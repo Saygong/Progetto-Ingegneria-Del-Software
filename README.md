@@ -50,3 +50,16 @@ npm run dev
 npm run build
 npm start
 ```
+
+
+Istruzioni per runnare il progetto:
+Eseguire il comando "npm install" sulla cartella principale del progetto (Families_Share)
+Eseguire il comando "npm install" sulla cartella client del progetto
+Esegui il comando "npm start" sulla cartella principale del progetto
+Esegui il comando "npm start" sulla cartella client del progetto 
+Ora vi si dovrebbe aprire automaticamente la pagina corretta sul browser, altrimenti collegatevi a
+localhost con il numero della porta indicata nel file .env
+
+
+
+
