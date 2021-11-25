@@ -12,25 +12,25 @@ import withLanguage from "./LanguageContext";
 import Texts from "../Constants/Texts";
 import Log from "./Log";
 
-const getGroupEvents = (groupId) => {
+const getGroupEvents = groupId => {
   return axios
     .get(`/api/groups/${groupId}/events`)
-    .then((response) => {
+    .then(response => {
       return response.data;
     })
-    .catch((error) => {
+    .catch(error => {
       Log.error(error);
       return [];
     });
 };
 
-const getUserEvents = (userId) => {
+const getUserEvents = userId => {
   return axios
     .get(`/api/users/${userId}/events`)
-    .then((response) => {
+    .then(response => {
       return response.data;
     })
-    .catch((error) => {
+    .catch(error => {
       Log.error(error);
       return [];
     });
@@ -42,7 +42,7 @@ const MyAgenda = ({ events: ev, date }) => {
     const currentMonth = moment(date).format("MMMM");
     const currentYear = moment(date).format("YYYY");
     const filteredEvents = events.filter(
-      (event) =>
+      event =>
         moment(event.start).format("MMMM") === currentMonth &&
         moment(event.start).format("YYYY") === currentYear
     );
@@ -55,15 +55,19 @@ const MyAgenda = ({ events: ev, date }) => {
     />
   );
 };
-MyAgenda.title = (date) => {
+MyAgenda.title = date => {
   return moment(date).format("MMMM YYYY");
 };
 MyAgenda.navigate = (date, action) => {
   switch (action) {
     case BigCalendar.Navigate.PREVIOUS:
-      return moment(date).add(-1, "M").toDate();
+      return moment(date)
+        .add(-1, "M")
+        .toDate();
     case BigCalendar.Navigate.NEXT:
-      return moment(date).add(1, "M").toDate();
+      return moment(date)
+        .add(1, "M")
+        .toDate();
 
     default:
       return date;
@@ -90,11 +94,11 @@ const DateCell = ({ children }) => {
   return <div style={{ backgroundColor: "#00838f" }}>{children}</div>;
 };
 
-const DateHeader = (handleDayClick) => ({
+const DateHeader = handleDayClick => ({
   drilldownView,
   label,
   // eslint-disable-next-line react/prop-types
-  onDrillDown,
+  onDrillDown
 }) => {
   if (!drilldownView) {
     return <span>{label}</span>;
@@ -104,7 +108,7 @@ const DateHeader = (handleDayClick) => ({
     <div
       role="button"
       tabIndex={-42}
-      onClick={(event) => {
+      onClick={event => {
         onDrillDown(event);
         handleDayClick();
       }}
@@ -141,15 +145,19 @@ const CustomToolbar = (
       default:
     }
   };
-  const navigate = (action) => {
+  const navigate = action => {
     if (action === "NEXT") {
-      const newDate = moment(date).add(1, "M").toDate();
+      const newDate = moment(date)
+        .add(1, "M")
+        .toDate();
       handleMonthEvents(
         moment(newDate).format("MMMM"),
         moment(newDate).format("YYYY")
       );
     } else {
-      const newDate = moment(date).add(-1, "M").toDate();
+      const newDate = moment(date)
+        .add(-1, "M")
+        .toDate();
       handleMonthEvents(
         moment(newDate).format("MMMM"),
         moment(newDate).format("YYYY")
@@ -159,7 +167,9 @@ const CustomToolbar = (
   };
   if (swipe === "right") {
     cancelSwipe();
-    const newDate = moment(date).add(-1, "M").toDate();
+    const newDate = moment(date)
+      .add(-1, "M")
+      .toDate();
     handleMonthEvents(
       moment(newDate).format("MMMM"),
       moment(newDate).format("YYYY")
@@ -167,7 +177,9 @@ const CustomToolbar = (
     onNavigate("PREV");
   } else if (swipe === "left") {
     cancelSwipe();
-    const newDate = moment(date).add(1, "M").toDate();
+    const newDate = moment(date)
+      .add(1, "M")
+      .toDate();
     handleMonthEvents(
       moment(newDate).format("MMMM"),
       moment(newDate).format("YYYY")
@@ -245,7 +257,7 @@ class Calendar extends React.Component {
     switch (ownerType) {
       case "user":
         const userEvents = await getUserEvents(ownerId);
-        userEvents.forEach((event) => {
+        userEvents.forEach(event => {
           event.title = event.summary;
           event.start = new Date(event.start.dateTime);
           event.end = new Date(event.end.dateTime);
@@ -254,16 +266,16 @@ class Calendar extends React.Component {
           filter === "all"
             ? userEvents
             : userEvents.filter(
-                (event) => event.extendedProperties.shared === "ongoing"
+                event => event.extendedProperties.shared === "ongoing"
               );
         this.setState({
           events: userEvents,
-          filteredEvents: filteredUserEvents,
+          filteredEvents: filteredUserEvents
         });
         break;
       case "group":
         const groupEvents = await getGroupEvents(ownerId);
-        groupEvents.forEach((event) => {
+        groupEvents.forEach(event => {
           event.title = event.summary;
           event.start = new Date(event.start.dateTime);
           event.end = new Date(event.end.dateTime);
@@ -272,11 +284,11 @@ class Calendar extends React.Component {
           filter === "all"
             ? groupEvents
             : groupEvents.filter(
-                (event) => event.extendedProperties.shared === "ongoing"
+                event => event.extendedProperties.shared === "ongoing"
               );
         this.setState({
           events: groupEvents,
-          filteredEvents: filteredGroupEvents,
+          filteredEvents: filteredGroupEvents
         });
         break;
       default:
@@ -285,38 +297,43 @@ class Calendar extends React.Component {
     }
   }
 
-  eventStyleGetter = (event) => {
+  eventStyleGetter = event => {
     const style = {
-      backgroundColor: event.extendedProperties.shared.activityColor,
+      backgroundColor: event.extendedProperties.shared.activityColor
     };
     return {
-      style,
+      style
     };
   };
 
   dayStyleGetter = () => {
     const style = {
-      border: "none",
+      border: "none"
     };
     return {
-      style,
+      style
     };
   };
 
   handleMonthEvents = (currentMonth, currentYear) => {
     const { events } = this.state;
-    events.forEach((event) => {
+    events.forEach(event => {
       const createdMonth = moment(event.created).month();
       const createdYear = moment(event.created).format("YYYY");
       if (event.extendedProperties.shared.repetition === "monthly") {
         if (
           createdYear <= currentYear &&
-          createdMonth <= moment().month(currentMonth).format("M")
+          createdMonth <=
+            moment()
+              .month(currentMonth)
+              .format("M")
         ) {
           event.start = moment(event.start)
             .month(currentMonth)
             .year(currentYear);
-          event.end = moment(event.end).month(currentMonth).year(currentYear);
+          event.end = moment(event.end)
+            .month(currentMonth)
+            .year(currentYear);
         }
       }
     });
@@ -335,17 +352,17 @@ class Calendar extends React.Component {
     this.setState({ swipe: "none" });
   };
 
-  handleChangeView = (view) => {
+  handleChangeView = view => {
     this.setState({ activeView: view });
   };
 
-  handleActivitiesFilter = (filter) => {
+  handleActivitiesFilter = filter => {
     const { events } = this.state;
     const filteredEvents =
       filter === "all"
         ? events
         : events.filter(
-            (event) => event.extendedProperties.shared.status === "ongoing"
+            event => event.extendedProperties.shared.status === "ongoing"
           );
     this.setState({ filter, filteredEvents });
   };
@@ -361,7 +378,7 @@ class Calendar extends React.Component {
       month: {
         dateHeader: DateHeader(() => this.handleChangeView("day")),
         dateCellWrapper: DateCell,
-        event: withRouter(MyMonthEvent),
+        event: withRouter(MyMonthEvent)
       },
       day: { header: DayHeader },
       toolbar: CustomToolbar(
@@ -372,7 +389,7 @@ class Calendar extends React.Component {
         filter,
         this.handleActivitiesFilter,
         calendarTitle
-      ),
+      )
     };
     const style = { flex: 1 };
     if (activeView === "day" && ownerType === "group") {
@@ -409,27 +426,27 @@ export default withRouter(withLanguage(Calendar));
 Calendar.propTypes = {
   ownerType: PropTypes.string,
   ownerId: PropTypes.string,
-  language: PropTypes.string,
+  language: PropTypes.string
 };
 
 MyAgenda.propTypes = {
   events: PropTypes.array,
-  date: PropTypes.instanceOf(Date),
+  date: PropTypes.instanceOf(Date)
 };
 
 MyMonthEvent.propTypes = {
   history: PropTypes.object,
-  event: PropTypes.object,
+  event: PropTypes.object
 };
 
 DateCell.propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.node
 };
 
 DateHeader.propTypes = {
   drilldownView: PropTypes.bool,
   onDrillDown: PropTypes.func,
-  label: PropTypes.string,
+  label: PropTypes.string
 };
 
 CustomToolbar.propTypes = {
@@ -437,5 +454,5 @@ CustomToolbar.propTypes = {
   onView: PropTypes.func,
   onNavigate: PropTypes.func,
   date: PropTypes.instanceOf(Date),
-  label: PropTypes.string,
+  label: PropTypes.string
 };

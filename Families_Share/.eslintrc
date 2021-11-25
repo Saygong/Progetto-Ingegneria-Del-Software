@@ -1,7 +1,4 @@
 {
-  "env": {
-    "jest": true
-  },
   "extends": "standard",
   "rules": {
     "camelcase": "off",
