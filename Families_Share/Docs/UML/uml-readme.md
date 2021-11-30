@@ -1,0 +1,1 @@
+Questi file sono da aprire con l'app StarUML. Sono gli UML presenti nel doc di progettazione.
