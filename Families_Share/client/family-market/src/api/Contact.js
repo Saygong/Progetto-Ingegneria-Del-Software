@@ -1,7 +1,7 @@
 /**
  * Class that models contact information for a Posting
  */
-class Contact extends {
+class Contact {
     email = "";
     place = "";
     phoneNumber = "";
