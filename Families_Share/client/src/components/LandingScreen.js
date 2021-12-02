@@ -7,7 +7,7 @@ import GroupList from "./GroupList";
 import Texts from "../Constants/Texts";
 import CardWithLink from "./CardWithLink";
 import withLanguage from "./LanguageContext";
-import Log from "./Log";
+const Log = require("./Log);;
 
 class LandingScreen extends React.Component {
   state = { fetchedSuggestions: false, suggestions: [], error: false };

@@ -4,7 +4,7 @@ import axios from "axios";
 import withLanguage from "./LanguageContext";
 import Reply from "./Reply";
 import Texts from "../Constants/Texts";
-import Log from "./Log";
+const Log = require("./Log);;
 
 class AnnouncementReplies extends React.Component {
   constructor(props) {

@@ -29,6 +29,10 @@ class PostingsWithGroupInfo {
         this.postings = postings;
     }
 
+    /**
+     *
+     * @return {PostingsWithGroupInfo}
+     */
     static get EMPTY() {
         return new PostingsWithGroupInfo();
     }

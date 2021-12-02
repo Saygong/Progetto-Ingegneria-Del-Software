@@ -8,7 +8,7 @@ import withLanguage from "./LanguageContext";
 import GroupList from "./GroupList";
 import TimeslotsList from "./TimeslotsList";
 import Texts from "../Constants/Texts";
-import Log from "./Log";
+const Log = require("./Log);;
 import Images from "../Constants/Images";
 
 const getMyGroups = userId => {

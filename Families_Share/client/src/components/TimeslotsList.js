@@ -6,7 +6,7 @@ import Texts from "../Constants/Texts";
 import withLanguage from "./LanguageContext";
 import FilterTimeslotsDrawer from "./FilterTimeslotsDrawer";
 import TimeslotPreview from "./TimeslotPreview";
-import Log from "./Log";
+const Log = require("./Log);;
 
 const getUsersChildren = userId => {
   return axios

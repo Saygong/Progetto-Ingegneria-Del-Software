@@ -2,8 +2,8 @@ const Posting = require("./Posting")
 const PostingInfo = require("./PostingInfo")
 const GroupInfo = require("./GroupInfo")
 const PostingsWithGroupInfo = require("./PostingsWithGroupInfo")
-import axios from "axios";
-import Log from "../../../src/components/Log";
+const axios = require("axios");
+const Log = require( "../../../src/components/Log");
 
 // TODO capire come va gestito il "data:image/<format>;base64,".
 // https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readAsDataURL

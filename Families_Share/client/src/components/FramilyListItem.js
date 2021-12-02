@@ -8,7 +8,7 @@ import Avatar from "./Avatar";
 import FramilyOptionsModal from "./OptionsModal";
 import Texts from "../Constants/Texts";
 import withLanguage from "./LanguageContext";
-import Log from "./Log";
+const Log = require("./Log);;
 
 class FramilyListItem extends React.Component {
   state = {

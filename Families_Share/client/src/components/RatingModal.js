@@ -5,7 +5,7 @@ import axios from "axios";
 import Rating from "react-rating";
 import Texts from "../Constants/Texts";
 import withLanguage from "./LanguageContext";
-import Log from "./Log";
+const Log = require("./Log);;
 
 Modal.setAppElement("#root");
 

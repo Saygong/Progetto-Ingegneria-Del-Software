@@ -25,6 +25,10 @@ class GroupInfo {
         this.name = name;
     }
 
+    /**
+     *
+     * @return {GroupInfo}
+     */
     static get EMPTY() {
         return new GroupInfo();
     }

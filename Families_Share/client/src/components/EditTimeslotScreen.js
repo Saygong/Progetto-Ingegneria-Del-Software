@@ -20,7 +20,7 @@ import withLanguage from "./LanguageContext";
 import ConfirmDialog from "./ConfirmDialog";
 import LoadingSpinner from "./LoadingSpinner";
 import Images from "../Constants/Images";
-import Log from "./Log";
+const Log = require("./Log);;
 
 const getTimeslot = pathname => {
   return axios

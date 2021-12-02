@@ -207,7 +207,8 @@ const initializeDB = async () => {
   await chai.request(server).post(`/api/users/${user.user_id}/children`).send(child).set('Authorization', user.token)
 }
 describe('Test', () => {
-  before('Initializing DB', async () => {
+  // Init Database
+  beforeAll(async () => {
     await initializeDB()
   })
 
@@ -225,7 +226,8 @@ describe('Test', () => {
   importTest('Profile Endpoints Test', './Profiles/profileEndpoints')
   importTest('Community Endpoints Test', './Community/communityEndpoints')
 
-  after('Cleaning up', async () => {
+  // Cleanup
+  afterAll(async () => {
     await User.deleteMany({})
     await Profile.deleteMany({})
     await Image.deleteMany({})

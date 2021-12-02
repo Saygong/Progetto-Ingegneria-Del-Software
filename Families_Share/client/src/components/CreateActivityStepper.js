@@ -19,7 +19,7 @@ import CreateActivityInformation from "./CreateActivityInformation";
 import CreateActivityDates from "./CreateActivityDates";
 import CreateActivityTimeslots from "./CreateActivityTimeslots";
 import Texts from "../Constants/Texts";
-import Log from "./Log";
+const Log = require("./Log);;
 import LoadingSpinner from "./LoadingSpinner";
 
 const muiTheme = createMuiTheme({

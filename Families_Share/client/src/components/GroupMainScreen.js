@@ -5,7 +5,7 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import LoadingSpinner from "./LoadingSpinner";
 import GroupNavbar from "./GroupNavbar";
-import Log from "./Log";
+const Log = require("./Log);;
 
 const GroupInfo = Loadable({
   loader: () => import("./GroupInfo"),

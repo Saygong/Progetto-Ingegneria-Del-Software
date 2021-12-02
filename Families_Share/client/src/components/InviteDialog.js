@@ -14,7 +14,7 @@ import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import ListItemText from "@material-ui/core/ListItemText";
 import Button from "@material-ui/core/Button";
 import { createMuiTheme, MuiThemeProvider, withStyles } from "@material-ui/core/styles";
-import Log from "./Log";
+const Log = require("./Log);;
 import AutoComplete from "./AutoComplete";
 import Texts from "../Constants/Texts";
 import withLanguage from "./LanguageContext";

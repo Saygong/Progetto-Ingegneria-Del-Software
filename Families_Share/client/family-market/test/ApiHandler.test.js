@@ -1,16 +1,12 @@
-import Log from "../../src/components/Log";
-
 const ApiHandler = require("../src/api/ApiHandler");
 const Posting = require("../src/api/Posting");
 const PostingInfo = require("../src/api/PostingInfo");
 const Contact = require("../src/api/Contact");
 const GroupInfo = require("../src/api/GroupInfo");
 const PostingsWithGroupInfo = require("../src/api/PostingsWithGroupInfo");
-import axios from "axios";
-import {polarToCartesian} from "recharts/lib/util/PolarUtils";
+const axios = require("axios");
 
 const POSTINGS_BASE_URL = ApiHandler.POSTINGS_BASE_URL;
-const USER_EXT_BASE_URL = ApiHandler.USER_EXT_BASE_URL;
 
 function getRandomString() {
     const randInt = (min, max) => {
@@ -205,7 +201,7 @@ async function createRandomPosting(creatorId, groupId) {
 
 /**
  *
- * @return {Promise<{groupId: string, postings: *[], userId: string}>}
+ * @return {Promise<{groupId: string, postings: Posting[], userId: string}>}
  */
 async function createUserWithSomePostingsSameGroup() {
     const userId = await createRandomUser();
@@ -221,9 +217,10 @@ async function createUserWithSomePostingsSameGroup() {
     return {userId: userId, groupId: groupInfo.id, postings: postings};
 }
 
+
 /**
  *
- * @return {{postingsByGroup: Array<PostingsWithGroupInfo>, userId: string}}
+ * @return {Promise<{postingsByGroup: PostingsWithGroupInfo[], userId: string}>}
  */
 async function createUserWithSomePostingsDifferentGroups() {
     const userId = await createRandomUser();
@@ -238,7 +235,7 @@ async function createUserWithSomePostingsDifferentGroups() {
         const postings = [];
         const nPostings = 3;
         for (let i = 0; i < nPostings; i++) {
-            const p = await createRandomPosting(userId, groupId);
+            const p = await createRandomPosting(userId, gInfo.id);
             postings.push(p);
         }
 
@@ -249,22 +246,29 @@ async function createUserWithSomePostingsDifferentGroups() {
     return {userId: userId, postingsByGroup: postingsByGroup};
 }
 
-/**
- *
- * @return {{postings: *[], groupId: string, userId: string}}
- */
-function createGroupWithSomePostings() {
-    xxxxx here //TODO:
-    return createUserWithSomePostingsSameGroup();
-}
 
 /**
  *
- * @return {{favouritePostings: *[], groupIds: *[], userId: string}}
+ * @return {Promise<{groupId: string, postings: Posting[], userId: string}>}
  */
-function createUserWithSomeFavourites() {
-    let {userId, postingsByGroup} = createUserWithSomePostingsDifferentGroups()
-    xxx
+async function createGroupWithSomePostings() {
+    return await createUserWithSomePostingsSameGroup();
+}
+
+
+/**
+ *
+ * @return {Promise<{groupIds: string[], userId: string, favouritePostings: Posting[]}>}
+ */
+async function createUserWithSomeFavourites() {
+    const {userId, postingsByGroup} = await createUserWithSomePostingsDifferentGroups()
+
+    const groupIds = [];
+    const postings = [];
+    for (const pg of postingsByGroup) {
+        groupIds.push(pg.groupInfo.id);
+        pg.postings.forEach(p => postings.push(p));
+    }
 
     return {userId: userId, groupIds: groupIds, favouritePostings: postings};
 }
@@ -316,12 +320,13 @@ async function deletePosting(postingId) {
  * situation, since a user must create a posting on a certain group.
  * To be even more realistic the user should belong to that group, but in this case
  * it's good enough.
- * @return {{groupId, posting, userId}}
+ * @return {Promise<{groupId: GroupInfo, posting: Posting, userId: string}>}
  */
 async function setupPosting() {
     let userId = await createRandomUser();
     let groupId = await createRandomGroup(userId);
     let posting = await createRandomPosting(userId, groupId);
+
     return {userId: userId, groupId: groupId, posting: posting};
 }
 
@@ -358,22 +363,22 @@ async function tearDownPostings(creatorIds, groupIds, postingIds) {
 
 
 describe('Get all group postings', function () {
-    it('should return a list of all the postings of a group', function () {
+    it('should return a list of all the postings of a group', async function () {
         // Arrange
-        const setup = () => {
-            return createGroupWithSomePostings();
+        const setup = async () => {
+            return await createGroupWithSomePostings();
         };
 
-        const tearDown = (userId, groupId, postings) => {
+        const tearDown = async (userId, groupId, postings) => {
             const postingIds = [];
             for (const p of postings) {
                 postingIds.push(p.id);
             }
 
-            tearDownPostings([userId], [groupId], postingIds);
+            await tearDownPostings([userId], [groupId], postingIds);
         };
 
-        let { userId, groupId, postings } = setup();
+        let { userId, groupId, postings } = await setup();
         let apiHandler = new ApiHandler();
 
         // Act
@@ -383,7 +388,7 @@ describe('Get all group postings', function () {
         strictAssertPostingList(actualPostings, postings);
 
         // Teardown
-        tearDown(userId, groupId, postings);
+        await tearDown(userId, groupId, postings);
     });
 
     it('should return empty array when given a wrong id for a specific group', function () {
@@ -401,17 +406,17 @@ describe('Get all group postings', function () {
 });
 
 describe('Get single posting', function () {
-    it('should return a single posting given a specific id', function () {
+    it('should return a single posting given a specific id', async function () {
         // Arrange
-        const setup = () => {
-            return setupPosting();
+        const setup = async () => {
+            return await setupPosting();
         };
 
-        const tearDown = (userId, groupId, postingId) => {
-            tearDownPosting(userId, groupId, postingId);
+        const tearDown = async (userId, groupId, postingId) => {
+            return await tearDownPosting(userId, groupId, postingId);
         };
 
-        let { userId, groupId, expectedPosting } = setup();
+        let { userId, groupId, expectedPosting } = await setup();
         let apiHandler = new ApiHandler();
 
         // Act
@@ -421,7 +426,7 @@ describe('Get single posting', function () {
         strictAssertPosting(actualPosting, expectedPosting);
 
         // Teardown
-        tearDown(userId, groupId, expectedPosting.id);
+        await tearDown(userId, groupId, expectedPosting.id);
     });
 
     it('should return an empty posting when given a wrong id for a specific posting', function () {
@@ -439,16 +444,17 @@ describe('Get single posting', function () {
 });
 
 describe('Create posting', function () {
-    it('should create a posting with the given information and return the created posting', function () {
+    it('should create a posting with the given information and return the created posting', async function () {
         // Arrange
-        const setup = () => {
-            let userId = createRandomUser();
-            let groupId = createRandomGroup(userId);
+        const setup = async () => {
+            let userId = await createRandomUser();
+            let groupId = await createRandomGroup(userId);
+
             return {userId: userId, groupId: groupId};
         };
 
-        const tearDown = (userId, groupId, postingId) => {
-            tearDownPosting(userId, groupId, postingId);
+        const tearDown = async (userId, groupId, postingId) => {
+            await tearDownPosting(userId, groupId, postingId);
         };
 
         let { userId, groupId } = setup();
@@ -464,7 +470,7 @@ describe('Create posting', function () {
         strictAssertPostingInfo(creationInfo, createdPosting);
 
         // Teardown
-        tearDown(userId, groupId, createdPosting.id);
+        await tearDown(userId, groupId, createdPosting.id);
     });
 
     it('should return and empty posting when invalid information is provided', function () {
@@ -484,14 +490,14 @@ describe('Create posting', function () {
 });
 
 describe('Edit posting', function () {
-    it('should edit a posting with the given information and return the edited posting', function () {
+    it('should edit a posting with the given information and return the edited posting', async function () {
         // Arrange
-        const setup = () => {
-            return setupPosting();
+        const setup = async () => {
+            return await setupPosting();
         };
 
-        const tearDown = (userId, groupId, postingId) => {
-            tearDownPosting(userId, groupId, postingId);
+        const tearDown = async (userId, groupId, postingId) => {
+            await tearDownPosting(userId, groupId, postingId);
         };
 
         let { userId, groupId, postingToEdit } = setup();
@@ -520,7 +526,7 @@ describe('Edit posting', function () {
         strictAssertPostingInfo(postingToEdit, editedPosting, false);
 
         // Teardown
-        tearDown(userId, groupId, postingToEdit.id);
+        await tearDown(userId, groupId, postingToEdit.id);
     });
 
     it('should return an empty posting when invalid information is provided', function () {
@@ -539,19 +545,19 @@ describe('Edit posting', function () {
 });
 
 describe('Delete posting', function () {
-    it('should delete a posting given a specific id', function () {
+    it('should delete a posting given a specific id', async function () {
         // Arrange
-        const setup = () => {
-            return setupPosting();
+        const setup = async () => {
+            return await setupPosting();
         };
 
         // Need to make sure that the posting is deleted
         // since the api delete method is being tested
-        const tearDown = (userId, groupId, postingId) => {
-            tearDownPosting(userId, groupId, postingId);
+        const tearDown = async (userId, groupId, postingId) => {
+            await tearDownPosting(userId, groupId, postingId);
         };
 
-        let { userId, groupId, postingToDelete } = setup();
+        let { userId, groupId, postingToDelete } = await setup();
         let apiHandler = new ApiHandler();
 
         // Act
@@ -561,7 +567,7 @@ describe('Delete posting', function () {
         expect(isDeleted).toBe(true);
 
         // Teardown
-        tearDown(userId, groupId, postingToDelete.id);
+        await tearDown(userId, groupId, postingToDelete.id);
     });
 
     it('should return false given a wrong id for a specific posting', function () {
@@ -578,13 +584,13 @@ describe('Delete posting', function () {
 });
 
 describe('Get all user postings', function () {
-    it('should return a list of all the postings of a user, grouped by group info', function () {
+    it('should return a list of all the postings of a user, grouped by group info', async function () {
         // Arrange
-        const setup = () => {
-            return createUserWithSomePostingsDifferentGroups();
+        const setup = async () => {
+            return await createUserWithSomePostingsDifferentGroups();
         };
 
-        const tearDown = (userId, postingsByGroup) => {
+        const tearDown = async (userId, postingsByGroup) => {
                 const postingIds = [];
                 const groupIds = [];
                 for (const item of postingsByGroup) {
@@ -595,10 +601,10 @@ describe('Get all user postings', function () {
                     }
                 }
 
-                tearDownPostings([userId], groupIds, postingIds);
+                await tearDownPostings([userId], groupIds, postingIds);
             };
 
-        let {userId, postingsByGroup} = setup();
+        let {userId, postingsByGroup} = await setup();
         let apiHandler = new ApiHandler();
 
         // Act
@@ -613,7 +619,7 @@ describe('Get all user postings', function () {
         }
 
         // Teardown
-        tearDown(userId, postingsByGroup);
+        await tearDown(userId, postingsByGroup);
     });
 
     it('should return an empty array when given a wrong id for a specific user', function () {
@@ -631,19 +637,19 @@ describe('Get all user postings', function () {
 });
 
 describe('Get user favourite postings', function () {
-    it('should return a list of all the postings marked as favourite by a specific user', function () {
+    it('should return a list of all the postings marked as favourite by a specific user', async function () {
         // Arrange
-        const setup = () => {
-            return createUserWithSomeFavourites();
+        const setup = async () => {
+            return await createUserWithSomeFavourites();
         };
 
-        const tearDown = (userId, groupIds, postings) => {
+        const tearDown = async (userId, groupIds, postings) => {
             const postingIds = [];
             for (const p of postings) {
                 postingIds.push(p.id);
             }
 
-            tearDownPostings([userId], groupIds, postingIds);
+            await tearDownPostings([userId], groupIds, postingIds);
         };
 
         let {userId, groupIds, postings} = setup();
@@ -656,7 +662,7 @@ describe('Get user favourite postings', function () {
         strictAssertPostingList(actualPostings, postings);
 
         // Teardown
-        tearDown(userId, groupIds, postings);
+        await tearDown(userId, groupIds, postings);
 
     });
 
@@ -675,22 +681,22 @@ describe('Get user favourite postings', function () {
 });
 
 describe('Edit user favourite postings', function () {
-    it('should return the new edited list of favourite posting ids of the specific user', function () {
+    it('should return the new edited list of favourite posting ids of the specific user', async function () {
         // Arrange
-        const setup = () => {
-            return createUserWithSomeFavourites();
+        const setup = async () => {
+            return await createUserWithSomeFavourites();
         };
 
-        const tearDown = (userId, groupIds, postings) => {
+        const tearDown = async (userId, groupIds, postings) => {
             const postingIds = [];
             for (const p of postings) {
                 postingIds.push(p.id);
             }
 
-            tearDownPostings([userId], groupIds, postingIds);
+            await tearDownPostings([userId], groupIds, postingIds);
         };
 
-        let {userId, groupIds, favouritePostings} = setup();
+        let {userId, groupIds, favouritePostings} = await setup();
         let apiHandler = new ApiHandler();
 
         // Take only postings on odd indexes to make a different id list
@@ -732,7 +738,7 @@ describe('Edit user favourite postings', function () {
         }
 
         // Teardown
-        tearDown(userId, groupIds, favouritePostings);
+        await tearDown(userId, groupIds, favouritePostings);
 
     });
 

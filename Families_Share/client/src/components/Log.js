@@ -1,4 +1,4 @@
-import debug from "debug";
+const debug = require("debug");
 
 const BASE = "families-share";
 const COLOURS = {
@@ -41,4 +41,4 @@ class Log {
   }
 }
 
-export default new Log();
+module.exports = new Log();

@@ -13,7 +13,7 @@ import ConfirmDialog from "./ConfirmDialog";
 import OptionsModal from "./OptionsModal";
 import LoadingSpinner from "./LoadingSpinner";
 import Images from "../Constants/Images";
-import Log from "./Log";
+const Log = require("./Log);;
 import Avatar from "./Avatar";
 
 const styles = {

@@ -9,7 +9,7 @@ import Texts from "../Constants/Texts";
 import withLanguage from "./LanguageContext";
 import Avatar from "./Avatar";
 import MemberOptionsModal from "./OptionsModal";
-import Log from "./Log";
+const Log = require("./Log);;
 
 class MemberContact extends React.Component {
   state = { modalIsOpen: false, top: "", right: "" };

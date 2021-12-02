@@ -8,7 +8,7 @@ import Avatar from "./Avatar";
 import ConfirmDialog from "./ConfirmDialog";
 import Texts from "../Constants/Texts";
 import withLanguage from "./LanguageContext";
-import Log from "./Log";
+const Log = require("./Log);;
 
 class AnnouncementHeader extends React.Component {
   state = {

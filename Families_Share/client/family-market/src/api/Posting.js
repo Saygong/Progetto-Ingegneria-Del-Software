@@ -37,6 +37,10 @@ class Posting extends PostingInfo{
         this.group_id = groupId;
     }
 
+    /**
+     *
+     * @return {Posting}
+     */
     static get EMPTY() {
         return new Posting();
     }

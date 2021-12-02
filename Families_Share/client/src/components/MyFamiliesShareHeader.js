@@ -14,7 +14,7 @@ import Texts from "../Constants/Texts";
 import Images from "../Constants/Images";
 import withLanguage from "./LanguageContext";
 import ConfirmDialog from "./ConfirmDialog";
-import Log from "./Log";
+const Log = require("./Log);;
 
 class MyFamiliesShareHeader extends React.Component {
   state = {

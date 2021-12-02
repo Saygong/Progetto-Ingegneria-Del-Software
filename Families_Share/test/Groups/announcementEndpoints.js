@@ -184,7 +184,7 @@ describe('/Get/api/groups/groupId/announcements', () => {
 		});
 	});
 });
-describe('/Post/api/groups/groupId/announcements/announcementId/replies', async () => {
+describe('/Post/api/groups/groupId/announcements/announcementId/replies', () => {
 	it('it should post a new reply when user is authenticated and group member', async () => {
 		const user = await User.findOne({ email: "test@email.com" });
 		const group = await Group.findOne({ name: "Test Group Edit" });
@@ -199,7 +199,7 @@ describe('/Post/api/groups/groupId/announcements/announcementId/replies', async 
 		res.should.have.status(200);
 	});
 });
-describe('/Post/api/groups/groupId/announcements/announcementId/replies', async () => {
+describe('/Post/api/groups/groupId/announcements/announcementId/replies',  () => {
 	it('it should not post a new reply announcement when user isnt authenticated ', async () => {
 		const group = await Group.findOne({ name: "Test Group Edit" });
 		const announcement = await Announcement.findOne({ group_id: group.group_id });
@@ -213,7 +213,7 @@ describe('/Post/api/groups/groupId/announcements/announcementId/replies', async 
 		res.should.have.status(401);
 	});
 });
-describe('/Post/api/groups/groupId/announcements/announcementId/replies', async () => {
+describe('/Post/api/groups/groupId/announcements/announcementId/replies',  () => {
 	it('it should not post a new reply when user isnt group member', async () => {
 		const user = await User.findOne({ email: "test4@email.com" });
 		const group = await Group.findOne({ name: "Test Group Edit" });
@@ -228,7 +228,7 @@ describe('/Post/api/groups/groupId/announcements/announcementId/replies', async 
 		res.should.have.status(401);
 	});
 });
-describe('/Post/api/groups/groupId/announcements/announcementId/replies', async () => {
+describe('/Post/api/groups/groupId/announcements/announcementId/replies', () => {
 	it('it should not post a new reply when user parameters are missing', async () => {
 		const user = await User.findOne({ email: "test@email.com" });
 		const group = await Group.findOne({ name: "Test Group Edit" });

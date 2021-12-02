@@ -62,6 +62,10 @@ class PostingInfo {
         this.contact = new Contact(contact);
     }
 
+    /**
+     *
+     * @return {PostingInfo}
+     */
     static get EMPTY() {
         return new PostingInfo();
     }

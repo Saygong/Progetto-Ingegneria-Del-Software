@@ -7,7 +7,7 @@ import Texts from "../Constants/Texts";
 import withLanguage from "./LanguageContext";
 import LoadingSpinner from "./LoadingSpinner";
 import Avatar from "./Avatar";
-import Log from "./Log";
+const Log = require("./Log);;
 
 class PendingRequestsScreen extends React.Component {
   constructor(props) {

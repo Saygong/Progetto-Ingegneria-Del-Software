@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 import withLanguage from "./LanguageContext";
 import Texts from "../Constants/Texts";
 import LoadingSpinner from "./LoadingSpinner";
-import Log from "./Log";
+const Log = require("./Log);;
 
 const dataURLtoFile = (dataurl, filename) => {
   const arr = dataurl.split(",");

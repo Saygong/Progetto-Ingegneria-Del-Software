@@ -40,6 +40,10 @@ class Contact {
         this.phone_number = phoneNumber;
     }
 
+    /**
+     *
+     * @return {Contact}
+     */
     static get EMPTY() {
         return new Contact();
     }

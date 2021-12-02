@@ -7,7 +7,7 @@ import * as path from "lodash.get";
 import ProfileHeader from "./ProfileHeader";
 import ProfileNavbar from "./ProfileNavbar";
 import LoadingSpinner from "./LoadingSpinner";
-import Log from "./Log";
+const Log = require("./Log);;
 
 const ProfileInfo = Loadable({
   loader: () => import("./ProfileInfo"),

@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import Texts from "../Constants/Texts";
 import LoadingSpinner from "./LoadingSpinner";
 import withLanguage from "./LanguageContext";
-import Log from "./Log";
+const Log = require("./Log);;
 
 class EditActivityScreen extends React.Component {
   state = {
