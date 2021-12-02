@@ -248,7 +248,14 @@ router.post('/', async (req, res, next) => {
     await Group.create(group)
     await Image.create(image)
     await Group_Settings.create(settings)
-    res.status(200).send('Group Created')
+
+    const toSend = {
+      message: "Group Created",
+      group_id: group_id,
+      name: name
+    };
+
+    res.status(200).send(toSend)
   } catch (err) {
     next(err)
   }

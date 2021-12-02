@@ -25,7 +25,9 @@ class GroupInfo {
         this.name = name;
     }
 
-    static EMPTY = new GroupInfo();
+    static get EMPTY() {
+        return new GroupInfo();
+    }
 }
 
 module.exports = GroupInfo;

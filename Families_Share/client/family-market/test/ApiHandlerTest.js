@@ -1,10 +1,16 @@
+import Log from "../../src/components/Log";
+
 const ApiHandler = require("../src/api/ApiHandler");
 const Posting = require("../src/api/Posting");
 const PostingInfo = require("../src/api/PostingInfo");
 const Contact = require("../src/api/Contact");
 const GroupInfo = require("../src/api/GroupInfo");
 const PostingsWithGroupInfo = require("../src/api/PostingsWithGroupInfo");
-const {expect} = require("chai"); //TODO: installare chai?
+import axios from "axios";
+import {polarToCartesian} from "recharts/lib/util/PolarUtils";
+
+const POSTINGS_BASE_URL = ApiHandler.POSTINGS_BASE_URL;
+const USER_EXT_BASE_URL = ApiHandler.USER_EXT_BASE_URL;
 
 function getRandomString() {
     const randInt = (min, max) => {
@@ -31,6 +37,11 @@ function getRandomPostingInfo() {
     })
 }
 
+/**
+ * Returns true if the provided object is null or undefined.
+ * @param x object to test
+ * @return {boolean}
+ */
 function isNullOrUndefined(x) {
     return x === undefined || x === null;
 }
@@ -84,8 +95,11 @@ function strictAssertPostingInfo(actual, expected, assertTrue=true) {
 }
 
 // TODO: funzioni devono essere async perché fanno query all'api
-function createRandomUser() {
-
+/**
+ *
+ * @return {Promise<string>}
+ */
+async function createRandomUser() {
     const user = {
         given_name: getRandomString(),
         family_name: getRandomString(),
@@ -96,20 +110,35 @@ function createRandomUser() {
         language: 'en'
 
         //TODO: effettivamente ci va? non ha senso perché è un campo che può
-        // benissimo essere inizializzato lato server
+        // benissimo essere inizializzato lato server. Parlare con ruie/geh
         //favourites: []
     };
 
+    // in test.js: await chai.request(server).post('/api/users').send(user2)
+    const routeUrl = "/api/users";
+    const response = await axios.post(routeUrl, user)
+        .then(response => {
+            console.log(`Successfully created user [${response.data.id}]`);
+            console.log(response)
+
+            // see line 154 of user-routes.js to understand what data is returned
+            return response;
+        })
+        .catch(error => {
+            console.log(`Error while creating user`)
+            console.log(error);
+        });
+
+    const userId = response.data.id;
     return userId;
 }
 
-function createRandomPosting(creatorId, groupId) {
-
-    return posting;
-}
-
-function createRandomGroup(ownerId) {
-
+/**
+ *
+ * @param ownerId {string}
+ * @return {Promise<GroupInfo>}
+ */
+async function createRandomGroup(ownerId) {
     const group = {
         invite_ids: [],
         description: getRandomString(),
@@ -121,33 +150,103 @@ function createRandomGroup(ownerId) {
         contact_info: getRandomString()
     };
 
-    // TODO: per ottenere id gruppo bisogna probabilmente fare richiesta per i gruppi
-    // dell'utente owner, perché quando lo crea non restituisce l'id
+    // in test.js:
+    // await chai.request(server).post('/api/groups').send(group2).set('Authorization', user.token)
+    const routeUrl = "/api/groups";
+    const response = await axios.post(routeUrl, group)
+        .then(response => {
+            console.log(`Successfully created group [${response.data.group_id}]`);
+            console.log(response)
 
-    return groupId;
+            return response;
+        })
+        .catch(error => {
+            console.log(`Error while creating group`)
+            console.log(error);
+        });
+
+    const groupId = response.data.group_id;
+    const groupName = response.data.name;
+
+    return new GroupInfo({id: groupId, name: groupName});
 }
 
 /**
  *
- * @return {{postings: *[], groupId: string, userId: string}}
+ * @param creatorId
+ * @param groupId
+ * @return {Promise<Posting>}
  */
-function createUserWithSomePostingsSameGroup(userId="") {
-    if (userId === "") {
-        userId = createRandomUser();
+async function createRandomPosting(creatorId, groupId) {
+    const rndInfo = getRandomPostingInfo();
+    const creationData = {
+        user_id: creatorId,
+        group_id: groupId,
+        ...rndInfo
+    };
+
+    const routeUrl = `${POSTINGS_BASE_URL}/`;
+    const response = await axios.post(routeUrl, creationData)
+        .then(response => {
+            console.log(`Successfully created posting [${response.data.id}]`);
+            console.log(response)
+
+            return response;
+        })
+        .catch(error => {
+            console.log(`Error while creating posting`)
+            console.log(error);
+        });
+
+    const posting = new Posting(response.data);
+    return posting;
+}
+
+
+/**
+ *
+ * @return {Promise<{groupId: string, postings: *[], userId: string}>}
+ */
+async function createUserWithSomePostingsSameGroup() {
+    const userId = await createRandomUser();
+    const groupInfo = await createRandomGroup(userId);
+
+    const postings = [];
+    const nPostings = 5;
+    for (let i = 0; i < nPostings; i++) {
+        const p = await createRandomPosting(userId, groupInfo.id);
+        postings.push(p);
     }
 
-
-
-    return {userId: userId, groupId: "", postings: []};
+    return {userId: userId, groupId: groupInfo.id, postings: postings};
 }
 
 /**
  *
  * @return {{postingsByGroup: Array<PostingsWithGroupInfo>, userId: string}}
  */
-function createUserWithSomePostingsDifferentGroups() {
+async function createUserWithSomePostingsDifferentGroups() {
+    const userId = await createRandomUser();
 
-    return {userId: "", postingsByGroup: []};
+    // For each group, create postings,
+    // then create a PostingsWithGroupInfo object
+    const nGroups = 3;
+    const postingsByGroup = []
+    for (let i = 0; i < nGroups; i++) {
+        const gInfo = await createRandomGroup(userId);
+
+        const postings = [];
+        const nPostings = 3;
+        for (let i = 0; i < nPostings; i++) {
+            const p = await createRandomPosting(userId, groupId);
+            postings.push(p);
+        }
+
+        const pg = new PostingsWithGroupInfo({groupInfo: gInfo, postings: postings});
+        postingsByGroup.push(pg);
+    }
+
+    return {userId: userId, postingsByGroup: postingsByGroup};
 }
 
 /**
@@ -155,7 +254,7 @@ function createUserWithSomePostingsDifferentGroups() {
  * @return {{postings: *[], groupId: string, userId: string}}
  */
 function createGroupWithSomePostings() {
-
+    xxxxx here //TODO:
     return createUserWithSomePostingsSameGroup();
 }
 
@@ -170,16 +269,43 @@ function createUserWithSomeFavourites() {
     return {userId: userId, groupIds: groupIds, favouritePostings: postings};
 }
 
-function deleteGroup(groupId) {
-
+async function deleteGroup(groupId) {
+    await axios
+        .delete(`/api/groups/${groupId}`)
+        .then(response => {
+            console.log(`Successfully deleted group [${groupId}]`);
+            console.log(response)
+        })
+        .catch(error => {
+            console.log(`Error while deleting group [${groupId}]`)
+            console.log(error);
+        });
 }
 
-function deleteUser(userId) {
-
+async function deleteUser(userId) {
+    await axios
+        .delete(`/api/users/${userId}`)
+        .then(response => {
+            console.log(`Successfully deleted user [${userId}]`);
+            console.log(response)
+        })
+        .catch(error => {
+            console.log(`Error while deleting user [${userId}]`)
+            console.log(error);
+        });
 }
 
-function deletePosting(postingId) {
-
+async function deletePosting(postingId) {
+    await axios
+        .delete(`${POSTINGS_BASE_URL}/${postingId}`)
+        .then(response => {
+            console.log(`Successfully deleted posting [${postingId}]`);
+            console.log(response)
+        })
+        .catch(error => {
+            console.log(`Error while deleting posting [${postingId}]`)
+            console.log(error);
+        });
 }
 
 /**
@@ -192,10 +318,10 @@ function deletePosting(postingId) {
  * it's good enough.
  * @return {{groupId, posting, userId}}
  */
-function setupPosting() {
-    let userId = createRandomUser();
-    let groupId = createRandomGroup(userId);
-    let posting = createRandomPosting(userId, groupId);
+async function setupPosting() {
+    let userId = await createRandomUser();
+    let groupId = await createRandomGroup(userId);
+    let posting = await createRandomPosting(userId, groupId);
     return {userId: userId, groupId: groupId, posting: posting};
 }
 
@@ -206,8 +332,8 @@ function setupPosting() {
  * @param groupId
  * @param postingId
  */
-function tearDownPosting(creatorId, groupId, postingId) {
-    tearDownPostings([creatorId], [groupId], [postingId]);
+async function tearDownPosting(creatorId, groupId, postingId) {
+    await tearDownPostings([creatorId], [groupId], [postingId]);
 }
 
 /**
@@ -216,17 +342,17 @@ function tearDownPosting(creatorId, groupId, postingId) {
  * @param groupIds
  * @param postingIds
  */
-function tearDownPostings(creatorIds, groupIds, postingIds) {
+async function tearDownPostings(creatorIds, groupIds, postingIds) {
     for (const pId of postingIds) {
-        deletePosting(pId);
+        await deletePosting(pId);
     }
 
     for (const groupId of groupIds) {
-        deleteGroup(groupId);
+        await deleteGroup(groupId);
     }
 
     for (const userId of creatorIds) {
-        deleteUser(userId);
+        await deleteUser(userId);
     }
 }
 

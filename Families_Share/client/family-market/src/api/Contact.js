@@ -40,7 +40,9 @@ class Contact {
         this.phone_number = phoneNumber;
     }
 
-    static EMPTY = new Contact();
+    static get EMPTY() {
+        return new Contact();
+    }
 }
 
 module.exports = Contact;

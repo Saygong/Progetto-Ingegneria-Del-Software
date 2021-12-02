@@ -29,7 +29,9 @@ class PostingsWithGroupInfo {
         this.postings = postings;
     }
 
-    static EMPTY = new PostingsWithGroupInfo();
+    static get EMPTY() {
+        return new PostingsWithGroupInfo();
+    }
 }
 
 module.exports = PostingsWithGroupInfo;

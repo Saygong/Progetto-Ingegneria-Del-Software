@@ -5,10 +5,6 @@ const PostingsWithGroupInfo = require("./PostingsWithGroupInfo")
 import axios from "axios";
 import Log from "../../../src/components/Log";
 
-const FM_API_BASE_URL = "/api/family-market";
-const POSTINGS_BASE_URL = `${FM_API_BASE_URL}/postings`;
-const USER_EXT_BASE_URL = `${FM_API_BASE_URL}/users`;
-
 // TODO capire come va gestito il "data:image/<format>;base64,".
 // https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readAsDataURL
 // questo si occupa già di aggiungere i metadati (data:image... ecc.) e prende come argomento
@@ -23,7 +19,7 @@ const USER_EXT_BASE_URL = `${FM_API_BASE_URL}/users`;
  * Class for handling requests and responses to/from the server side api
  * relative to the Family Market extension.
  */
-class FamilyMarketApiHandler {
+class ApiHandler {
     /* NOTE:
      * The policy of Families Share with regards to wrong api calls or api errors seems to be:
      * - client side, just to log the error, without throwing any exception or returning null values.
@@ -32,6 +28,15 @@ class FamilyMarketApiHandler {
      * The behaviour of Family Market will be the same.
      */
 
+    static get FM_API_BASE_URL() {
+        return "/api/family-market";
+    }
+    static get POSTINGS_BASE_URL() {
+        return `${ApiHandler.FM_API_BASE_URL}/postings`;
+    }
+    static get USER_EXT_BASE_URL() {
+        return `${ApiHandler.FM_API_BASE_URL}/users`;
+    }
 
     /**
      * Queries the api and returns a list of Posting objects belonging to the specified group
@@ -39,7 +44,7 @@ class FamilyMarketApiHandler {
      * @return {Array<Posting>} list of postings belonging to the group
      */
     getGroupPostings(groupId) {
-        let routeUrl = `${POSTINGS_BASE_URL}/groups/${groupId}`
+        let routeUrl = `${ApiHandler.POSTINGS_BASE_URL}/groups/${groupId}`
         return axios
             .get(routeUrl)
             .then(response => {
@@ -96,4 +101,4 @@ class FamilyMarketApiHandler {
     }
 }
 
-module.exports = FamilyMarketApiHandler
+module.exports = ApiHandler

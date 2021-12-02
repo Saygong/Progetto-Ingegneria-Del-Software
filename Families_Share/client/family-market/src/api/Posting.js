@@ -27,17 +27,19 @@ class Posting extends PostingInfo{
      */
     group_id = "";
 
-    constructor(id="", groupId="",
-                {name="", category="", description="",
+    constructor({id="", groupId="",
+                    name="", category="", description="",
                     photo="", type="",
                     contact = Contact.EMPTY} = {}) {
-        super({...arguments[0]});
+        super(arguments[0]);
 
         this.id = id;
         this.group_id = groupId;
     }
 
-    static EMPTY = new Posting();
+    static get EMPTY() {
+        return new Posting();
+    }
 }
 
 module.exports = Posting;

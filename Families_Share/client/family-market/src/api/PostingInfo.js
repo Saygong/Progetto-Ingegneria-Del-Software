@@ -62,7 +62,9 @@ class PostingInfo {
         this.contact = new Contact(contact);
     }
 
-    static EMPTY = new PostingInfo();
+    static get EMPTY() {
+        return new PostingInfo();
+    }
 }
 
 module.exports = PostingInfo;
