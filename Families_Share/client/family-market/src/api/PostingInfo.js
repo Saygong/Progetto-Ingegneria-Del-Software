@@ -52,18 +52,17 @@ class PostingInfo {
      * @param contact {Contact} Contact information of the posting
      */
     constructor({name="", category="", description="",
-                photo="", type="", contact = null}) {
+                    photo="", type="",
+                    contact = Contact.EMPTY} = {}) {
         this.name = name;
         this.category = category;
         this.description = description;
-
-        // TODO capire come va gestito il "data:image/<format>;base64,".
-        // se fosse per me io controlleri lato client di che tipo è l'immagine (supporto solo png e jpg)
-        // e quando converto l'immagine ci aggiungo all'inizio anche sta stringa con <format> = (png, jpg)
         this.photo = photo;
         this.type = type;
         this.contact = new Contact(contact);
     }
+
+    static EMPTY = new PostingInfo();
 }
 
 module.exports = PostingInfo;

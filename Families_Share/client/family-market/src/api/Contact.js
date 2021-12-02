@@ -34,11 +34,13 @@ class Contact {
      * @param place {string} string representing a location (could also be google maps coordinates)
      * @param phoneNumber {string}
      */
-    constructor({email="", place="", phoneNumber=""}) {
+    constructor({email="", place="", phoneNumber=""} = {}) {
         this.email = email;
         this.place = place;
         this.phone_number = phoneNumber;
     }
+
+    static EMPTY = new Contact();
 }
 
 module.exports = Contact;

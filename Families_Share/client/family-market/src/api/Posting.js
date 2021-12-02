@@ -1,4 +1,5 @@
-const PostingInfo = require("./PostingInfo")
+const PostingInfo = require("./PostingInfo");
+const Contact = require("./Contact");
 
 /**
  * Class representing a posting present in the database.
@@ -16,7 +17,7 @@ class Posting extends PostingInfo{
      * Id of the posting
      * @type {string}
      */
-    id = ""
+    id = "";
 
 
     /**
@@ -24,17 +25,19 @@ class Posting extends PostingInfo{
      *
      * @type {string}
      */
-    group_id = ""
+    group_id = "";
 
     constructor(id="", groupId="",
                 {name="", category="", description="",
-                    photo="", type="", contact = {}}) {
+                    photo="", type="",
+                    contact = Contact.EMPTY} = {}) {
         super({...arguments[0]});
 
         this.id = id;
         this.group_id = groupId;
     }
 
+    static EMPTY = new Posting();
 }
 
-module.exports = Posting
+module.exports = Posting;

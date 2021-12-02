@@ -7,23 +7,25 @@ class GroupInfo {
      * Id of the group
      * @type {string}
      */
-    id = ""
+    id = "";
 
     /**
      * Name of the group
      * @type {string}
      */
-    name = ""
+    name = "";
 
     /**
      *
      * @param id
      * @param name
      */
-    constructor({id="", name=""}) {
-        this.id = id
-        this.name = name
+    constructor({id="", name=""} = {}) {
+        this.id = id;
+        this.name = name;
     }
+
+    static EMPTY = new GroupInfo();
 }
 
-module.exports = GroupInfo
+module.exports = GroupInfo;

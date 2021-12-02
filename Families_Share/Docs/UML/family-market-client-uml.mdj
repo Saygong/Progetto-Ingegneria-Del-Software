@@ -27632,7 +27632,7 @@
 											"top": 1221,
 											"width": 464.22314453125,
 											"height": 13,
-											"text": "+editPosting(newInfo: PostingInfo): Posting",
+											"text": "+editPosting(idToEdit: int, newInfo: PostingInfo): Posting",
 											"horizontalAlignment": 0
 										},
 										{
@@ -41439,10 +41439,8 @@
 									"_parent": {
 										"$ref": "AAAAAAF9XO/zHhYxnNc="
 									},
-									"name": "newInfo",
-									"type": {
-										"$ref": "AAAAAAF9Wc3Nu/QRpII="
-									}
+									"name": "idToEdit",
+									"type": "int"
 								},
 								{
 									"_type": "UMLParameter",
@@ -41454,6 +41452,17 @@
 										"$ref": "AAAAAAF9XhQnuLy3I1Y="
 									},
 									"direction": "return"
+								},
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAF9eISeWcLBoxQ=",
+									"_parent": {
+										"$ref": "AAAAAAF9XO/zHhYxnNc="
+									},
+									"name": "newInfo",
+									"type": {
+										"$ref": "AAAAAAF9Wc3Nu/QRpII="
+									}
 								}
 							]
 						},
