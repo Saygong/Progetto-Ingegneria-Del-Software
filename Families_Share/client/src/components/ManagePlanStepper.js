@@ -22,7 +22,7 @@ import LoadingSpinner from "./LoadingSpinner";
 import Texts from "../Constants/Texts";
 import withLanguage from "./LanguageContext";
 import ManagePlanSolution from "./ManagePlanSolution";
-const Log = require("./Log);;
+const Log = require("./Log");;
 import "../styles/DayPicker.css";
 import TimeslotSubscribe from "./TimeslotSubcribe";
 

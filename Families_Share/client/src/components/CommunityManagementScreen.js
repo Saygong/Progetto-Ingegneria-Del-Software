@@ -23,7 +23,7 @@ import Papa from "papaparse";
 import BackNavigation from "./BackNavigation";
 import Texts from "../Constants/Texts";
 import withLanguage from "./LanguageContext";
-const Log = require("./Log);;
+const Log = require("./Log");;
 
 const theme = createMuiTheme({
   typography: {

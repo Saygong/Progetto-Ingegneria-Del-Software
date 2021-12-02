@@ -5,7 +5,7 @@ import * as path from "lodash.get";
 import ChildProfileHeader from "./ChildProfileHeader";
 import ChildProfileInfo from "./ChildProfileInfo";
 import LoadingSpinner from "./LoadingSpinner";
-const Log = require("./Log);;
+const Log = require("./Log");;
 
 const getChild = (userId, childId) => {
   return axios

@@ -6,7 +6,7 @@ import axios from "axios";
 import withLanguage from "./LanguageContext";
 import Texts from "../Constants/Texts";
 import InviteDialog from "./InviteDialog";
-const Log = require("./Log);;
+const Log = require("./Log");;
 
 const theme = createMuiTheme({
   palette: {

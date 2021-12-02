@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import withLanguage from "./LanguageContext";
 import Texts from "../Constants/Texts";
-const Log = require("./Log);;
+const Log = require("./Log");;
 
 const styles = {
   checkbox: {

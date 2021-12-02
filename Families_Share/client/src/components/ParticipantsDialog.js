@@ -14,7 +14,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Button from "@material-ui/core/Button";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import Texts from "../Constants/Texts";
-const Log = require("./Log);;
+const Log = require("./Log");;
 import withLanguage from "./LanguageContext";
 
 const theme = createMuiTheme({

@@ -8,7 +8,7 @@ import * as path from "lodash.get";
 import Texts from "../Constants/Texts";
 import withLanguage from "./LanguageContext";
 import Avatar from "./Avatar";
-const Log = require("./Log);;
+const Log = require("./Log");;
 
 class ChildListItem extends React.Component {
   state = { fetchedChild: false, child: {} };

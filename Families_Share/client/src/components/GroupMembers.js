@@ -8,7 +8,7 @@ import GroupMembersList from "./GroupMembersList";
 import MembersOptionsModal from "./OptionsModal";
 import GroupMembersAdminOptions from "./GroupMembersAdminOptions";
 import LoadingSpinner from "./LoadingSpinner";
-const Log = require("./Log);;
+const Log = require("./Log");;
 import GroupMembersNavbar from "./GroupMembersNavbar";
 
 const getGroupChildren = groupId => {

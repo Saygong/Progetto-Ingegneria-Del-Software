@@ -17,7 +17,7 @@ import moment from "moment";
 import LoadingSpinner from "./LoadingSpinner";
 import Texts from "../Constants/Texts";
 import withLanguage from "./LanguageContext";
-const Log = require("./Log);;
+const Log = require("./Log");;
 
 const muiTheme = createMuiTheme({
   typography: {
