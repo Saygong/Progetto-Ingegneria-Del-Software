@@ -1,6 +1,7 @@
 const Posting = require("./Posting")
 const PostingInfo = require("./PostingInfo")
 const GroupInfo = require("./GroupInfo")
+const PostingsWithGroupInfo = require("./PostingsWithGroupInfo")
 import axios from "axios";
 import Log from "../../../src/components/Log";
 
@@ -66,14 +67,30 @@ class FamilyMarketApiHandler {
 
     }
 
+    /**
+     *
+     * @param userId
+     * @return {Array<PostingsWithGroupInfo>}
+     */
     getUserPostings(userId) {
 
     }
 
+    /**
+     *
+     * @param userId
+     * @return {Array<Posting>}
+     */
     getUserFavouritePostings(userId) {
 
     }
 
+    /**
+     *
+     * @param userId {string}
+     * @param newFavouritesIds {Array<string>}
+     * @return {Array<string>}
+     */
     editUserFavourites(userId, newFavouritesIds) {
 
     }

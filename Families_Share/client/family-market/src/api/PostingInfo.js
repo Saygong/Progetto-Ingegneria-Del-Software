@@ -40,7 +40,7 @@ class PostingInfo {
      * Contact information of the posting
      * @type {Contact}
      */
-    contact = null;
+    contact = Contact.EMPTY;
 
     /**
      *

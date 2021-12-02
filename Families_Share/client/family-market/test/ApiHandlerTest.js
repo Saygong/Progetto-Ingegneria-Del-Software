@@ -3,8 +3,8 @@ const Posting = require("../src/api/Posting");
 const PostingInfo = require("../src/api/PostingInfo");
 const Contact = require("../src/api/Contact");
 const GroupInfo = require("../src/api/GroupInfo");
-const {func, element} = require("prop-types");
-const {expect} = require("chai");
+const PostingsWithGroupInfo = require("../src/api/PostingsWithGroupInfo");
+const {expect} = require("chai"); //TODO: installare chai?
 
 function getRandomString() {
     const randInt = (min, max) => {
@@ -31,34 +31,56 @@ function getRandomPostingInfo() {
     })
 }
 
-/**
- * Performs deep assert (all properties) on two PostingInfo objects
- * @param actual {PostingInfo}
- * @param expected {PostingInfo}
- * @param assertTrue {boolean} if false, the assert checks for inequality of all properties instead
- */
-function assertPostingInfo(actual, expected, assertTrue=true) {
-    expect(actual.name === expected.name).toBe(true && assertTrue);
-    expect(actual.description === expected.description).toBe(true && assertTrue);
-    expect(actual.type === expected.type).toBe(true && assertTrue);
-    expect(actual.category === expected.category).toBe(true && assertTrue);
-    expect(actual.photo === expected.photo).toBe(true && assertTrue);
-    expect(actual.contact.email === expected.contact.email).toBe(true && assertTrue);
-    expect(actual.contact.phone_number === expected.contact.phone_number).toBe(true && assertTrue);
-    expect(actual.contact.place === expected.contact.place).toBe(true && assertTrue);
+function isNullOrUndefined(x) {
+    return x === undefined || x === null;
 }
 
 /**
- * Performs deep assert (all properties) on two Posting objects
+ * Performs deep asserts on the two Posting lists.
+ * @param actualPostings {Array<Posting>}
+ * @param expectedPostings {Array<Posting>}
+ */
+function strictAssertPostingList(actualPostings, expectedPostings) {
+    expect(actualPostings.length === expectedPostings.length).toBe(true);
+
+    for (const actual of actualPostings) {
+        let expected = expectedPostings.find(p => p.id === actual.id);
+
+        expect(isNullOrUndefined(expected)).toBe(false);
+        strictAssertPosting(actual, expected);
+    }
+}
+
+/**
+ * Performs deep asserts for equality (default) or inequality of all properties
+ * of the two provided PostingInfo objects
  * @param actual {Posting}
  * @param expected {Posting}
  * @param assertTrue {boolean} if false, the assert checks for inequality of all properties instead
  */
-function assertPosting(actual, expected, assertTrue=true) {
-    expect(actual.id === expected.id).toBe(true);
-    expect(actual.group_id === expected.group_id).toBe(true);
+function strictAssertPosting(actual, expected, assertTrue=true) {
+    expect(actual.id === expected.id).toBe(assertTrue);
+    expect(actual.group_id === expected.group_id).toBe(assertTrue);
 
-    assertPostingInfo(actual, expected, assertTrue);
+    strictAssertPostingInfo(actual, expected, assertTrue);
+}
+
+/**
+ * Performs deep asserts for equality (default) or inequality of all properties
+ * of the two provided PostingInfo objects
+ * @param actual {PostingInfo}
+ * @param expected {PostingInfo}
+ * @param assertTrue {boolean} if false, the assert checks for inequality of all properties instead
+ */
+function strictAssertPostingInfo(actual, expected, assertTrue=true) {
+    expect(actual.name === expected.name).toBe(assertTrue);
+    expect(actual.description === expected.description).toBe(assertTrue);
+    expect(actual.type === expected.type).toBe(assertTrue);
+    expect(actual.category === expected.category).toBe(assertTrue);
+    expect(actual.photo === expected.photo).toBe(assertTrue);
+    expect(actual.contact.email === expected.contact.email).toBe(assertTrue);
+    expect(actual.contact.phone_number === expected.contact.phone_number).toBe(assertTrue);
+    expect(actual.contact.place === expected.contact.place).toBe(assertTrue);
 }
 
 // TODO: funzioni devono essere async perché fanno query all'api
@@ -105,23 +127,47 @@ function createRandomGroup(ownerId) {
     return groupId;
 }
 
+/**
+ *
+ * @return {{postings: *[], groupId: string, userId: string}}
+ */
+function createUserWithSomePostingsSameGroup(userId="") {
+    if (userId === "") {
+        userId = createRandomUser();
+    }
+
+
+
+    return {userId: userId, groupId: "", postings: []};
+}
+
+/**
+ *
+ * @return {{postingsByGroup: Array<PostingsWithGroupInfo>, userId: string}}
+ */
+function createUserWithSomePostingsDifferentGroups() {
+
+    return {userId: "", postingsByGroup: []};
+}
+
+/**
+ *
+ * @return {{postings: *[], groupId: string, userId: string}}
+ */
 function createGroupWithSomePostings() {
 
-    return {groupId: "", postingIds: []};
+    return createUserWithSomePostingsSameGroup();
 }
 
-function createUserWithSomePostings() {
-
-    return {userId: "", postingIds: []};
-}
-
-function createRandomUserSomePostingsOnDifferentGroups() {
-
-    return {id: "-1", groupIds: []};
-}
-
+/**
+ *
+ * @return {{favouritePostings: *[], groupIds: *[], userId: string}}
+ */
 function createUserWithSomeFavourites() {
-    return {userId: "", favouritesIds: []};
+    let {userId, postingsByGroup} = createUserWithSomePostingsDifferentGroups()
+    xxx
+
+    return {userId: userId, groupIds: groupIds, favouritePostings: postings};
 }
 
 function deleteGroup(groupId) {
@@ -136,17 +182,52 @@ function deletePosting(postingId) {
 
 }
 
+/**
+ * Creates a user, a group and a posting made by that user in that group
+ * and returns group id, user id and the posting object.
+ *
+ * Both a user and group are created to simulate as accurately as possible a real user
+ * situation, since a user must create a posting on a certain group.
+ * To be even more realistic the user should belong to that group, but in this case
+ * it's good enough.
+ * @return {{groupId, posting, userId}}
+ */
 function setupPosting() {
     let userId = createRandomUser();
     let groupId = createRandomGroup(userId);
     let posting = createRandomPosting(userId, groupId);
-    return { userId: userId, groupId: groupId, posting: posting };
+    return {userId: userId, groupId: groupId, posting: posting};
 }
 
+/**
+ * Deletes from the database the user, group and posting with the specified id.
+ * Creator and group ids are passed because a posting is created along with a group and a user.
+ * @param creatorId
+ * @param groupId
+ * @param postingId
+ */
 function tearDownPosting(creatorId, groupId, postingId) {
-    deletePosting(postingId);
-    deleteGroup(groupId);
-    deleteUser(creatorId);
+    tearDownPostings([creatorId], [groupId], [postingId]);
+}
+
+/**
+ * Deletes from the database the provided postings, groups and users.
+ * @param creatorIds
+ * @param groupIds
+ * @param postingIds
+ */
+function tearDownPostings(creatorIds, groupIds, postingIds) {
+    for (const pId of postingIds) {
+        deletePosting(pId);
+    }
+
+    for (const groupId of groupIds) {
+        deleteGroup(groupId);
+    }
+
+    for (const userId of creatorIds) {
+        deleteUser(userId);
+    }
 }
 
 
@@ -154,35 +235,29 @@ describe('Get all group postings', function () {
     it('should return a list of all the postings of a group', function () {
         // Arrange
         const setup = () => {
-            let groupPostingsObj = createGroupWithSomePostings();
-            return groupPostingsObj;
+            return createGroupWithSomePostings();
         };
 
-        const tearDown = (groupId, postingIds) => {
-            deleteGroup(groupId);
-
-            for (const pId of postingIds) {
-                deletePosting(pId);
+        const tearDown = (userId, groupId, postings) => {
+            const postingIds = [];
+            for (const p of postings) {
+                postingIds.push(p.id);
             }
+
+            tearDownPostings([userId], [groupId], postingIds);
         };
 
-        let { groupId, postingIds } = setup();
+        let { userId, groupId, postings } = setup();
         let apiHandler = new ApiHandler();
 
         // Act
         let actualPostings = apiHandler.getGroupPostings(groupId);
 
         // Assert
-        for (const actualId of actualPostings) {
-            let isValidId = postingIds.includes(actualId);
-            expect(isValidId).toBe(true);
-        }
-
-        let isLengthEqual = actualPostings.length === postingIds.length;
-        expect(isLengthEqual).toBe(true);
+        strictAssertPostingList(actualPostings, postings);
 
         // Teardown
-        tearDown(groupId);
+        tearDown(userId, groupId, postings);
     });
 
     it('should return empty array when given a wrong id for a specific group', function () {
@@ -217,11 +292,10 @@ describe('Get single posting', function () {
         let actualPosting = apiHandler.getPosting(expectedPosting.id);
 
         // Assert
-        assertPosting(actualPosting, expectedPosting);
+        strictAssertPosting(actualPosting, expectedPosting);
 
         // Teardown
         tearDown(userId, groupId, expectedPosting.id);
-
     });
 
     it('should return an empty posting when given a wrong id for a specific posting', function () {
@@ -234,7 +308,7 @@ describe('Get single posting', function () {
         let actual = apiHandler.getPosting(wrongId);
 
         //Assert
-        assertPosting(actual, expected);
+        strictAssertPosting(actual, expected);
     });
 });
 
@@ -261,7 +335,7 @@ describe('Create posting', function () {
         // Assert
         // Deep equality check
         expect(createdPosting.group_id === groupId).toBe(true);
-        assertPostingInfo(creationInfo, createdPosting);
+        strictAssertPostingInfo(creationInfo, createdPosting);
 
         // Teardown
         tearDown(userId, groupId, createdPosting.id);
@@ -279,7 +353,7 @@ describe('Create posting', function () {
         let actual = apiHandler.createPosting(wrongUserId, wrongGroupId, wrongCreationInfo);
 
         //Assert
-        expect(actual).toEqual(expected);
+        strictAssertPosting(actual, expected);
     });
 });
 
@@ -296,6 +370,7 @@ describe('Edit posting', function () {
 
         let { userId, groupId, postingToEdit } = setup();
         let apiHandler = new ApiHandler();
+
         let newInfo = new PostingInfo({
             name: postingToEdit.name + "1",
             category: postingToEdit.category + "1",
@@ -313,11 +388,13 @@ describe('Edit posting', function () {
         let editedPosting = apiHandler.editPosting(postingToEdit.id, newInfo);
 
         // Assert
-        assertPosting(postingToEdit, editedPosting, false);
+        // Id has to be the same but the rest of the info was changed
+        expect(editedPosting.id === postingToEdit.id).toBe(true);
+        expect(editedPosting.group_id === postingToEdit.group_id).toBe(true);
+        strictAssertPostingInfo(postingToEdit, editedPosting, false);
 
         // Teardown
         tearDown(userId, groupId, postingToEdit.id);
-
     });
 
     it('should return an empty posting when invalid information is provided', function () {
@@ -352,7 +429,7 @@ describe('Delete posting', function () {
         let apiHandler = new ApiHandler();
 
         // Act
-        isDeleted = apiHandler.deletePosting(postingToDelete.id);
+        let isDeleted = apiHandler.deletePosting(postingToDelete.id);
 
         // Assert
         expect(isDeleted).toBe(true);
@@ -364,7 +441,6 @@ describe('Delete posting', function () {
     it('should return false given a wrong id for a specific posting', function () {
         //Arrange
         let wrongPostingId = "-1";
-        let wrongCreationInfo = {wrong: "wrong"};
         let apiHandler = new ApiHandler();
 
         //Act
@@ -379,23 +455,52 @@ describe('Get all user postings', function () {
     it('should return a list of all the postings of a user, grouped by group info', function () {
         // Arrange
         const setup = () => {
-
+            return createUserWithSomePostingsDifferentGroups();
         };
 
-        const tearDown = () => {
+        const tearDown = (userId, postingsByGroup) => {
+                const postingIds = [];
+                const groupIds = [];
+                for (const item of postingsByGroup) {
+                    groupIds.push(item.groupInfo.id);
 
-        };
+                    for (const p of item.postings) {
+                        postingIds.push(p.id);
+                    }
+                }
 
+                tearDownPostings([userId], groupIds, postingIds);
+            };
+
+        let {userId, postingsByGroup} = setup();
+        let apiHandler = new ApiHandler();
 
         // Act
-
+        let actualPostingsByGroup = apiHandler.getUserPostings(userId)
 
         // Assert
+        for (const actual of actualPostingsByGroup) {
+            let expectedGroup = postingsByGroup.find(g => g.groupInfo.id === actual.groupInfo.id);
+            expect(isNullOrUndefined(expectedGroup)).toBe(false);
 
+            strictAssertPostingList(actual.postings, expectedGroup.postings);
+        }
+
+        // Teardown
+        tearDown(userId, postingsByGroup);
     });
 
     it('should return an empty array when given a wrong id for a specific user', function () {
+        //Arrange
+        let expected = [];
+        let wrongId = "-1";
+        let apiHandler = new ApiHandler();
 
+        //Act
+        let actual = apiHandler.getUserPostings(wrongId);
+
+        //Assert
+        expect(expected.length === actual.length).toBe(true);
     });
 });
 
@@ -403,23 +508,43 @@ describe('Get user favourite postings', function () {
     it('should return a list of all the postings marked as favourite by a specific user', function () {
         // Arrange
         const setup = () => {
-
+            return createUserWithSomeFavourites();
         };
 
-        const tearDown = () => {
+        const tearDown = (userId, groupIds, postings) => {
+            const postingIds = [];
+            for (const p of postings) {
+                postingIds.push(p.id);
+            }
 
+            tearDownPostings([userId], groupIds, postingIds);
         };
 
+        let {userId, groupIds, postings} = setup();
+        let apiHandler = new ApiHandler();
 
         // Act
-
+        let actualPostings = apiHandler.getUserFavouritePostings(userId);
 
         // Assert
+        strictAssertPostingList(actualPostings, postings);
+
+        // Teardown
+        tearDown(userId, groupIds, postings);
 
     });
 
     it('should return an empty array when given a wrong id for a specific user', function () {
+        //Arrange
+        let expected = [];
+        let wrongId = "-1";
+        let apiHandler = new ApiHandler();
 
+        //Act
+        let actual = apiHandler.getUserFavouritePostings(wrongId);
+
+        //Assert
+        expect(expected.length === actual.length).toBe(true);
     });
 });
 
@@ -427,23 +552,76 @@ describe('Edit user favourite postings', function () {
     it('should return the new edited list of favourite posting ids of the specific user', function () {
         // Arrange
         const setup = () => {
-
+            return createUserWithSomeFavourites();
         };
 
-        const tearDown = () => {
+        const tearDown = (userId, groupIds, postings) => {
+            const postingIds = [];
+            for (const p of postings) {
+                postingIds.push(p.id);
+            }
 
+            tearDownPostings([userId], groupIds, postingIds);
         };
 
+        let {userId, groupIds, favouritePostings} = setup();
+        let apiHandler = new ApiHandler();
+
+        // Take only postings on odd indexes to make a different id list
+        let newFavouritesIds = [];
+        let isOdd = true;
+        for (const fav of favouritePostings) {
+            if (isOdd) {
+                newFavouritesIds.push(fav.id);
+
+                isOdd = false;
+            }
+
+            if (!isOdd) {
+                isOdd = true;
+            }
+        }
 
         // Act
-
+        let actualFavouritesIds = apiHandler.editUserFavourites(userId, newFavouritesIds);
+        let actualFavourites = apiHandler.getUserFavouritePostings(userId)
 
         // Assert
+        // First check that the ids lists are equal
+        let isLengthEqual = actualFavouritesIds.length === newFavouritesIds.length;
+        expect(isLengthEqual).toBe(true);
+
+        for (const actualId of actualFavouritesIds) {
+            let isValid = newFavouritesIds.includes(actualId);
+            expect(isValid).toBe(true);
+        }
+
+        // Then check that the actual fetched postings correspond to the edited ids
+        isLengthEqual = actualFavouritesIds.length === actualFavourites.length;
+        expect(isLengthEqual).toBe(true);
+
+        for (const actualFav of actualFavourites) {
+            let isValid = newFavouritesIds.includes(actualFav.id);
+            expect(isValid).toBe(true);
+        }
+
+        // Teardown
+        tearDown(userId, groupIds, favouritePostings);
 
     });
 
     it('should return an empty array given a wrong id for a specific user', function () {
+        //Arrange
+        let expected = [];
+        let wrongId = "-1";
+        let newFavourites = []
+        let apiHandler = new ApiHandler();
 
+        //Act
+        let actual = apiHandler.editUserFavourites(wrongId, newFavourites);
+
+        //Assert
+        expect(expected.length === actual.length).toBe(true);
     });
 });
 
