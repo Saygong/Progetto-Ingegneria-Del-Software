@@ -1,9 +1,9 @@
 const ApiHandler = require("../src/api/ApiHandler");
-const Posting = require("../src/api/Posting");
-const PostingInfo = require("../src/api/PostingInfo");
-const Contact = require("../src/api/Contact");
-const GroupInfo = require("../src/api/GroupInfo");
-const PostingsWithGroupInfo = require("../src/api/PostingsWithGroupInfo");
+const Posting = require("../src/api/model/Posting");
+const PostingInfo = require("../src/api/model/PostingInfo");
+const Contact = require("../src/api/model/Contact");
+const GroupInfo = require("../src/api/model/GroupInfo");
+const PostingsWithGroupInfo = require("../src/api/model/PostingsWithGroupInfo");
 const axios = require("axios");
 
 const POSTINGS_BASE_URL = ApiHandler.POSTINGS_BASE_URL;

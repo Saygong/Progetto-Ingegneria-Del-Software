@@ -1,7 +1,7 @@
-const Posting = require("./Posting")
-const PostingInfo = require("./PostingInfo")
-const GroupInfo = require("./GroupInfo")
-const PostingsWithGroupInfo = require("./PostingsWithGroupInfo")
+const Posting = require("./model/Posting")
+const PostingInfo = require("./model/PostingInfo")
+const GroupInfo = require("./model/GroupInfo")
+const PostingsWithGroupInfo = require("./model/PostingsWithGroupInfo")
 const axios = require("axios");
 const Log = require( "../../../src/components/Log");
 
@@ -30,6 +30,17 @@ const Log = require( "../../../src/components/Log");
  * The policy adopted in Family Market and in this class will be the same.
  */
 class ApiHandler {
+    constructor() {
+        this.getGroupPostings = this.getGroupPostings.bind(this);
+        this.getPosting = this.getPosting.bind(this);
+        this.createPosting = this.createPosting.bind(this);
+        this.editPosting = this.editPosting.bind(this);
+        this.deletePosting = this.deletePosting.bind(this);
+        this.getUserPostings = this.getUserPostings.bind(this);
+        this.getUserFavouritePostings = this.getUserFavouritePostings.bind(this);
+        this.editUserFavourites = this.editUserFavourites.bind(this);
+    }
+
 
     static get FM_API_BASE_URL() {
         return "/api/family-market";
@@ -39,18 +50,6 @@ class ApiHandler {
     }
     static get USER_EXT_BASE_URL() {
         return `${ApiHandler.FM_API_BASE_URL}/users`;
-    }
-
-    static get #LOG_BASE() {
-        return "[ApiHandler] ";
-    }
-
-    static #logInfo(message) {
-        Log.info(ApiHandler.#LOG_BASE + message);
-    }
-
-    static #logError(message) {
-        Log.error(ApiHandler.#LOG_BASE + message);
     }
 
     /**
@@ -64,8 +63,8 @@ class ApiHandler {
         const routeUrl = `${ApiHandler.POSTINGS_BASE_URL}/groups/${groupId}`
         await axios.get(routeUrl)
             .then(response => {
-                ApiHandler.#logInfo(`Postings of group '${groupId}' have been fetched`);
-                ApiHandler.#logInfo(response);
+                Log.info(`Postings of group '${groupId}' have been fetched`, this);
+                Log.info(response, this);
 
                 for (const item of response.data) {
                     const p = new Posting(item);
@@ -73,8 +72,8 @@ class ApiHandler {
                 }
             })
             .catch(error => {
-                ApiHandler.#logError(`An error occurred on the request for the postings of group '${groupId}'`);
-                ApiHandler.#logError(error);
+                Log.error(`An error occurred on the request for the postings of group '${groupId}'`, this);
+                Log.error(error, this);
             });
 
         return postings;
@@ -91,14 +90,14 @@ class ApiHandler {
         const routeUrl = `${ApiHandler.POSTINGS_BASE_URL}/${postingId}`
         await axios.get(routeUrl)
             .then(response => {
-                ApiHandler.#logInfo(`Posting with id '${postingId}' has been fetched`);
-                ApiHandler.#logInfo(response);
+                Log.info(`Posting with id '${postingId}' has been fetched`, this);
+                Log.info(response, this);
 
                 posting = new Posting(response.data);
             })
             .catch(error => {
-                ApiHandler.#logError(`An error occurred on the request for the Posting with id '${postingId}'`);
-                ApiHandler.#logError(error);
+                Log.error(`An error occurred on the request for the Posting with id '${postingId}'`, this);
+                Log.error(error, this);
             });
 
         return posting;
@@ -124,15 +123,15 @@ class ApiHandler {
         const routeUrl = `${ApiHandler.POSTINGS_BASE_URL}/`;
         await axios.post(routeUrl, creationData)
             .then(response => {
-                ApiHandler.#logInfo(`Posting created with id ${response.data.id}`);
-                ApiHandler.#logInfo(response);
+                Log.info(`Posting created with id ${response.data.id}`, this);
+                Log.info(response, this);
 
                 posting = new Posting(response.data);
             })
             .catch(error => {
-                ApiHandler.#logError(`Error while creating posting for user: ${userId}, group: ${groupId}`);
-                ApiHandler.#logError('Creation data: ' + creationData);
-                ApiHandler.#logError(error);
+                Log.error(`Error while creating posting for user: ${userId}, group: ${groupId}`, this);
+                Log.error('Creation data: ' + creationData);
+                Log.error(error, this);
             });
 
         return posting;
@@ -152,15 +151,15 @@ class ApiHandler {
         const routeUrl = `${ApiHandler.POSTINGS_BASE_URL}/${idToEdit}`;
         await axios.patch(routeUrl, newInfo)
             .then(response => {
-                ApiHandler.#logInfo(`Posting with id ${idToEdit} has been edited`);
-                ApiHandler.#logInfo(response);
+                Log.info(`Posting with id ${idToEdit} has been edited`, this);
+                Log.info(response, this);
 
                 editedPosting = new Posting(response.data);
             })
             .catch(error => {
-                ApiHandler.#logError(`Error while editing posting with id ${idToEdit}`);
-                ApiHandler.#logError('Editing data: ' + newInfo);
-                ApiHandler.#logError(error);
+                Log.error(`Error while editing posting with id ${idToEdit}`, this);
+                Log.error('Editing data: ' + newInfo);
+                Log.error(error, this);
             });
 
         return editedPosting;
@@ -178,14 +177,14 @@ class ApiHandler {
         const routeUrl = `${ApiHandler.POSTINGS_BASE_URL}/${postingId}`;
         await axios.delete(routeUrl)
             .then(response => {
-                ApiHandler.#logInfo(`Posting with id ${response.data.id} has been deleted`);
-                ApiHandler.#logInfo(response);
+                Log.info(`Posting with id ${response.data.id} has been deleted`, this);
+                Log.info(response, this);
 
                 success = true;
             })
             .catch(error => {
-                ApiHandler.#logError(`Error while deleting posting with id ${postingId}`);
-                ApiHandler.#logError(error);
+                Log.error(`Error while deleting posting with id ${postingId}`, this);
+                Log.error(error, this);
             });
 
         return success;
@@ -202,8 +201,8 @@ class ApiHandler {
         const routeUrl = `${ApiHandler.USER_EXT_BASE_URL}/users/${userId}/postings`;
         await axios.get(routeUrl)
             .then(response => {
-                ApiHandler.#logInfo(`Postings of user '${userId}' have been fetched`);
-                ApiHandler.#logInfo(response);
+                Log.info(`Postings of user '${userId}' have been fetched`, this);
+                Log.info(response, this);
 
                 // Data is divided by group, so we first get the group info
                 // and then we get each posting of the group
@@ -221,8 +220,8 @@ class ApiHandler {
                 }
             })
             .catch(error => {
-                ApiHandler.#logError(`An error occurred on the request for the postings of user '${userId}'`);
-                ApiHandler.#logError(error);
+                Log.error(`An error occurred on the request for the postings of user '${userId}'`, this);
+                Log.error(error, this);
             });
 
         return postingsByGroup;
@@ -242,18 +241,18 @@ class ApiHandler {
         const routeUrl = `${ApiHandler.POSTINGS_BASE_URL}/users/${userId}/favourites`
         await axios.get(routeUrl)
             .then(response => {
-                ApiHandler.#logInfo(`Favourite postings of user '${userId}' have been fetched`);
-                ApiHandler.#logInfo(response);
+                Log.info(`Favourite postings of user '${userId}' have been fetched`, this);
+                Log.info(response, this);
 
                 for (const favId of response.data.favourites) {
                     favouritesIds.push(favId);
                 }
             })
             .catch(error => {
-                ApiHandler.#logError(`An error occurred on the request for the 
-                favourite postings of user '${userId}'`);
+                Log.error(`An error occurred on the request for the 
+                favourite postings of user '${userId}'`, this);
 
-                ApiHandler.#logError(error);
+                Log.error(error, this);
             });
 
         // After having fetched the ids,
@@ -286,22 +285,22 @@ class ApiHandler {
         const routeUrl = `${ApiHandler.POSTINGS_BASE_URL}/users/${userId}/favourites`
         await axios.put(routeUrl, data)
             .then(response => {
-                ApiHandler.#logInfo(`Favourite postings of user '${userId}' have been edited`);
-                ApiHandler.#logInfo(response);
+                Log.info(`Favourite postings of user '${userId}' have been edited`, this);
+                Log.info(response, this);
 
                 for (const favId of response.data.favourites) {
                     favouritesFromResponse.push(favId);
                 }
             })
             .catch(error => {
-                ApiHandler.#logError(`An error occurred on the request for the 
-                favourite postings of user '${userId}'`);
+                Log.error(`An error occurred on the request for the 
+                favourite postings of user '${userId}'`, this);
 
-                ApiHandler.#logError(error);
+                Log.error(error, this);
             });
 
         return favouritesFromResponse;
     }
 }
 
-module.exports = ApiHandler
+module.exports = ApiHandler;

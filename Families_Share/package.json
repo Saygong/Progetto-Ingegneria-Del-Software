@@ -3,6 +3,9 @@
   "type": "module",
   "version": "2.0.0",
   "private": true,
+  "jest": {
+    "verbose": true
+  },
   "scripts": {
     "start": "node ./src/index.js",
     "test": "nyc --reporter=lcov --reporter=text-summary mocha --timeout 20000 --exit",

@@ -11,8 +11,15 @@ const COLOURS = {
 class Log {
   generateMessage = (level, message, source) => {
     // Set the prefix which will cause debug to enable the message
-    const namespace = `${BASE}:${level}`;
-    const createDebug = debug(namespace);
+    let base = `${BASE}:${level}`;
+
+    // Add the name of the source's class to make more clear
+    // where the message is coming from
+    if (source !== undefined && source !== null) {
+      base += ` [${source.constructor.name}]`;
+    }
+
+    const createDebug = debug(base);
 
     // Set the colour of the message based on the level
     createDebug.color = COLOURS[level];
