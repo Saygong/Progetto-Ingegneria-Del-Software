@@ -38,37 +38,83 @@ class ApiHandler {
         return `${ApiHandler.FM_API_BASE_URL}/users`;
     }
 
+    static get #LOG_BASE() {
+        return "[ApiHandler] ";
+    }
+
+    static #logInfo(message) {
+        Log.info(ApiHandler.#LOG_BASE + message);
+    }
+
+    static #logError(message) {
+        Log.error(ApiHandler.#LOG_BASE + message);
+    }
+
     /**
      * Queries the api and returns a list of Posting objects belonging to the specified group
      * @param groupId {string} id of the group
      * @return {Array<Posting>} list of postings belonging to the group
      */
-    getGroupPostings(groupId) {
-        let routeUrl = `${ApiHandler.POSTINGS_BASE_URL}/groups/${groupId}`
-        return axios
-            .get(routeUrl)
+    async getGroupPostings(groupId) {
+        const routeUrl = `${ApiHandler.POSTINGS_BASE_URL}/groups/${groupId}`
+        const response = axios.get(routeUrl)
             .then(response => {
-                return response.data;
+                ApiHandler.#logInfo(`placeholder`);
+                ApiHandler.#logInfo(response);
+
+                return response;
             })
             .catch(error => {
-                Log.error(error);
+                ApiHandler.#logError(`placeholder`)
+                ApiHandler.#logError(error);
+
+                // TODO: fare un controllo su cosa viene ritornato perché
+                // chiaramente response != []
                 return [];
             });
+
+        xxx
     }
 
-    getPosting(postingId) {
-
-    }
-
-    createPosting(userId, groupId, info) {
-
-    }
-
-    editPosting(idToEdit, newInfo) {
+    async getPosting(postingId) {
 
     }
 
-    deletePosting(postingId) {
+    /**
+     *
+     * @param userId {string}
+     * @param groupId {string}
+     * @param info {PostingInfo}
+     * @return {Promise<Posting>}
+     */
+    async createPosting(userId, groupId, info) {
+        const creationData = {
+            user_id: userId,
+            group_id: groupId,
+            ...info
+        };
+
+        const routeUrl = `${ApiHandler.POSTINGS_BASE_URL}/`;
+        const response = await axios.post(routeUrl, creationData)
+            .then(response => {
+                ApiHandler.#logInfo(`Posting created with id ${response.data.id}`);
+                ApiHandler.#logInfo(response);
+
+                return response;
+            })
+            .catch(error => {
+                ApiHandler.#logError(`Error while creating posting`)
+                ApiHandler.#logError(error);
+            });
+
+        return new Posting(response.data);
+    }
+
+    async editPosting(idToEdit, newInfo) {
+
+    }
+
+    async deletePosting(postingId) {
 
     }
 
@@ -77,7 +123,7 @@ class ApiHandler {
      * @param userId
      * @return {Array<PostingsWithGroupInfo>}
      */
-    getUserPostings(userId) {
+    async getUserPostings(userId) {
 
     }
 
@@ -86,7 +132,7 @@ class ApiHandler {
      * @param userId
      * @return {Array<Posting>}
      */
-    getUserFavouritePostings(userId) {
+    async getUserFavouritePostings(userId) {
 
     }
 
@@ -96,7 +142,7 @@ class ApiHandler {
      * @param newFavouritesIds {Array<string>}
      * @return {Array<string>}
      */
-    editUserFavourites(userId, newFavouritesIds) {
+    async editUserFavourites(userId, newFavouritesIds) {
 
     }
 }
