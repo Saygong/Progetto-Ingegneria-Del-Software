@@ -34,7 +34,8 @@ const userSchema = new mongoose.Schema({
   },
   version: {
     type: String
-  }
+  },
+  favourites: [String]
 }, { timestamps: true })
 
 userSchema.pre('save', function (next) {
