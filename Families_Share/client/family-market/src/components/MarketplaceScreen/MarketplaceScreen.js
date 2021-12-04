@@ -1,13 +1,13 @@
-const React = require("react");
 const ApiHandler = require("../../api/ApiHandler");
-const Log = require("../../../../src/components/Log");
 const Posting = require("../../api/model/Posting");
+
+const React = require("react");
+const Log = require("../../../../src/components/Log");
 const CreatePostingButton = require("CreatePostingButton");
 const SearchBar = require("../SearchBar");
 const CategoryComboBox = require("../CategoryComboBox");
 const TransactionTypeComboBox = require("../TransactionTypeComboBox");
 const MarketplaceNavBar = require("MarketplaceNavBar");
-const VALID_CATEGORIES = require("../../constants").CATEGORIES;
 
 
 class MarketplaceScreen extends React.Component {
