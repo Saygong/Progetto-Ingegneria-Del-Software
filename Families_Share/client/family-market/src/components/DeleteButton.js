@@ -3,9 +3,9 @@ const Log = require("../../../src/components/Log");
 
 
 /**
- * Class that represents a button used to delete a posting.
+ * Class that represents a button used to delete something.
  */
-class DeletePostingButton extends React.Component {
+class DeleteButton extends React.Component {
 
     /**
      * @type {{deletionHandler: function}}
@@ -30,6 +30,9 @@ class DeletePostingButton extends React.Component {
         // TODO
     }
 
+    async onClick() {
+        // TODO chiamare deletionHandler
+    }
 }
 
-module.exports = DeletePostingButton;
+module.exports = DeleteButton;

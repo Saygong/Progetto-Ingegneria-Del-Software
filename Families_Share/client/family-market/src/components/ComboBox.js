@@ -27,4 +27,11 @@ class ComboBox extends React.Component {
     }
 }
 
+ComboBox.defaultProps = {
+    itemList: [],
+    selectedItem: "",
+    iconPath: "",
+    selectionChangeHandler: () => { }
+}
+
 module.exports = ComboBox;

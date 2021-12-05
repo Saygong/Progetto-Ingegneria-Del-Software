@@ -2,6 +2,7 @@ const React = require("react");
 const ApiHandler = require("../../api/ApiHandler");
 const Posting = require("../../api/model/Posting");
 const PostingInfo = require("../../api/model/PostingInfo");
+const Contact = require("../../api/model/Contact");
 
 const Log = require("../../../../src/components/Log");
 const EditNavBar = require("EditNavBar");
@@ -52,9 +53,7 @@ class EditPostingScreen extends React.Component {
             name: "",
             description: "",
             tnType: "",
-            place: "",
-            mail: "",
-            telephone: ""
+            contact: Contact.EMPTY
         }
 
         this.createPosting = this.createPosting.bind(this);

@@ -23,7 +23,7 @@ class PlaceInput extends React.Component {
         // TODO
     }
 
-    onSelectionChange() {
+    async onSelectionChange() {
 
     }
 }

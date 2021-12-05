@@ -1,5 +1,6 @@
-const React = require("react");
 const ApiHandler = require("../../api/ApiHandler");
+
+const React = require("react");
 const Log = require("../../../../src/components/Log");
 const EditPostingScreen = require("../EditPostingScreen/EditPostingScreen");
 
@@ -37,7 +38,7 @@ class CreatePostingButton extends React.Component {
         // TODO
     }
 
-    onClick() {
+    async onClick() {
         // TODO send to EditPostingScreen
     }
 

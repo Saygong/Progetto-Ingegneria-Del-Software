@@ -1,10 +1,11 @@
-const React = require("react");
 const ApiHandler = require("../../api/ApiHandler");
 const Posting = require("../../api/model/Posting");
+
+const React = require("react");
 const Log = require("../../../../src/components/Log");
 const ListItem = require("../ListItem");
 const EditPostingButton = require("../EditPostingButton");
-const DeletePostingButton = require("../DeletePostingButton");
+const DeletePostingButton = require("../DeleteButton");
 const ToggleFavouriteButton = require("../ToggleFavouriteButton");
 const PostingScreen = require("../PostingScreen/PostingScreen");
 

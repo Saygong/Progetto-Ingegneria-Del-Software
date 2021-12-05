@@ -3,8 +3,7 @@ const Log = require("../../../src/components/Log");
 
 
 /**
- * Class that represents a toggleable button that changes the state of something
- * (in this case the if a posting is marked as favourite or not) based on the provided handler.
+ * Class that represents a toggleable button that changes the "favourite" state of something.
  */
 class ToggleFavouriteButton extends React.Component {
 
@@ -22,12 +21,17 @@ class ToggleFavouriteButton extends React.Component {
 
         this.isFavouriteImage = "";
         this.notFavouriteImage = "";
+
+        this.onClick = this.onClick.bind(this);
     }
 
     render() {
         // TODO: change the displayed image based on the isFavourite prop
     }
 
+    async onClick() {
+        // TODO call favouriteChangeHandler
+    }
 }
 
 module.exports = ToggleFavouriteButton;

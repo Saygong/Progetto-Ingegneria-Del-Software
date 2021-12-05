@@ -9,6 +9,11 @@ const CategoryComboBox = require("../CategoryComboBox");
 const TransactionTypeComboBox = require("../TransactionTypeComboBox");
 const MarketplaceNavBar = require("MarketplaceNavBar");
 
+//TODO metodi api chiamati in componentDidMount e poi setState
+//TODO gestione asyncEventHandlers -> forse ha senso mettere la parola async in fondo come in C#?
+//  poi bisognerebbe mettere tutti i metodi tipo OnClick, OnTextChange che richiamano props.handler come async,
+//  dato che handler può essere async? -> sì
+
 
 class MarketplaceScreen extends React.Component {
 
@@ -45,20 +50,24 @@ class MarketplaceScreen extends React.Component {
         // TODO
     }
 
+    componentDidMount() {
+        // TODO load postings
+    }
+
     async getGroupPostings() {
         // TODO get postings from api -> component didmount o component update?
     }
 
     handleSearchBarChange() {
-        // TODO change state
+        // TODO change state filterText
     }
 
     handleTransactionTypeChange() {
-        // TODO change state
+        // TODO change state filterTnType
     }
 
     handleCategoryChange() {
-        // TODO change state
+        // TODO change state filterCategory
     }
 }
 

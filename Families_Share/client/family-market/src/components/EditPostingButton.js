@@ -1,7 +1,7 @@
-const React = require("react");
-const ApiHandler = require("../api/ApiHandler");
-const Log = require("../../../src/components/Log");
 const Posting = require("../api/model/Posting");
+
+const React = require("react");
+const Log = require("../../../src/components/Log");
 const EditPostingScreen = require("../EditPostingScreen/EditPostingScreen");
 
 
@@ -18,18 +18,11 @@ class EditPostingButton extends React.Component {
     props;
 
     /**
-     * @type {ApiHandler}
-     */
-    apiHandler;
-
-    /**
      *
      * @param props {{posting: Posting}}
      */
     constructor(props) {
         super(props);
-
-        this.apiHandler = new ApiHandler();
 
         this.onClick = this.onClick.bind(this);
     }
