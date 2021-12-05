@@ -24,7 +24,7 @@ class PhotoInput extends React.Component {
         // TODO
     }
 
-    onSelectionChange() {
+    async onSelectionChange() {
 
     }
 }

@@ -1,8 +1,9 @@
-const React = require("react");
 const ApiHandler = require("../../api/ApiHandler");
 const Posting = require("../../api/model/Posting");
-const PostingsListItem = require("./PostingsListItem");
+
+const React = require("react");
 const Log = require("../../../../src/components/Log");
+const PostingsListItem = require("./PostingsListItem");
 
 
 class PostingsList extends React.Component {
@@ -19,7 +20,7 @@ class PostingsList extends React.Component {
 
     /**
      * Changed only if a posting is deleted.
-     * @type {{posting: Posting}}
+     * @type {{postings: Posting[]}}
      */
     state;
 
@@ -73,7 +74,6 @@ class PostingsList extends React.Component {
     handlePostingDeletion() {
         // TODO delete the posting by querying the api and change the state
     }
-
 }
 
 module.exports = PostingsList;

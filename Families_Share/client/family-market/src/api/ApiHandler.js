@@ -16,6 +16,8 @@ const Log = require( "../../../src/components/Log");
  * https://stackoverflow.com/questions/14672746/how-to-compress-an-image-via-javascript-in-the-browser
  * Probabilmente ha senso mettere una size limit all'utente e far comprimere le immagini lato client
  * in maniera asincrona, in modo che non sono pesantissime da inviare e salvare.
+ *
+ * TODO mettere file api.config in cui si mette dimensione max immagine e rapporto compressione?
  */
 
 /**

@@ -26,7 +26,7 @@ class AccessMarketplaceButton extends React.Component {
         // TODO this button is a ListItem
     }
 
-    onClick() {
+    async onClick() {
         // TODO send to MarketplaceScreen
     }
 }

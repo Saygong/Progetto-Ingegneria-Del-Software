@@ -2,6 +2,7 @@ const VALID_CATEGORIES = require("../../constants").CATEGORIES;
 
 const React = require("react");
 const Log = require("../../../../src/components/Log");
+const ComboBox = require("ComboBox");
 
 
 class CategoryComboBox extends React.Component {
@@ -21,7 +22,7 @@ class CategoryComboBox extends React.Component {
     }
 
     render() {
-
+        // TODO pass the categoryChangeHandler down to the base ComboBox
     }
 }
 

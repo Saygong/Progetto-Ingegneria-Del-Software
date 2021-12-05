@@ -1,6 +1,11 @@
 const React = require("react");
 const Log = require("../../../src/components/Log");
 
+
+/**
+ * Class that represents a basic navigation bar, with a title and
+ * a back button that takes you to the previous page.
+ */
 class PlainNavBar extends React.Component {
 
     /**
@@ -25,7 +30,6 @@ class PlainNavBar extends React.Component {
     goBack() {
         // TODO fa history.goBack()
     }
-
 }
 
 module.exports = PlainNavBar;
