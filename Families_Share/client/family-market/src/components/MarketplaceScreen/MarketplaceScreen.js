@@ -55,19 +55,40 @@ class MarketplaceScreen extends React.Component {
     }
 
     async getGroupPostings() {
-        // TODO get postings from api -> component didmount o component update?
+        // TODO get postings from api -> component didmount
     }
 
-    handleSearchBarChange() {
-        // TODO change state filterText
+    /**
+     * Called when the text in the search bar is changed.
+     * Updates the state accordingly.
+     * @param newText {string}
+     */
+    handleSearchBarChange(newText) {
+        this.setState({
+            filterText: newText
+        });
     }
 
-    handleTransactionTypeChange() {
-        // TODO change state filterTnType
+    /**
+     * Called when the text in the search bar is changed.
+     * Updates the state accordingly.
+     * @param newTnType {string}
+     */
+    handleTransactionTypeChange(newTnType) {
+        this.setState({
+            filterTnType: newTnType
+        });
     }
 
-    handleCategoryChange() {
-        // TODO change state filterCategory
+    /**
+     * Called when the text in the search bar is changed.
+     * Updates the state accordingly.
+     * @param newCategory {string}
+     */
+    handleCategoryChange(newCategory) {
+        this.setState({
+            filterCategory: newCategory
+        });
     }
 }
 

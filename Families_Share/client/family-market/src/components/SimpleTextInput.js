@@ -15,6 +15,8 @@ class SimpleTextInput extends React.Component {
      */
     constructor(props) {
         super(props);
+
+        this.handleTextChange = this.handleTextChange.bind(this);
     }
 
     render() {
@@ -26,7 +28,7 @@ class SimpleTextInput extends React.Component {
      * @param newText {string}
      * @return {Promise<void>}
      */
-    async onTextChange(newText) {
+    async handleTextChange(newText) {
         this.props.textChangeHandler(newText);
     }
 }

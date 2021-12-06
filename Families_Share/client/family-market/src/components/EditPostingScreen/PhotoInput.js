@@ -17,7 +17,7 @@ class PhotoInput extends React.Component {
     constructor(props) {
         super(props);
 
-        this.onImageSelection = this.onImageSelection.bind(this);
+        this.handleImageSelection = this.handleImageSelection.bind(this);
     }
 
     render() {
@@ -33,7 +33,7 @@ class PhotoInput extends React.Component {
      * @param acceptedFiles {File[]}
      * @return {Promise<void>}
      */
-    async onImageSelection(acceptedFiles) {
+    async handleImageSelection(acceptedFiles) {
         // This is because only one image should be allowed
         this.props.selectionChangeHandler(acceptedFiles[0]);
     }

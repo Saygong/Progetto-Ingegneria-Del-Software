@@ -19,11 +19,13 @@ class ComboBox extends React.Component {
     constructor(props) {
         super(props);
 
-
+        this.handleSelectionChange = this.handleSelectionChange.bind(this);
     }
 
     render() {
-        // TODO
+        // TODO usare react-responsive-combobox
+        // https://react-combobox.netlify.app/docs-props
+        // editable = false perché utente non può mettere input con tastiera
     }
 
     /**
@@ -31,13 +33,8 @@ class ComboBox extends React.Component {
      * @param newSelection {string}
      * @return {Promise<void>}
      */
-    async onSelectionChange(newSelection) {
+    async handleSelectionChange(newSelection) {
         this.props.selectionChangeHandler(newSelection)
-
-
-
-        xxx devo cambiare i parametri che vengono accettati dai vari metodi onQualcosa;
-        xxx cambiare anche nomenclatura da onQualcosa a handleQualcosa?
     }
 }
 

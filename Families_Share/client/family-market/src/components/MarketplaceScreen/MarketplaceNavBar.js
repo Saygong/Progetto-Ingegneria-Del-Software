@@ -15,9 +15,8 @@ class MarketplaceNavBar extends React.Component {
     }
 
     render() {
-        // TODO PlainNavBar con MyProfileButton
+        // TODO PlainNavBar + MyProfileButton
     }
-
 }
 
 module.exports = MarketplaceNavBar;

@@ -19,11 +19,20 @@ class CategoryComboBox extends React.Component {
     constructor(props) {
         super(props);
 
+        this.handleCategoryChange = this.handleCategoryChange.bind(this);
     }
 
     render() {
         // TODO pass the categoryChangeHandler down to the base ComboBox
         // itemList della ComboBox di base è VALID_CATEGORIES
+    }
+
+    /**
+     * Called when the selected category in the combobox changes.
+     * @param newCategory {string}
+     */
+    async handleCategoryChange(newCategory) {
+        this.props.categoryChangeHandler(newCategory);
     }
 }
 

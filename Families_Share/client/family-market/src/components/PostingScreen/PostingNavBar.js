@@ -1,3 +1,5 @@
+const Posting = require("../../api/model/Posting");
+
 const React = require("react");
 const Log = require("../../../../src/components/Log");
 const PlainNavBar = require("../PlainNavBar");
@@ -11,13 +13,28 @@ const ToggleFavouriteButton = require("../ToggleFavouriteButton");
  * a button to go to the editing/creation screen.
  */
 class PostingNavBar extends React.Component {
+
+    /**
+     * @type {{isOwner: boolean, posting: Posting}}
+     */
+    props;
+
+    /**
+     *
+     * @param props {{isOwner: boolean, posting: Posting}}
+     */
     constructor(props) {
         super(props);
 
+        this.handleFavouriteChange = this.handleFavouriteChange.bind(this);
     }
 
     render() {
         // TODO PlainNavBar + EditPostingButton + ToggleFavouriteButton
+    }
+
+    handleFavouriteChange() {
+
     }
 }
 

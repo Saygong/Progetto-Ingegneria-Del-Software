@@ -19,6 +19,8 @@ class DeleteButton extends React.Component {
     constructor(props) {
         super(props);
 
+        this.handleDelete = this.handleDelete.bind(this);
+
         /* TODO magari passare un prop che propone modalità large oppure small
          * perché nella schermata di editing/creazione (vedi documento di progettazione)
          * c'è un bottone delete più grande di una semplice icona del cestino
@@ -30,8 +32,12 @@ class DeleteButton extends React.Component {
         // TODO
     }
 
-    async onClick() {
-        // TODO chiamare deletionHandler
+    /**
+     * Called when the button is pressed.
+     * @return {Promise<void>}
+     */
+    async handleDelete() {
+        this.props.deletionHandler();
     }
 }
 

@@ -1,44 +1,31 @@
-const ApiHandler = require("../../api/ApiHandler");
-
 const React = require("react");
 const Log = require("../../../../src/components/Log");
 
 
 /**
- * Class that represents a button used to create a posting.
- * When clicked, it redirects to an empty EditPostingScreen that is used
- * to create a new posting.
+ * Class that represents a button used to go to
+ * the profile section of the current user.
  */
 class MyProfileButton extends React.Component {
 
-    /**
-     * @type {{profileId: string}}
-     */
-    props;
-
-    /**
-     * @type {ApiHandler}
-     */
-    apiHandler;
-
-    /**
-     *
-     * @param props {{profileId: string}}
-     */
     constructor(props) {
         super(props);
 
-        this.apiHandler = new ApiHandler();
-
-        this.onClick = this.onClick.bind(this);
+        this.redirectToProfileScreen = this.redirectToProfileScreen.bind(this);
     }
 
     render() {
         // TODO
     }
 
-    async onClick() {
-        // TODO send to EditPostingScreen
+    /**
+     * Called when the button is clicked.
+     */
+    redirectToProfileScreen() {
+        // TODO send to ProfileScreen ->
+        //      probabilmente serve profileId e va inserito nell'url a cui redirezionare
+        //      -> dentro profileScreen viene fatto profileId = props.match.params.profileId
+        // In ogni caso, profileId si prende dallo user in localStorage
     }
 }
 

@@ -19,14 +19,14 @@ class AccessMarketplaceButton extends React.Component {
         this.title = "";
         this.description = "";
 
-        this.onClick = this.onClick.bind(this);
+        this.redirectToMarketplaceScreen = this.redirectToMarketplaceScreen.bind(this);
     }
 
     render() {
         // TODO this button is a ListItem
     }
 
-    async onClick() {
+    redirectToMarketplaceScreen() {
         // TODO send to MarketplaceScreen
     }
 }

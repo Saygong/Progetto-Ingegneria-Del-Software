@@ -16,7 +16,7 @@ class PlaceInput extends React.Component {
     constructor(props) {
         super(props);
 
-        this.onPlaceSelection = this.onPlaceSelection.bind(this);
+        this.handlePlaceSelection = this.handlePlaceSelection.bind(this);
     }
 
     render() {
@@ -34,7 +34,7 @@ class PlaceInput extends React.Component {
      * @param newPlace {string}
      * @return {Promise<void>}
      */
-    async onPlaceSelection(newPlace) {
+    async handlePlaceSelection(newPlace) {
         this.props.selectionChangeHandler(newPlace);
     }
 }

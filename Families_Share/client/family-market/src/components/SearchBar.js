@@ -16,6 +16,8 @@ class SearchBar extends React.Component {
      */
     constructor(props) {
         super(props);
+
+        this.handleTextChange = this.handleTextChange.bind(this);
     }
 
     render() {
@@ -23,8 +25,13 @@ class SearchBar extends React.Component {
         // si potrebbe semplicemente usare un quel componente affiancato all'immagine
     }
 
-    async onTextChange() {
-        // TODO richiamare props.textChangeHandler()
+    /**
+     * Called when the input text of this component is changed.
+     * @param newText {string}
+     * @return {Promise<void>}
+     */
+    async handleTextChange(newText) {
+        this.props.textChangeHandler(newText);
     }
 }
 

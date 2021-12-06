@@ -1,5 +1,3 @@
-const ApiHandler = require("../../api/ApiHandler");
-
 const React = require("react");
 const Log = require("../../../../src/components/Log");
 const EditPostingScreen = require("../EditPostingScreen/EditPostingScreen");
@@ -12,36 +10,22 @@ const EditPostingScreen = require("../EditPostingScreen/EditPostingScreen");
  */
 class CreatePostingButton extends React.Component {
 
-    /**
-     * @type {{userId: string, groupId: string}}
-     */
-    props;
-
-    /**
-     * @type {ApiHandler}
-     */
-    apiHandler;
-
-    /**
-     *
-     * @param props {{userId: string, groupId: string}}
-     */
     constructor(props) {
         super(props);
 
-        this.apiHandler = new ApiHandler();
-
-        this.onClick = this.onClick.bind(this);
+        this.redirectToPostingScreen = this.redirectToPostingScreen.bind(this);
     }
 
     render() {
         // TODO
     }
 
-    async onClick() {
-        // TODO send to EditPostingScreen
+    /**
+     * Called when the button is clicked.
+     */
+    redirectToPostingScreen() {
+        // TODO send to EditPostingScreen -> need to pass userId and groupId as props
     }
-
 }
 
 module.exports = CreatePostingButton;

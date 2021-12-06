@@ -22,14 +22,18 @@ class ToggleFavouriteButton extends React.Component {
         this.isFavouriteImage = "";
         this.notFavouriteImage = "";
 
-        this.onClick = this.onClick.bind(this);
+        this.handleToggle = this.handleToggle.bind(this);
     }
 
     render() {
         // TODO: change the displayed image based on the isFavourite prop
     }
 
-    async onToggle() {
+    /**
+     * Called when the button is pressed, which causes the state to toggle.
+     * @return {Promise<void>}
+     */
+    async handleToggle() {
         const newState = !this.props.isFavourite;
         this.props.favouriteChangeHandler(newState)
     }

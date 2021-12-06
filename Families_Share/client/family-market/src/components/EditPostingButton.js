@@ -24,15 +24,15 @@ class EditPostingButton extends React.Component {
     constructor(props) {
         super(props);
 
-        this.onClick = this.onClick.bind(this);
+        this.redirectToPostingScreen = this.redirectToPostingScreen.bind(this);
     }
 
     render() {
         //TODO
     }
 
-    onClick() {
-        // TODO send to EditPostingScreen
+    redirectToPostingScreen() {
+        // TODO send to EditPostingScreen -> need to pass userId as props
     }
 
 }

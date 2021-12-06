@@ -61,7 +61,7 @@ class PostingsListItem extends React.Component {
             isFavourite: false
         }
 
-        this.onClick = this.onClick.bind(this);
+        this.handleClick = this.handleClick.bind(this);
         this.handleFavouriteChange = this.handleFavouriteChange.bind(this);
     }
 
@@ -79,7 +79,7 @@ class PostingsListItem extends React.Component {
         }
     }
 
-    onClick() {
+    handleClick() {
         // TODO send to PostingScreen
     }
 

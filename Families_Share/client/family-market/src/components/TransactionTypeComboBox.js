@@ -19,11 +19,21 @@ class TransactionTypeComboBox extends React.Component {
     constructor(props) {
         super(props);
 
+        this.handleTnTypeChange = this.handleTnTypeChange.bind(this);
     }
 
     render() {
         // TODO pass the typeChangeHandler down to the base ComboBox
         // itemList della ComboBox di base è VALID_TN_TYPES
+    }
+
+
+    /**
+     * Called when the selected transaction type in the combobox changes.
+     * @param newTnType {string}
+     */
+    async handleTnTypeChange(newTnType) {
+        this.props.tnTypeChangeHandler(newTnType);
     }
 }
 
