@@ -1,6 +1,7 @@
 const React = require("react");
 const Log = require("../../../../src/components/Log");
 const PlainNavBar = require("../PlainNavBar");
+import withLanguage from "../../../../src/components/LanguageContext";
 
 
 /**
@@ -41,4 +42,4 @@ class EditNavBar extends React.Component {
     }
 }
 
-module.exports = EditNavBar;
+module.exports = withLanguage(EditNavBar);

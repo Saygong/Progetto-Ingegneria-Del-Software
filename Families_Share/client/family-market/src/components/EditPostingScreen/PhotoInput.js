@@ -1,6 +1,6 @@
 const React = require("react");
 const Log = require("../../../../src/components/Log");
-
+import withLanguage from "../../../../src/components/LanguageContext";
 
 class PhotoInput extends React.Component {
     /**
@@ -39,4 +39,4 @@ class PhotoInput extends React.Component {
     }
 }
 
-module.exports = PhotoInput;
+module.exports = withLanguage(PhotoInput);

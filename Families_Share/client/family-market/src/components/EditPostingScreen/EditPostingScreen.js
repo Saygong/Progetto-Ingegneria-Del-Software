@@ -13,6 +13,7 @@ const PlaceInput = require("PlaceInput");
 const PhotoInput = require("PhotoInput");
 const CategoryComboBox = require("../CategoryComboBox");
 const TransactionTypeComboBox = require("../TransactionTypeComboBox");
+import withLanguage from "../../../../src/components/LanguageContext";
 
 
 /**
@@ -212,4 +213,4 @@ EditPostingScreen.defaultProps = {
     posting: Posting.EMPTY
 }
 
-module.exports = EditPostingScreen;
+module.exports = withLanguage(EditPostingScreen);

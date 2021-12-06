@@ -11,6 +11,43 @@ import LoadingSpinner from "./components/LoadingSpinner";
 import { LanguageProvider } from "./components/LanguageContext";
 import PrivateRoute from "./components/PrivateRoute";
 
+// Paths for Family Market routes
+const {
+  MARKETPLACE_SCREEN_URL,
+  POSTING_SCREEN_URL,
+  EDIT_POSTING_SCREEN_URL,
+  MY_FAVOURITES_SCREEN_URL,
+  GROUPS_WITH_POSTINGS_SCREEN_URL,
+  GROUP_POSTINGS_SCREEN_URL
+} = require("../../client/family-market/src/constants");
+
+// Family Market components (screens)
+const MarketplaceScreen = Loadable({
+  loader: () => require("../../client/family-market/src/components/MarketplaceScreen/MarketplaceScreen"),
+  loading: () => Loading
+});
+const PostingScreen = Loadable({
+  loader: () => require("../../client/family-market/src/components/PostingScreen/PostingScreen"),
+  loading: () => Loading
+});
+const EditPostingScreen = Loadable({
+  loader: () => require("../../client/family-market/src/components/EditPostingScreen/EditPostingScreen"),
+  loading: () => Loading
+});
+const MyFavouritesScreen = Loadable({
+  loader: () => require("../../client/family-market/src/components/MyFavouritesScreen/MyFavouritesScreen"),
+  loading: () => Loading
+});
+const MyGroupsWithPostingsScreen = Loadable({
+  loader: () => require("../family-market/src/components/MyPostingsScreens/MyGroupsWithPostingsScreen"),
+  loading: () => Loading
+});
+const MyGroupPostingsScreen = Loadable({
+  loader: () => require("../family-market/src/components/MyPostingsScreens/MyGroupPostingsScreen"),
+  loading: () => Loading
+});
+
+
 const styles = () => ({
   info: { backgroundColor: "#202124" },
   message: {
@@ -386,6 +423,32 @@ class App extends React.Component {
               <PrivateRoute
                 path="/groups/:groupId"
                 component={GroupMainScreen}
+              />
+
+              {/* Family Market Routes*/}
+              <PrivateRoute
+                  exact path={MARKETPLACE_SCREEN_URL}
+                  component={MarketplaceScreen}
+                />
+              <PrivateRoute
+                  exact path={POSTING_SCREEN_URL}
+                  component={PostingScreen}
+              />
+              <PrivateRoute
+                  exact path={EDIT_POSTING_SCREEN_URL}
+                  component={EditPostingScreen}
+              />
+              <PrivateRoute
+                  exact path={MY_FAVOURITES_SCREEN_URL}
+                  component={MyFavouritesScreen}
+              />
+              <PrivateRoute
+                  exact path={GROUPS_WITH_POSTINGS_SCREEN_URL}
+                  component={MyGroupsWithPostingsScreen}
+              />
+              <PrivateRoute
+                  exact path={GROUP_POSTINGS_SCREEN_URL}
+                  component={MyGroupPostingsScreen}
               />
 
               <Route component={NoMatchScreen} />

@@ -5,6 +5,7 @@ const Log = require("../../../../src/components/Log");
 const PlainNavBar = require("../PlainNavBar");
 const EditPostingButton = require("../EditPostingButton");
 const ToggleFavouriteButton = require("../ToggleFavouriteButton");
+import withLanguage from "../../../../src/components/LanguageContext";
 
 
 /**
@@ -38,4 +39,4 @@ class PostingNavBar extends React.Component {
     }
 }
 
-module.exports = PostingNavBar;
+module.exports = withLanguage(PostingNavBar);

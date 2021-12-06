@@ -1,5 +1,6 @@
 const React = require("react");
 const Log = require("../../../../src/components/Log");
+import withLanguage from "../../../src/components/LanguageContext";
 
 
 class LargeTextInput extends React.Component {
@@ -33,4 +34,4 @@ class LargeTextInput extends React.Component {
     }
 }
 
-module.exports = LargeTextInput;
+module.exports = withLanguage(LargeTextInput);

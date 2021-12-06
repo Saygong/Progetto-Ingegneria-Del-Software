@@ -1,6 +1,7 @@
 const React = require("react");
 const Log = require("../../../../src/components/Log");
 const SimpleTextInput = require("SimpleTextInput");
+import withLanguage from "../../../src/components/LanguageContext";
 
 
 class SearchBar extends React.Component {
@@ -35,4 +36,4 @@ class SearchBar extends React.Component {
     }
 }
 
-module.exports = SearchBar;
+module.exports = withLanguage(SearchBar);

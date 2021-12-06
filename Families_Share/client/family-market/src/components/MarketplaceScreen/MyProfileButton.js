@@ -1,5 +1,6 @@
 const React = require("react");
 const Log = require("../../../../src/components/Log");
+import withLanguage from "../../../../src/components/LanguageContext";
 
 
 /**
@@ -29,4 +30,4 @@ class MyProfileButton extends React.Component {
     }
 }
 
-module.exports = MyProfileButton;
+module.exports = withLanguage(MyProfileButton);

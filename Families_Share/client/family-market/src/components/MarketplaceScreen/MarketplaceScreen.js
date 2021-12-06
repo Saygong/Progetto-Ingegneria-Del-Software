@@ -8,6 +8,7 @@ const SearchBar = require("../SearchBar");
 const CategoryComboBox = require("../CategoryComboBox");
 const TransactionTypeComboBox = require("../TransactionTypeComboBox");
 const MarketplaceNavBar = require("MarketplaceNavBar");
+import withLanguage from "../../../../src/components/LanguageContext";
 
 //TODO metodi api chiamati in componentDidMount e poi setState
 //TODO gestione asyncEventHandlers -> forse ha senso mettere la parola async in fondo come in C#?
@@ -92,4 +93,4 @@ class MarketplaceScreen extends React.Component {
     }
 }
 
-module.exports = MarketplaceScreen;
+module.exports = withLanguage(MarketplaceScreen);

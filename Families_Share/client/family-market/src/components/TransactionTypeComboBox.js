@@ -3,6 +3,7 @@ const VALID_TN_TYPES = require("../../constants").TN_TYPES;
 const React = require("react");
 const Log = require("../../../../src/components/Log");
 const ComboBox = require("ComboBox");
+import withLanguage from "../../../src/components/LanguageContext";
 
 
 class TransactionTypeComboBox extends React.Component {
@@ -37,4 +38,4 @@ class TransactionTypeComboBox extends React.Component {
     }
 }
 
-module.exports = TransactionTypeComboBox;
+module.exports = withLanguage(TransactionTypeComboBox);

@@ -7,6 +7,8 @@ const React = require("react");
 const Log = require("../../../../src/components/Log");
 const PlainNavBar = require("../PlainNavBar");
 const GroupList = require("../../../../src/components/GroupList");
+const {withRouter} = require("react-router-dom");
+import withLanguage from "../../../../src/components/LanguageContext";
 
 
 /**
@@ -62,4 +64,4 @@ class MyGroupPostingsScreen extends React.Component {
     }
 }
 
-module.exports = MyGroupPostingsScreen;
+module.exports = withLanguage(MyGroupPostingsScreen);

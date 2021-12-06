@@ -8,6 +8,8 @@ const EditPostingButton = require("../EditPostingButton");
 const DeletePostingButton = require("../DeleteButton");
 const ToggleFavouriteButton = require("../ToggleFavouriteButton");
 const PostingScreen = require("../PostingScreen/PostingScreen");
+const {withRouter} = require("react-router-dom");
+import withLanguage from "../../../../src/components/LanguageContext";
 
 
 /**
@@ -88,4 +90,4 @@ class PostingsListItem extends React.Component {
     }
 }
 
-module.exports = PostingsListItem;
+module.exports = withRouter(withLanguage(PostingsListItem));

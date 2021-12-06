@@ -3,6 +3,7 @@ const Posting = require("../api/model/Posting");
 const React = require("react");
 const Log = require("../../../src/components/Log");
 const EditPostingScreen = require("../EditPostingScreen/EditPostingScreen");
+import withLanguage from "../../../src/components/LanguageContext";
 
 
 /**
@@ -37,4 +38,4 @@ class EditPostingButton extends React.Component {
 
 }
 
-module.exports = EditPostingButton;
+module.exports = withLanguage(EditPostingButton);

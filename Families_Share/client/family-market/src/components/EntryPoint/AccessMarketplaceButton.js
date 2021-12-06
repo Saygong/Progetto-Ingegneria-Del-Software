@@ -2,6 +2,8 @@ const React = require("react");
 const Log = require("../../../../src/components/Log");
 const ListItem = require("../ListItem");
 const MarketplaceScreen = require("../MarketplaceScreen/MarketplaceScreen");
+const {withRouter} = require("react-router-dom");
+import withLanguage from "../../../../src/components/LanguageContext";
 
 
 /**
@@ -31,4 +33,4 @@ class AccessMarketplaceButton extends React.Component {
     }
 }
 
-module.exports = AccessMarketplaceButton;
+module.exports = withRouter(withLanguage(AccessMarketplaceButton));

@@ -1,5 +1,6 @@
 const React = require("react");
 const Log = require("../../../src/components/Log");
+import withLanguage from "../../../src/components/LanguageContext";
 
 
 /**
@@ -39,4 +40,4 @@ class ToggleFavouriteButton extends React.Component {
     }
 }
 
-module.exports = ToggleFavouriteButton;
+module.exports = withLanguage(ToggleFavouriteButton);

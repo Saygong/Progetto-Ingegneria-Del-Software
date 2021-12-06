@@ -4,6 +4,7 @@ const React = require("react");
 const Log = require("../../../../src/components/Log");
 const PostingInfoHeader = require("PostingInfoHeader");
 const PostingInfoTabs = require("PostingInfoTabs");
+import withLanguage from "../../../../src/components/LanguageContext";
 
 
 /**
@@ -29,4 +30,4 @@ class PostingInfo extends React.Component {
     }
 }
 
-module.exports = PostingInfo;
+module.exports = withLanguage(PostingInfo);

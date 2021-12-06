@@ -1,5 +1,6 @@
 const React = require("react");
 const Log = require("../../../src/components/Log");
+import withLanguage from "../../../src/components/LanguageContext";
 
 
 /**
@@ -41,4 +42,4 @@ class DeleteButton extends React.Component {
     }
 }
 
-module.exports = DeleteButton;
+module.exports = withLanguage(DeleteButton);

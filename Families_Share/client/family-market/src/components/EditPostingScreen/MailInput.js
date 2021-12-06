@@ -1,6 +1,7 @@
 const React = require("react");
 const Log = require("../../../../src/components/Log");
 const SimpleTextInput = require("../SimpleTextInput");
+import withLanguage from "../../../../src/components/LanguageContext";
 
 
 class MailInput extends React.Component {
@@ -34,4 +35,4 @@ class MailInput extends React.Component {
     }
 }
 
-module.exports = MailInput;
+module.exports = withLanguage(MailInput);

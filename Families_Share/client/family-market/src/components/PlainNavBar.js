@@ -1,5 +1,6 @@
 const React = require("react");
 const Log = require("../../../src/components/Log");
+import withLanguage from "../../../src/components/LanguageContext";
 
 
 /**
@@ -32,4 +33,4 @@ class PlainNavBar extends React.Component {
     }
 }
 
-module.exports = PlainNavBar;
+module.exports = withLanguage(PlainNavBar);

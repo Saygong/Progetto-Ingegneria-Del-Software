@@ -2,6 +2,7 @@ const Posting = require("../../api/model/Posting");
 
 const React = require("react");
 const Log = require("../../../../src/components/Log");
+import withLanguage from "../../../../src/components/LanguageContext";
 
 
 /**
@@ -28,4 +29,4 @@ class PostingInfoTabs extends React.Component {
     }
 }
 
-module.exports = PostingInfoTabs;
+module.exports = withLanguage(PostingInfoTabs);

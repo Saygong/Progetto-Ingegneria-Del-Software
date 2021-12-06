@@ -6,7 +6,7 @@ import axios from "axios";
 import withLanguage from "./LanguageContext";
 import Texts from "../Constants/Texts";
 import Avatar from "./Avatar";
-const Log = require("./Log");;
+const Log = require("./Log");
 
 const getGroup = groupId => {
   return axios

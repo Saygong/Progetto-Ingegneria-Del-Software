@@ -1,5 +1,6 @@
 const React = require("react");
 const Log = require("../../../../src/components/Log");
+import withLanguage from "../../../../src/components/LanguageContext";
 
 
 class PlaceInput extends React.Component {
@@ -39,4 +40,4 @@ class PlaceInput extends React.Component {
     }
 }
 
-module.exports = PlaceInput;
+module.exports = withLanguage(PlaceInput);

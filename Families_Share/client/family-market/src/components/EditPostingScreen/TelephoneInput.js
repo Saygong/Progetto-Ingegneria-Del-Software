@@ -1,6 +1,7 @@
 const React = require("react");
 const Log = require("../../../../src/components/Log");
 const SimpleTextInput = require("../SimpleTextInput");
+import withLanguage from "../../../../src/components/LanguageContext";
 
 
 class TelephoneInput extends React.Component {
@@ -34,4 +35,4 @@ class TelephoneInput extends React.Component {
     }
 }
 
-module.exports = TelephoneInput;
+module.exports = withLanguage(TelephoneInput);

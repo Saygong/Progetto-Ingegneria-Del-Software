@@ -3,6 +3,7 @@ const VALID_CATEGORIES = require("../../constants").CATEGORIES;
 const React = require("react");
 const Log = require("../../../../src/components/Log");
 const ComboBox = require("ComboBox");
+import withLanguage from "../../../src/components/LanguageContext";
 
 
 class CategoryComboBox extends React.Component {
@@ -36,4 +37,4 @@ class CategoryComboBox extends React.Component {
     }
 }
 
-module.exports = CategoryComboBox;
+module.exports = withLanguage(CategoryComboBox);

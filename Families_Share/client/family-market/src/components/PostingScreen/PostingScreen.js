@@ -4,6 +4,7 @@ const React = require("react");
 const Log = require("../../../../src/components/Log");
 const PostingNavBar = require("./PostingNavBar");
 const PostingInfo = require("./PostingInfo");
+import withLanguage from "../../../../src/components/LanguageContext";
 
 
 /**
@@ -29,4 +30,4 @@ class PostingScreen extends React.Component {
     }
 }
 
-module.exports = PostingScreen;
+module.exports = withLanguage(PostingScreen);

@@ -2,6 +2,7 @@ const React = require("react");
 const Log = require("../../../../src/components/Log");
 const PlainNavBar = require("../PlainNavBar");
 const MyProfileButton = require("MyProfileButton");
+import withLanguage from "../../../../src/components/LanguageContext";
 
 
 /**
@@ -19,4 +20,4 @@ class MarketplaceNavBar extends React.Component {
     }
 }
 
-module.exports = MarketplaceNavBar;
+module.exports = withLanguage(MarketplaceNavBar);

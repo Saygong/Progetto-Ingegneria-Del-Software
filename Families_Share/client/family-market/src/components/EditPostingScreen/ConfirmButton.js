@@ -1,5 +1,6 @@
 const React = require("react");
 const Log = require("../../../src/components/Log");
+import withLanguage from "../../../../src/components/LanguageContext";
 
 
 /**
@@ -13,23 +14,23 @@ class ConfirmButton extends React.Component {
     props;
 
     /**
-     *
+     * // TODO handler contiene anche history.goBack()? -> sì perché metterlo come sideeffect sembra brutto
      * @param props {{confirmationHandler: function}}
      */
     constructor(props) {
         super(props);
 
-        this.handleClick = this.handleClick.bind(this);
+        this.handleConfirmation = this.handleConfirmation.bind(this);
     }
 
     render() {
         // TODO:
     }
 
-    async handleClick() {
+    async handleConfirmation() {
         this.props.confirmationHandler();
     }
 
 }
 
-module.exports = ConfirmButton;
+module.exports = withLanguage(ConfirmButton);

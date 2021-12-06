@@ -6,6 +6,7 @@ const React = require("react");
 const Log = require("../../../../src/components/Log");
 const PlainNavBar = require("../PlainNavBar");
 const PostingsList = require("../PostingsList/PostingsList");
+import withLanguage from "../../../../src/components/LanguageContext";
 
 
 /**
@@ -31,4 +32,4 @@ class MyGroupPostingsScreen extends React.Component {
     }
 }
 
-module.exports = MyGroupPostingsScreen;
+module.exports = withLanguage(MyGroupPostingsScreen);

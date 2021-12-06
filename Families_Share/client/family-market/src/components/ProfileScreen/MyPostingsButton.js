@@ -1,7 +1,8 @@
 const React = require("react");
 const Log = require("../../../../src/components/Log");
 const ListItem = require("../ListItem");
-const MyPostingsScreen = require("../MyPostingsScreen/MyPostingsScreen");
+const MyPostingsScreen = require("../MyPostingsScreens/MyPostingsScreens");
+import withLanguage from "../../../../src/components/LanguageContext";
 
 
 /**
@@ -26,8 +27,8 @@ class MyPostingsButton extends React.Component {
     }
 
     onClick() {
-        // TODO send to MyPostingsScreen
+        // TODO send to MyPostingsScreens
     }
 }
 
-module.exports = MyPostingsButton;
+module.exports = withLanguage(MyPostingsButton);

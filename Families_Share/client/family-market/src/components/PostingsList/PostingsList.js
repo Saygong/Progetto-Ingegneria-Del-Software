@@ -4,6 +4,7 @@ const Posting = require("../../api/model/Posting");
 const React = require("react");
 const Log = require("../../../../src/components/Log");
 const PostingsListItem = require("./PostingsListItem");
+import withLanguage from "../../../../src/components/LanguageContext";
 
 
 class PostingsList extends React.Component {
@@ -76,4 +77,4 @@ class PostingsList extends React.Component {
     }
 }
 
-module.exports = PostingsList;
+module.exports = withLanguage(PostingsList);

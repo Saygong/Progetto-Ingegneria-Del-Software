@@ -2,6 +2,7 @@ const React = require("react");
 const Log = require("../../../../src/components/Log");
 const ListItem = require("../ListItem");
 const MyFavouritesScreen = require("../MyFavouritesScreen/MyFavouritesScreen");
+import withLanguage from "../../../../src/components/LanguageContext";
 
 
 /**
@@ -30,4 +31,4 @@ class MyFavouritesButton extends React.Component {
     }
 }
 
-module.exports = MyFavouritesButton;
+module.exports = withLanguage(MyFavouritesButton);
