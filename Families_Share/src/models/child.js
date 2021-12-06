@@ -61,6 +61,7 @@ childSchema.post('find', (profiles, next) => {
   }
   next()
 })
+
 childSchema.post('findOne', (profile, next) => {
   if (profile !== null) {
     if (profile.suspended) {
