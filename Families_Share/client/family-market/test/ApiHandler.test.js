@@ -90,7 +90,6 @@ function strictAssertPostingInfo(actual, expected, assertTrue=true) {
     expect(actual.contact.place === expected.contact.place).toBe(assertTrue);
 }
 
-// TODO: funzioni devono essere async perché fanno query all'api
 /**
  *
  * @return {Promise<string>}

@@ -8,13 +8,13 @@ const ComboBox = require("ComboBox");
 class CategoryComboBox extends React.Component {
 
     /**
-     * @type {{description: string, selectedCategory: string, categoryChangeHandler: function}}
+     * @type {{description: string, selectedCategory: string, categoryChangeHandler: function(string)}}
      */
     props;
 
     /**
      *
-     * @param props {{description: string, selectedCategory: string, categoryChangeHandler: function}}
+     * @param props {{description: string, selectedCategory: string, categoryChangeHandler: function(string)}}
      */
     constructor(props) {
         super(props);
@@ -23,6 +23,7 @@ class CategoryComboBox extends React.Component {
 
     render() {
         // TODO pass the categoryChangeHandler down to the base ComboBox
+        // itemList della ComboBox di base è VALID_CATEGORIES
     }
 }
 

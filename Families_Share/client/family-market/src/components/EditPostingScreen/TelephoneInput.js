@@ -6,13 +6,13 @@ const SimpleTextInput = require("../SimpleTextInput");
 class TelephoneInput extends React.Component {
     /**
      *
-     * @type {{text: string, textChangeHandler: function}}
+     * @type {{text: string, textChangeHandler: function(string)}}
      */
     props;
 
     /**
      *
-     * @param props {{text: string, textChangeHandler: function}}
+     * @param props {{text: string, textChangeHandler: function(string)}}
      */
     constructor(props) {
         super(props);

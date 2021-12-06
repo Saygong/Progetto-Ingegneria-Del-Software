@@ -8,13 +8,13 @@ const Log = require("../../../src/components/Log");
 class ToggleFavouriteButton extends React.Component {
 
     /**
-     * @type {{isFavourite: boolean, favouriteChangeHandler: function}}
+     * @type {{isFavourite: boolean, favouriteChangeHandler: function(boolean)}}
      */
     props;
 
     /**
      *
-     * @param props {{isFavourite: boolean, favouriteChangeHandler: function}}
+     * @param props {{isFavourite: boolean, favouriteChangeHandler: function(boolean)}}
      */
     constructor(props) {
         super(props);
@@ -29,8 +29,9 @@ class ToggleFavouriteButton extends React.Component {
         // TODO: change the displayed image based on the isFavourite prop
     }
 
-    async onClick() {
-        // TODO call favouriteChangeHandler
+    async onToggle() {
+        const newState = !this.props.isFavourite;
+        this.props.favouriteChangeHandler(newState)
     }
 }
 

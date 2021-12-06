@@ -6,26 +6,36 @@ class PhotoInput extends React.Component {
     /**
      * The photo can be a base64 string, a file or a blob, last two of which
      * are the way images are treated and passed by frontend elements (to my current understanding)
-     * @type {{photo: string | File | Blob, selectionChangeHandler: function}}
+     * @type {{photo: string | File | Blob, selectionChangeHandler: function(string | File | Blob)}}
      */
     props;
 
     /**
      *
-     * @param props {{photo: string | File | Blob, selectionChangeHandler: function}}
+     * @param props {{photo: string | File | Blob, selectionChangeHandler: function(string | File | Blob)}}
      */
     constructor(props) {
         super(props);
 
-        this.onSelectionChange = this.onSelectionChange.bind(this);
+        this.onImageSelection = this.onImageSelection.bind(this);
     }
 
     render() {
-        // TODO
+        // TODO usare react-dropzone
+        // https://react-dropzone.js.org/#src
+        // permette di settare tipo di file accettati, numero file, minSize e maxSize
     }
 
-    async onSelectionChange() {
-
+    /**
+     * Called when a new photo is selected.
+     *
+     * See https://react-dropzone.js.org/#src function onDrop for more info.
+     * @param acceptedFiles {File[]}
+     * @return {Promise<void>}
+     */
+    async onImageSelection(acceptedFiles) {
+        // This is because only one image should be allowed
+        this.props.selectionChangeHandler(acceptedFiles[0]);
     }
 }
 

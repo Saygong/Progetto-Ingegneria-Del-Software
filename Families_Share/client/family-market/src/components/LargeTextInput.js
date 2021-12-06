@@ -5,13 +5,13 @@ const Log = require("../../../../src/components/Log");
 class LargeTextInput extends React.Component {
 
     /**
-     * @type {{description: string, text: string, textChangeHandler: function}}
+     * @type {{description: string, text: string, textChangeHandler: function(string)}}
      */
     props;
 
     /**
      *
-     * @param props {{description: string, text: string, textChangeHandler: function}}
+     * @param props {{description: string, text: string, textChangeHandler: function(string)}}
      */
     constructor(props) {
         super(props);
@@ -21,8 +21,13 @@ class LargeTextInput extends React.Component {
         // TODO description è il titoletto che va sopra la textbox
     }
 
-    async onTextChange() {
-        // TODO richiamare props.textChangeHandler()
+    /**
+     * Called when the input text of this component is changed.
+     * @param newText {string}
+     * @return {Promise<void>}
+     */
+    async onTextChange(newText) {
+        this.props.textChangeHandler(newText);
     }
 }
 
