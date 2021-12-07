@@ -36,7 +36,7 @@ const userSchema = new mongoose.Schema({
     type: String
   },
   /* ---------------------------------------       FAMILY-MARKET      ----------------------------------------------- */
-  favourites: [String] //dovrebbe essere un array di stringhe, array di ID
+  favourites: [String]
   /* ---------------------------------------------------------------------------------------------------------------- */
 }, { timestamps: true })
 

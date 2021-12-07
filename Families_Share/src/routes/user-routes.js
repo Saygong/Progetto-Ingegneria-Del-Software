@@ -40,10 +40,10 @@ const transporter = nodemailer.createTransport({
 })
 
 const profileStorage = multer.diskStorage({
-  destination(req, file, cb) {
+  destination (req, file, cb) {
     cb(null, path.join(__dirname, '../../images/profiles'))
   },
-  filename(req, file, cb) {
+  filename (req, file, cb) {
     fr(path.join(__dirname, '../../images/profiles'), { prefix: req.params.id })
     cb(null, `${req.params.id}-${Date.now()}.${file.mimetype.slice(file.mimetype.indexOf('/') + 1, file.mimetype.length)}`)
   }
@@ -51,10 +51,10 @@ const profileStorage = multer.diskStorage({
 const profileUpload = multer({ storage: profileStorage, limits: { fieldSize: 52428800 } })
 
 const childProfileStorage = multer.diskStorage({
-  destination(req, file, cb) {
+  destination (req, file, cb) {
     cb(null, path.join(__dirname, '../../images/profiles'))
   },
-  filename(req, file, cb) {
+  filename (req, file, cb) {
     fr(path.join(__dirname, '../../images/profiles'), { prefix: req.params.childId })
     cb(null, `${req.params.childId}-${Date.now()}.${file.mimetype.slice(file.mimetype.indexOf('/') + 1, file.mimetype.length)}`)
   }
@@ -77,6 +77,7 @@ const Password_Reset = require('../models/password-reset')
 const Device = require('../models/device')
 const Rating = require('../models/rating')
 const Community = require('../models/community')
+const Posting = require('../models/family-market/posting')
 
 router.post('/', async (req, res, next) => {
   const {
@@ -1063,8 +1064,6 @@ router.delete('/:userId/children/:childId/parents/:parentId', (req, res, next) =
   }).catch(next)
 })
 
-module.exports = router
-
 router.post('/:userId/sendmenotification', async (req, res, next) => {
   try {
     const devices = await Device.find({ user_id: req.params.userId })
@@ -1100,3 +1099,98 @@ router.post('/:userId/sendmenotification', async (req, res, next) => {
     next(err)
   }
 })
+
+/* ----------------------------------------     FAMILY-MARKET    ---------------------------------------------------- */
+
+// Prefix: “/api/users/“
+// Route for getUserFavouritePostings to show all the saved postings of an user
+router.get('/:userId/favourites', async (req, res) => {
+  // Check if user is not authenticated
+  if (!req.params.userId) {
+    return res.status(401).send('Not authenticated')
+  }
+  const u_id = req.params.userId
+
+  try {
+    // Query that retrieves all the saved postings of the user user_id = u_id
+    const favouriteListId = await User.findOne({ user_id: `${u_id}` }, 'favourites').exec()
+
+    let fav_post = []
+
+    // Multiple queries to insert the favourites posts into a list
+    for (let post of favouriteListId) {
+      fav_post.push(await Posting.findOne({ id: `${post.id}` }).lean().exec())
+    }
+
+    if (fav_post.length === 0) {
+      return res.status(404).send('This user has no saved postings')
+    }
+    res.json(fav_post)
+
+  } catch (error) {
+    return res.status(401).send('Error')
+  }
+})
+
+// Prefisso: “/api/users“
+// Route for getUserPosting to show all the postings from a group of an user
+router.get('/:userId/groups/:groupId/postings', async (req, res) => {
+  // Check user's integrity
+  if (req.user_id !== req.params.id) { return res.status(401).send('Unauthorized') }
+  const g_id = req.params.groupId
+  const u_id = req.params.userId
+
+  // Check if user is member of the group
+  try {
+    const member = await Member.findOne({
+      group_id: `${g_id}`,
+      user_id: `${u_id}`,
+      group_accepted: true,
+      user_accepted: true
+    })
+    if (!member) {
+      return res.status(401).send('Unauthorized')
+    }
+
+    // Query that retrieves all postings with group_id = g_id of the user user_id = u_id
+    return Posting.find({
+      user_id: `${u_id}`,
+      group_id: `${g_id}`
+    })
+      .sort({ creation_date: 'desc' })
+      .lean()
+      .exec()
+      .then(postings => {
+        if (postings.length === 0) {
+          return res.status(404).send('This user has no posting in this group')
+        }
+        res.json(postings)
+      })
+  } catch (error) {
+    return res.status(401).send('Error')
+  }
+})
+
+// Prefisso: “/api/users”
+// Route for editUserFavourites edit the list of saved postings of the user -> Unlike PUT, PATCH applies a partial update to the resource.
+router.patch('/:userId', async (req, res, next) => {
+  // Check if user is authenticated
+  if (!req.user_id) {
+    return res.status(401).send('Not authenticated')
+  }
+  const u_id = req.params.userId
+
+  try {
+    // req.patch must be the updated favourites postings list
+    await User.findOneAndUpdate({ user_id: `${u_id}` }, req.patch).then(
+      res.status(200).send('Favourites successfully updated')
+    )
+
+  } catch (error) {
+    next(error)
+  }
+})
+
+/* ------------------------------------------------------------------------------------------------------------------ */
+
+module.exports = router
