@@ -70,8 +70,13 @@ app.use('/api/children', require('./routes/child-routes'))
 app.use('/api/github', require('./routes/github-routes'))
 app.use('/api/community', require('./routes/community-routes'))
 
+
+
+//TODO: tutti i prefissi IDK
+
+
 /* ---------------------------------------        FAMILY-MARKET       ----------------------------------------------- */
-app.use('/api/posting', require('./routes/posting-routes'))
+app.use('/api/family-market/postings', require('./routes/posting-routes'))
 
 if (config.util.getEnv('NODE_ENV') === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')))

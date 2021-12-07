@@ -1897,9 +1897,9 @@ router.delete(
 
 /* ----------------------------------------     FAMILY-MARKET    ---------------------------------------------------- */
 
-// Route for /group_id/posting in order to show all the postings in a group
-
-router.get('/:id/posting', async (req, res) => {
+// Prefisso: “/api/family-market/postings”
+// Route for getGroupPostings in order to show all the postings in a group
+router.get('/groups/:id', async (req, res) => {
   // Check if user is not authenticated
   if (!req.user_id) {
     return res.status(401).send('Not authenticated')
@@ -1936,6 +1936,145 @@ router.get('/:id/posting', async (req, res) => {
     return res.status(401).send('Error')
   }
 })
+
+
+// Prefisso: “/api/family-market/postings”
+// Route for getPosting retrieve a posting
+// TODO: FORSE NON SERVE perche alla fine quando facciamo richiesta per i post di un gruppo, li abbiamo gia. dice pier
+router.get('/:id', async (req, res) => {
+  // Check if user is not authenticated
+  if (!req.user_id) {
+    return res.status(401).send('Not authenticated')
+  }
+  const p_id = req.params.id
+  //const g_id = req.params.groupId //TODO: /:groupId/:postingId serve per fare il controllo se l'utente fa parte del gruppo
+  const u_id = req.user_id
+
+  // Check if user is member of the group
+  try {
+    const member = await Member.findOne({           //??serve, dove prendo il group id?
+      group_id: `${g_id}`,
+      user_id: `${u_id}`,
+      group_accepted: true,
+      user_accepted: true
+    })
+    if (!member) {
+      return res.status(401).send('Unauthorized')
+    }
+
+    // Query that retrieves the posting with id = p_id
+    return Posting.findOne({
+      id: `${p_id}`
+    })
+        .sort({ creation_date: 'desc' })
+        .lean()
+        .exec()
+        .then(postings => {
+          if (postings.length === 0) {
+            return res.status(404).send('This posting does not exist')
+          }
+          res.json(postings)
+        })
+  } catch (error) {
+    return res.status(401).send('Error')
+  }
+})
+
+
+// Prefisso: “/api/family-market/postings”          + '/'
+// Route for createPosting create a posting
+//TODO: è un POST, da vedere
+//router.post()
+
+
+// Prefisso: “/api/family-market/postings”          + '/:id'
+// Route for editPosting edit an existing posting
+//TODO: è una PATCH, da vedere
+//router.patch()
+
+
+// Prefisso: “/api/family-market/postings”          + '/:id'
+// Route for deletePosting delete an existing posting
+//TODO: è una DELETE, da vedere
+//router.delete()
+
+
+// Prefisso: “/api/family-market/users/“
+// Route for getUserPosting to show all the postings from a group of an user
+router.get('/:userId/groups/:groupId/postings', async (req, res) => {
+  // Check if user is not authenticated
+  if (!req.user_id) {
+    return res.status(401).send('Not authenticated')
+  }
+  const g_id = req.params.groupId
+  const u_id = req.user_id                       //TODO a che serve userID a sto punto
+
+  // Check if user is member of the group
+  try {
+    const member = await Member.findOne({
+      group_id: `${g_id}`,
+      user_id: `${u_id}`,
+      group_accepted: true,
+      user_accepted: true
+    })
+    if (!member) {
+      return res.status(401).send('Unauthorized')
+    }
+
+    // Query that retrieves all postings with group_id = g_id of the user user_id = u_id
+    return Posting.find({
+      user_id: `${u_id}`,
+      group_id: `${g_id}`
+    })
+        .sort({ creation_date: 'desc' })
+        .lean()
+        .exec()
+        .then(postings => {
+          if (postings.length === 0) {
+            return res.status(404).send('This user has no posting in this group')
+          }
+          res.json(postings)
+        })
+  } catch (error) {
+    return res.status(401).send('Error')
+  }
+})
+
+
+// Prefisso: “/api/family-market/users/“
+// Route for getUserFavouritePostings to show all the saved postings of an user
+router.get('/:id/favourites', async (req, res) => {
+  // Check if user is not authenticated
+  if (!req.user_id) {
+    return res.status(401).send('Not authenticated')
+  }
+  const u_id = req.user_id //TODO non so come funziona il req.user_id e non so se sia lo stesso utente specificato in :id
+
+  try {
+    // Query that retrieves all the saved postings of the user user_id = u_id
+    return Posting.find({
+      //TODO: quello che deve fare sarebbe prendere tutti i postings che hanno l'id presente dell'array di ID, favourites, in user
+    })
+        .sort({ creation_date: 'desc' })
+        .lean()
+        .exec()
+        .then(postings => {
+          if (postings.length === 0) {
+            return res.status(404).send('This user has no saved postings')
+          }
+          res.json(postings)
+        })
+  } catch (error) {
+    return res.status(401).send('Error')
+  }
+})
+
+
+// Prefisso: “/api/family-market/postings”          + '/:id/favourites'
+// Route for editUserFavourites edit the list of saved postings of the user
+//TODO: è una PUT, da vedere
+//router.put()
+
 
 /* ------------------------------------------------------------------------------------------------------------------ */
 
