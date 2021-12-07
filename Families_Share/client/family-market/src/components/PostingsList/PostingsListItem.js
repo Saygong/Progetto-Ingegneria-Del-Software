@@ -6,9 +6,8 @@ const PropTypes = require("prop-types");
 const Log = require("../../../../src/components/Log");
 const ListItem = require("../ListItem");
 const EditPostingButton = require("../EditPostingButton");
-const DeletePostingButton = require("../DeleteButton");
 const ToggleFavouriteButton = require("../ToggleFavouriteButton");
-const {POSTING_SCREEN_URL} = require("../../constants");
+const {buildRedirectionHandler} = require("../PostingScreen/PostingScreen")
 const {withRouter} = require("react-router-dom");
 import withLanguage from "../../../../src/components/LanguageContext";
 
@@ -61,7 +60,7 @@ class PostingsListItem extends React.Component {
     render() {
         // TODO
         if (this.props.mode === PostingsListItem.EDIT_MODE) {
-            // render edit and delete buttons
+            // render edit  button
         }
         else if (this.props.mode === PostingsListItem.FAVOURITES_MODE) {
             // render toggle favourite button
@@ -76,19 +75,12 @@ class PostingsListItem extends React.Component {
      * Called when this component is clicked.
      */
     redirectToPostingScreen() {
-        Log.info("Redirecting to PostingScreen " + `(${POSTING_SCREEN_URL})`, this);
+        Log.info("Redirecting to PostingScreen ", this);
 
-        const currentPosting = this.props.posting;
-        const userId = JSON.parse(localStorage.getItem("user")).id;
-        const isOwner = userId === currentPosting.user_id;
+        const postingId = this.props.posting.id;
+        const redirectionHandler = buildRedirectionHandler(this.props.history, postingId)
 
-        this.props.history.push({
-            pathname: POSTING_SCREEN_URL,
-            state: {
-                isOwner: isOwner,
-                posting: currentPosting
-            }
-        })
+        redirectionHandler();
     }
 
     async handleFavouriteChange() {
@@ -105,7 +97,7 @@ PostingsListItem.defaultProps = {
 
 PostingsListItem.propTypes = {
     posting: PropTypes.instanceOf(Posting),
-    mode: PropTypes.string,
+    mode: PropTypes.oneOf([PostingsListItem.EDIT_MODE, PostingsListItem.FAVOURITES_MODE]),
     deletionHandler: PropTypes.func.isRequired
 }
 

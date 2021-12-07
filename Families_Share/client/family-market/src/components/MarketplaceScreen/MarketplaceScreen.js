@@ -1,6 +1,8 @@
 const ApiHandler = require("../../api/ApiHandler");
 const Posting = require("../../api/model/Posting");
 
+const {FAMILY_MARKET_BASE_URL} = require("../../constants");
+
 const React = require("react");
 const Log = require("../../../../src/components/Log");
 const CreatePostingButton = require("CreatePostingButton");
@@ -51,8 +53,11 @@ class MarketplaceScreen extends React.Component {
         // TODO
     }
 
-    componentDidMount() {
-        // TODO load postings
+    async componentDidMount() {
+        // TODO load postings + setGoBackState
+        setGoBackState({});
+
+
     }
 
     async getGroupPostings() {
@@ -91,6 +96,40 @@ class MarketplaceScreen extends React.Component {
             filterCategory: newCategory
         });
     }
+
+    /**
+     * Returns a url used to redirect to this page.
+     * @return {string}
+     */
+    static buildUrl() {
+        MarketplaceScreen.ROUTE;
+    }
+
+    /**
+     * Returns the route path to load this page.
+     * Intended for use in react router.
+     * @return {string}
+     */
+    static get ROUTE() {
+        return FAMILY_MARKET_BASE_URL + "/marketplace";
+    }
+
+    /**
+     * Returns a function that handles the redirection to this page.
+     * This method should be used instead of manually handling redirection,
+     * since it makes things clearer by encapsulating navigation behaviour for this class.
+     * @param history {History}
+     * @return {function}
+     */
+    static buildRedirectionHandler(history) {
+        return () => {
+            history.push(MarketplaceScreen.buildUrl());
+        }
+    }
 }
 
-module.exports = withLanguage(MarketplaceScreen);
+module.exports = {
+    MarketplaceScreen: withLanguage(MarketplaceScreen),
+    MarketplaceScreenRoute: MarketplaceScreen.ROUTE,
+    buildRedirectionHandler: MarketplaceScreen.buildRedirectionHandler
+};

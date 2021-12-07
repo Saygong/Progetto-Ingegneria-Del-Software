@@ -3,11 +3,14 @@ const Posting = require("../../api/model/Posting");
 const PostingInfo = require("../../api/model/PostingInfo");
 const Contact = require("../../api/model/Contact");
 
+const {FAMILY_MARKET_BASE_URL} = require("../../constants");
+
 const React = require("react");
 const PropTypes = require("prop-types");
 const Log = require("../../../../src/components/Log");
 const EditNavBar = require("EditNavBar");
 const ConfirmButton = require("ConfirmButton");
+const DeleteButton = require("../DeleteButton");
 const MailInput = require("MailInput");
 const TelephoneInput = require("TelephoneInput");
 const PlaceInput = require("PlaceInput");
@@ -35,6 +38,16 @@ class EditPostingScreen extends React.Component {
     state;
 
     /**
+     * @type {{postingId: string} | {userId: string, groupId: string}}
+     */
+    matchParams;
+
+    /**
+     * @type {{onEditUrl: string, onDeleteUrl} | {onCreateUrl: string}}
+     */
+    locationState;
+
+    /**
      * @type {ApiHandler}
      */
     apiHandler;
@@ -43,6 +56,8 @@ class EditPostingScreen extends React.Component {
         super(props);
 
         this.apiHandler = new ApiHandler();
+        this.locationState = this.props.location.state;
+        this.matchParams = this.props.match.params;
         this.state = {
             photo: "",
             name: "",
@@ -54,11 +69,14 @@ class EditPostingScreen extends React.Component {
             place: ""
         }
 
+
         // Bind everything because all these methods are called from outside the class
         this.createPosting = this.createPosting.bind(this);
         this.editPosting = this.editPosting.bind(this);
+        this.isCreateMode = this.isCreateMode.bind(this);
         this.getPostingInfoFromState = this.getPostingInfoFromState.bind(this);
-        this.handleEditConfirmation = this.handleEditConfirmation.bind(this);
+        this.handleConfirmation = this.handleConfirmation.bind(this);
+        this.handleDeletion = this.handleDeletion.bind(this);
         this.handlePhotoChange = this.handlePhotoChange.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
@@ -66,23 +84,61 @@ class EditPostingScreen extends React.Component {
         this.handleCategoryChange = this.handleCategoryChange.bind(this);
         this.handleTelephoneChange = this.handleTelephoneChange.bind(this);
         this.handleMailChange = this.handleMailChange.bind(this);
+
+        // NOTE: no goBackState is set here since you shouldn't be able to go back to this page.
+        //  this should be a leaf in the navigation tree.
     }
 
     render() {
         // TODO
+        // pass something to editNavBar o to plain
     }
 
+    async componentDidMount() {
+        // TODO fetch posting and set state accordingly
+        const currentPosting = await this.fetchPosting();
+    }
+
+    /**
+     *
+     * @return {Promise<Posting|Posting.EMPTY>}
+     */
+    async fetchPosting() {
+        const postingId = this.matchParams.postingId;
+
+        return this.apiHandler.getPosting(postingId);
+    }
+
+    /**
+     * Api call to create a posting based on current state.
+     * @return {Promise<void>}
+     */
     async createPosting() {
         const creationInfo = this.getPostingInfoFromState()
+        const {userId, groupId} = this.matchParams;
 
-        await this.apiHandler.createPosting(this.props.userId, this.props.groupId, creationInfo);
+        await this.apiHandler.createPosting(userId, groupId, creationInfo);
     }
 
+    /**
+     * Api call to edit a posting based on current state.
+     * @return {Promise<void>}
+     */
     async editPosting() {
-        const idToEdit = this.props.posting.id;
+        const idToEdit = this.matchParams.postingId;
         const editedInfo = this.getPostingInfoFromState()
 
         await this.apiHandler.editPosting(idToEdit, editedInfo);
+    }
+
+    /**
+     * Api call to delete the current posting.
+     * @return {Promise<void>}
+     */
+    async deletePosting() {
+        const idToDelete = this.matchParams.postingId;
+
+        await this.apiHandler.deletePosting(idToDelete);
     }
 
     /**
@@ -108,19 +164,33 @@ class EditPostingScreen extends React.Component {
      * Called when the user presses the confirmation button.
      * @return {Promise<void>}
      */
-    async handleEditConfirmation() {
-        Log.info("Edit confirmed, redirecting to previous page...", this);
-
-        if (this.props.isCreateMode) {
+    async handleConfirmation() {
+        if (this.isCreateMode()) {
+            // Create mode
             await this.createPosting();
 
-            this.props.history.goBack();
+            const {onCreateUrl} = this.locationState;
+            Log.info("Creation successful, redirecting to " + onCreateUrl, this);
+            this.props.history.replace(onCreateUrl);
         }
         else {
+            // Edit mode
             await this.editPosting();
 
-            this.props.history.goBack();
+            const {onEditUrl} = this.locationState;
+            Log.info("Edit successful, redirecting to " + onEditUrl, this);
+            this.props.history.replace(onEditUrl);
         }
+    }
+
+    /**
+     * Called when the user presses the delete button.
+     * @return {Promise<void>}
+     */
+    async handleDeletion() {
+        const {onDeleteUrl} = this.locationState;
+        Log.info("Deletion successful, redirecting to " + onDeleteUrl, this);
+        this.props.history.replace(onDeleteUrl);
     }
 
     /**
@@ -202,18 +272,117 @@ class EditPostingScreen extends React.Component {
             place: newPlace
         });
     }
+
+    /**
+     * Returns true if this screen was loaded in create mode, false if in edit mode.
+     * @return {boolean}
+     */
+    isCreateMode() {
+        const location = this.props.location
+        return location.pathname.includes("create");
+    }
+
+    /**
+     * Returns the url used to redirect to to this page in edit mode.
+     * @param postingId {string} posting to load when this page is loaded.
+     * @return {string}
+     */
+    static buildEditModeUrl(postingId) {
+        const basePath = EditPostingScreen.EDIT_MODE_ROUTE;
+
+        return basePath.replace(":postingId", postingId);
+    }
+
+    /**
+     * Returns the route path to load this page in edit mode.
+     * @return {string}
+     */
+    static get EDIT_MODE_ROUTE() {
+        return FAMILY_MARKET_BASE_URL + "/posting/edit/:postingId";
+    }
+
+    /**
+     * Returns the url used to redirect to this page in edit mode.
+     * Intended for use in react router.
+     * @param userId {string} user that creates the posting
+     * @param groupId {string} group in which the posting is created
+     * @return {string}
+     */
+    static buildCreateModeUrl(userId, groupId) {
+        return EditPostingScreen.CREATE_MODE_ROUTE;
+    }
+
+    /**
+     * Returns the route path to load this page in create mode.
+     * Intended for use in react router.
+     * @return {string}
+     */
+    static get CREATE_MODE_ROUTE() {
+        return FAMILY_MARKET_BASE_URL + "/posting/create/users/:userId/groups/:groupId";
+    }
+
+    /**
+     * Returns a function that handles the redirection to this page in edit mode.
+     * This method should be used instead of manually handling redirection,
+     * since it makes things clearer by defining navigation behaviour for this class.
+     * @param history {History}
+     * @param postingId {string} posting to load on the page
+     * @param onEditUrl {string} url to redirect to when a posting is edited.
+     * @param onDeleteUrl {string} url to redirect to when a posting is deleted.
+     * @return {function}
+     */
+    static buildEditModeRedirectionHandler(history, postingId, onEditUrl, onDeleteUrl) {
+        return () => {
+            /**
+             * Use replace here, since push can lead to inconsistencies:
+             * in this page a posting can be edited or deleted, so it is better to not leave
+             * any entry on the history stack whose state can differ from the updated one
+             * (e.g. a posting gets deleted, you go back and the page still has that posting
+             *  because it hasn't been reloaded)
+             */
+            history.replace({
+                pathname: EditPostingScreen.buildEditModeUrl(postingId),
+                state: {
+                    onEditUrl: onEditUrl,
+                    onDeleteUrl: onDeleteUrl
+                }
+            });
+        }
+    }
+
+    /**
+     * Returns a function that handles the redirection to this page in create mode.
+     * This method should be used instead of manually handling redirection,
+     * since it makes things clearer by defining navigation behaviour for this class.
+     * @param history {History}
+     * @param userId {string} user that creates the posting
+     * @param groupId {string} group in which the posting is created
+     * @param onCreateUrl {string} url to redirect to when a posting is edited.
+     * @return {function}
+     */
+    static buildCreateModeRedirectionHandler(history, userId, groupId, onCreateUrl) {
+        return () => {
+            /**
+             * Use replace here, since push can lead to inconsistencies:
+             * in this page a posting can be created, so it is better to not leave
+             * any entry on the history stack whose state can differ from the updated one
+             * (e.g. a posting gets deleted, you go back and the page still doesn't have
+             *  that posting because it hasn't been reloaded)
+             */
+            history.replace({
+                pathname: EditPostingScreen.buildCreateModeUrl(userId, groupId),
+                state: {
+                    onCreateUrl: onCreateUrl
+                }
+            });
+        }
+    }
 }
 
-EditPostingScreen.defaultProps = {
-    isCreateMode: false,
-    userId: "",
-    posting: Posting.EMPTY
-}
-
-EditPostingScreen.propTypes = {
-    isCreateMode: PropTypes.bool,
-    userId: PropTypes.string,
-    posting: PropTypes.instanceOf(Posting)
-}
-
-module.exports = withLanguage(EditPostingScreen);
+module.exports = {
+    EditPostingScreen: withLanguage(EditPostingScreen),
+    EditModeRoute: EditPostingScreen.EDIT_MODE_ROUTE,
+    CreateModeRoute: EditPostingScreen.CREATE_MODE_ROUTE,
+    buildCreateModeRedirectionHandler: EditPostingScreen.buildCreateModeRedirectionHandler,
+    buildEditModeRedirectionHandler: EditPostingScreen.buildEditModeRedirectionHandler
+};

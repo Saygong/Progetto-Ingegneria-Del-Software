@@ -14,7 +14,7 @@ class ConfirmButton extends React.Component {
     props;
 
     /**
-     * // TODO handler contiene anche history.goBack()? -> sì perché metterlo come sideeffect sembra brutto
+     *
      * @param props {{confirmationHandler: function}}
      */
     constructor(props) {

@@ -9,7 +9,7 @@ import ManagePlanStepper from "./ManagePlanStepper";
 import LoadingSpinner from "./LoadingSpinner";
 import PlanOptionsModal from "./OptionsModal";
 
-const Log = require("./Log");;
+const Log = require("./Log");
 
 const fetchPlan = (groupId, planId) => {
   return axios

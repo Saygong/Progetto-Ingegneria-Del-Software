@@ -5,7 +5,7 @@ const Contact = require("./Contact");
  * Class representing a posting present in the database.
  * It is used to map certain json request/response data to/from the api.
  */
-class Posting extends PostingInfo{
+class Posting extends PostingInfo {
     /*
      * Note: nomenclature has to be the same as that defined in the Api docs,
      * which means that snake_case is used instead of lowerCamelCase.
@@ -48,6 +48,27 @@ class Posting extends PostingInfo{
      */
     static get EMPTY() {
         return new Posting();
+    }
+
+    /**
+     * Needed because JSON.stringify does not count inherited fields, which means that
+     * passing a Posting instance to an axios request will not include all the properties.
+     *
+     * @return {{user_id: string, group_id: string, contact: Contact, name: string,
+     * description: string, photo: string, id: string, category: string, type: string}}
+     */
+    toJSON() {
+        return {
+            id: this.id,
+            user_id: this.user_id,
+            group_id: this.group_id,
+            name: this.name,
+            category: this.category,
+            description: this.description,
+            photo: this.photo,
+            type: this.type,
+            contact: this.contact
+        };
     }
 }
 

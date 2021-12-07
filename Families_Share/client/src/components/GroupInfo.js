@@ -11,7 +11,7 @@ import withLanguage from "./LanguageContext";
 import Texts from "../Constants/Texts";
 import ConfirmDialog from "./ConfirmDialog";
 import LoadingSpinner from "./LoadingSpinner";
-const Log = require("./Log");;
+const Log = require("./Log");
 
 class GroupInfo extends React.Component {
   constructor(props) {

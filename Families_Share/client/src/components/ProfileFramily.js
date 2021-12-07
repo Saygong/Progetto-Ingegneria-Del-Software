@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import FramilyListItem from "./FramilyListItem";
 import InviteDialog from "./InviteDialog";
-const Log = require("./Log");;
+const Log = require("./Log");
 
 class ProfileFramily extends React.Component {
   constructor(props) {

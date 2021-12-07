@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import Card from "./CardWithLink";
 import LoadingSpinner from "./LoadingSpinner";
-const Log = require("./Log");;
+const Log = require("./Log");
 
 class GroupNotifications extends React.Component {
   state = { fetchedGroupNotifications: false };

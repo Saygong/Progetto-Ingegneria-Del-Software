@@ -1,7 +1,8 @@
 const React = require("react");
 const Log = require("../../../../src/components/Log");
 const ListItem = require("../ListItem");
-const MyFavouritesScreen = require("../MyFavouritesScreen/MyFavouritesScreen");
+const {buildRedirectionHandler} = require("../MyFavouritesScreen/MyFavouritesScreen");
+const {withRouter} = require("react-router-dom");
 import withLanguage from "../../../../src/components/LanguageContext";
 
 
@@ -19,16 +20,23 @@ class MyFavouritesButton extends React.Component {
         this.title = "";
         this.description = "";
 
-        this.onClick = this.onClick.bind(this);
+        this.redirectToMyFavouritesScreen = this.redirectToMyFavouritesScreen.bind(this);
     }
 
     render() {
         // TODO this button is a ListItem
     }
 
-    onClick() {
-        // TODO send to MyFavouritesScreen
+    /**
+     * Called when this button is clicked.
+     */
+    redirectToMyFavouritesScreen() {
+        const redirectionHandler = buildRedirectionHandler(this.props.history);
+
+        Log.info("Redirecting to MyFavouritesScreen ", this);
+
+        redirectionHandler();
     }
 }
 
-module.exports = withLanguage(MyFavouritesButton);
+module.exports = withRouter(withLanguage(MyFavouritesButton));

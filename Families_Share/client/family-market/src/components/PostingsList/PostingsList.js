@@ -71,10 +71,6 @@ class PostingsList extends React.Component {
 
         return filteredPostings;
     }
-
-    handlePostingDeletion() {
-        // TODO delete the posting by querying the api and change the state
-    }
 }
 
 module.exports = withLanguage(PostingsList);

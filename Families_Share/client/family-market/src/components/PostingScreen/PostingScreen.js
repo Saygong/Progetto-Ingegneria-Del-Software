@@ -1,4 +1,7 @@
+const ApiHandler = require("../../api/ApiHandler");
 const Posting = require("../../api/model/Posting");
+
+const {FAMILY_MARKET_BASE_URL} = require("../../constants");
 
 const React = require("react");
 const PropTypes = require("prop-types");
@@ -12,23 +15,89 @@ import withLanguage from "../../../../src/components/LanguageContext";
  * Class that represents the screen where a certain posting is displayed.
  */
 class PostingScreen extends React.Component {
+
+    /**
+     * @type {{postingId: string}}
+     */
+    matchParams;
+
+    /**
+     * @type {{posting: Posting}}
+     */
+    state;
+
+    /**
+     * @type {ApiHandler}
+     */
+    apiHandler;
+
     constructor(props) {
         super(props);
+
+        this.matchParams = this.props.match.params;
+        this.state = {
+            posting: Posting.EMPTY
+        }
     }
 
     render() {
         // TODO PostingNavBar + PostingInfo
     }
+
+    async componentDidMount() {
+    }
+
+    async fetchPosting() {
+        const postingId = this.matchParams.postingId;
+
+        return this.apiHandler.getPosting(postingId);
+    }
+
+    /**
+     * Returns a url used to redirect to this page.
+     * @param postingId {string} posting to load
+     * @return {string}
+     */
+    static buildUrl(postingId) {
+        const route = PostingScreen.ROUTE;
+
+        return route.replace(":postingId", postingId);
+    }
+
+    /**
+     * Returns the route path to load this page.
+     * Intended for use in react router.
+     * @return {string}
+     */
+    static get ROUTE() {
+        return FAMILY_MARKET_BASE_URL + "/posting/:postingId";
+    }
+
+    /**
+     * Returns a function that handles the redirection to this page.
+     * This method should be used instead of manually handling redirection,
+     * since it makes things clearer by defining navigation behaviour for this class.
+     * @param history {History}
+     * @param postingId {string} posting to load
+     * @return {function}
+     */
+    static buildRedirectionHandler(history, postingId) {
+        return () => {
+            history.push(PostingScreen.buildUrl(postingId))
+        }
+    }
 }
 
 PostingScreen.defaultProps = {
-    isOwner: false,
-    posting: Posting.EMPTY
+    postingId: ""
 }
 
 PostingScreen.propTypes = {
-    isOwner: PropTypes.bool,
-    posting: PropTypes.instanceOf(Posting)
+    postingId: string
 }
 
-module.exports = withLanguage(PostingScreen);
+module.exports = {
+    PostingScreen: withLanguage(PostingScreen),
+    PostingScreenRoute: PostingScreen.ROUTE,
+    buildRedirectionHandler: PostingScreen.buildRedirectionHandler
+};

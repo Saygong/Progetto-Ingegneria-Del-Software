@@ -1,9 +1,13 @@
+import {EDIT_POSTING_SCREEN_URL} from "../../constants";
+
 const Posting = require("../api/model/Posting");
 
 const React = require("react");
 import PropTypes from "prop-types";
 const Log = require("../../../src/components/Log");
-const {EDIT_POSTING_SCREEN_URL} = require( "../constants");
+
+const {buildEditModeRedirectionHandler} = require("EditPostingScreen/EditPostingScreen");
+
 import {withRouter} from "react-router-dom";
 import withLanguage from "../../../src/components/LanguageContext";
 
@@ -25,27 +29,20 @@ class EditPostingButton extends React.Component {
     }
 
     redirectToEditPostingScreen() {
-        Log.info("Redirecting to EditPostingScreen " + `(${EDIT_POSTING_SCREEN_URL})`, this);
+        const {postingId, onEditUrl, onDeleteUrl} = this.props;
+        const redirectionHandler =
+            buildEditModeRedirectionHandler(this.props.history, postingId, onEditUrl, onDeleteUrl);
 
-        const userId = JSON.parse(localStorage.getItem("user")).id;
-        this.props.history.push({
-            pathname: EDIT_POSTING_SCREEN_URL,
-            state: {
-                isCreateMode: false,
-                userId: userId,
-                posting: this.props.posting
-            }
-        });
+        Log.info("Redirecting to EditPostingScreen ", this);
+
+        redirectionHandler();
     }
 }
 
-// TODO
-EditPostingButton.defaultProps = {
-    posting: Posting.EMPTY
-}
-
 EditPostingButton.propTypes = {
-    posting: PropTypes.instanceOf(Posting)
+    postingId: PropTypes.string.isRequired,
+    onEditUrl: PropTypes.string.isRequired,
+    onDeleteUrl: PropTypes.string.isRequired,
 }
 
 module.exports = withRouter(withLanguage(EditPostingButton));

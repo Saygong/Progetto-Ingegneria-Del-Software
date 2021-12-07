@@ -1,8 +1,9 @@
 const Posting = require("../../api/model/Posting");
 
 const React = require("react");
+const PropTypes = require("prop-types");
 const Log = require("../../../../src/components/Log");
-const {EDIT_POSTING_SCREEN_URL} = require( "../../constants");
+const {buildCreateModeRedirectionHandler} = require( "../EditPostingScreen/EditPostingScreen");
 import {withRouter} from "react-router-dom";
 import withLanguage from "../../../../src/components/LanguageContext";
 
@@ -28,21 +29,15 @@ class CreatePostingButton extends React.Component {
      * Called when the button is clicked.
      */
     redirectToEditPostingScreen() {
-        Log.info("Redirecting to EditPostingScreen " + `(${EDIT_POSTING_SCREEN_URL})`, this);
-
         const userId = JSON.parse(localStorage.getItem("user")).id;
-
-        // The screen is loaded in creation mode, which means createMode = true and
-        // an empty posting is passed.
-        this.props.history.push({
-            pathname: EDIT_POSTING_SCREEN_URL,
-            state: {
-                isCreateMode: true,
-                userId: userId,
-                posting: Posting.EMPTY
-            }
-        });
+        const groupId = JSON.parse(localStorage.getItem("group")).id;
+        const onCreateUrl = this.props.onCreateUrl;
+        buildCreateModeRedirectionHandler(this.props.history, userId, groupId, onCreateUrl);
     }
+}
+
+CreatePostingButton.propTypes = {
+    onCreateUrl: PropTypes.string.isRequired
 }
 
 module.exports = withRouter(withLanguage(CreatePostingButton));

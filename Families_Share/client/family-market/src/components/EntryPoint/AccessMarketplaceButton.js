@@ -1,8 +1,7 @@
 const React = require("react");
 const Log = require("../../../../src/components/Log");
 const ListItem = require("../ListItem");
-const MarketplaceScreen = require("../MarketplaceScreen/MarketplaceScreen");
-const {MARKETPLACE_SCREEN_URL} = require("../../constants");
+const {buildRedirectionHandler} = require("../MarketplaceScreen/MarketplaceScreen");
 const {withRouter} = require("react-router-dom");
 import withLanguage from "../../../../src/components/LanguageContext";
 
@@ -11,7 +10,7 @@ import withLanguage from "../../../../src/components/LanguageContext";
  * Class that represents the button to access the Marketplace section of Family Market.
  * It is the entry point to the extension.
  *
- * TODO This button must be added to the ActivityList component
+ * TODO This button must be added to the GroupActivities component (see TODO)
  */
 class AccessMarketplaceButton extends React.Component {
     constructor(props) {
@@ -30,9 +29,11 @@ class AccessMarketplaceButton extends React.Component {
     }
 
     redirectToMarketplaceScreen() {
-        Log.info("Redirecting to MarketplaceScreen " + `(${MARKETPLACE_SCREEN_URL})`, this);
+        const redirectionHandler = buildRedirectionHandler(this.props.history);
 
-        this.props.history.push(MARKETPLACE_SCREEN_URL);
+        Log.info("Redirecting to MarketplaceScreen ", this);
+
+        redirectionHandler();
     }
 }
 

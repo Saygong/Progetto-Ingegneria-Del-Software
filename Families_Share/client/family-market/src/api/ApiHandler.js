@@ -194,11 +194,22 @@ class ApiHandler {
 
     /**
      * Queries the api and returns information about all the groups the user belongs to.
+     * In case an error occurred, returns an empty array instead.
      * @param userId {string} user to retrieve the postings of
      * @return {Promise<GroupInfo[]> | Promise<[]>}
      */
     async getUserGroupsInfo(userId) {
         // TODO e scrivi anche i test
+    }
+
+    /**
+     * Queries the api and returns information about the specified group.
+     * @param groupId {string} group to retrieve the information of
+     * @return {Promise<GroupInfo> | Promise<GroupInfo.EMPTY>}
+     */
+    async getGroupInfo(groupId) {
+        // TODO e scrivi anche test -> io userei metodo getUserGroupsInfo e prenderei elemento che matcha.
+        //a meno che non esiste chiamata api specifica
     }
 
     /**

@@ -9,7 +9,6 @@ import withLanguage from "../../../../src/components/LanguageContext";
  * the profile section of the current user.
  */
 class MyProfileButton extends React.Component {
-
     constructor(props) {
         super(props);
 
@@ -24,7 +23,6 @@ class MyProfileButton extends React.Component {
      * Called when the button is clicked.
      */
     redirectToProfileScreen() {
-
         // Line 322 App.js: path="/profiles/:profileId"
         const profileId = JSON.parse(localStorage.getItem("user"));
         const profileScreenUrl = `/profiles/${profileId}`;

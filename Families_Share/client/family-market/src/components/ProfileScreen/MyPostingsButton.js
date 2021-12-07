@@ -1,13 +1,13 @@
 const React = require("react");
 const Log = require("../../../../src/components/Log");
 const ListItem = require("../ListItem");
-const {MY_GROUPS_WITH_POSTINGS_SCREEN_URL} = require("../../constants");
+const {buildRedirectionHandler} = require("../MyPostingsScreens/MyGroupsWithPostingsScreen");
 const {withRouter} = require("react-router-dom");
 import withLanguage from "../../../../src/components/LanguageContext";
 
 
 /**
- * Class that represents the button to access the "my postings" screen.
+ * Class that represents the button to access the "my postings" section.
  *
  * TODO This button must be added to the ProfileScreen component
  */
@@ -28,10 +28,12 @@ class MyPostingsButton extends React.Component {
     }
 
     redirectToMyPostingsScreens() {
-        Log.info("Redirecting to MyGroupsWithPostingsScreen "
-            + `(${MY_GROUPS_WITH_POSTINGS_SCREEN_URL})`, this);
+        const userId = JSON.parse(localStorage.getItem("user")).id;
+        const redirectionHandler = buildRedirectionHandler(this.props.history, userId);
 
-        this.props.history.push(MY_GROUPS_WITH_POSTINGS_SCREEN_URL);
+        Log.info("Redirecting to MyGroupsWithPostingsScreen ", this);
+
+        redirectionHandler();
     }
 }
 

@@ -9,7 +9,7 @@ import ActivityOptionsModal from "./OptionsModal";
 import ActivityListItem from "./ActivityListItem";
 import PlanListItem from "./PlanListItem";
 import ConfirmDialog from "./ConfirmDialog";
-const Log = require("./Log");;
+const Log = require("./Log");
 
 const styles = {
   add: {
@@ -332,6 +332,7 @@ class GroupActivities extends React.Component {
             </div>
           )}
         </div>
+        {/*TODO: qui mettere AccessMarketplaceButton*/}
       </div>
     );
   }

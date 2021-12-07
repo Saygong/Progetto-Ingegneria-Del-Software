@@ -8,7 +8,7 @@ import withLanguage from "./LanguageContext";
 import Texts from "../Constants/Texts";
 import ConfirmDialog from "./ConfirmDialog";
 import ExpandedImageModal from "./ExpandedImageModal";
-const Log = require("./Log");;
+const Log = require("./Log");
 
 class ChildProfileHeader extends React.Component {
   state = {

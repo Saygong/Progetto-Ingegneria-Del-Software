@@ -18,7 +18,7 @@ import {
 import Texts from "../Constants/Texts";
 import LoadingSpinner from "./LoadingSpinner";
 import withLanguage from "./LanguageContext";
-const Log = require("./Log");;
+const Log = require("./Log");
 
 class EditPlanScreen extends React.Component {
   state = {

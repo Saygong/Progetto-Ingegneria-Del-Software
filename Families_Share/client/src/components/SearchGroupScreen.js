@@ -5,7 +5,7 @@ import withLanguage from "./LanguageContext";
 import Texts from "../Constants/Texts";
 import GroupList from "./GroupList";
 import AutoComplete from "./AutoComplete";
-const Log = require("./Log");;
+const Log = require("./Log");
 
 class SearchGroupScreen extends React.Component {
   constructor(props) {
