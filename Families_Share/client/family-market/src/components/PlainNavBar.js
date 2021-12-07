@@ -1,6 +1,8 @@
 const React = require("react");
 const Log = require("../../../src/components/Log");
+const {withRouter} = require("react-router-dom");
 import withLanguage from "../../../src/components/LanguageContext";
+import PropTypes from "prop-types";
 
 
 /**
@@ -8,16 +10,6 @@ import withLanguage from "../../../src/components/LanguageContext";
  * a back button that takes you to the previous page.
  */
 class PlainNavBar extends React.Component {
-
-    /**
-     * @type {{title: string}}
-     */
-    props;
-
-    /**
-     *
-     * @param props {{title: string}}
-     */
     constructor(props) {
         super(props);
 
@@ -28,9 +20,22 @@ class PlainNavBar extends React.Component {
         // TODO
     }
 
+    /**
+     * Called when the go-back button is clicked.
+     */
     goBack() {
-        // TODO fa history.goBack()
+        Log.info("Redirecting to the previous page...", this);
+
+        this.props.history.goBack();
     }
 }
 
-module.exports = withLanguage(PlainNavBar);
+PlainNavBar.defaultProps = {
+    title: ""
+}
+
+PlainNavBar.propTypes = {
+    title: PropTypes.string,
+}
+
+module.exports = withRouter(withLanguage(PlainNavBar));

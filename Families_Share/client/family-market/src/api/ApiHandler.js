@@ -193,12 +193,24 @@ class ApiHandler {
     }
 
     /**
-     * Queries the api and returns all the postings created by the specified user, divided by group.
+     * Queries the api and returns information about all the groups the user belongs to.
+     * @param userId {string} user to retrieve the postings of
+     * @return {Promise<GroupInfo[]> | Promise<[]>}
+     */
+    async getUserGroupsInfo(userId) {
+        // TODO e scrivi anche i test
+    }
+
+    /**
+     * Queries the api and returns all the postings created by the specified user.
      * In case an error occurred, an empty array is returned instead.
      * @param userId {string} user to retrieve the postings of
-     * @return {Promise<PostingsWithGroupInfo[]> | Promise<[]>}
+     * @param groupId {string} group to retrieve the user's postings of
+     * @return {Promise<Posting[]> | Promise<[]>}
      */
-    async getUserPostings(userId) {
+    async getUserPostings(userId, groupId) {
+        // TODO qui va cambiato perché ora questo metodo ritorna solo i post dell'utente per quello specifico gruppo
+        //      "/users/:id/groups/:groupId/postings"
         const postingsByGroup = [];
         const routeUrl = `${ApiHandler.USER_EXT_BASE_URL}/users/${userId}/postings`;
         await axios.get(routeUrl)

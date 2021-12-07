@@ -1,26 +1,26 @@
 const ApiHandler = require("../../api/ApiHandler");
 const Posting = require("../../api/model/Posting");
 const GroupInfo = require("../../api/model/GroupInfo");
-const PostingsWithGroupInfo = require("../../api/model/PostingsWithGroupInfo");
 
 const React = require("react");
 const Log = require("../../../../src/components/Log");
 const PlainNavBar = require("../PlainNavBar");
 const GroupList = require("../../../../src/components/GroupList");
-const {withRouter} = require("react-router-dom");
+const {MY_GROUP_POSTINGS_SCREEN_URL} = require("../../constants");
 import withLanguage from "../../../../src/components/LanguageContext";
 
 
 /**
  * Class that represents the screen where all of a group's postings are displayed.
  */
-class MyGroupPostingsScreen extends React.Component {
+class MyGroupsWithPostingsScreen extends React.Component {
 
     /**
      * @type {ApiHandler}
      */
     apiHandler;
 
+    // TODO questo diventa una lista di groupinfo
     /**
      * @type {{postingsByGroup: PostingsWithGroupInfo[] | []}}
      */
@@ -45,23 +45,36 @@ class MyGroupPostingsScreen extends React.Component {
         // TODO chiama getUserPostings e setta lo stato con i postings aggiornati
     }
 
+    async getUserGroups() {
+
+    }
+
     /**
      * Returns the postings of the current user, divided by group.
      * @return {Promise<PostingsWithGroupInfo[] | []>}
      */
-    async getUserPostings() {
+    async getUserPostings(groupId) {
         const userId = JSON.parse(localStorage.getItem("user")).id;
 
-        return this.apiHandler.getUserPostings(userId);
+        return this.apiHandler.getUserPostings(userId, groupId);
     }
 
-    handleNavigation(groupId) {
-        //TODO redirects to MyGroupPostingsScreen and passes the groups postings as prop
+    /**
+     * Called by each group list item when clicked.
+     * @param groupInfo {GroupInfo}
+     * @return {Promise<void>}
+     */
+    async handleNavigation(groupInfo) {
+        // TODO implementare navigationHandler su GroupListItem
+        Log.info("Redirecting to MyGroupPostingsScreen..." + `(${MY_GROUP_POSTINGS_SCREEN_URL})`, this);
 
-
-        //xxxx forse meglio fare due nuove classi che estendono grouplist e grouplist item??
-        // no perché si ripropone problema della navigazione quando clicchi??
+        this.props.history.push({
+            pathname: MY_GROUP_POSTINGS_SCREEN_URL,
+            state: {
+                groupInfo: null
+            }
+        })
     }
 }
 
-module.exports = withLanguage(MyGroupPostingsScreen);
+module.exports = withLanguage(MyGroupsWithPostingsScreen);

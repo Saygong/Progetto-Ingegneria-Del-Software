@@ -2,6 +2,7 @@ const React = require("react");
 const Log = require("../../../../src/components/Log");
 const ListItem = require("../ListItem");
 const MarketplaceScreen = require("../MarketplaceScreen/MarketplaceScreen");
+const {MARKETPLACE_SCREEN_URL} = require("../../constants");
 const {withRouter} = require("react-router-dom");
 import withLanguage from "../../../../src/components/LanguageContext";
 
@@ -29,7 +30,9 @@ class AccessMarketplaceButton extends React.Component {
     }
 
     redirectToMarketplaceScreen() {
-        // TODO send to MarketplaceScreen
+        Log.info("Redirecting to MarketplaceScreen " + `(${MARKETPLACE_SCREEN_URL})`, this);
+
+        this.props.history.push(MARKETPLACE_SCREEN_URL);
     }
 }
 

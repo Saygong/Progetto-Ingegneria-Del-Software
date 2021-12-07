@@ -19,6 +19,11 @@ class Posting extends PostingInfo{
      */
     id = "";
 
+    /**
+     * Id of the user that created the posting
+     * @type {string}
+     */
+    user_id = ""; // TODO updated tests to include this property
 
     /**
      * Id of the group the posting belongs to.

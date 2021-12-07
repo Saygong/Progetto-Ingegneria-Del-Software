@@ -1,6 +1,9 @@
+const Posting = require("../../api/model/Posting");
+
 const React = require("react");
 const Log = require("../../../../src/components/Log");
-const EditPostingScreen = require("../EditPostingScreen/EditPostingScreen");
+const {EDIT_POSTING_SCREEN_URL} = require( "../../constants");
+import {withRouter} from "react-router-dom";
 import withLanguage from "../../../../src/components/LanguageContext";
 
 
@@ -14,7 +17,7 @@ class CreatePostingButton extends React.Component {
     constructor(props) {
         super(props);
 
-        this.redirectToPostingScreen = this.redirectToPostingScreen.bind(this);
+        this.redirectToEditPostingScreen = this.redirectToEditPostingScreen.bind(this);
     }
 
     render() {
@@ -24,9 +27,22 @@ class CreatePostingButton extends React.Component {
     /**
      * Called when the button is clicked.
      */
-    redirectToPostingScreen() {
-        // TODO send to EditPostingScreen -> need to pass userId and groupId as props
+    redirectToEditPostingScreen() {
+        Log.info("Redirecting to EditPostingScreen " + `(${EDIT_POSTING_SCREEN_URL})`, this);
+
+        const userId = JSON.parse(localStorage.getItem("user")).id;
+
+        // The screen is loaded in creation mode, which means createMode = true and
+        // an empty posting is passed.
+        this.props.history.push({
+            pathname: EDIT_POSTING_SCREEN_URL,
+            state: {
+                isCreateMode: true,
+                userId: userId,
+                posting: Posting.EMPTY
+            }
+        });
     }
 }
 
-module.exports = withLanguage(CreatePostingButton);
+module.exports = withRouter(withLanguage(CreatePostingButton));

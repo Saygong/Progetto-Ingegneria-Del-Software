@@ -1,4 +1,4 @@
-const VALID_TN_TYPES = require("../../constants").TN_TYPES;
+const VALID_TN_TYPES = require("../constants").TN_TYPES;
 
 const React = require("react");
 const Log = require("../../../../src/components/Log");

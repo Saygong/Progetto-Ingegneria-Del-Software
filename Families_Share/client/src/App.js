@@ -17,8 +17,8 @@ const {
   POSTING_SCREEN_URL,
   EDIT_POSTING_SCREEN_URL,
   MY_FAVOURITES_SCREEN_URL,
-  GROUPS_WITH_POSTINGS_SCREEN_URL,
-  GROUP_POSTINGS_SCREEN_URL
+  MY_GROUPS_WITH_POSTINGS_SCREEN_URL,
+  MY_GROUP_POSTINGS_SCREEN_URL
 } = require("../../client/family-market/src/constants");
 
 // Family Market components (screens)
@@ -443,11 +443,11 @@ class App extends React.Component {
                   component={MyFavouritesScreen}
               />
               <PrivateRoute
-                  exact path={GROUPS_WITH_POSTINGS_SCREEN_URL}
+                  exact path={MY_GROUPS_WITH_POSTINGS_SCREEN_URL}
                   component={MyGroupsWithPostingsScreen}
               />
               <PrivateRoute
-                  exact path={GROUP_POSTINGS_SCREEN_URL}
+                  exact path={MY_GROUP_POSTINGS_SCREEN_URL}
                   component={MyGroupPostingsScreen}
               />
 

@@ -1,4 +1,4 @@
-const VALID_CATEGORIES = require("../../constants").CATEGORIES;
+const VALID_CATEGORIES = require("../constants").CATEGORIES;
 
 const React = require("react");
 const Log = require("../../../../src/components/Log");

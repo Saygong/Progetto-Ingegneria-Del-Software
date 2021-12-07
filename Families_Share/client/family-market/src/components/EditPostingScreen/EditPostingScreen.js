@@ -1,9 +1,10 @@
-const React = require("react");
 const ApiHandler = require("../../api/ApiHandler");
 const Posting = require("../../api/model/Posting");
 const PostingInfo = require("../../api/model/PostingInfo");
 const Contact = require("../../api/model/Contact");
 
+const React = require("react");
+const PropTypes = require("prop-types");
 const Log = require("../../../../src/components/Log");
 const EditNavBar = require("EditNavBar");
 const ConfirmButton = require("ConfirmButton");
@@ -24,12 +25,6 @@ import withLanguage from "../../../../src/components/LanguageContext";
  *  To create a new post, isCreateMode must be true and no posting needs to be passed.
  */
 class EditPostingScreen extends React.Component {
-
-    /**
-     * @type {{isCreateMode: boolean, userId: string, groupId: string, posting: Posting}}
-     */
-    props;
-
     /**
      * This stores all the attributes and info necessary to create/edit a posting,
      * and is updated each time one of these info is changed by the user.
@@ -44,10 +39,6 @@ class EditPostingScreen extends React.Component {
      */
     apiHandler;
 
-    /**
-     *
-     * @param props {{isCreateMode: boolean, userId: string, groupId: string, posting: Posting}}
-     */
     constructor(props) {
         super(props);
 
@@ -118,11 +109,17 @@ class EditPostingScreen extends React.Component {
      * @return {Promise<void>}
      */
     async handleEditConfirmation() {
+        Log.info("Edit confirmed, redirecting to previous page...", this);
+
         if (this.props.isCreateMode) {
             await this.createPosting();
+
+            this.props.history.goBack();
         }
         else {
             await this.editPosting();
+
+            this.props.history.goBack();
         }
     }
 
@@ -211,6 +208,12 @@ EditPostingScreen.defaultProps = {
     isCreateMode: false,
     userId: "",
     posting: Posting.EMPTY
+}
+
+EditPostingScreen.propTypes = {
+    isCreateMode: PropTypes.bool,
+    userId: PropTypes.string,
+    posting: PropTypes.instanceOf(Posting)
 }
 
 module.exports = withLanguage(EditPostingScreen);

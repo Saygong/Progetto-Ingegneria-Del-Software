@@ -1,8 +1,10 @@
 const Posting = require("../api/model/Posting");
 
 const React = require("react");
+import PropTypes from "prop-types";
 const Log = require("../../../src/components/Log");
-const EditPostingScreen = require("../EditPostingScreen/EditPostingScreen");
+const {EDIT_POSTING_SCREEN_URL} = require( "../constants");
+import {withRouter} from "react-router-dom";
 import withLanguage from "../../../src/components/LanguageContext";
 
 
@@ -12,30 +14,38 @@ import withLanguage from "../../../src/components/LanguageContext";
  * with the posting that needs to be edited.
  */
 class EditPostingButton extends React.Component {
-
-    /**
-     * @type {{posting: Posting}}
-     */
-    props;
-
-    /**
-     *
-     * @param props {{posting: Posting}}
-     */
     constructor(props) {
         super(props);
 
-        this.redirectToPostingScreen = this.redirectToPostingScreen.bind(this);
+        this.redirectToEditPostingScreen = this.redirectToEditPostingScreen.bind(this);
     }
 
     render() {
         //TODO
     }
 
-    redirectToPostingScreen() {
-        // TODO send to EditPostingScreen -> need to pass userId as props
-    }
+    redirectToEditPostingScreen() {
+        Log.info("Redirecting to EditPostingScreen " + `(${EDIT_POSTING_SCREEN_URL})`, this);
 
+        const userId = JSON.parse(localStorage.getItem("user")).id;
+        this.props.history.push({
+            pathname: EDIT_POSTING_SCREEN_URL,
+            state: {
+                isCreateMode: false,
+                userId: userId,
+                posting: this.props.posting
+            }
+        });
+    }
 }
 
-module.exports = withLanguage(EditPostingButton);
+// TODO
+EditPostingButton.defaultProps = {
+    posting: Posting.EMPTY
+}
+
+EditPostingButton.propTypes = {
+    posting: PropTypes.instanceOf(Posting)
+}
+
+module.exports = withRouter(withLanguage(EditPostingButton));

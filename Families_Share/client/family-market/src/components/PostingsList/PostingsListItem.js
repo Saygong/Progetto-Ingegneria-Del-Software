@@ -2,12 +2,13 @@ const ApiHandler = require("../../api/ApiHandler");
 const Posting = require("../../api/model/Posting");
 
 const React = require("react");
+const PropTypes = require("prop-types");
 const Log = require("../../../../src/components/Log");
 const ListItem = require("../ListItem");
 const EditPostingButton = require("../EditPostingButton");
 const DeletePostingButton = require("../DeleteButton");
 const ToggleFavouriteButton = require("../ToggleFavouriteButton");
-const PostingScreen = require("../PostingScreen/PostingScreen");
+const {POSTING_SCREEN_URL} = require("../../constants");
 const {withRouter} = require("react-router-dom");
 import withLanguage from "../../../../src/components/LanguageContext";
 
@@ -18,12 +19,6 @@ import withLanguage from "../../../../src/components/LanguageContext";
  * based on the mode that is set when it is instantiated.
  */
 class PostingsListItem extends React.Component {
-
-    /**
-     * @type {{posting: Posting, mode: string, deletionHandler: function}}
-     */
-    props;
-
     /**
      * Changed by the toggle favourite button
      * @type {{isFavourite: boolean}}
@@ -51,10 +46,6 @@ class PostingsListItem extends React.Component {
         return "favourites";
     }
 
-    /**
-     *
-     * @param props {{posting: Posting, mode: string, deletionHandler: function}}
-     */
     constructor(props) {
         super(props);
 
@@ -63,7 +54,7 @@ class PostingsListItem extends React.Component {
             isFavourite: false
         }
 
-        this.handleClick = this.handleClick.bind(this);
+        this.redirectToPostingScreen = this.redirectToPostingScreen.bind(this);
         this.handleFavouriteChange = this.handleFavouriteChange.bind(this);
     }
 
@@ -81,13 +72,41 @@ class PostingsListItem extends React.Component {
         }
     }
 
-    handleClick() {
-        // TODO send to PostingScreen
+    /**
+     * Called when this component is clicked.
+     */
+    redirectToPostingScreen() {
+        Log.info("Redirecting to PostingScreen " + `(${POSTING_SCREEN_URL})`, this);
+
+        const currentPosting = this.props.posting;
+        const userId = JSON.parse(localStorage.getItem("user")).id;
+        const isOwner = userId === currentPosting.user_id;
+
+        this.props.history.push({
+            pathname: POSTING_SCREEN_URL,
+            state: {
+                isOwner: isOwner,
+                posting: currentPosting
+            }
+        })
     }
 
-    handleFavouriteChange() {
+    async handleFavouriteChange() {
         // TODO updates the current user favourites list and change state
     }
+}
+
+
+PostingsListItem.defaultProps = {
+    posting: Posting.EMPTY,
+    mode: PostingsListItem.FAVOURITES_MODE,
+    deletionHandler: null
+}
+
+PostingsListItem.propTypes = {
+    posting: PropTypes.instanceOf(Posting),
+    mode: PropTypes.string,
+    deletionHandler: PropTypes.func.isRequired
 }
 
 module.exports = withRouter(withLanguage(PostingsListItem));

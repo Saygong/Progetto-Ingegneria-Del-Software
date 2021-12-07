@@ -1,5 +1,6 @@
 const React = require("react");
 const Log = require("../../../../src/components/Log");
+const {withRouter} = require("react-router-dom");
 import withLanguage from "../../../../src/components/LanguageContext";
 
 
@@ -23,11 +24,14 @@ class MyProfileButton extends React.Component {
      * Called when the button is clicked.
      */
     redirectToProfileScreen() {
-        // TODO send to ProfileScreen ->
-        //      probabilmente serve profileId e va inserito nell'url a cui redirezionare
-        //      -> dentro profileScreen viene fatto profileId = props.match.params.profileId
-        // In ogni caso, profileId si prende dallo user in localStorage
+
+        // Line 322 App.js: path="/profiles/:profileId"
+        const profileId = JSON.parse(localStorage.getItem("user"));
+        const profileScreenUrl = `/profiles/${profileId}`;
+
+        Log.info("Redirecting to ProfileScreen " + `(${profileScreenUrl})`, this);
+        this.props.history.push(profileScreenUrl);
     }
 }
 
-module.exports = withLanguage(MyProfileButton);
+module.exports = withRouter(withLanguage(MyProfileButton));

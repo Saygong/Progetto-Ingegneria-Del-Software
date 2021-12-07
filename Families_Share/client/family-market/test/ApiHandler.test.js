@@ -381,7 +381,7 @@ describe('Get all group postings', function () {
         let apiHandler = new ApiHandler();
 
         // Act
-        let actualPostings = apiHandler.getGroupPostings(groupId);
+        let actualPostings = await apiHandler.getGroupPostings(groupId);
 
         // Assert
         strictAssertPostingList(actualPostings, postings);
@@ -390,14 +390,14 @@ describe('Get all group postings', function () {
         await tearDown(userId, groupId, postings);
     });
 
-    it('should return empty array when given a wrong id for a specific group', function () {
+    it('should return empty array when given a wrong id for a specific group', async function () {
         //Arrange
         let expected = [];
         let wrongId = "-1";
         let apiHandler = new ApiHandler();
 
         //Act
-        let actual = apiHandler.getGroupPostings(wrongId);
+        let actual = await apiHandler.getGroupPostings(wrongId);
 
         //Assert
         expect(expected.length === actual.length).toBe(true);
@@ -419,7 +419,7 @@ describe('Get single posting', function () {
         let apiHandler = new ApiHandler();
 
         // Act
-        let actualPosting = apiHandler.getPosting(expectedPosting.id);
+        let actualPosting = await apiHandler.getPosting(expectedPosting.id);
 
         // Assert
         strictAssertPosting(actualPosting, expectedPosting);
@@ -428,14 +428,14 @@ describe('Get single posting', function () {
         await tearDown(userId, groupId, expectedPosting.id);
     });
 
-    it('should return an empty posting when given a wrong id for a specific posting', function () {
+    it('should return an empty posting when given a wrong id for a specific posting', async function () {
         //Arrange
         let expected = Posting.EMPTY;
         let wrongId = "-1";
         let apiHandler = new ApiHandler();
 
         //Act
-        let actual = apiHandler.getPosting(wrongId);
+        let actual = await apiHandler.getPosting(wrongId);
 
         //Assert
         strictAssertPosting(actual, expected);
@@ -461,7 +461,7 @@ describe('Create posting', function () {
         let creationInfo = getRandomPostingInfo();
 
         // Act
-        let createdPosting = apiHandler.createPosting(userId, groupId, creationInfo);
+        let createdPosting = await apiHandler.createPosting(userId, groupId, creationInfo);
 
         // Assert
         // Deep equality check
@@ -472,7 +472,7 @@ describe('Create posting', function () {
         await tearDown(userId, groupId, createdPosting.id);
     });
 
-    it('should return and empty posting when invalid information is provided', function () {
+    it('should return and empty posting when invalid information is provided', async function () {
         //Arrange
         let expected = Posting.EMPTY;
         let wrongUserId = "-1";
@@ -481,7 +481,7 @@ describe('Create posting', function () {
         let apiHandler = new ApiHandler();
 
         //Act
-        let actual = apiHandler.createPosting(wrongUserId, wrongGroupId, wrongCreationInfo);
+        let actual = await apiHandler.createPosting(wrongUserId, wrongGroupId, wrongCreationInfo);
 
         //Assert
         strictAssertPosting(actual, expected);
@@ -516,7 +516,7 @@ describe('Edit posting', function () {
         });
 
         // Act
-        let editedPosting = apiHandler.editPosting(postingToEdit.id, newInfo);
+        let editedPosting = await apiHandler.editPosting(postingToEdit.id, newInfo);
 
         // Assert
         // Id has to be the same but the rest of the info was changed
@@ -528,7 +528,7 @@ describe('Edit posting', function () {
         await tearDown(userId, groupId, postingToEdit.id);
     });
 
-    it('should return an empty posting when invalid information is provided', function () {
+    it('should return an empty posting when invalid information is provided', async function () {
         //Arrange
         let expected = Posting.EMPTY;
         let wrongUserId = "-1";
@@ -536,7 +536,7 @@ describe('Edit posting', function () {
         let apiHandler = new ApiHandler();
 
         //Act
-        let actual = apiHandler.editPosting(wrongUserId, wrongCreationInfo);
+        let actual = await apiHandler.editPosting(wrongUserId, wrongCreationInfo);
 
         //Assert
         expect(actual).toEqual(expected);
@@ -560,7 +560,7 @@ describe('Delete posting', function () {
         let apiHandler = new ApiHandler();
 
         // Act
-        let isDeleted = apiHandler.deletePosting(postingToDelete.id);
+        let isDeleted = await apiHandler.deletePosting(postingToDelete.id);
 
         // Assert
         expect(isDeleted).toBe(true);
@@ -569,13 +569,13 @@ describe('Delete posting', function () {
         await tearDown(userId, groupId, postingToDelete.id);
     });
 
-    it('should return false given a wrong id for a specific posting', function () {
+    it('should return false given a wrong id for a specific posting', async function () {
         //Arrange
         let wrongPostingId = "-1";
         let apiHandler = new ApiHandler();
 
         //Act
-        let isDeleted = apiHandler.deletePosting(wrongPostingId);
+        let isDeleted = await apiHandler.deletePosting(wrongPostingId);
 
         //Assert
         expect(isDeleted).toBe(false);
@@ -607,7 +607,7 @@ describe('Get all user postings', function () {
         let apiHandler = new ApiHandler();
 
         // Act
-        let actualPostingsByGroup = apiHandler.getUserPostings(userId)
+        let actualPostingsByGroup = await apiHandler.getUserPostings(userId)
 
         // Assert
         for (const actual of actualPostingsByGroup) {
@@ -621,21 +621,21 @@ describe('Get all user postings', function () {
         await tearDown(userId, postingsByGroup);
     });
 
-    it('should return an empty array when given a wrong id for a specific user', function () {
+    it('should return an empty array when given a wrong id for a specific user', async function () {
         //Arrange
         let expected = [];
         let wrongId = "-1";
         let apiHandler = new ApiHandler();
 
         //Act
-        let actual = apiHandler.getUserPostings(wrongId);
+        let actual = await apiHandler.getUserPostings(wrongId);
 
         //Assert
         expect(expected.length === actual.length).toBe(true);
     });
 });
 
-describe('Get user favourite postings', function () {
+describe('Get user favourite postings', async function () {
     it('should return a list of all the postings marked as favourite by a specific user', async function () {
         // Arrange
         const setup = async () => {
@@ -655,7 +655,7 @@ describe('Get user favourite postings', function () {
         let apiHandler = new ApiHandler();
 
         // Act
-        let actualPostings = apiHandler.getUserFavouritePostings(userId);
+        let actualPostings = await apiHandler.getUserFavouritePostings(userId);
 
         // Assert
         strictAssertPostingList(actualPostings, postings);
@@ -665,21 +665,21 @@ describe('Get user favourite postings', function () {
 
     });
 
-    it('should return an empty array when given a wrong id for a specific user', function () {
+    it('should return an empty array when given a wrong id for a specific user', async function () {
         //Arrange
         let expected = [];
         let wrongId = "-1";
         let apiHandler = new ApiHandler();
 
         //Act
-        let actual = apiHandler.getUserFavouritePostings(wrongId);
+        let actual = await apiHandler.getUserFavouritePostings(wrongId);
 
         //Assert
         expect(expected.length === actual.length).toBe(true);
     });
 });
 
-describe('Edit user favourite postings', function () {
+describe('Edit user favourite postings', async function () {
     it('should return the new edited list of favourite posting ids of the specific user', async function () {
         // Arrange
         const setup = async () => {
@@ -714,8 +714,8 @@ describe('Edit user favourite postings', function () {
         }
 
         // Act
-        let actualFavouritesIds = apiHandler.editUserFavourites(userId, newFavouritesIds);
-        let actualFavourites = apiHandler.getUserFavouritePostings(userId)
+        let actualFavouritesIds = await apiHandler.editUserFavourites(userId, newFavouritesIds);
+        let actualFavourites = await apiHandler.getUserFavouritePostings(userId)
 
         // Assert
         // First check that the ids lists are equal
@@ -741,7 +741,7 @@ describe('Edit user favourite postings', function () {
 
     });
 
-    it('should return an empty array given a wrong id for a specific user', function () {
+    it('should return an empty array given a wrong id for a specific user', async function () {
         //Arrange
         let expected = [];
         let wrongId = "-1";
@@ -749,7 +749,7 @@ describe('Edit user favourite postings', function () {
         let apiHandler = new ApiHandler();
 
         //Act
-        let actual = apiHandler.editUserFavourites(wrongId, newFavourites);
+        let actual = await apiHandler.editUserFavourites(wrongId, newFavourites);
 
         //Assert
         expect(expected.length === actual.length).toBe(true);

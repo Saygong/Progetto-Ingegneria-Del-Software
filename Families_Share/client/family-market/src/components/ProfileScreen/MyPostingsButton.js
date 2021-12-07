@@ -1,7 +1,8 @@
 const React = require("react");
 const Log = require("../../../../src/components/Log");
 const ListItem = require("../ListItem");
-const MyPostingsScreen = require("../MyPostingsScreens/MyPostingsScreens");
+const {MY_GROUPS_WITH_POSTINGS_SCREEN_URL} = require("../../constants");
+const {withRouter} = require("react-router-dom");
 import withLanguage from "../../../../src/components/LanguageContext";
 
 
@@ -19,16 +20,19 @@ class MyPostingsButton extends React.Component {
         this.title = "";
         this.description = "";
 
-        this.onClick = this.onClick.bind(this);
+        this.redirectToMyPostingsScreens = this.redirectToMyPostingsScreens.bind(this);
     }
 
     render() {
         // TODO this button is a ListItem
     }
 
-    onClick() {
-        // TODO send to MyPostingsScreens
+    redirectToMyPostingsScreens() {
+        Log.info("Redirecting to MyGroupsWithPostingsScreen "
+            + `(${MY_GROUPS_WITH_POSTINGS_SCREEN_URL})`, this);
+
+        this.props.history.push(MY_GROUPS_WITH_POSTINGS_SCREEN_URL);
     }
 }
 
-module.exports = withLanguage(MyPostingsButton);
+module.exports = withRouter(withLanguage(MyPostingsButton));
