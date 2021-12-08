@@ -20,6 +20,7 @@ const Activity = require('../src/models/activity')
 const Announcement = require('../src/models/announcement')
 const Reply = require('../src/models/reply')
 const Posting = require('../src/models/family-market/posting')
+const Contact = require("../src/models/family-market/contact");
 
 const importTest = (name, path) => {
   describe(name, () => {
@@ -280,5 +281,6 @@ describe('Test', () => {
     await Reply.deleteMany({})
     await Announcement.deleteMany({})
     await Posting.deleteMany({})
+    await Contact.deleteMany({})
   })
 })

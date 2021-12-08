@@ -485,7 +485,7 @@ describe('/Get/api/family-market/users/userId/groups/groupId/postings', () => {
     User.find({ email: 'test3@email.com' }, (user) => {
       Group.findOne({ name: 'Test Group 2' }, (group) => {
         chai.request(server)
-          .get(`/api/users/${user.userId}/groups/${group.groupId}/postings`)
+          .get(`/api/users/${user.userId}/groups/${group.group_id}/postings`)
           .end((res) => {
             res.should.have.status(404)
             done()
