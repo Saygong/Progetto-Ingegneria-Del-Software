@@ -1133,7 +1133,7 @@ router.get('/:userId/favourites', async (req, res) => {
 })
 
 // Prefisso: “/api/users“
-// Route for getUserPosting to show all the postings from a group of an user
+// Route for getUserPosting to show all the postings from a group of a user
 router.get('/:userId/groups/:groupId/postings', async (req, res) => {
   // Check user's integrity
   if (req.user_id !== req.params.id) { return res.status(401).send('Unauthorized') }

@@ -525,3 +525,19 @@ describe('/Delete/api/groups/id', () => {
     })
   })
 })
+/* ---------------------------------------     FAMILY - MARKET  TEST    --------------------------------------------- */
+
+describe('/Get/api/groups/groupId/postings', () => {
+  it('it should correctly return a list of postings contained in a group', (done) => {
+    Group.find({ name: 'Test Group 2' }, (err, group) => {
+      chai.request(server)
+        .get(`/api/groups/${group.group_id}/postings`)
+        .end((err, res) => {
+          res.should.have.status(404)
+          done()
+        })
+    })
+  })
+})
+
+/* ------------------------------------------------------------------------------------------------------------------ */

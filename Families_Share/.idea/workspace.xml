@@ -3,8 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="f6567f50-91eb-4444-b973-18bab2dfc57c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/posting-routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/posting-routes.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/user-routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/user-routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Groups/groupEndpoints.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/Groups/groupEndpoints.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Users/groupEndpoints.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/Users/groupEndpoints.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Users/userEndpoints.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/Users/userEndpoints.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/test.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,6 +54,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="nodejs.mocha.mocha_node_package_dir" value="$PROJECT_DIR$/node_modules/mocha" />
     <property name="nodejs_interpreter_path" value="$PROJECT_DIR$/../../../../../../Program Files/nodejs/node" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="settings.nodejs" />
@@ -106,7 +110,8 @@
       <workItem from="1638822736044" duration="7829000" />
       <workItem from="1638905315163" duration="9160000" />
       <workItem from="1638972036048" duration="579000" />
-      <workItem from="1638972744053" duration="2185000" />
+      <workItem from="1638972744053" duration="2947000" />
+      <workItem from="1638975930518" duration="8712000" />
     </task>
     <servers />
   </component>
