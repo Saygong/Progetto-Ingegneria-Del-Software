@@ -1,12 +1,11 @@
 const express = require('express')
 const router = new express.Router()
-
-const Posting = require('../models/family-market/posting')
-const Member = require('../models/member')
+const Posting = require('../../models/family-market/posting')
+const Member = require('../../models/member')
 const objectid = require('objectid')
-const Contact = require("../models/family-market/contact");
+const Contact = require("../../models/family-market/contact");
 
-// Prefisso: “/api/postings”
+// Prefisso: “/api/family-market/postings”
 // Route for getPosting that retrieve a posting
 router.get('/:postingId', async (req, res) => {
   // Check if user is not authenticated
@@ -48,7 +47,7 @@ router.get('/:postingId', async (req, res) => {
   }
 })
 
-// Prefisso: “/api/postings”
+// Prefisso: “/api/family-market/postings”
 // Route for editPosting  ->  edit an existing posting
 router.patch('/:postingId', async (req, res, next) => {
   // Check if user is authenticated
@@ -71,7 +70,7 @@ router.patch('/:postingId', async (req, res, next) => {
   }
 })
 
-// Prefisso: “/api/postings”
+// Prefisso: “/api/family-market/postings”
 // Route for deletePosting -> delete an existing posting
 router.delete('/:postingId', async (req, res, next) => {
   // Check if user is authenticated
@@ -93,7 +92,7 @@ router.delete('/:postingId', async (req, res, next) => {
   }
 })
 
-// Prefisso: “/api/postings”
+// Prefisso: “/api/family-market/postings”
 // Route for createPosting -> create a new posting
 router.post('/', async (req, res, next) => {
   // Check if user is authenticated
