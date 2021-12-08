@@ -63,20 +63,6 @@ class GroupListItem extends React.Component {
     this.setState({ fetchedGroupData: true, group });
   }
 
-  handleNavigation = () => {
-    const { history } = this.props;
-    const { group } = this.state;
-
-    // Used in Family Market to retrieve the current group id
-    const currentGroupInfo = {
-      id: group.group_id,
-      name: group.name
-    }
-    localStorage.setItem("group", JSON.stringify(currentGroupInfo));
-
-    history.push(`/groups/${group.group_id}/activities`);
-  };
-
   render() {
     const { language } = this.props;
     const texts = Texts[language].groupListItem;
@@ -87,7 +73,7 @@ class GroupListItem extends React.Component {
         tabIndex={-42}
         className="row no-gutters"
         id="suggestionContainer"
-        onClick={this.handleNavigation}
+        onClick={this.props.navigationHandler}
       >
         <div className="col-2-10">
           <Avatar
@@ -115,7 +101,8 @@ class GroupListItem extends React.Component {
 GroupListItem.propTypes = {
   groupId: PropTypes.string,
   language: PropTypes.string,
-  history: PropTypes.object
+  history: PropTypes.object,
+  navigationHandler: PropTypes.func.isRequired
 };
 
 export default withRouter(withLanguage(GroupListItem));

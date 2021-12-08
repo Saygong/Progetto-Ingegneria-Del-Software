@@ -36,11 +36,13 @@ class ApiHandler {
      * @param userToken {string} Token used to authenticate the user that makes the requests.
      *      Set in the AUTHORIZATION field of the request header.
      */
-    constructor(userToken) {
-        // Set default auth header with the token of the user that makes the requests
-        // this is necessary because the server checks if the user is authenticated
-        // by verifying the token
-        axios.defaults.headers.common["AUTHORIZATION"] = userToken;
+    constructor(userToken="") {
+        if (userToken !== "") {
+            // Set default auth header with the token of the user that makes the requests
+            // this is necessary because the server checks if the user is authenticated
+            // by verifying the token
+            axios.defaults.headers.common["AUTHORIZATION"] = userToken;
+        }
 
         this.getGroupPostings = this.getGroupPostings.bind(this);
         this.getPosting = this.getPosting.bind(this);
@@ -122,7 +124,7 @@ class ApiHandler {
      */
     async createPosting(userId, groupId, info) {
         const creationData = {
-            user_id: userId,
+            user_id: userId, // TODO quindi non devo più passarli qui ma nella route?
             group_id: groupId,
             ...info
         };

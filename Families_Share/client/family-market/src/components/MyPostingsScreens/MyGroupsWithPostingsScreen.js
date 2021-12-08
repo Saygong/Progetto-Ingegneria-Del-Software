@@ -62,22 +62,6 @@ class MyGroupsWithPostingsScreen extends React.Component {
     }
 
     /**
-     * Called by each group list item when clicked.
-     * @param groupInfo {GroupInfo}
-     * @return {Promise<void>}
-     */
-    async handleNavigation(groupInfo) {
-        // TODO implementare navigationHandler(GroupInfo) su GroupListItem
-        const userId = this.matchParams.userId;
-        const groupId = groupInfo.id;
-        const redirectionHandler = buildRedirectionHandler(this.props.history, userId, groupId);
-
-        Log.info("Redirecting to MyGroupPostingsScreen...", this);
-
-        redirectionHandler();
-    }
-
-    /**
      * Returns a url used to redirect to this page.
      * @param userId {string} id of the user to load the groups of
      * @return {string}

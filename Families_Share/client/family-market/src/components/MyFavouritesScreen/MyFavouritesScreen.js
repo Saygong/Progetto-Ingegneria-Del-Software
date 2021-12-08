@@ -1,7 +1,7 @@
-import {FAMILY_MARKET_BASE_URL} from "../../constants";
-
 const ApiHandler = require("../../api/ApiHandler");
 const Posting = require("../../api/model/Posting");
+
+const {FAMILY_MARKET_BASE_URL} = require("../../constants");
 
 const React = require("react");
 const Log = require("../../../../src/components/Log");
@@ -12,6 +12,11 @@ import withLanguage from "../../../../src/components/LanguageContext";
  * Class that represents the screen where a user's favourite postings are displayed.
  */
 class MyFavouritesScreen extends React.Component {
+
+    /**
+     * @type {{userId: string}}
+     */
+    matchParams;
 
     /**
      * @type {ApiHandler}
@@ -27,6 +32,7 @@ class MyFavouritesScreen extends React.Component {
         super(props);
 
         this.apiHandler = new ApiHandler();
+        this.matchParams = this.props.match.params;
         this.state = {
             postings: []
         };
@@ -52,11 +58,22 @@ class MyFavouritesScreen extends React.Component {
     }
 
     /**
-     * Returns the url of this page.
+     * Returns a url used to redirect to this page.
+     * @param userId {string} user whose favourites should be displayed
      * @return {string}
      */
-    static get pageUrl() {
-        return FAMILY_MARKET_BASE_URL + "/favourites";
+    static buildUrl(userId) {
+        const route = MyFavouritesScreen.ROUTE;
+        return route.replace(":userId", userId);
+    }
+
+    /**
+     * Returns the route path to load this page.
+     * Intended for use in react router.
+     * @return {string}
+     */
+    static get ROUTE() {
+        return FAMILY_MARKET_BASE_URL + "/users/:userId/favourites";
     }
 
     /**
@@ -64,15 +81,18 @@ class MyFavouritesScreen extends React.Component {
      * This method should be used instead of manually handling redirection,
      * since it makes things clearer by encapsulating navigation behaviour for this class.
      * @param history {History}
-     * @param state {Object}
-     * @param goBackUrl {string} url to go back to, from this page.
-     *      If not specified, a simple history.goBack() is performed.
-     * @param goBackState {Object} state (if any) to pass when going back to the specified page.
+     * @param userId {string} user whose favourites should be displayed
+     * @return {function}
      */
-    static getRedirectionHandler(history, state, goBackUrl="", goBackState={}) {
-
+    static buildRedirectionHandler(history, userId) {
+        return () => {
+            history.push(MyFavouritesScreen.buildUrl(userId))
+        }
     }
-
 }
 
-module.exports = withLanguage(MyFavouritesScreen);
+module.exports = {
+    MyFavouritesScreen: withLanguage(MyFavouritesScreen),
+    MyFavouritesScreenRoute: MyFavouritesScreen.ROUTE,
+    buildRedirectionHandler: MyFavouritesScreen.buildRedirectionHandler
+};

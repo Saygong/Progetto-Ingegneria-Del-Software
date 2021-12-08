@@ -455,7 +455,7 @@ class App extends React.Component {
                   component={LoadableMyGroupsWithPostingsScreen}
               />
               <PrivateRoute
-                  exact path={MyGroupPostingsScreen}
+                  exact path={MyGroupPostingsScreenRoute}
                   component={LoadableMyGroupPostingsScreen}
               />
 

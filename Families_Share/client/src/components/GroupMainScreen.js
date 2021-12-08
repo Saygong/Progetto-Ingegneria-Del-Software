@@ -78,6 +78,14 @@ export default class GroupMainScreen extends React.Component {
     const { history } = this.props;
     const { groupId } = this.state;
     const group = await getGroup(groupId);
+
+    // Used in Family Market to retrieve the current group id
+    const currentGroupInfo = {
+      id: group.group_id,
+      name: group.name
+    }
+    localStorage.setItem("group", JSON.stringify(currentGroupInfo));
+
     group.members = await getGroupMembers(groupId);
     const user = group.members.filter(
       member =>
