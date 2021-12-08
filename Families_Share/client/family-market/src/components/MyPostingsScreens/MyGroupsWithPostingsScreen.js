@@ -58,7 +58,7 @@ class MyGroupsWithPostingsScreen extends React.Component {
     async fetchUserGroups() {
         const userId = this.matchParams.userId;
 
-        return this.apiHandler.getUserGroupsInfo(userId);
+        return this.apiHandler.getUserGroups(userId);
     }
 
     /**

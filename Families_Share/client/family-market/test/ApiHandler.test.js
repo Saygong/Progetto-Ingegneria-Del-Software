@@ -3,11 +3,37 @@ const Posting = require("../src/api/model/Posting");
 const PostingInfo = require("../src/api/model/PostingInfo");
 const Contact = require("../src/api/model/Contact");
 const GroupInfo = require("../src/api/model/GroupInfo");
-const PostingsWithGroupInfo = require("../src/api/model/PostingsWithGroupInfo");
 const axios = require("axios");
 
 const POSTINGS_BASE_URL = ApiHandler.POSTINGS_BASE_URL;
 
+
+class PostingsWithGroupInfo {
+    /**
+     *
+     * @param groupInfo {GroupInfo}
+     * @param postings {Posting[]}
+     */
+    constructor({groupInfo, postings}) {
+        this.groupInfo = groupInfo;
+        this.postings = postings
+    }
+}
+
+
+ class User {
+     /**
+      *
+      * @param id {string}
+      * @param token {string}
+      */
+     constructor(id, token) {
+        this.id = id;
+        this.token = token;
+    }
+ }
+
+ 
 function getRandomString() {
     const randInt = (min, max) => {
         return Math.floor(Math.random() * (max - min)) + min;
@@ -15,12 +41,13 @@ function getRandomString() {
 
     // 36 is the max number and 2 is the min because toString() accepts bases from 2 to 36
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toString
-    let randomBase = randInt(2, 36);
-    let randStr = (Math.random() + 1).toString(randomBase);
-    let randLength = randInt(1, randStr.length);
+    const randomBase = randInt(2, 36);
+    const randStr = (Math.random() + 1).toString(randomBase);
+    const randLength = randInt(1, randStr.length);
 
     return randStr.substring(0, randLength);
 }
+
 
 function getRandomPostingInfo() {
     return new PostingInfo({
@@ -33,6 +60,7 @@ function getRandomPostingInfo() {
     })
 }
 
+
 /**
  * Returns true if the provided object is null or undefined.
  * @param x object to test
@@ -42,22 +70,27 @@ function isNullOrUndefined(x) {
     return x === undefined || x === null;
 }
 
-/**
- * Performs deep asserts on the two Posting lists.
- * @param actualPostings {Array<Posting>}
- * @param expectedPostings {Array<Posting>}
- */
-function strictAssertPostingList(actualPostings, expectedPostings) {
-    expect(actualPostings.length === expectedPostings.length).toBe(true);
 
-    for (const actual of actualPostings) {
-        let expected = expectedPostings.find(p => p.id === actual.id);
+/**
+ * Performs deep asserts on all the elements of the two lists.
+ * @param actualList {Array}
+ * @param expectedList {Array}
+ */
+function assertList(actualList, expectedList) {
+    expect(actualList.length === expectedList.length).toBe(true);
+
+    for (const actual of actualList) {
+        const expected = expectedList.find(x => x.id === actual.id);
 
         expect(isNullOrUndefined(expected)).toBe(false);
-        strictAssertPosting(actual, expected);
+        expect(actual).toEqual(expected);
     }
 }
 
+
+// TODO dato che assertTrue è sempre true, si può fare refactoring e generalizzare i metodi
+//  oppure eliminarli del tutto ed usare expect().toEqual()
+//  Io aspetterei di vedere se prima così runna i test e li passa
 /**
  * Performs deep asserts for equality (default) or inequality of all properties
  * of the two provided PostingInfo objects
@@ -67,10 +100,12 @@ function strictAssertPostingList(actualPostings, expectedPostings) {
  */
 function strictAssertPosting(actual, expected, assertTrue=true) {
     expect(actual.id === expected.id).toBe(assertTrue);
+    expect(actual.user_id === expected.user_id).toBe(assertTrue);
     expect(actual.group_id === expected.group_id).toBe(assertTrue);
 
     strictAssertPostingInfo(actual, expected, assertTrue);
 }
+
 
 /**
  * Performs deep asserts for equality (default) or inequality of all properties
@@ -90,9 +125,10 @@ function strictAssertPostingInfo(actual, expected, assertTrue=true) {
     expect(actual.contact.place === expected.contact.place).toBe(assertTrue);
 }
 
+
 /**
  *
- * @return {Promise<string>}
+ * @return {Promise<User>}
  */
 async function createRandomUser() {
     const user = {
@@ -103,10 +139,6 @@ async function createRandomUser() {
         password: getRandomString(),
         visible: true,
         language: 'en'
-
-        //TODO: effettivamente ci va? non ha senso perché è un campo che può
-        // benissimo essere inizializzato lato server. Parlare con ruie/geh
-        //favourites: []
     };
 
     // in test.js: await chai.request(server).post('/api/users').send(user2)
@@ -124,9 +156,10 @@ async function createRandomUser() {
             console.log(error);
         });
 
-    const userId = response.data.id;
-    return userId;
+    const userData = response.data;
+    return new User(userData.id, userData.token);
 }
+
 
 /**
  *
@@ -166,6 +199,7 @@ async function createRandomGroup(ownerId) {
     return new GroupInfo({id: groupId, name: groupName});
 }
 
+
 /**
  *
  * @param creatorId
@@ -193,48 +227,47 @@ async function createRandomPosting(creatorId, groupId) {
             console.log(error);
         });
 
-    const posting = new Posting(response.data);
-    return posting;
+    return new Posting(response.data);
 }
 
 
 /**
  *
- * @return {Promise<{groupId: string, postings: Posting[], userId: string}>}
+ * @return {Promise<{groupId: string, postings: Posting[], user: User}>}
  */
 async function createUserWithSomePostingsSameGroup() {
-    const userId = await createRandomUser();
-    const groupInfo = await createRandomGroup(userId);
+    const user = await createRandomUser();
+    const groupInfo = await createRandomGroup(user.id);
 
     const postings = [];
     const nPostings = 5;
     for (let i = 0; i < nPostings; i++) {
-        const p = await createRandomPosting(userId, groupInfo.id);
+        const p = await createRandomPosting(user.id, groupInfo.id);
         postings.push(p);
     }
 
-    return {userId: userId, groupId: groupInfo.id, postings: postings};
+    return {user: user, groupId: groupInfo.id, postings: postings};
 }
 
 
 /**
  *
- * @return {Promise<{postingsByGroup: PostingsWithGroupInfo[], userId: string}>}
+ * @return {Promise<{postingsByGroup: PostingsWithGroupInfo[], user: User}>}
  */
 async function createUserWithSomePostingsDifferentGroups() {
-    const userId = await createRandomUser();
+    const user = await createRandomUser();
 
     // For each group, create postings,
     // then create a PostingsWithGroupInfo object
     const nGroups = 3;
     const postingsByGroup = []
     for (let i = 0; i < nGroups; i++) {
-        const gInfo = await createRandomGroup(userId);
+        const gInfo = await createRandomGroup(user.id);
 
         const postings = [];
         const nPostings = 3;
         for (let i = 0; i < nPostings; i++) {
-            const p = await createRandomPosting(userId, gInfo.id);
+            const p = await createRandomPosting(user.id, gInfo.id);
             postings.push(p);
         }
 
@@ -242,13 +275,13 @@ async function createUserWithSomePostingsDifferentGroups() {
         postingsByGroup.push(pg);
     }
 
-    return {userId: userId, postingsByGroup: postingsByGroup};
+    return {user: user, postingsByGroup: postingsByGroup};
 }
 
 
 /**
  *
- * @return {Promise<{groupId: string, postings: Posting[], userId: string}>}
+ * @return {Promise<{groupId: string, postings: Posting[], user: User}>}
  */
 async function createGroupWithSomePostings() {
     return await createUserWithSomePostingsSameGroup();
@@ -257,10 +290,10 @@ async function createGroupWithSomePostings() {
 
 /**
  *
- * @return {Promise<{groupIds: string[], userId: string, favouritePostings: Posting[]}>}
+ * @return {Promise<{groupIds: string[], user: User, favouritePostings: Posting[]}>}
  */
 async function createUserWithSomeFavourites() {
-    const {userId, postingsByGroup} = await createUserWithSomePostingsDifferentGroups()
+    const {user, postingsByGroup} = await createUserWithSomePostingsDifferentGroups()
 
     const groupIds = [];
     const postings = [];
@@ -269,8 +302,9 @@ async function createUserWithSomeFavourites() {
         pg.postings.forEach(p => postings.push(p));
     }
 
-    return {userId: userId, groupIds: groupIds, favouritePostings: postings};
+    return {user: user, groupIds: groupIds, favouritePostings: postings};
 }
+
 
 async function deleteGroup(groupId) {
     await axios
@@ -285,6 +319,7 @@ async function deleteGroup(groupId) {
         });
 }
 
+
 async function deleteUser(userId) {
     await axios
         .delete(`/api/users/${userId}`)
@@ -297,6 +332,7 @@ async function deleteUser(userId) {
             console.log(error);
         });
 }
+
 
 async function deletePosting(postingId) {
     await axios
@@ -311,23 +347,25 @@ async function deletePosting(postingId) {
         });
 }
 
+
 /**
  * Creates a user, a group and a posting made by that user in that group
- * and returns group id, user id and the posting object.
+ * and returns group id, user and the posting object.
  *
  * Both a user and group are created to simulate as accurately as possible a real user
  * situation, since a user must create a posting on a certain group.
  * To be even more realistic the user should belong to that group, but in this case
  * it's good enough.
- * @return {Promise<{groupId: GroupInfo, posting: Posting, userId: string}>}
+ * @return {Promise<{groupId: GroupInfo, posting: Posting, user: User}>}
  */
 async function setupPosting() {
-    let userId = await createRandomUser();
-    let groupId = await createRandomGroup(userId);
-    let posting = await createRandomPosting(userId, groupId);
+    const user = await createRandomUser();
+    const groupId = await createRandomGroup(user.id);
+    const posting = await createRandomPosting(user.id, groupId);
 
-    return {userId: userId, groupId: groupId, posting: posting};
+    return {user: user, groupId: groupId, posting: posting};
 }
+
 
 /**
  * Deletes from the database the user, group and posting with the specified id.
@@ -339,6 +377,7 @@ async function setupPosting() {
 async function tearDownPosting(creatorId, groupId, postingId) {
     await tearDownPostings([creatorId], [groupId], [postingId]);
 }
+
 
 /**
  * Deletes from the database the provided postings, groups and users.
@@ -362,7 +401,7 @@ async function tearDownPostings(creatorIds, groupIds, postingIds) {
 
 
 describe('Get all group postings', function () {
-    it('should return a list of all the postings of a group', async function () {
+    it('should return an array of all the postings of a group', async function () {
         // Arrange
         const setup = async () => {
             return await createGroupWithSomePostings();
@@ -377,32 +416,130 @@ describe('Get all group postings', function () {
             await tearDownPostings([userId], [groupId], postingIds);
         };
 
-        let { userId, groupId, postings } = await setup();
-        let apiHandler = new ApiHandler();
+        const { user, groupId, postings } = await setup();
+        const apiHandler = new ApiHandler(user.token);
 
         // Act
-        let actualPostings = await apiHandler.getGroupPostings(groupId);
+        const actualPostings = await apiHandler.getGroupPostings(groupId);
 
         // Assert
-        strictAssertPostingList(actualPostings, postings);
+        assertList(actualPostings, postings);
 
         // Teardown
-        await tearDown(userId, groupId, postings);
+        await tearDown(user.id, groupId, postings);
     });
 
     it('should return empty array when given a wrong id for a specific group', async function () {
         //Arrange
-        let expected = [];
-        let wrongId = "-1";
-        let apiHandler = new ApiHandler();
+        const expectedLength = 0;
+        const wrongId = "-1";
+        const wrongToken = "-1";
+        const apiHandler = new ApiHandler(wrongToken);
 
         //Act
-        let actual = await apiHandler.getGroupPostings(wrongId);
+        const actual = await apiHandler.getGroupPostings(wrongId);
 
         //Assert
-        expect(expected.length === actual.length).toBe(true);
+        expect(actual.length === expectedLength).toBe(true);
     });
 });
+
+
+describe('Get group info', function () {
+    it('should return the group info object given a specific group id', async function () {
+        const setup = async () => {
+            const user = await createRandomUser();
+            const group = await createRandomGroup(user.id);
+
+            return {user: user, group: group};
+        };
+
+        const tearDown = async (userId, groupId) => {
+             await deleteGroup(groupId);
+             await deleteUser(userId);
+        };
+
+        const { user, group } = await setup();
+        const apiHandler = new ApiHandler(user.token);
+
+        // Act
+        const actualGroup = await apiHandler.getGroupInfo(group.id);
+
+        // Assert
+        expect(group.id === actualGroup.id).toBe(true);
+        expect(group.name === actualGroup.name).toBe(true);
+
+        // Teardown
+        await tearDown(user.id, group.id);
+    });
+
+    it('should return an empty group info object when given wrong arguments', async function () {
+        //Arrange
+        const expected = GroupInfo.EMPTY;
+        const wrongId = "-1";
+        const wrongToken = "-1"
+        const apiHandler = new ApiHandler(wrongToken);
+
+        //Act
+        const actual = await apiHandler.getGroupInfo(wrongId);
+
+        //Assert
+        expect(actual).toEqual(expected);
+    });
+});
+
+
+describe('Get group info of all user groups', function () {
+    it('should return an array of the info objects of all the groups that the specified user belongs to ',
+        async function () {
+            const setup = async () => {
+                const user = await createRandomUser();
+
+                const groups = [];
+                for (let i = 0; i < 5; i++) {
+                    const g = await createRandomGroup(user.id);
+                    groups.push(g);
+                }
+
+                return {user: user, groups: groups};
+            };
+
+            const tearDown = async (userId, groups) => {
+                for (const g of groups) {
+                    await deleteGroup(g.id);
+                }
+
+                await deleteUser(userId);
+            };
+
+            const { user, groups } = await setup();
+            const apiHandler = new ApiHandler(user.token);
+
+            // Act
+            const actualGroups = await apiHandler.getUserGroups(user.id);
+
+            // Assert
+            assertList(actualGroups, groups);
+
+            // Teardown
+            await tearDown(user.id, group.id);
+    });
+
+    it('should return an empty array when given wrong arguments', async function () {
+        //Arrange
+        const wrongId = "-1";
+        const wrongToken = "-1";
+        const apiHandler = new ApiHandler(wrongToken);
+        const expectedLength = 0;
+
+        //Act
+        const actual = await apiHandler.getUserGroups(wrongId);
+
+        //Assert
+        expect(actual.length === expectedLength).toBe(true);
+    });
+});
+
 
 describe('Get single posting', function () {
     it('should return a single posting given a specific id', async function () {
@@ -415,53 +552,55 @@ describe('Get single posting', function () {
             return await tearDownPosting(userId, groupId, postingId);
         };
 
-        let { userId, groupId, expectedPosting } = await setup();
-        let apiHandler = new ApiHandler();
+        const { user, groupId, expectedPosting } = await setup();
+        const apiHandler = new ApiHandler(user.token);
 
         // Act
-        let actualPosting = await apiHandler.getPosting(expectedPosting.id);
+        const actualPosting = await apiHandler.getPosting(expectedPosting.id);
 
         // Assert
         strictAssertPosting(actualPosting, expectedPosting);
 
         // Teardown
-        await tearDown(userId, groupId, expectedPosting.id);
+        await tearDown(user.id, groupId, expectedPosting.id);
     });
 
     it('should return an empty posting when given a wrong id for a specific posting', async function () {
         //Arrange
-        let expected = Posting.EMPTY;
-        let wrongId = "-1";
-        let apiHandler = new ApiHandler();
+        const expected = Posting.EMPTY;
+        const wrongId = "-1";
+        const wrongToken = "-1"
+        const apiHandler = new ApiHandler(wrongToken);
 
         //Act
-        let actual = await apiHandler.getPosting(wrongId);
+        const actual = await apiHandler.getPosting(wrongId);
 
         //Assert
         strictAssertPosting(actual, expected);
     });
 });
 
+
 describe('Create posting', function () {
     it('should create a posting with the given information and return the created posting', async function () {
         // Arrange
         const setup = async () => {
-            let userId = await createRandomUser();
-            let groupId = await createRandomGroup(userId);
+            const user = await createRandomUser();
+            const groupId = await createRandomGroup(user.id);
 
-            return {userId: userId, groupId: groupId};
+            return {user: user, groupId: groupId};
         };
 
         const tearDown = async (userId, groupId, postingId) => {
             await tearDownPosting(userId, groupId, postingId);
         };
 
-        let { userId, groupId } = setup();
-        let apiHandler = new ApiHandler();
-        let creationInfo = getRandomPostingInfo();
+        const { user, groupId } = setup();
+        const apiHandler = new ApiHandler(user.token);
+        const creationInfo = getRandomPostingInfo();
 
         // Act
-        let createdPosting = await apiHandler.createPosting(userId, groupId, creationInfo);
+        const createdPosting = await apiHandler.createPosting(user, groupId, creationInfo);
 
         // Assert
         // Deep equality check
@@ -469,24 +608,27 @@ describe('Create posting', function () {
         strictAssertPostingInfo(creationInfo, createdPosting);
 
         // Teardown
-        await tearDown(userId, groupId, createdPosting.id);
+        await tearDown(user.id, groupId, createdPosting.id);
     });
 
     it('should return and empty posting when invalid information is provided', async function () {
         //Arrange
-        let expected = Posting.EMPTY;
-        let wrongUserId = "-1";
-        let wrongGroupId = wrongUserId;
-        let wrongCreationInfo = {wrong: "wrong"};
-        let apiHandler = new ApiHandler();
+        const expected = Posting.EMPTY;
+        const wrongUserId = "-1";
+        const wrongToken = ""
+        const wrongGroupId = wrongUserId;
+        const wrongCreationInfo = PostingInfo.EMPTY;
+        wrongCreationInfo.name = "-1";
+        const apiHandler = new ApiHandler(wrongToken);
 
         //Act
-        let actual = await apiHandler.createPosting(wrongUserId, wrongGroupId, wrongCreationInfo);
+        const actual = await apiHandler.createPosting(wrongUserId, wrongGroupId, wrongCreationInfo);
 
         //Assert
         strictAssertPosting(actual, expected);
     });
 });
+
 
 describe('Edit posting', function () {
     it('should edit a posting with the given information and return the edited posting', async function () {
@@ -499,10 +641,10 @@ describe('Edit posting', function () {
             await tearDownPosting(userId, groupId, postingId);
         };
 
-        let { userId, groupId, postingToEdit } = setup();
-        let apiHandler = new ApiHandler();
+        const { user, groupId, postingToEdit } = setup();
+        const apiHandler = new ApiHandler(user.token);
 
-        let newInfo = new PostingInfo({
+        const newInfo = new PostingInfo({
             name: postingToEdit.name + "1",
             category: postingToEdit.category + "1",
             description: postingToEdit.description + "1",
@@ -516,32 +658,33 @@ describe('Edit posting', function () {
         });
 
         // Act
-        let editedPosting = await apiHandler.editPosting(postingToEdit.id, newInfo);
+        const success = await apiHandler.editPosting(postingToEdit.id, newInfo);
 
         // Assert
         // Id has to be the same but the rest of the info was changed
-        expect(editedPosting.id === postingToEdit.id).toBe(true);
-        expect(editedPosting.group_id === postingToEdit.group_id).toBe(true);
-        strictAssertPostingInfo(postingToEdit, editedPosting, false);
+        expect(success).toBe(true);
 
         // Teardown
-        await tearDown(userId, groupId, postingToEdit.id);
+        await tearDown(user.id, groupId, postingToEdit.id);
     });
 
     it('should return an empty posting when invalid information is provided', async function () {
         //Arrange
-        let expected = Posting.EMPTY;
-        let wrongUserId = "-1";
-        let wrongCreationInfo = {wrong: "wrong"};
-        let apiHandler = new ApiHandler();
+        const expected = Posting.EMPTY;
+        const wrongUserId = "-1";
+        const wrongToken = "-1"
+        const wrongCreationInfo = PostingInfo.EMPTY;
+        wrongCreationInfo.name = "-1"
+        const apiHandler = new ApiHandler(wrongToken);
 
         //Act
-        let actual = await apiHandler.editPosting(wrongUserId, wrongCreationInfo);
+        const actual = await apiHandler.editPosting(wrongUserId, wrongCreationInfo);
 
         //Assert
         expect(actual).toEqual(expected);
     });
 });
+
 
 describe('Delete posting', function () {
     it('should delete a posting given a specific id', async function () {
@@ -556,84 +699,79 @@ describe('Delete posting', function () {
             await tearDownPosting(userId, groupId, postingId);
         };
 
-        let { userId, groupId, postingToDelete } = await setup();
-        let apiHandler = new ApiHandler();
+        const { user, groupId, postingToDelete } = await setup();
+        const apiHandler = new ApiHandler(user.token);
 
         // Act
-        let isDeleted = await apiHandler.deletePosting(postingToDelete.id);
+        const isDeleted = await apiHandler.deletePosting(postingToDelete.id);
 
         // Assert
         expect(isDeleted).toBe(true);
 
         // Teardown
-        await tearDown(userId, groupId, postingToDelete.id);
+        await tearDown(user.id, groupId, postingToDelete.id);
     });
 
     it('should return false given a wrong id for a specific posting', async function () {
         //Arrange
-        let wrongPostingId = "-1";
-        let apiHandler = new ApiHandler();
+        const wrongPostingId = "-1";
+        const wrongToken = "-1";
+        const apiHandler = new ApiHandler(wrongToken);
 
         //Act
-        let isDeleted = await apiHandler.deletePosting(wrongPostingId);
+        const isDeleted = await apiHandler.deletePosting(wrongPostingId);
 
         //Assert
         expect(isDeleted).toBe(false);
     });
 });
 
-describe('Get all user postings', function () {
-    it('should return a list of all the postings of a user, grouped by group info', async function () {
+
+describe('Get all user postings of a certain group', function () {
+    it('should return a list of all the postings of a user in a specified group', async function () {
         // Arrange
         const setup = async () => {
-            return await createUserWithSomePostingsDifferentGroups();
+            return await createUserWithSomePostingsSameGroup();
         };
 
-        const tearDown = async (userId, postingsByGroup) => {
-                const postingIds = [];
-                const groupIds = [];
-                for (const item of postingsByGroup) {
-                    groupIds.push(item.groupInfo.id);
+        const tearDown = async (userId, groupId, postings) => {
+            const postingIds = [];
+            for (const p of postings) {
+                postingIds.push(p.id);
+            }
 
-                    for (const p of item.postings) {
-                        postingIds.push(p.id);
-                    }
-                }
+            await tearDownPostings([userId], [groupId], postingIds);
+        };
 
-                await tearDownPostings([userId], groupIds, postingIds);
-            };
-
-        let {userId, postingsByGroup} = await setup();
-        let apiHandler = new ApiHandler();
+        const {user, groupId, postings} = await setup();
+        const apiHandler = new ApiHandler(user.token);
 
         // Act
-        let actualPostingsByGroup = await apiHandler.getUserPostings(userId)
+        const actualGroupPostings = await apiHandler.getUserPostings(user.id, groupId)
 
         // Assert
-        for (const actual of actualPostingsByGroup) {
-            let expectedGroup = postingsByGroup.find(g => g.groupInfo.id === actual.groupInfo.id);
-            expect(isNullOrUndefined(expectedGroup)).toBe(false);
-
-            strictAssertPostingList(actual.postings, expectedGroup.postings);
-        }
+        assertList(actualGroupPostings, postings);
 
         // Teardown
-        await tearDown(userId, postingsByGroup);
+        await tearDown(user.id, groupId, postings);
     });
 
     it('should return an empty array when given a wrong id for a specific user', async function () {
         //Arrange
-        let expected = [];
-        let wrongId = "-1";
-        let apiHandler = new ApiHandler();
+        const wrongId = "-1";
+        const wrongToken = "-1";
+        const wrongGroupId = "-1";
+        const apiHandler = new ApiHandler(wrongToken);
+        const expectedLength = 0;
 
         //Act
-        let actual = await apiHandler.getUserPostings(wrongId);
+        const actual = await apiHandler.getUserPostings(wrongId, wrongGroupId);
 
         //Assert
-        expect(expected.length === actual.length).toBe(true);
+        expect(actual.length === expectedLength).toBe(true);
     });
 });
+
 
 describe('Get user favourite postings', async function () {
     it('should return a list of all the postings marked as favourite by a specific user', async function () {
@@ -651,36 +789,39 @@ describe('Get user favourite postings', async function () {
             await tearDownPostings([userId], groupIds, postingIds);
         };
 
-        let {userId, groupIds, postings} = setup();
-        let apiHandler = new ApiHandler();
+        const {user, groupIds, postings} = await setup();
+        const apiHandler = new ApiHandler(user.token);
 
         // Act
-        let actualPostings = await apiHandler.getUserFavouritePostings(userId);
+        const actualPostings = await apiHandler.getUserFavouritePostings(user.id);
 
         // Assert
-        strictAssertPostingList(actualPostings, postings);
+        assertList(actualPostings, postings);
 
         // Teardown
-        await tearDown(userId, groupIds, postings);
+        await tearDown(user.id, groupIds, postings);
 
     });
 
     it('should return an empty array when given a wrong id for a specific user', async function () {
         //Arrange
-        let expected = [];
-        let wrongId = "-1";
-        let apiHandler = new ApiHandler();
+        const expectedLength = 0;
+        const wrongId = "-1";
+        const wrongToken = "-1";
+        const apiHandler = new ApiHandler(wrongToken);
 
         //Act
-        let actual = await apiHandler.getUserFavouritePostings(wrongId);
+        const actual = await apiHandler.getUserFavouritePostings(wrongId);
 
         //Assert
-        expect(expected.length === actual.length).toBe(true);
+        expect(actual.length === expectedLength).toBe(true);
     });
 });
 
+
 describe('Edit user favourite postings', async function () {
-    it('should return the new edited list of favourite posting ids of the specific user', async function () {
+    it('should return true and the actual favourite postings should correspond to the updated ids',
+        async function () {
         // Arrange
         const setup = async () => {
             return await createUserWithSomeFavourites();
@@ -695,11 +836,11 @@ describe('Edit user favourite postings', async function () {
             await tearDownPostings([userId], groupIds, postingIds);
         };
 
-        let {userId, groupIds, favouritePostings} = await setup();
-        let apiHandler = new ApiHandler();
+        const {user, groupIds, favouritePostings} = await setup();
+        const apiHandler = new ApiHandler(user.token);
 
         // Take only postings on odd indexes to make a different id list
-        let newFavouritesIds = [];
+        const newFavouritesIds = [];
         let isOdd = true;
         for (const fav of favouritePostings) {
             if (isOdd) {
@@ -714,45 +855,38 @@ describe('Edit user favourite postings', async function () {
         }
 
         // Act
-        let actualFavouritesIds = await apiHandler.editUserFavourites(userId, newFavouritesIds);
-        let actualFavourites = await apiHandler.getUserFavouritePostings(userId)
+        const success = await apiHandler.editUserFavourites(user.id, newFavouritesIds);
+        const actualFavourites = await apiHandler.getUserFavouritePostings(user.id)
 
         // Assert
-        // First check that the ids lists are equal
-        let isLengthEqual = actualFavouritesIds.length === newFavouritesIds.length;
-        expect(isLengthEqual).toBe(true);
-
-        for (const actualId of actualFavouritesIds) {
-            let isValid = newFavouritesIds.includes(actualId);
-            expect(isValid).toBe(true);
-        }
+        // First check that the edit was successful
+        expect(success).toBe(true);
 
         // Then check that the actual fetched postings correspond to the edited ids
-        isLengthEqual = actualFavouritesIds.length === actualFavourites.length;
+        const isLengthEqual = newFavouritesIds.length === actualFavourites.length;
         expect(isLengthEqual).toBe(true);
 
         for (const actualFav of actualFavourites) {
-            let isValid = newFavouritesIds.includes(actualFav.id);
+            const isValid = newFavouritesIds.includes(actualFav.id);
             expect(isValid).toBe(true);
         }
 
         // Teardown
-        await tearDown(userId, groupIds, favouritePostings);
-
+        await tearDown(user.id, groupIds, favouritePostings);
     });
 
-    it('should return an empty array given a wrong id for a specific user', async function () {
+    it('should return false given a wrong id for a specific user', async function () {
         //Arrange
-        let expected = [];
-        let wrongId = "-1";
-        let newFavourites = []
-        let apiHandler = new ApiHandler();
+        const wrongId = "-1";
+        const wrongToken = "-1";
+        const newFavourites = []
+        const apiHandler = new ApiHandler(wrongToken);
 
         //Act
-        let actual = await apiHandler.editUserFavourites(wrongId, newFavourites);
+        const success = await apiHandler.editUserFavourites(wrongId, newFavourites);
 
         //Assert
-        expect(expected.length === actual.length).toBe(true);
+        expect(success).toBe(false);
     });
 });
 

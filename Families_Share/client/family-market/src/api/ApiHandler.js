@@ -1,7 +1,6 @@
 const Posting = require("./model/Posting")
 const PostingInfo = require("./model/PostingInfo")
 const GroupInfo = require("./model/GroupInfo")
-const PostingsWithGroupInfo = require("./model/PostingsWithGroupInfo")
 const axios = require("axios");
 const Log = require( "../../../src/components/Log");
 
@@ -32,7 +31,17 @@ const Log = require( "../../../src/components/Log");
  * The policy adopted in Family Market and in this class will be the same.
  */
 class ApiHandler {
-    constructor() {
+    /**
+     *
+     * @param userToken {string} Token used to authenticate the user that makes the requests.
+     *      Set in the AUTHORIZATION field of the request header.
+     */
+    constructor(userToken) {
+        // Set default auth header with the token of the user that makes the requests
+        // this is necessary because the server checks if the user is authenticated
+        // by verifying the token
+        axios.defaults.headers.common["AUTHORIZATION"] = userToken;
+
         this.getGroupPostings = this.getGroupPostings.bind(this);
         this.getPosting = this.getPosting.bind(this);
         this.createPosting = this.createPosting.bind(this);
@@ -58,20 +67,17 @@ class ApiHandler {
      * Queries the api and returns an array of Posting objects belonging to the specified group.
      * In case an error occurred, an empty array is returned.
      * @param groupId {string} id of the group
-     * @return {Promise<Posting[]> | Promise<[]>} array of postings belonging to the group or empty array.
+     * @return {Promise<Posting[] | []>} array of postings belonging to the group or empty array.
      */
     async getGroupPostings(groupId) {
-        const postings = [];
+        let postings = [];
         const routeUrl = `${ApiHandler.POSTINGS_BASE_URL}/groups/${groupId}`
         await axios.get(routeUrl)
             .then(response => {
                 Log.info(`Postings of group '${groupId}' have been fetched`, this);
                 Log.info(response, this);
 
-                for (const item of response.data) {
-                    const p = new Posting(item);
-                    postings.push(p);
-                }
+                postings = ApiHandler.#parsePostingArray(response.data);
             })
             .catch(error => {
                 Log.error(`An error occurred on the request for the postings of group '${groupId}'`, this);
@@ -85,7 +91,7 @@ class ApiHandler {
      * Queries the api and returns the Posting object with the specified id.
      * In case an error occurred, an empty Posting is returned.
      * @param postingId {string} id of the posting to retrieve
-     * @return {Promise<Posting> | Promise<Posting.EMPTY>}
+     * @return {Promise<Posting | Posting.EMPTY>}
      */
     async getPosting(postingId) {
         let posting = Posting.EMPTY;
@@ -112,7 +118,7 @@ class ApiHandler {
      * @param userId {string} user that creates the posting
      * @param groupId {string} group that the posting is created on
      * @param info {PostingInfo} information to create the posting with
-     * @return {Promise<Posting> | Promise<Posting.EMPTY>}
+     * @return {Promise<Posting | Posting.EMPTY>}
      */
     async createPosting(userId, groupId, info) {
         const creationData = {
@@ -142,21 +148,20 @@ class ApiHandler {
     /**
      * Queries the api and edits an existing Posting with the provided id,
      * based on the information provided as argument.
-     * The Posting with the edited information is then returned.
-     * In case an error occurred, an empty Posting is returned instead.
+     * Returns true if the edit was successful, false otherwise.
      * @param idToEdit {string} id of the posting to edit
      * @param newInfo {PostingInfo} information to edit the Posting with.
-     * @return {Promise<Posting> | Promise<Posting.EMPTY>}
+     * @return {Promise<boolean>}
      */
     async editPosting(idToEdit, newInfo) {
-        let editedPosting = Posting.EMPTY;
+        let successful = false;
         const routeUrl = `${ApiHandler.POSTINGS_BASE_URL}/${idToEdit}`;
         await axios.patch(routeUrl, newInfo)
             .then(response => {
                 Log.info(`Posting with id ${idToEdit} has been edited`, this);
                 Log.info(response, this);
 
-                editedPosting = new Posting(response.data);
+                successful = true;
             })
             .catch(error => {
                 Log.error(`Error while editing posting with id ${idToEdit}`, this);
@@ -164,9 +169,8 @@ class ApiHandler {
                 Log.error(error, this);
             });
 
-        return editedPosting;
+        return successful;
     }
-
 
     /**
      * Queries the api and deletes an existing Posting with the provided id.
@@ -175,41 +179,78 @@ class ApiHandler {
      * @return {Promise<boolean>}
      */
     async deletePosting(postingId) {
-        let success = false;
+        let successful = false;
         const routeUrl = `${ApiHandler.POSTINGS_BASE_URL}/${postingId}`;
         await axios.delete(routeUrl)
             .then(response => {
                 Log.info(`Posting with id ${response.data.id} has been deleted`, this);
                 Log.info(response, this);
 
-                success = true;
+                successful = true;
             })
             .catch(error => {
                 Log.error(`Error while deleting posting with id ${postingId}`, this);
                 Log.error(error, this);
             });
 
-        return success;
+        return successful;
     }
 
     /**
      * Queries the api and returns information about all the groups the user belongs to.
      * In case an error occurred, returns an empty array instead.
      * @param userId {string} user to retrieve the postings of
-     * @return {Promise<GroupInfo[]> | Promise<[]>}
+     * @return {Promise<GroupInfo[] | []>}
      */
-    async getUserGroupsInfo(userId) {
-        // TODO e scrivi anche i test
+    async getUserGroups(userId) {
+        const groupInfos = [];
+        const routeUrl = `api/users/${userId}/groups`;
+        await axios.get(routeUrl)
+            .then(async response => {
+                Log.info(`Group ids for user '${userId}' has been fetched`, this);
+                Log.info(response, this);
+
+                for (const item of response.data)
+                {
+                    const groupId = item.group_id;
+                    const info = await this.getGroupInfo(groupId);
+                    groupInfos.push(info);
+                }
+            })
+            .catch(error => {
+                Log.error(`Error while fetching group infos for user '${userId}'`, this);
+                Log.error(error, this);
+            });
+
+        return groupInfos;
     }
 
     /**
      * Queries the api and returns information about the specified group.
+     * In case an error occurred, an empty group is returned instead.
      * @param groupId {string} group to retrieve the information of
-     * @return {Promise<GroupInfo> | Promise<GroupInfo.EMPTY>}
+     * @return {Promise<GroupInfo | GroupInfo.EMPTY>}
      */
     async getGroupInfo(groupId) {
-        // TODO e scrivi anche test -> io userei metodo getUserGroupsInfo e prenderei elemento che matcha.
-        //a meno che non esiste chiamata api specifica
+        let groupInfo = GroupInfo.EMPTY;
+        const routeUrl = `api/groups/${groupId}`;
+        await axios.get(routeUrl)
+            .then(async response => {
+                Log.info(`Group info for id '${groupId}' has been fetched`, this);
+                Log.info(response, this);
+
+                const groupData = response.data;
+                groupInfo = new GroupInfo({
+                    id: groupData.group_id,
+                    name: groupData.name
+                });
+            })
+            .catch(error => {
+                Log.error(`Error while fetching group info for id '${groupId}'`, this);
+                Log.error(error, this);
+            });
+
+        return groupInfo;
     }
 
     /**
@@ -217,48 +258,34 @@ class ApiHandler {
      * In case an error occurred, an empty array is returned instead.
      * @param userId {string} user to retrieve the postings of
      * @param groupId {string} group to retrieve the user's postings of
-     * @return {Promise<Posting[]> | Promise<[]>}
+     * @return {Promise<Posting[] | []>}
      */
     async getUserPostings(userId, groupId) {
-        // TODO qui va cambiato perché ora questo metodo ritorna solo i post dell'utente per quello specifico gruppo
-        //      "/users/:id/groups/:groupId/postings"
-        const postingsByGroup = [];
-        const routeUrl = `${ApiHandler.USER_EXT_BASE_URL}/users/${userId}/postings`;
+        let postings = [];
+        const routeUrl = `${ApiHandler.USER_EXT_BASE_URL}/${userId}/groups/${groupId}/postings`;
         await axios.get(routeUrl)
             .then(response => {
-                Log.info(`Postings of user '${userId}' have been fetched`, this);
+                Log.info(`Postings of user '${userId}' in group '${groupId}' have been fetched`, this);
                 Log.info(response, this);
 
-                // Data is divided by group, so we first get the group info
-                // and then we get each posting of the group
-                for (const item of response.data) {
-                    const info = new GroupInfo(item.group_info);
-
-                    const postings = [];
-                    for (const p of item.postings) {
-                        const posting = new Posting(p);
-                        postings.push(posting);
-                    }
-
-                    const pg = new PostingsWithGroupInfo({groupInfo: info, postings: postings});
-                    postingsByGroup.push(pg);
-                }
+                // Response data is an array of postings
+                postings = ApiHandler.#parsePostingArray(response.data);
             })
             .catch(error => {
-                Log.error(`An error occurred on the request for the postings of user '${userId}'`, this);
+                Log.error("An error occurred on the request" +
+                    `for the postings of user '${userId}' in group '${groupId}'`, this);
                 Log.error(error, this);
             });
 
-        return postingsByGroup;
+        return postings;
     }
-
 
     /**
      * Queries the api and returns an array of Posting objects that
      * were marked as favourites by the specified user.
      * In case an error occurred, an empty array is returned.
      * @param userId {string} user to fetch the favourite postings of
-     * @return {Promise<Posting[]> | Promise<[]>}
+     * @return {Promise<Posting[] | []>}
      */
     async getUserFavouritePostings(userId) {
         // First make a request for the user's favourite postings ids
@@ -269,7 +296,8 @@ class ApiHandler {
                 Log.info(`Favourite postings of user '${userId}' have been fetched`, this);
                 Log.info(response, this);
 
-                for (const favId of response.data.favourites) {
+                const favList = response.data;
+                for (const favId of favList) {
                     favouritesIds.push(favId);
                 }
             })
@@ -295,27 +323,20 @@ class ApiHandler {
 
     /**
      * Queries the api and updates the postings that the specified user marked as favourite.
-     * If the edit was successful, an array containing the updated favourite postings ids is returned.
-     * In case an error occurred, an empty array is returned instead.
+     * Returns true if the edit was successful, false otherwise.
      * @param userId {string} user to edit the favourite postings of
      * @param newFavouritesIds {string[]} updated ids of the postings the user marked as favourite
-     * @return {Promise<string[]> | Promise<[]>}
+     * @return {Promise<boolean>}
      */
     async editUserFavourites(userId, newFavouritesIds) {
-        const data = {
-            favourites: newFavouritesIds
-        };
-
-        const favouritesFromResponse = []
+        let successful = false;
         const routeUrl = `${ApiHandler.POSTINGS_BASE_URL}/users/${userId}/favourites`
         await axios.put(routeUrl, data)
             .then(response => {
                 Log.info(`Favourite postings of user '${userId}' have been edited`, this);
                 Log.info(response, this);
 
-                for (const favId of response.data.favourites) {
-                    favouritesFromResponse.push(favId);
-                }
+                successful = true;
             })
             .catch(error => {
                 Log.error(`An error occurred on the request for the 
@@ -324,7 +345,23 @@ class ApiHandler {
                 Log.error(error, this);
             });
 
-        return favouritesFromResponse;
+        return successful;
+    }
+
+    /**
+     * Parses an array of objects coming from an api response and returns
+     * the corresponding Posting objects.
+     * @param responseData
+     * @return {Posting[]}
+     */
+    static #parsePostingArray(responseData) {
+        const postings = []
+        for (const item of responseData) {
+            const p = new Posting(item);
+            postings.push(p);
+        }
+
+        return postings;
     }
 }
 

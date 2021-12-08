@@ -8,7 +8,7 @@ const {FAMILY_MARKET_BASE_URL} = require("../../constants");
 const React = require("react");
 const PropTypes = require("prop-types");
 const Log = require("../../../../src/components/Log");
-const EditNavBar = require("EditNavBar");
+const PlainNavBar = require("../PlainNavBar");
 const ConfirmButton = require("ConfirmButton");
 const DeleteButton = require("../DeleteButton");
 const MailInput = require("MailInput");
@@ -69,7 +69,6 @@ class EditPostingScreen extends React.Component {
             place: ""
         }
 
-
         // Bind everything because all these methods are called from outside the class
         this.createPosting = this.createPosting.bind(this);
         this.editPosting = this.editPosting.bind(this);
@@ -91,7 +90,6 @@ class EditPostingScreen extends React.Component {
 
     render() {
         // TODO
-        // pass something to editNavBar o to plain
     }
 
     async componentDidMount() {
