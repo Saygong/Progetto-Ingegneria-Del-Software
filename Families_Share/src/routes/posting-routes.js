@@ -4,7 +4,7 @@ const router = new express.Router()
 const Posting = require('../models/family-market/posting')
 const Member = require('../models/member')
 const objectid = require('objectid')
-
+const Contact = require("../models/family-market/contact");
 
 // Prefisso: “/api/groups/:groupId/postings”
 // Route for getPosting that retrieve a posting
@@ -95,13 +95,15 @@ router.delete('/:postingId', async (req, res, next) => {
 // Route for createPosting -> create a new posting
 router.post('/', async (req, res, next) => {
   const {
-    user_id, group_id, name, category, description, photo, type, contact_id
+    user_id, group_id, name, category, description, photo, type, email, place, phone_number
   } = req.body
+
   if (!(user_id && group_id && name && category && description && photo && type && contact_id)) {
     return res.status(400).send('Bad Request')
   }
   try {
     const id = objectid()
+    const contact_id = objectid()
     const newPosting = {
       id,
       user_id,
@@ -112,15 +114,26 @@ router.post('/', async (req, res, next) => {
       photo,
       type,
       contact_id
+      //creation_date fatto in automatico?
+    }
+    const newContact = {
+      contact_id,
+      email,
+      place,
+      phone_number
     }
     await Posting.create(newPosting)
+    await Contact.create(newPosting)
     const response = {
+      id,
+      user_id,
+      group_id,
       name,
       category,
       description,
       photo,
-      type
-      // TODO contact
+      type,
+      newContact
     }
     res.json(response)
   } catch (err) {
