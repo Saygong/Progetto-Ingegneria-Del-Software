@@ -495,7 +495,7 @@ describe('/Get/api/users/userId/groups/groupId/postings', () => {
   })
 })
 
-describe('/Patch/api/users/userId', () => {
+describe('/Patch/api/users/userId/favourites', () => {
   it('it should patch a users saved posting', (done) => {
     User.findOne({ email: 'test3@email.com' }, (user) => {
       chai.request(server)

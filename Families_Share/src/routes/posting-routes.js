@@ -6,39 +6,41 @@ const Member = require('../models/member')
 const objectid = require('objectid')
 const Contact = require("../models/family-market/contact");
 
-// Prefisso: “/api/groups/:groupId/postings”
+// Prefisso: “/api/postings”
 // Route for getPosting that retrieve a posting
 router.get('/:postingId', async (req, res) => {
   // Check if user is not authenticated
   if (!req.user_id) {
     return res.status(401).send('Not authenticated')
   }
-  const p_id = req.params.postingId
-  const g_id = req.params.groupId
-  const u_id = req.user_id
 
-  // Check if user is member of the group
   try {
-    const member = await Member.findOne({
-      group_id: `${g_id}`,
-      user_id: `${u_id}`,
-      group_accepted: true,
-      user_accepted: true
-    })
-    if (!member) {
-      return res.status(401).send('Unauthorized')
-    }
-
+    const p_id = req.params.postingId
     // Query that retrieves the posting with id = p_id
     return Posting.findOne({
       id: `${p_id}`
     })
       .lean()
       .exec()
-      .then(posting => {
-        if (posting.length === 0) {
+      .then(async posting => {
+        if (!posting) {
           return res.status(404).send('This posting does not exist')
         }
+
+        // Check if user is member of the group
+        const g_id = posting.group_id
+        const u_id = req.user_id
+
+        const member = await Member.findOne({
+          group_id: `${g_id}`,
+          user_id: `${u_id}`,
+          group_accepted: true,
+          user_accepted: true
+        })
+        if (!member) {
+          return res.status(401).send('Unauthorized')
+        }
+
         res.json(posting)
       })
   } catch (error) {
@@ -46,7 +48,7 @@ router.get('/:postingId', async (req, res) => {
   }
 })
 
-// Prefisso: “/api/groups/:groupId/postings”
+// Prefisso: “/api/postings”
 // Route for editPosting  ->  edit an existing posting
 router.patch('/:postingId', async (req, res, next) => {
   // Check if user is authenticated
@@ -69,7 +71,7 @@ router.patch('/:postingId', async (req, res, next) => {
   }
 })
 
-// Prefisso: “/api/groups/:groupId/postings”
+// Prefisso: “/api/postings”
 // Route for deletePosting -> delete an existing posting
 router.delete('/:postingId', async (req, res, next) => {
   // Check if user is authenticated
@@ -91,7 +93,7 @@ router.delete('/:postingId', async (req, res, next) => {
   }
 })
 
-// Prefisso: “/api/groups/:groupId/postings”
+// Prefisso: “/api/postings”
 // Route for createPosting -> create a new posting
 router.post('/', async (req, res, next) => {
   // Check if user is authenticated
@@ -102,7 +104,6 @@ router.post('/', async (req, res, next) => {
   const {
     user_id, group_id, name, category, description, photo, type, email, place, phone_number
   } = req.body
-  const a = req.body.user_id
 
   if (!(user_id && group_id && name && category && description && photo && type && email && place && phone_number)) {
     return res.status(400).send('Bad Request')
@@ -132,7 +133,7 @@ router.post('/', async (req, res, next) => {
       photo,
       type,
       contact_id
-      //creation_date fatto in automatico? Date.now() //se va male prendi l'esempio dell'indiano
+      //creation_date fatto in automatico? Date.now() //se va male prendo l'esempio dell'indiano
     }
     const newContact = {
       contact_id,

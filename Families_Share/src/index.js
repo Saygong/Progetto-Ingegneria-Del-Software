@@ -70,7 +70,7 @@ app.use('/api/children', require('./routes/child-routes'))
 app.use('/api/github', require('./routes/github-routes'))
 app.use('/api/community', require('./routes/community-routes'))
 /* ---------------------------------------        FAMILY-MARKET       ----------------------------------------------- */
-app.use('/api/groups/:groupId/postings', require('./routes/posting-routes'))
+app.use('/api/postings', require('./routes/posting-routes'))
 // to check the truthfulness of this sintax (ambiguous parameter)
 
 if (config.util.getEnv('NODE_ENV') === 'production') {

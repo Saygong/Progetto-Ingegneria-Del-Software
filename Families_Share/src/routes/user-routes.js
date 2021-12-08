@@ -1173,7 +1173,7 @@ router.get('/:userId/groups/:groupId/postings', async (req, res) => {
 
 // Prefisso: “/api/users”
 // Route for editUserFavourites edit the list of saved postings of the user -> Unlike PUT, PATCH applies a partial update to the resource.
-router.patch('/:userId', async (req, res, next) => {
+router.patch('/:userId/favourites', async (req, res, next) => {
   // Check if user is authenticated
   if (!req.user_id) {
     return res.status(401).send('Not authenticated')
