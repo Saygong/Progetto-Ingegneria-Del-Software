@@ -3,7 +3,7 @@ const Posting = require("../models/family-market/posting");
 
 /* ----------------------------------------     FAMILY-MARKET    ---------------------------------------------------- */
 
-// Prefisso: “/api/groups”
+// Prefisso: “/api/family-market/groups”
 // Route for getGroupPostings in order to show all the postings in a group
 router.get('/:groupId/postings', async (req, res) => {
     // Check if user is not authenticated

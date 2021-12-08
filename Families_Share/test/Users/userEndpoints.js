@@ -467,7 +467,7 @@ describe('/Get/api/users/userId/events', () => {
 
 /* ---------------------------------------     FAMILY - MARKET  TEST    --------------------------------------------- */
 
-describe('/Get/api/users/userId/favourites', () => {
+describe('/Get/api/family-market/users/userId/favourites', () => {
   it('it should correctly return a list of favourite postings of a user', (done) => {
     User.find({ email: 'test3@email.com' }, (user) => {
       chai.request(server)
@@ -480,7 +480,7 @@ describe('/Get/api/users/userId/favourites', () => {
   })
 })
 
-describe('/Get/api/users/userId/groups/groupId/postings', () => {
+describe('/Get/api/family-market/users/userId/groups/groupId/postings', () => {
   it('it should correctly return a list of postings of a user on a group', (done) => {
     User.find({ email: 'test3@email.com' }, (user) => {
       Group.findOne({ name: 'Test Group 2' }, (group) => {
@@ -495,7 +495,7 @@ describe('/Get/api/users/userId/groups/groupId/postings', () => {
   })
 })
 
-describe('/Patch/api/users/userId/favourites', () => {
+describe('/Patch/api/family-market/users/userId/favourites', () => {
   it('it should patch a users saved posting', (done) => {
     User.findOne({ email: 'test3@email.com' }, (user) => {
       chai.request(server)

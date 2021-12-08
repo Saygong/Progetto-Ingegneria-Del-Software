@@ -527,7 +527,7 @@ describe('/Delete/api/groups/id', () => {
 })
 /* ---------------------------------------     FAMILY - MARKET  TEST    --------------------------------------------- */
 
-describe('/Get/api/groups/groupId/postings', () => {
+describe('/Get/api/family-market/groups/groupId/postings', () => {
   it('it should correctly return a list of postings contained in a group', (done) => {
     Group.find({ name: 'Test Group 2' }, (err, group) => {
       chai.request(server)
