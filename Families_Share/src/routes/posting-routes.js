@@ -94,14 +94,32 @@ router.delete('/:postingId', async (req, res, next) => {
 // Prefisso: “/api/groups/:groupId/postings”
 // Route for createPosting -> create a new posting
 router.post('/', async (req, res, next) => {
+  // Check if user is authenticated
+  if (!req.user_id) {
+    return res.status(401).send('Not authenticated')
+  }
+
   const {
     user_id, group_id, name, category, description, photo, type, email, place, phone_number
   } = req.body
+  const a = req.body.user_id
 
-  if (!(user_id && group_id && name && category && description && photo && type && contact_id)) {
+  if (!(user_id && group_id && name && category && description && photo && type && email && place && phone_number)) {
     return res.status(400).send('Bad Request')
   }
+
   try {
+    // Check if user is member of the group
+    const member = await Member.findOne({
+      group_id: `${group_id}`,
+      user_id: `${user_id}`,
+      group_accepted: true,
+      user_accepted: true
+    })
+    if (!member) {
+      return res.status(401).send('Unauthorized')
+    }
+
     const id = objectid()
     const contact_id = objectid()
     const newPosting = {
@@ -114,7 +132,7 @@ router.post('/', async (req, res, next) => {
       photo,
       type,
       contact_id
-      //creation_date fatto in automatico?
+      //creation_date fatto in automatico? Date.now() //se va male prendi l'esempio dell'indiano
     }
     const newContact = {
       contact_id,
