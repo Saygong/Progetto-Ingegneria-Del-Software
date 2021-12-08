@@ -1,6 +1,7 @@
 const Posting = require("../../api/model/Posting");
 
 const React = require("react");
+const PropTypes = require("prop-types");
 const Log = require("../../../../src/components/Log");
 import withLanguage from "../../../../src/components/LanguageContext";
 
@@ -11,15 +12,6 @@ import withLanguage from "../../../../src/components/LanguageContext";
  */
 class PostingInfoTabs extends React.Component {
 
-    /**
-     * @type {{posting: Posting}}
-     */
-    props;
-
-    /**
-     *
-     * @param props {{posting: Posting}}
-     */
     constructor(props) {
         super(props);
     }
@@ -27,6 +19,14 @@ class PostingInfoTabs extends React.Component {
     render() {
         // TODO
     }
+}
+
+PostingInfoTabs.defaultProps = {
+    posting: Posting.EMPTY
+}
+
+PostingInfoTabs.propTypes = {
+    posting: PropTypes.instanceOf(Posting)
 }
 
 module.exports = withLanguage(PostingInfoTabs);

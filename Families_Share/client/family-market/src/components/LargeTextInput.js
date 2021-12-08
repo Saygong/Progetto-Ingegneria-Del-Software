@@ -1,19 +1,11 @@
 const React = require("react");
+const PropTypes = require("prop-types");
 const Log = require("../../../../src/components/Log");
 import withLanguage from "../../../src/components/LanguageContext";
 
 
 class LargeTextInput extends React.Component {
 
-    /**
-     * @type {{description: string, text: string, textChangeHandler: function(string)}}
-     */
-    props;
-
-    /**
-     *
-     * @param props {{description: string, text: string, textChangeHandler: function(string)}}
-     */
     constructor(props) {
         super(props);
 
@@ -32,6 +24,18 @@ class LargeTextInput extends React.Component {
     async handleTextChange(newText) {
         this.props.textChangeHandler(newText);
     }
+}
+
+LargeTextInput.defaultProps = {
+    text: "",
+    description: "",
+    textChangeHandler: null
+}
+
+LargeTextInput.propTypes = {
+    text: PropTypes.string,
+    description: PropTypes.string,
+    textChangeHandler: PropTypes.func.isRequired
 }
 
 module.exports = withLanguage(LargeTextInput);

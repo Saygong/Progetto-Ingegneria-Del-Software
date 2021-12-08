@@ -1,4 +1,5 @@
 const React = require("react");
+const PropTypes = require("prop-types");
 const Log = require("../../../src/components/Log");
 import withLanguage from "../../../src/components/LanguageContext";
 
@@ -8,25 +9,10 @@ import withLanguage from "../../../src/components/LanguageContext";
  */
 class DeleteButton extends React.Component {
 
-    /**
-     * @type {{deletionHandler: function}}
-     */
-    props;
-
-    /**
-     *
-     * @param props {{deletionHandler: function}}
-     */
     constructor(props) {
         super(props);
 
         this.handleDelete = this.handleDelete.bind(this);
-
-        /* TODO magari passare un prop che propone modalità large oppure small
-         * perché nella schermata di editing/creazione (vedi documento di progettazione)
-         * c'è un bottone delete più grande di una semplice icona del cestino
-         */
-
     }
 
     render() {
@@ -40,6 +26,14 @@ class DeleteButton extends React.Component {
     async handleDelete() {
         this.props.deletionHandler();
     }
+}
+
+DeleteButton.defaultProps = {
+    deletionHandler: null
+}
+
+DeleteButton.propTypes = {
+    deletionHandler: PropTypes.func.isRequired
 }
 
 module.exports = withLanguage(DeleteButton);

@@ -1,19 +1,11 @@
 const React = require("react");
+const PropTypes = require("prop-types");
 const Log = require("../../../../src/components/Log");
 import withLanguage from "../../../../src/components/LanguageContext";
 
-class PhotoInput extends React.Component {
-    /**
-     * The photo can be a base64 string, a file or a blob, last two of which
-     * are the way images are treated and passed by frontend elements (to my current understanding)
-     * @type {{photo: string | File | Blob, selectionChangeHandler: function(string | File | Blob)}}
-     */
-    props;
 
-    /**
-     *
-     * @param props {{photo: string | File | Blob, selectionChangeHandler: function(string | File | Blob)}}
-     */
+class ImageInput extends React.Component {
+
     constructor(props) {
         super(props);
 
@@ -35,8 +27,18 @@ class PhotoInput extends React.Component {
      */
     async handleImageSelection(acceptedFiles) {
         // This is because only one image should be allowed
-        this.props.selectionChangeHandler(acceptedFiles[0]);
+        this.props.photoChangeHandler(acceptedFiles[0]);
     }
 }
 
-module.exports = withLanguage(PhotoInput);
+ImageInput.defaultProps = {
+    image: "",
+    photoChangeHandler: null
+}
+
+ImageInput.propTypes = {
+    image: PropTypes.string,
+    photoChangeHandler: PropTypes.func
+}
+
+module.exports = withLanguage(ImageInput);

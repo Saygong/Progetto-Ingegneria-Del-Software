@@ -1,4 +1,5 @@
 const React = require("react");
+const PropTypes = require("prop-types");
 const Log = require("../../../../src/components/Log");
 const SimpleTextInput = require("SimpleTextInput");
 import withLanguage from "../../../src/components/LanguageContext";
@@ -6,15 +7,6 @@ import withLanguage from "../../../src/components/LanguageContext";
 
 class SearchBar extends React.Component {
 
-    /**
-     * @type {{text: string, textChangeHandler: function}}
-     */
-    props;
-
-    /**
-     *
-     * @param props {{text: string, textChangeHandler: function}}
-     */
     constructor(props) {
         super(props);
 
@@ -34,6 +26,16 @@ class SearchBar extends React.Component {
     async handleTextChange(newText) {
         this.props.textChangeHandler(newText);
     }
+}
+
+SearchBar.defaultProps = {
+    text: "",
+    textChangeHandler: null
+}
+
+SearchBar.propTypes = {
+    text: PropTypes.string,
+    textChangeHandler: PropTypes.func.isRequired
 }
 
 module.exports = withLanguage(SearchBar);

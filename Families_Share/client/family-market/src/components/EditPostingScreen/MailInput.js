@@ -1,20 +1,12 @@
 const React = require("react");
+const PropTypes = require("prop-types");
 const Log = require("../../../../src/components/Log");
 const SimpleTextInput = require("../SimpleTextInput");
 import withLanguage from "../../../../src/components/LanguageContext";
 
 
 class MailInput extends React.Component {
-    /**
-     *
-     * @type {{text: string, textChangeHandler: function(string)}}
-     */
-    props;
 
-    /**
-     *
-     * @param props {{text: string, textChangeHandler: function(string)}}
-     */
     constructor(props) {
         super(props);
 
@@ -33,6 +25,16 @@ class MailInput extends React.Component {
     async handleTextChange(newText) {
         this.props.textChangeHandler(newText);
     }
+}
+
+MailInput.defaultProps = {
+    text: "",
+    textChangeHandler: null
+}
+
+MailInput.propTypes = {
+    text: PropTypes.string,
+    textChangeHandler: PropTypes.func.isRequired
 }
 
 module.exports = withLanguage(MailInput);

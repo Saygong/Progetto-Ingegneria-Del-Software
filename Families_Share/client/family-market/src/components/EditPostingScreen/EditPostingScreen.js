@@ -3,7 +3,7 @@ const Posting = require("../../api/model/Posting");
 const PostingInfo = require("../../api/model/PostingInfo");
 const Contact = require("../../api/model/Contact");
 
-const {FAMILY_MARKET_BASE_URL} = require("../../constants");
+const {FAMILY_MARKET_BASE_PAGE_URL} = require("../../constants");
 
 const React = require("react");
 const PropTypes = require("prop-types");
@@ -14,7 +14,7 @@ const DeleteButton = require("../DeleteButton");
 const MailInput = require("MailInput");
 const TelephoneInput = require("TelephoneInput");
 const PlaceInput = require("PlaceInput");
-const PhotoInput = require("PhotoInput");
+const ImageInput = require("Families_Share/client/family-market/src/components/EditPostingScreen/ImageInput");
 const CategoryComboBox = require("../CategoryComboBox");
 const TransactionTypeComboBox = require("../TransactionTypeComboBox");
 import withLanguage from "../../../../src/components/LanguageContext";
@@ -296,7 +296,7 @@ class EditPostingScreen extends React.Component {
      * @return {string}
      */
     static get EDIT_MODE_ROUTE() {
-        return FAMILY_MARKET_BASE_URL + "/posting/edit/:postingId";
+        return FAMILY_MARKET_BASE_PAGE_URL + "/posting/edit/:postingId";
     }
 
     /**
@@ -316,7 +316,7 @@ class EditPostingScreen extends React.Component {
      * @return {string}
      */
     static get CREATE_MODE_ROUTE() {
-        return FAMILY_MARKET_BASE_URL + "/posting/create/users/:userId/groups/:groupId";
+        return FAMILY_MARKET_BASE_PAGE_URL + "/posting/create/users/:userId/groups/:groupId";
     }
 
     /**

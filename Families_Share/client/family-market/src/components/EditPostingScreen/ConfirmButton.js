@@ -1,4 +1,5 @@
 const React = require("react");
+const PropTypes = require("prop-types");
 const Log = require("../../../src/components/Log");
 import withLanguage from "../../../../src/components/LanguageContext";
 
@@ -8,15 +9,6 @@ import withLanguage from "../../../../src/components/LanguageContext";
  */
 class ConfirmButton extends React.Component {
 
-    /**
-     * @type {{confirmationHandler: function}}
-     */
-    props;
-
-    /**
-     *
-     * @param props {{confirmationHandler: function}}
-     */
     constructor(props) {
         super(props);
 
@@ -27,10 +19,22 @@ class ConfirmButton extends React.Component {
         // TODO:
     }
 
+    /**
+     * Called when the button is pressed.
+     * @return {Promise<void>}
+     */
     async handleConfirmation() {
         this.props.confirmationHandler();
     }
 
+}
+
+ConfirmButton.defaultProps = {
+    confirmationHandler: null
+}
+
+ConfirmButton.propTypes = {
+    confirmationHandler: PropTypes.func.isRequired
 }
 
 module.exports = withLanguage(ConfirmButton);

@@ -32,8 +32,16 @@ class CreatePostingButton extends React.Component {
         const userId = JSON.parse(localStorage.getItem("user")).id;
         const groupId = JSON.parse(localStorage.getItem("group")).id;
         const onCreateUrl = this.props.onCreateUrl;
-        buildCreateModeRedirectionHandler(this.props.history, userId, groupId, onCreateUrl);
+
+        const redirectionHandler =
+            buildCreateModeRedirectionHandler(this.props.history, userId, groupId, onCreateUrl);
+
+        redirectionHandler();
     }
+}
+
+CreatePostingButton.defaultProps = {
+    onCreateUrl: null
 }
 
 CreatePostingButton.propTypes = {

@@ -1,6 +1,7 @@
 const Posting = require("../../api/model/Posting");
 
 const React = require("react");
+const PropTypes = require("prop-types");
 const Log = require("../../../../src/components/Log");
 const PlainNavBar = require("../PlainNavBar");
 const EditPostingButton = require("../EditPostingButton");
@@ -16,16 +17,16 @@ import withLanguage from "../../../../src/components/LanguageContext";
 class PostingNavBar extends React.Component {
 
     /**
-     * @type {{isOwner: boolean, posting: Posting}}
+     * @type {{isFavourite: boolean}}
      */
-    props;
+    state;
 
-    /**
-     *
-     * @param props {{isOwner: boolean, posting: Posting}}
-     */
     constructor(props) {
         super(props);
+
+        this.state = {
+            isFavourite: xxx //TODO fare metodo isPostingFavourite(userId, postingId) su api
+        }
 
         this.handleFavouriteChange = this.handleFavouriteChange.bind(this);
     }
@@ -34,9 +35,31 @@ class PostingNavBar extends React.Component {
         // TODO PlainNavBar + EditPostingButton + ToggleFavouriteButton
     }
 
-    handleFavouriteChange() {
+    /**
+     * Returns true if the current user is the owner of the posting that is being displayed,
+     * false otherwise.
+     * @return {boolean}
+     */
+    isCurrentUserOwner() {
+        const currentUserId = JSON.parse(localStorage.getItem("user")).id;
+        const postingOwnerId = this.props.posting.id;
 
+        return currentUserId === postingOwnerId;
     }
+
+    async handleFavouriteChange() {
+        // TODO add methods (add, remove favourite(userId, postingId)) + add tests
+        xxx //TODO fare metodo isPostingFavourite(userId, postingId) su api
+    }
+
+}
+
+PostingNavBar.defaultProps = {
+    posting: Posting.EMPTY
+}
+
+PostingNavBar.propTypes = {
+    posting: PropTypes.instanceOf(Posting)
 }
 
 module.exports = withLanguage(PostingNavBar);

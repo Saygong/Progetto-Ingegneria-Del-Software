@@ -7,7 +7,7 @@ import withLanguage from "./LanguageContext";
 // Needed to handle Family Market redirection
 import {useLocation} from "react-router-dom";
 import {useHistory} from "react-router-dom";
-import {FAMILY_MARKET_BASE_URL} from "../../family-market/src/constants";
+import {FAMILY_MARKET_BASE_PAGE_URL} from "../../family-market/src/constants";
 import {buildRedirectionHandler} from "../../family-market/src/components/MyPostingsScreens/MyGroupPostingsScreen";
 import Log from "./Log";
 
@@ -38,7 +38,7 @@ const GroupList = ({ groupIds }) => {
   // Determine which navigation handler would be correct based on the current location (route)
   let navigationHandler = null;
   let currentLocation = useLocation();
-  if (currentLocation.pathname.includes(FAMILY_MARKET_BASE_URL)) {
+  if (currentLocation.pathname.includes(FAMILY_MARKET_BASE_PAGE_URL)) {
       // we are in the Family Market extension
       navigationHandler = redirectToGroupPostingsScreen;
   }

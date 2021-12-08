@@ -1,4 +1,5 @@
 const React = require("react");
+const PropTypes = require("prop-types");
 const Log = require("../../../src/components/Log");
 import withLanguage from "../../../src/components/LanguageContext";
 
@@ -6,11 +7,6 @@ import withLanguage from "../../../src/components/LanguageContext";
  * Class that represents a generic rectangular list item, with an image, title and description.
  */
 class ListItem extends React.Component {
-
-    /**
-     * @type {{image: string | Image, title: string, description: string}}
-     */
-    props;
 
     constructor(props) {
         super(props);
@@ -20,6 +16,18 @@ class ListItem extends React.Component {
     render() {
         //  TODO
     }
+}
+
+ListItem.defaultProps = {
+    image: "",
+    title: "",
+    description: ""
+}
+
+ListItem.propTypes = {
+    image: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+    title: PropTypes.string,
+    description: PropTypes.string
 }
 
 module.exports = withLanguage(ListItem);

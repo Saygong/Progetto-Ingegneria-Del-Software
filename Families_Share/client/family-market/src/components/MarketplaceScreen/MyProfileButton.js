@@ -9,6 +9,7 @@ import withLanguage from "../../../../src/components/LanguageContext";
  * the profile section of the current user.
  */
 class MyProfileButton extends React.Component {
+
     constructor(props) {
         super(props);
 

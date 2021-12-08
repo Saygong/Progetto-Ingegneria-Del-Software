@@ -1,7 +1,8 @@
 const ApiHandler = require("../../api/ApiHandler");
 const Posting = require("../../api/model/Posting");
 const GroupInfo = require("../../api/model/GroupInfo");
-const {FAMILY_MARKET_BASE_URL} = require("../../constants");
+
+const {FAMILY_MARKET_BASE_PAGE_URL} = require("../../constants");
 
 const React = require("react");
 const Log = require("../../../../src/components/Log");
@@ -77,7 +78,7 @@ class MyGroupsWithPostingsScreen extends React.Component {
      * @return {string}
      */
     static get ROUTE() {
-        return FAMILY_MARKET_BASE_URL + "/users/:userId/groups";
+        return FAMILY_MARKET_BASE_PAGE_URL + "/users/:userId/groups";
     }
 
     /**

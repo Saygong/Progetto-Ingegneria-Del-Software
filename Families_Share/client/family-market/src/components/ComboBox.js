@@ -1,22 +1,11 @@
 const React = require("react");
+const PropTypes = require("prop-types");
 const Log = require("../../../../src/components/Log");
 import withLanguage from "../../../src/components/LanguageContext";
 
 
 class ComboBox extends React.Component {
 
-    /**
-     *
-     * @type {{itemList: string[], selectedItem: string, iconPath: string,
-     *          selectionChangeHandler: function(string)}}
-     */
-    props;
-
-    /**
-     *
-     * @param props {{itemList: string[], selectedItem: string, iconPath: string,
-     *          selectionChangeHandler: function(string)}}
-     */
     constructor(props) {
         super(props);
 
@@ -43,7 +32,14 @@ ComboBox.defaultProps = {
     itemList: [],
     selectedItem: "",
     iconPath: "",
-    selectionChangeHandler: () => { }
+    selectionChangeHandler: null
+}
+
+ComboBox.propTypes = {
+    itemList: PropTypes.arrayOf(PropTypes.string),
+    selectedItem: PropTypes.string,
+    iconPath: PropTypes.string,
+    selectionChangeHandler: PropTypes.func.isRequired
 }
 
 module.exports = withLanguage(ComboBox);

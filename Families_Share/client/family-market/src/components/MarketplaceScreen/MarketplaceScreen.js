@@ -1,7 +1,7 @@
 const ApiHandler = require("../../api/ApiHandler");
 const Posting = require("../../api/model/Posting");
 
-const {FAMILY_MARKET_BASE_URL} = require("../../constants");
+const {FAMILY_MARKET_BASE_PAGE_URL} = require("../../constants");
 
 const React = require("react");
 const Log = require("../../../../src/components/Log");
@@ -11,11 +11,6 @@ const CategoryComboBox = require("../CategoryComboBox");
 const TransactionTypeComboBox = require("../TransactionTypeComboBox");
 const MarketplaceNavBar = require("MarketplaceNavBar");
 import withLanguage from "../../../../src/components/LanguageContext";
-
-//TODO metodi api chiamati in componentDidMount e poi setState
-//TODO gestione asyncEventHandlers -> forse ha senso mettere la parola async in fondo come in C#?
-//  poi bisognerebbe mettere tutti i metodi tipo OnClick, OnTextChange che richiamano props.handler come async,
-//  dato che handler può essere async? -> sì
 
 
 class MarketplaceScreen extends React.Component {
@@ -54,14 +49,19 @@ class MarketplaceScreen extends React.Component {
     }
 
     async componentDidMount() {
-        // TODO load postings + setGoBackState
-        setGoBackState({});
+        // TODO load postings
+
 
 
     }
 
+    /**
+     * Returns all the postings of the current group.
+     * @return {Promise<Posting[]|[]>}
+     */
     async getGroupPostings() {
-        // TODO get postings from api -> component didmount
+        const groupId = JSON.parse(localStorage.getItem("group")).id;
+        return this.apiHandler.getGroupPostings(groupId);
     }
 
     /**
@@ -111,7 +111,7 @@ class MarketplaceScreen extends React.Component {
      * @return {string}
      */
     static get ROUTE() {
-        return FAMILY_MARKET_BASE_URL + "/marketplace";
+        return FAMILY_MARKET_BASE_PAGE_URL + "/marketplace";
     }
 
     /**

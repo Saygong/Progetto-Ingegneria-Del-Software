@@ -2,22 +2,13 @@ const ApiHandler = require("../../api/ApiHandler");
 const Posting = require("../../api/model/Posting");
 
 const React = require("react");
+const PropTypes = require("prop-types");
 const Log = require("../../../../src/components/Log");
-const PostingsListItem = require("./PostingsListItem");
+const {PostingsListItem, EDIT_MODE, FAVOURITES_MODE} = require("./PostingsListItem");
 import withLanguage from "../../../../src/components/LanguageContext";
 
 
 class PostingsList extends React.Component {
-
-    /**
-     * Notes:
-     * - itemMode is either "edit" or "favourites" and determines the buttons
-     * that are visualized in each list item
-     * - filterText filters postings based on their name
-     * @type {{itemMode: string, filterTnType: string, filterCategory: string, postings: Posting[],
-     *          filterText: string, title: string}}
-     */
-    props;
 
     /**
      * Changed only if a posting is deleted.
@@ -30,11 +21,6 @@ class PostingsList extends React.Component {
      */
     apiHandler;
 
-    /**
-     *
-     * @param props {{itemMode: string, filterTnType: string, filterCategory: string, postings: Posting[],
-     *                  filterText: string, title: string}}
-     */
     constructor(props) {
         super(props);
 
@@ -46,14 +32,12 @@ class PostingsList extends React.Component {
         this.state = {
             postings: this.getFilteredPostings()
         };
-
-        this.handlePostingDeletion = this.handlePostingDeletion.bind(this);
     }
 
     render() {
         const postingsToDisplay = this.state.postings;
 
-        // TODO
+        // TODO lista di PostingsListItem
     }
 
     /**
@@ -64,13 +48,32 @@ class PostingsList extends React.Component {
         const allPostings = this.props.postings;
         const {filterText, filterTnType, filterCategory} = this.props;
         const filteredPostings = [];
-
-        //TODO: implementare filtro
-        // https://it.reactjs.org/docs/thinking-in-react.html
-        // Passo 5 della guida contiene un buon esempio di ricerca elementi fatta in maniera semplice
+        for (const p of allPostings) {
+            //TODO: implementare filtro
+            // https://it.reactjs.org/docs/thinking-in-react.html
+            // Passo 5 della guida contiene un buon esempio di ricerca elementi fatta in maniera semplice
+        }
 
         return filteredPostings;
     }
+}
+
+PostingsList.defaultProps = {
+    postings: [],
+    title: "",
+    itemMode: FAVOURITES_MODE,
+    filterText: "",
+    filterTnType: "",
+    filterCategory: ""
+}
+
+PostingsList.defaultProps = {
+    postings: PropTypes.arrayOf(PropTypes.instanceOf(Posting)),
+    title: PropTypes.string,
+    iteMode: PropTypes.oneOf([EDIT_MODE, FAVOURITES_MODE]),
+    filterText: PropTypes.string,
+    filterTnType: PropTypes.string,
+    filterCategory: PropTypes.string
 }
 
 module.exports = withLanguage(PostingsList);

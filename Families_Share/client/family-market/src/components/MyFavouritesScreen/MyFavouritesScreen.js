@@ -1,7 +1,7 @@
 const ApiHandler = require("../../api/ApiHandler");
 const Posting = require("../../api/model/Posting");
 
-const {FAMILY_MARKET_BASE_URL} = require("../../constants");
+const {FAMILY_MARKET_BASE_PAGE_URL} = require("../../constants");
 
 const React = require("react");
 const Log = require("../../../../src/components/Log");
@@ -44,7 +44,7 @@ class MyFavouritesScreen extends React.Component {
         // TODO postings from state
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         // TODO fetch fav postings here and set state
     }
 
@@ -73,7 +73,7 @@ class MyFavouritesScreen extends React.Component {
      * @return {string}
      */
     static get ROUTE() {
-        return FAMILY_MARKET_BASE_URL + "/users/:userId/favourites";
+        return FAMILY_MARKET_BASE_PAGE_URL + "/users/:userId/favourites";
     }
 
     /**

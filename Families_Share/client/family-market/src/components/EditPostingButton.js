@@ -1,9 +1,7 @@
-import {EDIT_POSTING_SCREEN_URL} from "../../constants";
-
 const Posting = require("../api/model/Posting");
 
 const React = require("react");
-import PropTypes from "prop-types";
+const PropTypes = require("prop-types");
 const Log = require("../../../src/components/Log");
 
 const {buildEditModeRedirectionHandler} = require("EditPostingScreen/EditPostingScreen");
@@ -28,6 +26,9 @@ class EditPostingButton extends React.Component {
         //TODO
     }
 
+    /**
+     * Called when the button is clicked.
+     */
     redirectToEditPostingScreen() {
         const {postingId, onEditUrl, onDeleteUrl} = this.props;
         const redirectionHandler =

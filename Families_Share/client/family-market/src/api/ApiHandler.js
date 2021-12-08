@@ -54,14 +54,19 @@ class ApiHandler {
         this.editUserFavourites = this.editUserFavourites.bind(this);
     }
 
-
     static get FM_API_BASE_URL() {
         return "/api/family-market";
     }
+
     static get POSTINGS_BASE_URL() {
         return `${ApiHandler.FM_API_BASE_URL}/postings`;
     }
-    static get USER_EXT_BASE_URL() {
+
+    static get GROUPS_BASE_URL() {
+        return `${ApiHandler.FM_API_BASE_URL}/groups`;
+    }
+
+    static get USERS_BASE_URL() {
         return `${ApiHandler.FM_API_BASE_URL}/users`;
     }
 
@@ -73,7 +78,7 @@ class ApiHandler {
      */
     async getGroupPostings(groupId) {
         let postings = [];
-        const routeUrl = `${ApiHandler.POSTINGS_BASE_URL}/groups/${groupId}`
+        const routeUrl = `${ApiHandler.GROUPS_BASE_URL}/${groupId}/postings`
         await axios.get(routeUrl)
             .then(response => {
                 Log.info(`Postings of group '${groupId}' have been fetched`, this);
@@ -264,7 +269,7 @@ class ApiHandler {
      */
     async getUserPostings(userId, groupId) {
         let postings = [];
-        const routeUrl = `${ApiHandler.USER_EXT_BASE_URL}/${userId}/groups/${groupId}/postings`;
+        const routeUrl = `${ApiHandler.USERS_BASE_URL}/${userId}/groups/${groupId}/postings`;
         await axios.get(routeUrl)
             .then(response => {
                 Log.info(`Postings of user '${userId}' in group '${groupId}' have been fetched`, this);

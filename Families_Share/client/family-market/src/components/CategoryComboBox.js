@@ -1,6 +1,7 @@
 const VALID_CATEGORIES = require("../constants").CATEGORIES;
 
 const React = require("react");
+const PropTypes = require("prop-types");
 const Log = require("../../../../src/components/Log");
 const ComboBox = require("ComboBox");
 import withLanguage from "../../../src/components/LanguageContext";
@@ -8,15 +9,6 @@ import withLanguage from "../../../src/components/LanguageContext";
 
 class CategoryComboBox extends React.Component {
 
-    /**
-     * @type {{description: string, selectedCategory: string, categoryChangeHandler: function(string)}}
-     */
-    props;
-
-    /**
-     *
-     * @param props {{description: string, selectedCategory: string, categoryChangeHandler: function(string)}}
-     */
     constructor(props) {
         super(props);
 
@@ -35,6 +27,20 @@ class CategoryComboBox extends React.Component {
     async handleCategoryChange(newCategory) {
         this.props.categoryChangeHandler(newCategory);
     }
+}
+
+CategoryComboBox.defaultProps = {
+    itemList: [],
+    selectedItem: "",
+    iconPath: "",
+    categoryChangeHandler: null
+}
+
+CategoryComboBox.propTypes = {
+    itemList: PropTypes.arrayOf(PropTypes.string),
+    selectedItem: PropTypes.string,
+    iconPath: PropTypes.string,
+    categoryChangeHandler: PropTypes.func.isRequired
 }
 
 module.exports = withLanguage(CategoryComboBox);

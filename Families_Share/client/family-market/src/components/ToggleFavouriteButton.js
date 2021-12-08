@@ -1,4 +1,5 @@
 const React = require("react");
+const PropTypes = require("prop-types");
 const Log = require("../../../src/components/Log");
 import withLanguage from "../../../src/components/LanguageContext";
 
@@ -8,15 +9,6 @@ import withLanguage from "../../../src/components/LanguageContext";
  */
 class ToggleFavouriteButton extends React.Component {
 
-    /**
-     * @type {{isFavourite: boolean, favouriteChangeHandler: function(boolean)}}
-     */
-    props;
-
-    /**
-     *
-     * @param props {{isFavourite: boolean, favouriteChangeHandler: function(boolean)}}
-     */
     constructor(props) {
         super(props);
 
@@ -38,6 +30,16 @@ class ToggleFavouriteButton extends React.Component {
         const newState = !this.props.isFavourite;
         this.props.favouriteChangeHandler(newState)
     }
+}
+
+ToggleFavouriteButton.defaultProps = {
+    isFavourite: false,
+    favouriteChangeHandler: null
+}
+
+ToggleFavouriteButton.propTypes = {
+    isFavourite: PropTypes.bool.isRequired,
+    favouriteChangeHandler: PropTypes.func.isRequired
 }
 
 module.exports = withLanguage(ToggleFavouriteButton);

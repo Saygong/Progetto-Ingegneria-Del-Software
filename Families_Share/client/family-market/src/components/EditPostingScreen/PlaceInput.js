@@ -1,19 +1,11 @@
 const React = require("react");
+const PropTypes = require("prop-types");
 const Log = require("../../../../src/components/Log");
 import withLanguage from "../../../../src/components/LanguageContext";
 
 
 class PlaceInput extends React.Component {
-    /**
-     *
-     * @type {{place: string, selectionChangeHandler: function(string)}}
-     */
-    props;
 
-    /**
-     *
-     * @param props {{place: string, selectionChangeHandler: function(string)}}
-     */
     constructor(props) {
         super(props);
 
@@ -31,13 +23,23 @@ class PlaceInput extends React.Component {
     }
 
     /**
-     * Called when a new place is selected.
+     * Called when a new place is picked.
      * @param newPlace {string}
      * @return {Promise<void>}
      */
     async handlePlaceSelection(newPlace) {
-        this.props.selectionChangeHandler(newPlace);
+        this.props.placeChangeHandler(newPlace);
     }
+}
+
+PlaceInput.defaultProps = {
+    place: "",
+    placeChangeHandler: null
+}
+
+PlaceInput.propTypes = {
+    place: PropTypes.string,
+    placeChangeHandler: PropTypes.func.isRequired
 }
 
 module.exports = withLanguage(PlaceInput);

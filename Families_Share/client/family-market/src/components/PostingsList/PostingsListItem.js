@@ -75,16 +75,16 @@ class PostingsListItem extends React.Component {
      * Called when this component is clicked.
      */
     redirectToPostingScreen() {
-        Log.info("Redirecting to PostingScreen ", this);
-
         const postingId = this.props.posting.id;
         const redirectionHandler = buildRedirectionHandler(this.props.history, postingId)
 
+        Log.info("Redirecting to PostingScreen ", this);
         redirectionHandler();
     }
 
     async handleFavouriteChange() {
-        // TODO updates the current user favourites list and change state
+        // TODO add methods (add, remove favourite(userId, postingId)) + add tests
+        xxx //TODO fare metodo isPostingFavourite(userId, postingId) su api
     }
 }
 
@@ -101,4 +101,8 @@ PostingsListItem.propTypes = {
     deletionHandler: PropTypes.func.isRequired
 }
 
-module.exports = withRouter(withLanguage(PostingsListItem));
+module.exports = {
+    PostingsListItem: withRouter(withLanguage(PostingsListItem)),
+    FAVOURITES_MODE: PostingsListItem.FAVOURITES_MODE,
+    EDIT_MODE: PostingsListItem.EDIT_MODE
+};

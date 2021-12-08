@@ -1,10 +1,9 @@
 const ApiHandler = require("../../api/ApiHandler");
 const Posting = require("../../api/model/Posting");
 
-const {FAMILY_MARKET_BASE_URL} = require("../../constants");
+const {FAMILY_MARKET_BASE_PAGE_URL} = require("../../constants");
 
 const React = require("react");
-const PropTypes = require("prop-types");
 const Log = require("../../../../src/components/Log");
 const PostingNavBar = require("./PostingNavBar");
 const PostingInfo = require("./PostingInfo");
@@ -45,8 +44,13 @@ class PostingScreen extends React.Component {
     }
 
     async componentDidMount() {
+        // fetch the posting and set the state
     }
 
+    /**
+     * Fetch the posting to display in this page.
+     * @return {Promise<Posting|Posting.EMPTY>}
+     */
     async fetchPosting() {
         const postingId = this.matchParams.postingId;
 
@@ -70,7 +74,7 @@ class PostingScreen extends React.Component {
      * @return {string}
      */
     static get ROUTE() {
-        return FAMILY_MARKET_BASE_URL + "/posting/:postingId";
+        return FAMILY_MARKET_BASE_PAGE_URL + "/posting/:postingId";
     }
 
     /**
@@ -86,14 +90,6 @@ class PostingScreen extends React.Component {
             history.push(PostingScreen.buildUrl(postingId))
         }
     }
-}
-
-PostingScreen.defaultProps = {
-    postingId: ""
-}
-
-PostingScreen.propTypes = {
-    postingId: string
 }
 
 module.exports = {
