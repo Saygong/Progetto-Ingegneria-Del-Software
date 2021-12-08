@@ -1183,7 +1183,7 @@ router.patch('/:userId', async (req, res, next) => {
   try {
     // req.patch must be the updated favourites postings list
     await User.findOneAndUpdate({ user_id: `${u_id}` }, req.patch).then(
-      res.status(200).send('Favourites successfully updated')
+      res.status(204).send('Favourites successfully updated')
     )
 
   } catch (error) {

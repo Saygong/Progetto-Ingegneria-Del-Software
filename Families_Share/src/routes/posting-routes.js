@@ -5,7 +5,7 @@ const Posting = require('../models/family-market/posting')
 const Member = require('../models/member')
 const objectid = require('objectid')
 
-// TODO: FORSE NON SERVE perche alla fine quando facciamo richiesta per i post di un gruppo, li abbiamo gia. dice pier
+
 // Prefisso: “/api/groups/:groupId/postings”
 // Route for getPosting that retrieve a posting
 router.get('/:postingId', async (req, res) => {
@@ -61,7 +61,7 @@ router.patch('/:postingId', async (req, res, next) => {
 
     // req.patch must be an object with the updated field
     await Posting.findOneAndUpdate({ id: `${p_id}` }, req.patch).then(
-      res.status(200).send('Posting successfully updated')
+      res.status(204).send('Posting successfully updated')
     )
 
   } catch (error) {
@@ -93,7 +93,7 @@ router.delete('/:postingId', async (req, res, next) => {
 
 // Prefisso: “/api/groups/:groupId/postings”
 // Route for createPosting -> create a new posting
-router.post('/newPost', async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   const {
     user_id, group_id, name, category, description, photo, type, contact_id
   } = req.body
