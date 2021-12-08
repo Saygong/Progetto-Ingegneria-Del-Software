@@ -773,7 +773,7 @@ describe('Get all user postings of a certain group', function () {
 });
 
 
-describe('Get user favourite postings', async function () {
+describe('Get user favourite postings', function () {
     it('should return a list of all the postings marked as favourite by a specific user', async function () {
         // Arrange
         const setup = async () => {
@@ -789,17 +789,17 @@ describe('Get user favourite postings', async function () {
             await tearDownPostings([userId], groupIds, postingIds);
         };
 
-        const {user, groupIds, postings} = await setup();
+        const {user, groupIds, favouritePostings} = await setup();
         const apiHandler = new ApiHandler(user.token);
 
         // Act
         const actualPostings = await apiHandler.getUserFavouritePostings(user.id);
 
         // Assert
-        assertList(actualPostings, postings);
+        assertList(actualPostings, favouritePostings);
 
         // Teardown
-        await tearDown(user.id, groupIds, postings);
+        await tearDown(user.id, groupIds, favouritePostings);
 
     });
 
@@ -819,7 +819,7 @@ describe('Get user favourite postings', async function () {
 });
 
 
-describe('Edit user favourite postings', async function () {
+describe('Edit user favourite postings', function () {
     it('should return true and the actual favourite postings should correspond to the updated ids',
         async function () {
         // Arrange
@@ -829,9 +829,7 @@ describe('Edit user favourite postings', async function () {
 
         const tearDown = async (userId, groupIds, postings) => {
             const postingIds = [];
-            for (const p of postings) {
-                postingIds.push(p.id);
-            }
+            postings.forEach(p => postingIds.push(p.id));
 
             await tearDownPostings([userId], groupIds, postingIds);
         };
@@ -862,14 +860,10 @@ describe('Edit user favourite postings', async function () {
         // First check that the edit was successful
         expect(success).toBe(true);
 
-        // Then check that the actual fetched postings correspond to the edited ids
-        const isLengthEqual = newFavouritesIds.length === actualFavourites.length;
-        expect(isLengthEqual).toBe(true);
-
-        for (const actualFav of actualFavourites) {
-            const isValid = newFavouritesIds.includes(actualFav.id);
-            expect(isValid).toBe(true);
-        }
+        // Then check that the actual fetched postings ids correspond to the edited ids
+        const actualIds = [];
+        actualFavourites.forEach(fav => actualIds.push(fav.id));
+        assertList(newFavouritesIds, actualIds);
 
         // Teardown
         await tearDown(user.id, groupIds, favouritePostings);
@@ -890,3 +884,187 @@ describe('Edit user favourite postings', async function () {
     });
 });
 
+
+describe("Check if a single posting belongs to a user's favourites list", function () {
+    it('should return true if a posting is a user favourite', async function () {
+        // Arrange
+        const setup = async () => {
+            return await createUserWithSomeFavourites();
+        };
+
+        const tearDown = async (userId, groupIds, postings) => {
+            const postingIds = [];
+            for (const p of postings) {
+                postingIds.push(p.id);
+            }
+
+            await tearDownPostings([userId], groupIds, postingIds);
+        };
+
+        const {user, groupIds, favouritePostings} = await setup();
+        const apiHandler = new ApiHandler(user.token);
+
+        // this is already a favourite, so the tested method should return true
+        const toCheck = favouritePostings[0];
+
+        // Act
+        const isFavourite = await apiHandler.isUserFavourite(user.id, toCheck.id);
+
+        // Assert
+        expect(isFavourite).toBe(true);
+
+        // Teardown
+        await tearDown(user.id, groupIds, favouritePostings);
+    });
+
+    it('should return false if a posting is not a user favourite', async function () {
+        // Arrange
+        const setup = async () => {
+            return await createUserWithSomeFavourites();
+        };
+
+        const tearDown = async (userId, groupIds, postings) => {
+            const postingIds = [];
+            for (const p of postings) {
+                postingIds.push(p.id);
+            }
+
+            await tearDownPostings([userId], groupIds, postingIds);
+        };
+
+        const {user, groupIds, favouritePostings} = await setup();
+        const apiHandler = new ApiHandler(user.token);
+
+        // Act
+        const wrongId = "-1";
+        const isFavourite = await apiHandler.isUserFavourite(user.id, wrongId);
+
+        // Assert
+        expect(isFavourite).toBe(false);
+
+        // Teardown
+        await tearDown(user.id, groupIds, favouritePostings);
+    });
+});
+
+
+describe("Add a single posting to a user's favourites list", function () {
+    it('should return true if an existing posting is added to the favourites list', async function () {
+        // Arrange
+        const setup = async () => {
+            return await createUserWithSomeFavourites();
+        };
+
+        const tearDown = async (userId, groupIds, postings) => {
+            const postingIds = [];
+            for (const p of postings) {
+                postingIds.push(p.id);
+            }
+
+            await tearDownPostings([userId], groupIds, postingIds);
+        };
+
+        const {user, groupIds, favouritePostings} = await setup();
+        const apiHandler = new ApiHandler(user.token);
+        const toAdd = await createRandomPosting(user.id, groupIds[0]);
+
+        // Act
+        const success = apiHandler.addUserFavourite(user.id, toAdd.id);
+
+        // Assert
+        expect(success).toBe(true);
+
+        // Teardown
+        await tearDown(user.id, groupIds, favouritePostings);
+    });
+
+    it('should return false if the posting to be added is already a favourite', async function () {
+        // Arrange
+        const setup = async () => {
+            return await createUserWithSomeFavourites();
+        };
+
+        const tearDown = async (userId, groupIds, postings) => {
+            const postingIds = [];
+            for (const p of postings) {
+                postingIds.push(p.id);
+            }
+
+            await tearDownPostings([userId], groupIds, postingIds);
+        };
+
+        const {user, groupIds, favouritePostings} = await setup();
+        const apiHandler = new ApiHandler(user.token);
+        const alreadyAdded = favouritePostings[0]
+
+        // Act
+        const success = apiHandler.addUserFavourite(user.id, alreadyAdded.id);
+
+        // Assert
+        expect(success).toBe(false);
+
+        // Teardown
+        await tearDown(user.id, groupIds, favouritePostings);
+    });
+});
+
+
+describe("Remove a single posting from a user's favourites list", function () {
+    it('should return true if a favourite posting is removed from the list', async function () {
+        // Arrange
+        const setup = async () => {
+            return await createUserWithSomeFavourites();
+        };
+
+        const tearDown = async (userId, groupIds, postings) => {
+            const postingIds = [];
+            for (const p of postings) {
+                postingIds.push(p.id);
+            }
+
+            await tearDownPostings([userId], groupIds, postingIds);
+        };
+
+        const {user, groupIds, favouritePostings} = await setup();
+        const apiHandler = new ApiHandler(user.token);
+        const toRemove = await createRandomPosting(user.id, groupIds[0]);
+
+        // Act
+        const success = apiHandler.removeUserFavourite(user.id, toRemove.id);
+
+        // Assert
+        expect(success).toBe(true);
+
+        // Teardown
+        await tearDown(user.id, groupIds, favouritePostings);
+    });
+
+    it('should return false if the posting to be removed is not a favourite', async function () {
+        // Arrange
+        const setup = async () => {
+            return await createUserWithSomeFavourites();
+        };
+
+        const tearDown = async (userId, groupIds, postings) => {
+            const postingIds = [];
+            for (const p of postings) {
+                postingIds.push(p.id);
+            }
+
+            await tearDownPostings([userId], groupIds, postingIds);
+        };
+
+        const {user, groupIds, favouritePostings} = await setup();
+        const apiHandler = new ApiHandler(user.token);
+        const wrongIdToRemove = "-1";
+
+        // Act
+        const success = apiHandler.removeUserFavourite(user.id, wrongIdToRemove);
+
+        // Assert
+        expect(success).toBe(false);
+
+        // Teardown
+        await tearDown(user.id, groupIds, favouritePostings);
+    });
+});

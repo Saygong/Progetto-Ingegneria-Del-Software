@@ -33,15 +33,15 @@ const Log = require( "../../../src/components/Log");
 class ApiHandler {
     /**
      *
-     * @param userToken {string} Token used to authenticate the user that makes the requests.
+     * @param authToken {string} Token used to authenticate the user that makes the requests.
      *      Set in the AUTHORIZATION field of the request header.
      */
-    constructor(userToken="") {
-        if (userToken !== "") {
+    constructor(authToken="") {
+        if (authToken !== "") {
             // Set default auth header with the token of the user that makes the requests
             // this is necessary because the server checks if the user is authenticated
             // by verifying the token
-            axios.defaults.headers.common["AUTHORIZATION"] = userToken;
+            axios.defaults.headers.common["AUTHORIZATION"] = authToken;
         }
 
         this.getGroupPostings = this.getGroupPostings.bind(this);
@@ -161,14 +161,14 @@ class ApiHandler {
      * @return {Promise<boolean>}
      */
     async editPosting(idToEdit, newInfo) {
-        let successful = false;
+        let success = false;
         const routeUrl = `${ApiHandler.POSTINGS_BASE_URL}/${idToEdit}`;
         await axios.patch(routeUrl, newInfo)
             .then(response => {
                 Log.info(`Posting with id ${idToEdit} has been edited`, this);
                 Log.info(response, this);
 
-                successful = true;
+                success = true;
             })
             .catch(error => {
                 Log.error(`Error while editing posting with id ${idToEdit}`, this);
@@ -176,7 +176,7 @@ class ApiHandler {
                 Log.error(error, this);
             });
 
-        return successful;
+        return success;
     }
 
     /**
@@ -186,21 +186,21 @@ class ApiHandler {
      * @return {Promise<boolean>}
      */
     async deletePosting(postingId) {
-        let successful = false;
+        let success = false;
         const routeUrl = `${ApiHandler.POSTINGS_BASE_URL}/${postingId}`;
         await axios.delete(routeUrl)
             .then(response => {
                 Log.info(`Posting with id ${response.data.id} has been deleted`, this);
                 Log.info(response, this);
 
-                successful = true;
+                success = true;
             })
             .catch(error => {
                 Log.error(`Error while deleting posting with id ${postingId}`, this);
                 Log.error(error, this);
             });
 
-        return successful;
+        return success;
     }
 
     /**
@@ -296,11 +296,34 @@ class ApiHandler {
      */
     async getUserFavouritePostings(userId) {
         // First make a request for the user's favourite postings ids
+        const favouritesIds = await this.#getUserFavouritesIds(userId);
+
+        // After having fetched the ids,
+        // fetch the individual postings and then return them
+        const favouritePostings = [];
+        for (const favId of favouritesIds) {
+            // TODO: potenzialmente implementare un metodo che raggruppa più id da fetchare
+            // in modo da fare una sola chiamata al server invece che n.
+            const p = await this.getPosting(favId);
+            favouritePostings.push(p);
+        }
+
+        return favouritePostings;
+    }
+
+    /**
+     * Queries the api and returns an array containing the ids of the postings that
+     * were marked as favourites by the specified user.
+     * In case an error occurred, an empty array is returned.
+     * @param userId {string} user to fetch the favourite postings ids of
+     * @return {Promise<string[] | []>}
+     */
+    async #getUserFavouritesIds(userId) {
         const favouritesIds = [];
         const routeUrl = `${ApiHandler.POSTINGS_BASE_URL}/users/${userId}/favourites`
         await axios.get(routeUrl)
             .then(response => {
-                Log.info(`Favourite postings of user '${userId}' have been fetched`, this);
+                Log.info(`Favourite ids of user '${userId}' have been fetched`, this);
                 Log.info(response, this);
 
                 const favList = response.data;
@@ -309,23 +332,77 @@ class ApiHandler {
                 }
             })
             .catch(error => {
-                Log.error(`An error occurred on the request for the 
-                favourite postings of user '${userId}'`, this);
-
+                Log.error(`An error occurred on the request for the favourite ids of user '${userId}'`, this);
                 Log.error(error, this);
             });
 
-        // After having fetched the ids,
-        // fetch the individual postings and then return them
-        const favouritePostings = [];
-        for (const favId of favouritesIds) {
-            // TODO: potenzialmente implementare un metodo che raggruppa più id da fetchare
-            // in modo da fare una sola chiamata al server invece che n.
-            const p = this.getPosting(favId);
-            favouritePostings.push(p);
+        return favouritesIds;
+    }
+
+    /**
+     * Returns true if the specified posting is marked as favourite by the specified user,
+     * false otherwise.
+     * @param userId {string}
+     * @param postingId {string}
+     * @return {Promise<boolean>}
+     */
+    async isUserFavourite(userId, postingId) {
+        const favouriteIds = await this.#getUserFavouritesIds(userId);
+
+        return favouriteIds.includes(postingId);
+    }
+
+    /**
+     * Adds the provided posting to the specified user's favourites list.
+     * Returns true if the operation was successful,
+     * false in case an error occurred or the posting was already a favourite.
+     * @param userId {string}
+     * @param postingId {string}
+     * @return {Promise<boolean>}
+     */
+    async addUserFavourite(userId, postingId) {
+        let success = true;
+        const favouriteIds = await this.#getUserFavouritesIds(userId);
+
+        if (favouriteIds.includes(postingId)) {
+            // Nothing to do, operation successful
+            return success;
+        }
+        else {
+            // Edit the list by adding the id
+            // success depends on the edit operation
+            favouriteIds.push(postingId);
+            success = await this.editUserFavourites(userId, favouriteIds);
         }
 
-        return favouritePostings;
+        return success;
+    }
+
+    /**
+     * Removes the provided posting from the specified user's favourites list.
+     * Returns true if the operation was successful,
+     * false in case an error occurred or the posting wasn't a favourite to begin with.
+     * @param userId {string}
+     * @param postingId {string}
+     * @return {Promise<boolean>}
+     */
+    async removeUserFavourite(userId, postingId) {
+        let success = true;
+        const favouriteIds = await this.#getUserFavouritesIds(userId);
+
+        const index = favouriteIds.indexOf(postingId);
+        if (index === -1) {
+            // Nothing to do, postingId is already not in the list
+            return success;
+        }
+        else {
+            // Edit the list by removing the id
+            // success depends on the edit operation
+            favouriteIds.splice(index, 1);
+            success = await this.editUserFavourites(userId, favouriteIds);
+        }
+
+        return success;
     }
 
     /**
@@ -336,14 +413,14 @@ class ApiHandler {
      * @return {Promise<boolean>}
      */
     async editUserFavourites(userId, newFavouritesIds) {
-        let successful = false;
+        let success = false;
         const routeUrl = `${ApiHandler.POSTINGS_BASE_URL}/users/${userId}/favourites`
         await axios.put(routeUrl, data)
             .then(response => {
                 Log.info(`Favourite postings of user '${userId}' have been edited`, this);
                 Log.info(response, this);
 
-                successful = true;
+                success = true;
             })
             .catch(error => {
                 Log.error(`An error occurred on the request for the 
@@ -352,7 +429,7 @@ class ApiHandler {
                 Log.error(error, this);
             });
 
-        return successful;
+        return success;
     }
 
     /**

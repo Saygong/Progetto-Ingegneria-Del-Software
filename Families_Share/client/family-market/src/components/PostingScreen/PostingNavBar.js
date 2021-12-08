@@ -1,3 +1,4 @@
+const ApiHandler = require("../../api/ApiHandler");
 const Posting = require("../../api/model/Posting");
 
 const React = require("react");
@@ -21,18 +22,37 @@ class PostingNavBar extends React.Component {
      */
     state;
 
+    /**
+     * @type {ApiHandler}
+     */
+    apiHandler;
+
     constructor(props) {
         super(props);
 
+        this.apiHandler = new ApiHandler();
         this.state = {
-            isFavourite: xxx //TODO fare metodo isPostingFavourite(userId, postingId) su api
-        }
+            isFavourite: false
+        };
 
         this.handleFavouriteChange = this.handleFavouriteChange.bind(this);
     }
 
     render() {
         // TODO PlainNavBar + EditPostingButton + ToggleFavouriteButton
+    }
+
+    async componentDidMount() {
+        // Fetch the favourite state and set it
+        const currentPosting = this.props.posting;
+        const userId = JSON.parse(localStorage.getItem("user")).id;
+        const isFav = await this.apiHandler.isUserFavourite(userId, currentPosting.id);
+
+        this.setState({
+            isFavourite: isFav
+        });
+
+        this.handleFavouriteChange = this.handleFavouriteChange.bind(this);
     }
 
     /**
@@ -47,11 +67,27 @@ class PostingNavBar extends React.Component {
         return currentUserId === postingOwnerId;
     }
 
+    /**
+     * Called when the button is clicked.
+     * Changes the button state and adds/removes the current posting to/from the user's favourites.
+     * @return {Promise<void>}
+     */
     async handleFavouriteChange() {
-        // TODO add methods (add, remove favourite(userId, postingId)) + add tests
-        xxx //TODO fare metodo isPostingFavourite(userId, postingId) su api
-    }
+        // since the button has been clicked, the state needs to be toggled
+        const newIsFav = !this.state.isFavourite;
+        const currentUserId = JSON.parse(localStorage.getItem("user")).id;
+        const posting = this.props.posting;
+        if (newIsFav) {
+            await this.apiHandler.addUserFavourite(currentUserId, posting.id);
+        }
+        else {
+            await this.apiHandler.removeUserFavourite(currentUserId, posting.id);
+        }
 
+        this.setState({
+            isFavourite: newIsFav
+        });
+    }
 }
 
 PostingNavBar.defaultProps = {
@@ -59,7 +95,7 @@ PostingNavBar.defaultProps = {
 }
 
 PostingNavBar.propTypes = {
-    posting: PropTypes.instanceOf(Posting)
+    posting: PropTypes.instanceOf(Posting).isRequired
 }
 
 module.exports = withLanguage(PostingNavBar);

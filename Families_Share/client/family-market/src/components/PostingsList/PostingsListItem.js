@@ -50,7 +50,7 @@ class PostingsListItem extends React.Component {
 
         this.apiHandler = new ApiHandler();
         this.state = {
-            isFavourite: false
+            isFavourite: //xxx vedere se posting è favourite
         }
 
         this.redirectToPostingScreen = this.redirectToPostingScreen.bind(this);
@@ -83,8 +83,13 @@ class PostingsListItem extends React.Component {
     }
 
     async handleFavouriteChange() {
-        // TODO add methods (add, remove favourite(userId, postingId)) + add tests
-        xxx //TODO fare metodo isPostingFavourite(userId, postingId) su api
+        // TODO add this method (and the one in posting nav bar) inside the button
+        // TODO 2 do the same for the delete button. Make them implement the method instead of
+        //      accepting a handler.
+
+        this.setState({
+            isFavourite: xx
+        })
     }
 }
 
