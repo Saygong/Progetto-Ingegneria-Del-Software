@@ -125,15 +125,19 @@ router.post('/', async (req, res, next) => {
     await Posting.create(newPosting)
     await Contact.create(newPosting)
     const response = {
-      id,
-      user_id,
-      group_id,
-      name,
-      category,
-      description,
-      photo,
-      type,
-      newContact
+      id: id,
+      user_id: user_id,
+      group_id: group_id,
+      name: name,
+      category: category,
+      description: description,
+      photo: photo,
+      type: type,
+      contact: {
+        email: email,
+        place: place,
+        phone_number: phone_number
+      }
     }
     res.json(response)
   } catch (err) {
