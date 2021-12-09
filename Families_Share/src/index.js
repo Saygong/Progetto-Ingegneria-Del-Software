@@ -15,7 +15,7 @@ const HTTPS_PORT = parseInt(process.env.HTTPS_PORT, 10)
 const HTTP_PORT = parseInt(process.env.HTTP_PORT, 10)
 
 const config = require('config')
-
+//test git
 const dbHost = config.get('dbConfig.host')
 mongoose.set('useCreateIndex', true)
 mongoose.set('useNewUrlParser', true)
