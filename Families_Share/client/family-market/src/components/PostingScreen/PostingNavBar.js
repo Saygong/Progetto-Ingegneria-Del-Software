@@ -17,42 +17,12 @@ import withLanguage from "../../../../src/components/LanguageContext";
  */
 class PostingNavBar extends React.Component {
 
-    /**
-     * @type {{isFavourite: boolean}}
-     */
-    state;
-
-    /**
-     * @type {ApiHandler}
-     */
-    apiHandler;
-
     constructor(props) {
         super(props);
-
-        this.apiHandler = new ApiHandler();
-        this.state = {
-            isFavourite: false
-        };
-
-        this.handleFavouriteChange = this.handleFavouriteChange.bind(this);
     }
 
     render() {
-        // TODO PlainNavBar + EditPostingButton + ToggleFavouriteButton
-    }
-
-    async componentDidMount() {
-        // Fetch the favourite state and set it
-        const currentPosting = this.props.posting;
-        const userId = JSON.parse(localStorage.getItem("user")).id;
-        const isFav = await this.apiHandler.isUserFavourite(userId, currentPosting.id);
-
-        this.setState({
-            isFavourite: isFav
-        });
-
-        this.handleFavouriteChange = this.handleFavouriteChange.bind(this);
+        // TODO PlainNavBar + (EditPostingButton + ToggleFavouriteButton if owner)
     }
 
     /**
@@ -62,40 +32,29 @@ class PostingNavBar extends React.Component {
      */
     isCurrentUserOwner() {
         const currentUserId = JSON.parse(localStorage.getItem("user")).id;
-        const postingOwnerId = this.props.posting.id;
+        const postingCreatorId = this.props.postingCreatorId;
 
-        return currentUserId === postingOwnerId;
-    }
-
-    /**
-     * Called when the button is clicked.
-     * Changes the button state and adds/removes the current posting to/from the user's favourites.
-     * @return {Promise<void>}
-     */
-    async handleFavouriteChange() {
-        // since the button has been clicked, the state needs to be toggled
-        const newIsFav = !this.state.isFavourite;
-        const currentUserId = JSON.parse(localStorage.getItem("user")).id;
-        const posting = this.props.posting;
-        if (newIsFav) {
-            await this.apiHandler.addUserFavourite(currentUserId, posting.id);
-        }
-        else {
-            await this.apiHandler.removeUserFavourite(currentUserId, posting.id);
-        }
-
-        this.setState({
-            isFavourite: newIsFav
-        });
+        return currentUserId === postingCreatorId;
     }
 }
 
 PostingNavBar.defaultProps = {
-    posting: Posting.EMPTY
-}
+    postingId: "",
+    postingCreatorId: ""
+};
 
 PostingNavBar.propTypes = {
-    posting: PropTypes.instanceOf(Posting).isRequired
-}
+    /**
+     * Passed as prop to the favourite and edit button.
+     */
+    postingId: PropTypes.string.isRequired,
+
+    /**
+     * Id of the user that created the posting.
+     * Used to determine if the current user is the owner of the posting and
+     * consequently which buttons to show .
+     */
+    postingCreatorId: PropTypes.string.isRequired
+};
 
 module.exports = withLanguage(PostingNavBar);

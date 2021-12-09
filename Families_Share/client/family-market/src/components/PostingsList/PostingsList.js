@@ -68,11 +68,30 @@ PostingsList.defaultProps = {
 }
 
 PostingsList.defaultProps = {
+    /**
+     * Postings to display
+     */
     postings: PropTypes.arrayOf(PropTypes.instanceOf(Posting)),
     title: PropTypes.string,
+
+    /**
+     * Mode of the list items, determines which button to show
+     */
     iteMode: PropTypes.oneOf([EDIT_MODE, FAVOURITES_MODE]),
+
+    /**
+     * Text used to filters posts based on their name
+     */
     filterText: PropTypes.string,
+
+    /**
+     * Used to filter posts based on this transaction type
+     */
     filterTnType: PropTypes.string,
+
+    /**
+     * Used to filter posts based on this category
+     */
     filterCategory: PropTypes.string
 }
 

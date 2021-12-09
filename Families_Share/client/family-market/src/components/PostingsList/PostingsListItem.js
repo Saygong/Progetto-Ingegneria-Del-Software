@@ -50,7 +50,7 @@ class PostingsListItem extends React.Component {
 
         this.apiHandler = new ApiHandler();
         this.state = {
-            isFavourite: //xxx vedere se posting è favourite
+            isFavourite: false // TODO da togliere perché viene spostato dentro favourite button
         }
 
         this.redirectToPostingScreen = this.redirectToPostingScreen.bind(this);
@@ -60,7 +60,7 @@ class PostingsListItem extends React.Component {
     render() {
         // TODO
         if (this.props.mode === PostingsListItem.EDIT_MODE) {
-            // render edit  button
+            // render edit button
         }
         else if (this.props.mode === PostingsListItem.FAVOURITES_MODE) {
             // render toggle favourite button
@@ -83,27 +83,28 @@ class PostingsListItem extends React.Component {
     }
 
     async handleFavouriteChange() {
-        // TODO add this method (and the one in posting nav bar) inside the button
+        // TODO add this method (implemented in posting nav bar) inside the button
         // TODO 2 do the same for the delete button. Make them implement the method instead of
         //      accepting a handler.
-
-        this.setState({
-            isFavourite: xx
-        })
     }
 }
 
 
 PostingsListItem.defaultProps = {
     posting: Posting.EMPTY,
-    mode: PostingsListItem.FAVOURITES_MODE,
-    deletionHandler: null
+    mode: PostingsListItem.FAVOURITES_MODE
 }
 
 PostingsListItem.propTypes = {
+    /**
+     * Posting to display
+     */
     posting: PropTypes.instanceOf(Posting),
-    mode: PropTypes.oneOf([PostingsListItem.EDIT_MODE, PostingsListItem.FAVOURITES_MODE]),
-    deletionHandler: PropTypes.func.isRequired
+
+    /**
+     * Determines if the favourite or the edit button is displayed
+     */
+    mode: PropTypes.oneOf([PostingsListItem.EDIT_MODE, PostingsListItem.FAVOURITES_MODE])
 }
 
 module.exports = {

@@ -10,7 +10,7 @@ const PropTypes = require("prop-types");
 const Log = require("../../../../src/components/Log");
 const PlainNavBar = require("../PlainNavBar");
 const ConfirmButton = require("ConfirmButton");
-const DeleteButton = require("../DeleteButton");
+const DeleteButton = require("../DeletePostingButton");
 const MailInput = require("MailInput");
 const TelephoneInput = require("TelephoneInput");
 const PlaceInput = require("PlaceInput");
@@ -75,7 +75,7 @@ class EditPostingScreen extends React.Component {
         this.isCreateMode = this.isCreateMode.bind(this);
         this.getPostingInfoFromState = this.getPostingInfoFromState.bind(this);
         this.handleConfirmation = this.handleConfirmation.bind(this);
-        this.handleDeletion = this.handleDeletion.bind(this);
+        this.handleDeleteRedirection = this.handleDeleteRedirection.bind(this);
         this.handlePhotoChange = this.handlePhotoChange.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
@@ -185,8 +185,9 @@ class EditPostingScreen extends React.Component {
      * Called when the user presses the delete button.
      * @return {Promise<void>}
      */
-    async handleDeletion() {
-        const {onDeleteUrl} = this.locationState;
+    async handleDeleteRedirection() {
+        // TODO finire DeletePostingButton e fare aggiornamento di UML
+        const {onDeleteUrl} = this.props;
         Log.info("Deletion successful, redirecting to " + onDeleteUrl, this);
         this.props.history.replace(onDeleteUrl);
     }
