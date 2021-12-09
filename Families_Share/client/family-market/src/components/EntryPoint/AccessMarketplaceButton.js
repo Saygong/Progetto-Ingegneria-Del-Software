@@ -16,7 +16,6 @@ class AccessMarketplaceButton extends React.Component {
     constructor(props) {
         super(props);
 
-        // TODO these values are constant since the button is always the same
         this.image = "";
         this.title = "";
         this.description = "";

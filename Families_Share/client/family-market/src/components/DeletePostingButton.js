@@ -25,10 +25,27 @@ class DeletePostingButton extends React.Component {
 
     render() {
         // TODO (magari aggiungere pure una finestra di dialogo per dire "sei sicuro"?
+        return (<button/>)
     }
 
+    /**
+     * Called when the button is clicked.
+     * Deletes the posting and calls the redirection handler passed as prop.
+     * @return {Promise<void>}
+     */
+    async handleClick() {
+        await this.handleDelete();
+        this.props.redirectionHandler();
+    }
+
+    /**
+     * Deletes the posting specified in the props.
+     * @return {Promise<void>}
+     */
     async handleDelete() {
         // Delete the posting by calling api
+        const postingId = this.props.postingId;
+        await this.apiHandler.deletePosting(postingId);
     }
 }
 

@@ -89,7 +89,6 @@ class PostingsListItem extends React.Component {
     }
 }
 
-
 PostingsListItem.defaultProps = {
     posting: Posting.EMPTY,
     mode: PostingsListItem.FAVOURITES_MODE
