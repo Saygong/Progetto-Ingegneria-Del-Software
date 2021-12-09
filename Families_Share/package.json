@@ -16,10 +16,10 @@
     "dev": "concurrently \"npm run dev-server\" \"npm run dev-client\""
   },
   "engines": {
-    "node": "10.14.2"
+    "node": "17.0.1"
   },
   "dependencies": {
-    "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "chalk": "^2.4.2",
     "colors": "^1.4.0",
