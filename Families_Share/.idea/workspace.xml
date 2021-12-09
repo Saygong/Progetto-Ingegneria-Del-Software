@@ -3,9 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="f6567f50-91eb-4444-b973-18bab2dfc57c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/user-routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/user-routes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/Groups/groupEndpoints.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/Groups/groupEndpoints.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/Users/groupEndpoints.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/Users/groupEndpoints.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/family-market/groups-routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/family-market/groups-routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/family-market/posting-routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/family-market/posting-routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/family-market/users-routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/family-market/users-routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/group-routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/group-routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Posting/postingEndpoints.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/Posting/postingEndpoints.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/Users/userEndpoints.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/Users/userEndpoints.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/test.js" afterDir="false" />
     </list>
@@ -66,7 +68,7 @@
       <recent name="C:\Users\andre\Desktop\Progetto-Ingegneria-Del-Software\Families_Share\src\models\family-market" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Mocha.test\test.js">
     <configuration name="Test" type="mocha-javascript-test-runner" temporary="true" nameIsGenerated="true">
       <node-interpreter>project</node-interpreter>
       <node-options />
@@ -82,8 +84,37 @@
       </test-names>
       <method v="2" />
     </configuration>
+    <configuration name="/Get/api/community" type="mocha-javascript-test-runner" temporary="true" nameIsGenerated="true">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <mocha-package>$PROJECT_DIR$/node_modules/mocha</mocha-package>
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>SUITE</test-kind>
+      <test-file>$PROJECT_DIR$/test/Community/communityEndpoints.js</test-file>
+      <test-names>
+        <name value="/Get/api/community" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="test\test.js" type="mocha-javascript-test-runner" temporary="true" nameIsGenerated="true">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <mocha-package>$PROJECT_DIR$/node_modules/mocha</mocha-package>
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>TEST_FILE</test-kind>
+      <test-file>$PROJECT_DIR$/test/test.js</test-file>
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Mocha.test\test.js" />
+        <item itemvalue="Mocha./Get/api/community" />
         <item itemvalue="Mocha.Test" />
       </list>
     </recent_temporary>
@@ -112,11 +143,15 @@
       <workItem from="1638972036048" duration="579000" />
       <workItem from="1638972744053" duration="2947000" />
       <workItem from="1638975930518" duration="8712000" />
+      <workItem from="1639067044176" duration="5513000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.env" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -128,6 +163,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />

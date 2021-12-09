@@ -3,7 +3,7 @@ const router = new express.Router()
 const Posting = require('../../models/family-market/posting')
 const Member = require('../../models/member')
 const objectid = require('objectid')
-const Contact = require("../../models/family-market/contact");
+const Contact = require('../../models/family-market/contact')
 
 // Prefisso: “/api/family-market/postings”
 // Route for getPosting that retrieve a posting
@@ -132,7 +132,7 @@ router.post('/', async (req, res, next) => {
       photo,
       type,
       contact_id
-      //creation_date fatto in automatico? Date.now() //se va male prendo l'esempio dell'indiano
+      // creation_date fatto in automatico? Date.now() //se va male prendo l'esempio dell'indiano
     }
     const newContact = {
       contact_id,
@@ -141,7 +141,7 @@ router.post('/', async (req, res, next) => {
       phone_number
     }
     await Posting.create(newPosting)
-    await Contact.create(newPosting)
+    await Contact.create(newContact)
     const response = {
       id: id,
       user_id: user_id,

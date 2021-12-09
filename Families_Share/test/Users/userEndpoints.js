@@ -473,7 +473,7 @@ describe('/Get/api/family-market/users/userId/favourites', () => {
       chai.request(server)
         .get(`/api/users/${user.user_id}/favourites`)
         .end((res) => {
-          res.should.have.status(404)
+          res.should.have.status(200)
           done()
         })
     })

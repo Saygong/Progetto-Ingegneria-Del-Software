@@ -20,7 +20,7 @@ const Activity = require('../src/models/activity')
 const Announcement = require('../src/models/announcement')
 const Reply = require('../src/models/reply')
 const Posting = require('../src/models/family-market/posting')
-const Contact = require("../src/models/family-market/contact");
+const Contact = require('../src/models/family-market/contact')
 
 const importTest = (name, path) => {
   describe(name, () => {
@@ -52,6 +52,7 @@ const initializeDB = async () => {
 
   await chai.request(server).post('/api/users').send(user2)
   await chai.request(server).post('/api/users').send(user3)
+
   const user = await User.findOne({ email: 'test3@email.com' })
   const group2 = {
     name: 'Test Group 2',
@@ -73,6 +74,7 @@ const initializeDB = async () => {
     contact_type: 'phone',
     contact_info: '65485748'
   }
+
   await chai.request(server).post('/api/groups').send(group2).set('Authorization', user.token)
   await chai.request(server).post('/api/groups').send(group3).set('Authorization', user.token)
   const group = await Group.findOne({ name: 'Test Group 2' })
