@@ -19,6 +19,8 @@ const Child = require('../src/models/child')
 const Activity = require('../src/models/activity')
 const Announcement = require('../src/models/announcement')
 const Reply = require('../src/models/reply')
+const Posting = require('../src/models/family-market/posting')
+const Contact = require('../src/models/family-market/contact')
 
 const importTest = (name, path) => {
   describe(name, () => {
@@ -34,7 +36,8 @@ const initializeDB = async () => {
     email: 'test2@email.com',
     password: 'password',
     visible: true,
-    language: 'en'
+    language: 'en',
+    favourites: ['io', 'sto', 'bene']
   }
   const user3 = {
     given_name: 'Test',
@@ -43,10 +46,13 @@ const initializeDB = async () => {
     email: 'test3@email.com',
     password: 'password',
     visible: true,
-    language: 'en'
+    language: 'en',
+    favourites: ['ciao', 'come', 'stai']
   }
+
   await chai.request(server).post('/api/users').send(user2)
   await chai.request(server).post('/api/users').send(user3)
+
   const user = await User.findOne({ email: 'test3@email.com' })
   const group2 = {
     name: 'Test Group 2',
@@ -68,9 +74,11 @@ const initializeDB = async () => {
     contact_type: 'phone',
     contact_info: '65485748'
   }
+
   await chai.request(server).post('/api/groups').send(group2).set('Authorization', user.token)
   await chai.request(server).post('/api/groups').send(group3).set('Authorization', user.token)
   const group = await Group.findOne({ name: 'Test Group 2' })
+
   const activity = {
     group_id: group.group_id,
     creator_id: user.user_id,
@@ -82,6 +90,37 @@ const initializeDB = async () => {
     repetition_type: 'weekly',
     different_timeslots: false
   }
+
+  // Creation of two instances of posting
+  const posting1 = {
+    user_id: user.user_id,
+    group_id: group.group_id,
+    name: 'Lego BrickHeadz',
+    category: 'Toys Construction',
+    description: 'Giving away',
+    photo: '/images/profiles/posting_default_photo.png',
+    type: 'Lend',
+    email: '880141@stud.unive.com',
+    place: 'Chirignago',
+    phone_number: '3406862134'
+  }
+  const posting2 = {
+    user_id: user.user_id,
+    group_id: group.group_id,
+    name: 'Barbie Fairy',
+    category: 'Donation',
+    description: 'Please help me get rid',
+    photo: '/images/profiles/posting_default_photo.png',
+    type: 'Donation',
+    email: 'marcodifresco99@gmail.com',
+    place: 'Chiry',
+    phone_number: '3477808876'
+  }
+
+  // Adding posting1 & posting2 to database
+  await chai.request(server).post(`/api/groups/${group.group_id}/postings`).send(posting1).set('Authorization', user.token)
+  await chai.request(server).post(`/api/groups/${group.group_id}/postings`).send(posting2).set('Authorization', user.token)
+
   const events = [
     {
       description: 'Test timeslot',
@@ -225,6 +264,7 @@ describe('Test', () => {
   importTest('Child Endpoints Test', './Children/childEndpoints')
   importTest('Profile Endpoints Test', './Profiles/profileEndpoints')
   importTest('Community Endpoints Test', './Community/communityEndpoints')
+  importTest('Posting Endpoints Test', './Posting/postingEndpoints')
 
   // Cleanup
   afterAll(async () => {
@@ -244,5 +284,7 @@ describe('Test', () => {
     await Activity.deleteMany({})
     await Reply.deleteMany({})
     await Announcement.deleteMany({})
+    await Posting.deleteMany({})
+    await Contact.deleteMany({})
   })
 })

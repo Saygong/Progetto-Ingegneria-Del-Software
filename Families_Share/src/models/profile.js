@@ -74,6 +74,7 @@ profileSchema.post('find', (profiles, next) => {
   }
   next()
 })
+
 profileSchema.post('findOne', (profile, next) => {
   if (profile !== null) {
     if (profile.suspended) {

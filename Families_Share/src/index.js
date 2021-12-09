@@ -69,6 +69,11 @@ app.use('/api/profiles', require('./routes/profile-routes'))
 app.use('/api/children', require('./routes/child-routes'))
 app.use('/api/github', require('./routes/github-routes'))
 app.use('/api/community', require('./routes/community-routes'))
+/* ---------------------------------------        FAMILY-MARKET       ----------------------------------------------- */
+app.use('/api/family-market/postings', require('./routes/family-market/posting-routes'))
+app.use('/api/family-market/groups', require('./routes/family-market/groups-routes'))
+app.use('/api/family-market/users', require('./routes/family-market/users-routes'))
+
 
 if (config.util.getEnv('NODE_ENV') === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')))

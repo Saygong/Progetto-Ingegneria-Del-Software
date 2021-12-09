@@ -40,10 +40,10 @@ const transporter = nodemailer.createTransport({
 })
 
 const profileStorage = multer.diskStorage({
-  destination(req, file, cb) {
+  destination (req, file, cb) {
     cb(null, path.join(__dirname, '../../images/profiles'))
   },
-  filename(req, file, cb) {
+  filename (req, file, cb) {
     fr(path.join(__dirname, '../../images/profiles'), { prefix: req.params.id })
     cb(null, `${req.params.id}-${Date.now()}.${file.mimetype.slice(file.mimetype.indexOf('/') + 1, file.mimetype.length)}`)
   }
@@ -51,10 +51,10 @@ const profileStorage = multer.diskStorage({
 const profileUpload = multer({ storage: profileStorage, limits: { fieldSize: 52428800 } })
 
 const childProfileStorage = multer.diskStorage({
-  destination(req, file, cb) {
+  destination (req, file, cb) {
     cb(null, path.join(__dirname, '../../images/profiles'))
   },
-  filename(req, file, cb) {
+  filename (req, file, cb) {
     fr(path.join(__dirname, '../../images/profiles'), { prefix: req.params.childId })
     cb(null, `${req.params.childId}-${Date.now()}.${file.mimetype.slice(file.mimetype.indexOf('/') + 1, file.mimetype.length)}`)
   }
@@ -77,6 +77,7 @@ const Password_Reset = require('../models/password-reset')
 const Device = require('../models/device')
 const Rating = require('../models/rating')
 const Community = require('../models/community')
+const Posting = require('../models/family-market/posting')
 
 router.post('/', async (req, res, next) => {
   const {
@@ -1063,8 +1064,6 @@ router.delete('/:userId/children/:childId/parents/:parentId', (req, res, next) =
   }).catch(next)
 })
 
-module.exports = router
-
 router.post('/:userId/sendmenotification', async (req, res, next) => {
   try {
     const devices = await Device.find({ user_id: req.params.userId })
@@ -1100,3 +1099,5 @@ router.post('/:userId/sendmenotification', async (req, res, next) => {
     next(err)
   }
 })
+
+module.exports = router

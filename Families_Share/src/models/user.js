@@ -34,7 +34,10 @@ const userSchema = new mongoose.Schema({
   },
   version: {
     type: String
-  }
+  },
+  /* ---------------------------------------       FAMILY-MARKET      ----------------------------------------------- */
+  favourites: [String]
+  /* ---------------------------------------------------------------------------------------------------------------- */
 }, { timestamps: true })
 
 userSchema.pre('save', function (next) {
