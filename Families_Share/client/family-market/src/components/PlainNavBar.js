@@ -46,7 +46,14 @@ PlainNavBar.defaultProps = {
 }
 
 PlainNavBar.propTypes = {
+    /**
+     * Text displayed in the navigation bar.
+     */
     title: PropTypes.string,
+
+    /**
+     * Url to redirect to when the button to go back is pressed.
+     */
     goBackUrl: PropTypes.string
 }
 

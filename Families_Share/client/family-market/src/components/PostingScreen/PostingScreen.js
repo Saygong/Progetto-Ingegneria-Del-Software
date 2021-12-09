@@ -16,6 +16,7 @@ import withLanguage from "../../../../src/components/LanguageContext";
 class PostingScreen extends React.Component {
 
     /**
+     * Parameters passed on the route used to load this screen.
      * @type {{postingId: string}}
      */
     matchParams;
@@ -45,6 +46,7 @@ class PostingScreen extends React.Component {
 
     async componentDidMount() {
         // fetch the posting and set the state
+
     }
 
     /**

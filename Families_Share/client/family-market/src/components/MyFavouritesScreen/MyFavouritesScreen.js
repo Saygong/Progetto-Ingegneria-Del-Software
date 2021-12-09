@@ -14,6 +14,7 @@ import withLanguage from "../../../../src/components/LanguageContext";
 class MyFavouritesScreen extends React.Component {
 
     /**
+     * Parameters passed on the route used to load this screen.
      * @type {{userId: string}}
      */
     matchParams;

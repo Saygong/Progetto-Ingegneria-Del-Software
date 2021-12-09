@@ -13,6 +13,9 @@ const MarketplaceNavBar = require("MarketplaceNavBar");
 import withLanguage from "../../../../src/components/LanguageContext";
 
 
+/**
+ * Screen that represents the main page of Family Market.
+ */
 class MarketplaceScreen extends React.Component {
 
     /**

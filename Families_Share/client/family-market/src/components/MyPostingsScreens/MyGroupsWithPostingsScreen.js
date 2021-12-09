@@ -13,7 +13,9 @@ import withLanguage from "../../../../src/components/LanguageContext";
 
 
 /**
- * Class that represents the screen where all of a group's postings are displayed.
+ * Class that represents the screen where all current user's group are displayed.
+ * Clicking on one group redirects to a page where all of the group's postings made
+ * by the current user are seen.
  */
 class MyGroupsWithPostingsScreen extends React.Component {
 
@@ -23,6 +25,7 @@ class MyGroupsWithPostingsScreen extends React.Component {
     apiHandler;
 
     /**
+     * Parameters passed on the route used to load this screen.
      * @type {{userId: string}}
      */
     matchParams;

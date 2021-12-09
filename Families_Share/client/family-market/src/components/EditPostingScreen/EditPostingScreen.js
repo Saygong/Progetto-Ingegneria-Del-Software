@@ -23,9 +23,6 @@ import withLanguage from "../../../../src/components/LanguageContext";
 /**
  * Class that represents a screen that is used either to edit an existing posting
  *  or to create a new one.
- *  To edit an existing posting, isCreateMode must be set to false and a posting object needs
- *  to be passed.
- *  To create a new post, isCreateMode must be true and no posting needs to be passed.
  */
 class EditPostingScreen extends React.Component {
     /**
@@ -38,14 +35,17 @@ class EditPostingScreen extends React.Component {
     state;
 
     /**
+     * Parameters passed on the route used to load this screen.
      * @type {{postingId: string} | {userId: string, groupId: string}}
      */
     matchParams;
 
     /**
+     * Urls to redirect to after the post has been edited, deleted or created.
+     * Passed as additional parameters during the redirection.
      * @type {{onEditUrl: string, onDeleteUrl} | {onCreateUrl: string}}
      */
-    locationState;
+    redirectionsUrl;
 
     /**
      * @type {ApiHandler}
@@ -56,12 +56,12 @@ class EditPostingScreen extends React.Component {
         super(props);
 
         this.apiHandler = new ApiHandler();
-        this.locationState = this.props.location.state;
+        this.redirectionsUrl = this.props.location.state;
         this.matchParams = this.props.match.params;
         this.state = {
-            photo: "",
             name: "",
             description: "",
+            photo: "",
             category: "",
             tnType: "",
             mail: "",
@@ -83,9 +83,6 @@ class EditPostingScreen extends React.Component {
         this.handleCategoryChange = this.handleCategoryChange.bind(this);
         this.handleTelephoneChange = this.handleTelephoneChange.bind(this);
         this.handleMailChange = this.handleMailChange.bind(this);
-
-        // NOTE: no goBackState is set here since you shouldn't be able to go back to this page.
-        //  this should be a leaf in the navigation tree.
     }
 
     render() {
@@ -93,8 +90,21 @@ class EditPostingScreen extends React.Component {
     }
 
     async componentDidMount() {
-        // TODO fetch posting and set state accordingly
-        const currentPosting = await this.fetchPosting();
+        // Fetch the posting info to load only in edit mode
+        if (!this.isCreateMode()) {
+            // TODO fetch posting and set state accordingly
+            const currentPosting = await this.fetchPosting();
+            this.setState(currentPosting);
+        }
+    }
+
+    /**
+     * Returns true if this screen was loaded in create mode, false if in edit mode.
+     * @return {boolean}
+     */
+    isCreateMode() {
+        const location = this.props.location
+        return location.pathname.includes("create");
     }
 
     /**
@@ -167,7 +177,7 @@ class EditPostingScreen extends React.Component {
             // Create mode
             await this.createPosting();
 
-            const {onCreateUrl} = this.locationState;
+            const {onCreateUrl} = this.redirectionsUrl;
             Log.info("Creation successful, redirecting to " + onCreateUrl, this);
             this.props.history.replace(onCreateUrl);
         }
@@ -175,7 +185,7 @@ class EditPostingScreen extends React.Component {
             // Edit mode
             await this.editPosting();
 
-            const {onEditUrl} = this.locationState;
+            const {onEditUrl} = this.redirectionsUrl;
             Log.info("Edit successful, redirecting to " + onEditUrl, this);
             this.props.history.replace(onEditUrl);
         }
@@ -186,7 +196,6 @@ class EditPostingScreen extends React.Component {
      * @return {Promise<void>}
      */
     async handleDeleteRedirection() {
-        // TODO finire DeletePostingButton e fare aggiornamento di UML
         const {onDeleteUrl} = this.props;
         Log.info("Deletion successful, redirecting to " + onDeleteUrl, this);
         this.props.history.replace(onDeleteUrl);
@@ -270,15 +279,6 @@ class EditPostingScreen extends React.Component {
         this.setState({
             place: newPlace
         });
-    }
-
-    /**
-     * Returns true if this screen was loaded in create mode, false if in edit mode.
-     * @return {boolean}
-     */
-    isCreateMode() {
-        const location = this.props.location
-        return location.pathname.includes("create");
     }
 
     /**

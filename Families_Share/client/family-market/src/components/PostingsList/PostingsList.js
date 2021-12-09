@@ -47,14 +47,59 @@ class PostingsList extends React.Component {
     getFilteredPostings() {
         const allPostings = this.props.postings;
         const {filterText, filterTnType, filterCategory} = this.props;
+
+        // If a posting matches all the filtering criteria (name, category, type),
+        // then it is selected.
         const filteredPostings = [];
         for (const p of allPostings) {
-            //TODO: implementare filtro
-            // https://it.reactjs.org/docs/thinking-in-react.html
-            // Passo 5 della guida contiene un buon esempio di ricerca elementi fatta in maniera semplice
+            const nameMatch = this.isMatchedByText(p, filterText);
+            const catMatch = this.isMatchedByCategory(p, filterCategory);
+            const tnTypeMatch = this.isMatchedByTnType(p, filterTnType);
+
+            const isMatch = nameMatch && catMatch && tnTypeMatch;
+            if(isMatch) {
+                filteredPostings.push(p);
+            }
         }
 
         return filteredPostings;
+    }
+
+    /**
+     * Determines if a posting name is matched by the provided text.
+     * Returns true if there is a match, false otherwise.
+     * @param posting {Posting}
+     * @param filterText {string}
+     * @return {boolean}
+     */
+    isMatchedByText(posting, filterText) {
+        // Make everything lower case to perform case insensitive research
+        const nameLower = posting.name.toLowerCase();
+        const filterTextLower = filterText.toLowerCase();
+
+        return nameLower.includes(filterTextLower);
+    }
+
+    /**
+     * Determines if a posting name is matched by the provided category.
+     * Returns true if there is a match, false otherwise.
+     * @param posting {Posting}
+     * @param filterCategory {string}
+     * @return {boolean}
+     */
+    isMatchedByCategory(posting, filterCategory) {
+        return posting.category === filterCategory;
+    }
+
+    /**
+     * Determines if a posting transaction type is matched by the provided transaction type.
+     * Returns true if there is a match, false otherwise.
+     * @param posting {Posting}
+     * @param filterTnType {string}
+     * @return {boolean}
+     */
+    isMatchedByTnType(posting, filterTnType) {
+        return posting.type === filterTnType;
     }
 }
 
@@ -67,30 +112,30 @@ PostingsList.defaultProps = {
     filterCategory: ""
 }
 
-PostingsList.defaultProps = {
+PostingsList.propTypes = {
     /**
-     * Postings to display
+     * Postings to display.
      */
     postings: PropTypes.arrayOf(PropTypes.instanceOf(Posting)),
     title: PropTypes.string,
 
     /**
-     * Mode of the list items, determines which button to show
+     * Mode of the list items, determines which button to show.
      */
-    iteMode: PropTypes.oneOf([EDIT_MODE, FAVOURITES_MODE]),
+    itemMode: PropTypes.oneOf([EDIT_MODE, FAVOURITES_MODE]),
 
     /**
-     * Text used to filters posts based on their name
+     * Text used to filters posts based on their name.
      */
     filterText: PropTypes.string,
 
     /**
-     * Used to filter posts based on this transaction type
+     * Used to filter posts based on this transaction type.
      */
     filterTnType: PropTypes.string,
 
     /**
-     * Used to filter posts based on this category
+     * Used to filter posts based on this category.
      */
     filterCategory: PropTypes.string
 }

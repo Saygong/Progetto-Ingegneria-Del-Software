@@ -16,6 +16,7 @@ import withLanguage from "../../../../src/components/LanguageContext";
 class MyGroupPostingsScreen extends React.Component {
 
     /**
+     * Parameters passed on the route used to load this screen.
      * @type {{userId: string, groupId: string}}
      */
     matchParams;
