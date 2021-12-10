@@ -1,5 +1,3 @@
-const Posting = require("../api/model/Posting");
-
 const React = require("react");
 const PropTypes = require("prop-types");
 const Log = require("../../../src/components/Log");
@@ -26,12 +24,11 @@ class EditPostingButton extends React.Component {
     render() {
         const language = this.props.language;
         const txt = texts[language].editPostingButton;
+        const editIconPath = "../../assets/edit-icon.png";
 
         return (
-            <button>
-                <img src="../../assets/edit-icon.png" alt={txt.altImageText}
-                     width={200} height={200}
-                     onClick={this.redirectToEditPostingScreen}/>
+            <button onClick={this.handleClick} style="height:200px;width:200px">
+                <img src={editIconPath} alt={txt.altImageText} className="center"/>
             </button>
         )
     }

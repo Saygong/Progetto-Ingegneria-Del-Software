@@ -1,8 +1,11 @@
-const PropTypes = require("prop-types");
+import texts from "../../texts";
 
 const React = require("react");
+const PropTypes = require("prop-types");
 const Log = require("../../../../src/components/Log");
 const {withRouter} = require("react-router-dom");
+
+
 import withLanguage from "../../../../src/components/LanguageContext";
 
 
@@ -19,7 +22,17 @@ class MyProfileButton extends React.Component {
     }
 
     render() {
-        // TODO
+        const language = this.props.language;
+        const txt = texts[language].profileButton;
+
+        // TODO add path
+        const profileIconPath = "";
+
+        return (
+            <button onClick={this.redirectToProfileScreen} style="height:200px;width:200px">
+                <img src={profileIconPath} alt={txt.altImageText} className="center"/>
+            </button>
+        )
     }
 
     /**

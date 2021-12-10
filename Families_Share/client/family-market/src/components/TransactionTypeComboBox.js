@@ -3,7 +3,7 @@ const VALID_TN_TYPES = require("../constants").TN_TYPES;
 const React = require("react");
 const PropTypes = require("prop-types");
 const Log = require("../../../src/components/Log");
-const ComboBox = require("ComboBox");
+const ComboBox = require("react-responsive-combo-box");
 
 const texts = require("../texts");
 import withLanguage from "../../../src/components/LanguageContext";
@@ -21,19 +21,20 @@ class TransactionTypeComboBox extends React.Component {
         // Get texts based on current language
         const language = this.props.language;
         const txt = texts[language].transactionTypeComboBox;
+        /*TODO add transaction icon*/
+        const tnIconPath = "";
 
         return (
             <div>
                 <h2>{txt.description}</h2>
                 <div className="row no-gutters">
                     <div className="col-2-10">
-                        {/*TODO add transaction icon*/}
-                        <img src={} alt={txt.altImageText} className="center"/>
+                        <img src={tnIconPath} alt={txt.altImageText} className="center"/>
                     </div>
                     <div className="col-8-10">
-                        <ComboBox itemList={VALID_TN_TYPES}
-                                  selectedItem={this.props.selectedItem}
-                                  selectionChangeHandler={this.handleTnTypeChange}/>
+                        <ComboBox options={VALID_TN_TYPES}
+                                  onSelect={this.handleTnTypeChange}
+                                  editable={false}/>
                     </div>
                 </div>
             </div>
@@ -52,8 +53,6 @@ class TransactionTypeComboBox extends React.Component {
 
 TransactionTypeComboBox.defaultProps = {
     itemList: [],
-    selectedItem: "",
-    iconPath: "",
     tnTypeChangeHandler: null
 }
 
@@ -62,16 +61,6 @@ TransactionTypeComboBox.propTypes = {
      * List of items to display
      */
     itemList: PropTypes.arrayOf(PropTypes.string),
-
-    /**
-     * Currently selected item
-     */
-    selectedItem: PropTypes.string,
-
-    /**
-     * Path of the image to show alongside the combobox
-     */
-    iconPath: PropTypes.string,
 
     /**
      * Function that handles what happens when the selected item changes

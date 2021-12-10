@@ -1,43 +1,56 @@
-const ApiHandler = require("../../api/ApiHandler");
 const Posting = require("../../api/model/Posting");
 
 const React = require("react");
 const PropTypes = require("prop-types");
 const Log = require("../../../../src/components/Log");
 const {PostingsListItem, EDIT_MODE, FAVOURITES_MODE} = require("./PostingsListItem");
+
+const texts = require("../../texts");
 import withLanguage from "../../../../src/components/LanguageContext";
 
 
 class PostingsList extends React.Component {
 
-    /**
-     * Changed only if a posting is deleted.
-     * @type {{postings: Posting[]}}
-     */
-    state;
-
-    /**
-     * @type {ApiHandler}
-     */
-    apiHandler;
-
     constructor(props) {
         super(props);
-
-        this.apiHandler = new ApiHandler();
-
-        // The postings to first load are the filtered ones
-        // after that, they get changed only if a posting is deleted.
-        // Also, no need to bind since "this" is the object calling the function.
-        this.state = {
-            postings: this.getFilteredPostings()
-        };
     }
 
     render() {
-        const postingsToDisplay = this.state.postings;
+        const filteredPostings = this.getFilteredPostings()
+        const title = this.buildTitle();
 
-        // TODO lista di PostingsListItem
+        return (
+            <div>
+                <h2>{title}</h2>
+                {/* One item for each posting */
+                    filteredPostings.map((p, idx) => {
+                        return <PostingsListItem key={idx}
+                                                 posting={p} mode={this.props.itemMode}/>
+                    })
+                }
+            </div>
+        )
+    }
+
+    /**
+     * Returns the title to display, which is based on the filtering criteria
+     * @return {string}
+     */
+    buildTitle() {
+        const language = this.prop.language;
+        const txt = texts[language].postingsLists.title;
+
+        const nameFilter = this.props.filterText;
+        const namePart = `${txt.namePart} "${nameFilter}"`;
+
+        const catFilter = this.props.filterCategory;
+        const catPart = `${txt.categoryPart} "${catFilter}"`;
+
+        const tnTypeFilter = this.props.filterTnType;
+        const typePart = `${txt.transactionTypePart} "${tnTypeFilter}"`;
+
+        // title is like "Results for "name" in category "cat" of type "type"
+        return namePart + catPart + typePart;
     }
 
     /**
@@ -117,6 +130,10 @@ PostingsList.propTypes = {
      * Postings to display.
      */
     postings: PropTypes.arrayOf(PropTypes.instanceOf(Posting)),
+
+    /**
+     * Title attached on top of the actual list of postings
+     */
     title: PropTypes.string,
 
     /**

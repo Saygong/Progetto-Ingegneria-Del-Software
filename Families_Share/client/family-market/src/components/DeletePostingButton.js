@@ -30,12 +30,11 @@ class DeletePostingButton extends React.Component {
         // TODO (magari aggiungere pure una finestra di dialogo per dire "sei sicuro"?
         const language = this.props.language;
         const txt = texts[language].deletePostingButton;
+        const deleteIconPath = "../../assets/delete-icon.png";
 
         return (
-            <button>
-                <img src="../../assets/delete-icon.png" alt={txt.altImageText}
-                     width={200} height={200}
-                     onClick={this.handleClick}/>
+            <button onClick={this.handleClick} style="height:200px;width:200px">
+                <img src={deleteIconPath} alt={txt.altImageText} className="center"/>
             </button>
         )
     }

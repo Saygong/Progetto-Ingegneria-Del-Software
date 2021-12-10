@@ -1,4 +1,3 @@
-const ApiHandler = require("../../api/ApiHandler");
 const Posting = require("../../api/model/Posting");
 
 const React = require("react");
@@ -7,8 +6,11 @@ const Log = require("../../../../src/components/Log");
 const ListItem = require("../ListItem");
 const EditPostingButton = require("../EditPostingButton");
 const ToggleFavouriteButton = require("../ToggleFavouriteButton");
+
 const {buildRedirectionHandler} = require("../PostingScreen/PostingScreen")
 const {withRouter} = require("react-router-dom");
+
+const texts = require("../../texts");
 import withLanguage from "../../../../src/components/LanguageContext";
 
 
@@ -43,25 +45,57 @@ class PostingsListItem extends React.Component {
     constructor(props) {
         super(props);
 
-        this.apiHandler = new ApiHandler();
-
         this.redirectToPostingScreen = this.redirectToPostingScreen.bind(this);
     }
 
     render() {
-        // TODO
+        // Get the texts based on the current language TODO forse non serve
+        //const language = this.props.language;
+        //const txt = texts[language].confirmButton;
+
+        // Display posting info in the list item
+        const posting = this.props.posting;
+
+        // To pass as props down to the edit posting button.
+        // It is not a problem if we get redirected to the current page,
+        // since after an edit or delete the current page will be reloaded and there
+        // won't be any inconsistencies (this component will be reloaded along with
+        // its parent PostingsList, so no deleted postings or
+        // postings with outdated info will be shown)
+        const redirectToUrl = this.props.location.pathname;
+
+        // Determine which button to display based on the mode of this item
+        let sideButton;
         if (this.props.mode === PostingsListItem.EDIT_MODE) {
-            // render edit button
+            // Render edit button
+            sideButton = (
+                <EditPostingButton postingId={posting.id}
+                                   onEditUrl={redirectToUrl} onDeleteUrl={redirectToUrl}/>
+            );
         }
         else if (this.props.mode === PostingsListItem.FAVOURITES_MODE) {
-            // render toggle favourite button
+            // Render toggle favourite button
+            sideButton = (
+                <ToggleFavouriteButton postingId={posting.id}/>
+            );
         }
         else {
             Log.error("mode is invalid, the user shouldn't be able to get here");
-            return (
-                <div>Error</div>
-            )
+            sideButton = <h1>Error</h1>;
         }
+
+        return (
+            <div className="row no-gutters">
+                <div className="col-8-10">
+                    <ListItem image={posting.photo}
+                              title={posting.name}
+                              description={posting.description}/>
+                </div>
+                <div className="col-2-10">
+                    {sideButton}
+                </div>
+            </div>
+        );
     }
 
     /**

@@ -42,7 +42,8 @@ ListItem.defaultProps = {
 }
 
 ListItem.propTypes = {
-    image: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+    image: PropTypes.oneOfType(
+        [PropTypes.string, PropTypes.instanceOf(File), PropTypes.instanceOf(Blob)]),
     title: PropTypes.string,
     description: PropTypes.string,
 

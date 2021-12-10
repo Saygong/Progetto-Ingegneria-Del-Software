@@ -1,3 +1,5 @@
+import texts from "../texts";
+
 const React = require("react");
 const PropTypes = require("prop-types");
 const Log = require("../../../src/components/Log");
@@ -16,7 +18,14 @@ class ConfirmButton extends React.Component {
     }
 
     render() {
-        // TODO:
+        const language = this.props.language;
+        const txt = texts[language].confirmButton;
+
+        return (
+            <button onClick={this.handleConfirmation}>
+                {txt.text}
+            </button>
+        );
     }
 
     /**

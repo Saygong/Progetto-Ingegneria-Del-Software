@@ -1,5 +1,9 @@
 // TODO scrivere i testi dei componenti nelle varie lingue
 const en = {
+    listItem: {
+        altImageText: "list item placeholder"
+    },
+
     editPostingButton: {
         altImageText: "edit image"
     },
@@ -46,8 +50,20 @@ const en = {
         description: "Select the transaction type:"
     },
 
-    listItem: {
-        altImageText: "list item placeholder"
+    confirmButton: {
+        text: "Confirm"
+    },
+
+    profileButton: {
+        altImageText: "profile icon"
+    },
+
+    postingsLists: {
+        title: {
+            namePart: "Results for",
+            categoryPart: "in category",
+            transactionTypePart: "of type"
+        }
     }
 }
 
