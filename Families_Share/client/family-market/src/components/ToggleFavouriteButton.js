@@ -41,13 +41,13 @@ class ToggleFavouriteButton extends React.Component {
 
         // Get texts based on current language
         const language = this.props.language;
-        const txt = texts[language].deletePostingButton;
+        const txt = texts[language].toggleFavButton;
 
         return (
             <button>
                 <img src={imgPath} alt={txt.altImageText}
                      width={200} height={200}
-                     onClick={this.handleClick}/>
+                     onClick={this.handleFavouriteChange}/>
             </button>
         )
     }

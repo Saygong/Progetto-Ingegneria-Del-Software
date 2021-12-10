@@ -2,6 +2,8 @@ const React = require("react");
 const PropTypes = require("prop-types");
 const Log = require("../../../../src/components/Log");
 const SimpleTextInput = require("../SimpleTextInput");
+
+const texts = require("../../texts");
 import withLanguage from "../../../../src/components/LanguageContext";
 
 
@@ -14,7 +16,21 @@ class TelephoneInput extends React.Component {
     }
 
     render() {
-        // TODO - SimpleTextInput con icona di telefono/mail a sinistra e descrizione vuota.
+        // Get texts based on current language
+        const language = this.props.language;
+        const txt = texts[language].telephoneInput;
+
+        return (
+            <div className="row no-gutters">
+                {/*TODO add telephone image*/}
+                <img src={} alt={txt.altImageText} className="col-2-10"/>
+                <div className="col-8-10">
+                    <SimpleTextInput text={this.props.text} description=""
+                                     textChangeHandler={this.handleTextChange}
+                                     placeholder={txt.placeholder}/>
+                </div>
+            </div>
+        )
     }
 
     /**

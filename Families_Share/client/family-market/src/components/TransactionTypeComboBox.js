@@ -2,8 +2,10 @@ const VALID_TN_TYPES = require("../constants").TN_TYPES;
 
 const React = require("react");
 const PropTypes = require("prop-types");
-const Log = require("../../../../src/components/Log");
+const Log = require("../../../src/components/Log");
 const ComboBox = require("ComboBox");
+
+const texts = require("../texts");
 import withLanguage from "../../../src/components/LanguageContext";
 
 
@@ -16,8 +18,26 @@ class TransactionTypeComboBox extends React.Component {
     }
 
     render() {
-        // TODO pass the typeChangeHandler down to the base ComboBox
-        // itemList della ComboBox di base è VALID_TN_TYPES
+        // Get texts based on current language
+        const language = this.props.language;
+        const txt = texts[language].transactionTypeComboBox;
+
+        return (
+            <div>
+                <h2>{txt.description}</h2>
+                <div className="row no-gutters">
+                    <div className="col-2-10">
+                        {/*TODO add transaction icon*/}
+                        <img src={} alt={txt.altImageText} className="center"/>
+                    </div>
+                    <div className="col-8-10">
+                        <ComboBox itemList={VALID_TN_TYPES}
+                                  selectedItem={this.props.selectedItem}
+                                  selectionChangeHandler={this.handleTnTypeChange}/>
+                    </div>
+                </div>
+            </div>
+        )
     }
 
 

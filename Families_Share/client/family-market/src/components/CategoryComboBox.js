@@ -2,8 +2,10 @@ const VALID_CATEGORIES = require("../constants").CATEGORIES;
 
 const React = require("react");
 const PropTypes = require("prop-types");
-const Log = require("../../../../src/components/Log");
+const Log = require("../../../src/components/Log");
 const ComboBox = require("ComboBox");
+
+const texts = require("../texts");
 import withLanguage from "../../../src/components/LanguageContext";
 
 
@@ -16,8 +18,26 @@ class CategoryComboBox extends React.Component {
     }
 
     render() {
-        // TODO pass the categoryChangeHandler down to the base ComboBox
-        // itemList della ComboBox di base è VALID_CATEGORIES
+        // Get texts based on current language
+        const language = this.props.language;
+        const txt = texts[language].categoryComboBox;
+
+        return (
+            <div>
+                <h2>{txt.description}</h2>
+                <div className="row no-gutters">
+                    <div className="col-2-10">
+                        {/*TODO add category icon*/}
+                        <img src={} alt={txt.altImageText} className="center"/>
+                    </div>
+                    <div className="col-8-10">
+                        <ComboBox itemList={VALID_CATEGORIES}
+                                  selectedItem={this.props.selectedItem}
+                                  selectionChangeHandler={this.handleCategoryChange}/>
+                    </div>
+                </div>
+            </div>
+        )
     }
 
     /**

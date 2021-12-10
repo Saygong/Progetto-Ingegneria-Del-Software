@@ -5,6 +5,8 @@ const Log = require("../../../../src/components/Log");
 const ListItem = require("../ListItem");
 const {buildRedirectionHandler} = require("../MarketplaceScreen/MarketplaceScreen");
 const {withRouter} = require("react-router-dom");
+
+const texts = require("../../texts");
 import withLanguage from "../../../../src/components/LanguageContext";
 
 
@@ -18,22 +20,28 @@ class AccessMarketplaceButton extends React.Component {
     constructor(props) {
         super(props);
 
-        this.image = "";
-        this.title = "";
-        this.description = "";
-
         this.redirectToMarketplaceScreen = this.redirectToMarketplaceScreen.bind(this);
     }
 
     render() {
-        // TODO this button is a ListItem
+        const language = this.props.language;
+        const txt = texts[language].accessMarketplaceButton;
+
+        // TODO add image
+        return (
+            <div role="button" onClick={this.redirectToMarketplaceScreen}>
+                <ListItem image={} title={txt.title} description={txt.description}/>
+            </div>
+        );
     }
 
+    /**
+     * Called when this button is clicked.
+     */
     redirectToMarketplaceScreen() {
         const redirectionHandler = buildRedirectionHandler(this.props.history);
 
         Log.info("Redirecting to MarketplaceScreen ", this);
-
         redirectionHandler();
     }
 }

@@ -1,6 +1,6 @@
 const React = require("react");
 const PropTypes = require("prop-types");
-const Log = require("../../../../src/components/Log");
+const Log = require("../../../src/components/Log");
 import withLanguage from "../../../src/components/LanguageContext";
 
 

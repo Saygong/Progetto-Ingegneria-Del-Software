@@ -5,6 +5,8 @@ const PropTypes = require("prop-types");
 const Log = require("../../../../src/components/Log");
 const {buildCreateModeRedirectionHandler} = require( "../EditPostingScreen/EditPostingScreen");
 import {withRouter} from "react-router-dom";
+
+const texts = require("../../texts");
 import withLanguage from "../../../../src/components/LanguageContext";
 
 
@@ -22,7 +24,14 @@ class CreatePostingButton extends React.Component {
     }
 
     render() {
-        // TODO
+        const language = this.props.language;
+        const txt = texts[language].createPostingButton;
+
+        return (
+            <button onClick={this.redirectToEditPostingScreen}>
+                {txt.text}
+            </button>
+        )
     }
 
     /**

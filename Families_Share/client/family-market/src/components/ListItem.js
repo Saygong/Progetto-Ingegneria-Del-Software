@@ -1,6 +1,8 @@
 const React = require("react");
 const PropTypes = require("prop-types");
 const Log = require("../../../src/components/Log");
+
+const texts = require("../texts");
 import withLanguage from "../../../src/components/LanguageContext";
 
 /**
@@ -14,7 +16,22 @@ class ListItem extends React.Component {
     }
 
     render() {
-        //  TODO
+        // Get texts based on current language
+        const language = this.props.language;
+        const txt = texts[language].listItem;
+
+        return (
+            <div role="button" className="row no-gutters">
+                <div className="col-2-10">
+                    <img className="center"
+                         src={this.props.image} alt={txt.altImageText}/>
+                </div>
+                <div className="col-8-10">
+                    <h1>{this.props.title}</h1>
+                    <h2>{this.props.description}</h2>
+                </div>
+            </div>
+        )
     }
 }
 

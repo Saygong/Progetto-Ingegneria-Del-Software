@@ -1,6 +1,8 @@
 const React = require("react");
 const PropTypes = require("prop-types");
-const Log = require("../../../../src/components/Log");
+const Log = require("../../../src/components/Log");
+
+const texts = require("../texts");
 import withLanguage from "../../../src/components/LanguageContext";
 
 
@@ -14,6 +16,14 @@ class LargeTextInput extends React.Component {
 
     render() {
         // TODO description è il titoletto che va sopra la textbox
+        return (
+            <div>
+                <h2>{this.props.description}</h2>
+                <textarea onChange={this.handleTextChange}>
+                    {this.props.text}
+                </textarea>
+            </div>
+        );
     }
 
     /**
