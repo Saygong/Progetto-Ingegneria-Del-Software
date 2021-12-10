@@ -68,4 +68,4 @@ SearchBar.propTypes = {
     language: PropTypes.string
 }
 
-module.exports = withLanguage(SearchBar);
+export default withLanguage(SearchBar);

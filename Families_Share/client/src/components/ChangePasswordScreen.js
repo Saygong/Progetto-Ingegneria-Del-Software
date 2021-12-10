@@ -5,7 +5,7 @@ import * as path from "lodash.get";
 import Texts from "../Constants/Texts";
 import withLanguage from "./LanguageContext";
 import LoadingSpinner from "./LoadingSpinner";
-const Log = require("./Log");
+import Log from "./Log";
 
 class ChangePasswordScreen extends React.Component {
   state = {

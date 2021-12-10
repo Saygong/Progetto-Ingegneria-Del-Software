@@ -3,16 +3,16 @@ import PropTypes from "prop-types";
 import LazyLoad from "react-lazyload";
 import GroupListItem from "./GroupListItem";
 import withLanguage from "./LanguageContext";
-
+import Log from "./Log";
 // Needed to handle Family Market redirection
 import {useLocation} from "react-router-dom";
 import {useHistory} from "react-router-dom";
-import {FAMILY_MARKET_BASE_PAGE_URL} from "../family-market/src/constants";
 
+
+const {FAMILY_MARKET_BASE_PAGE_URL} = require("../family-market/src/constants");
 const {buildRedirectionHandler} = require("../family-market/src/components/MyPostingsScreens/MyGroupPostingsScreen");
 
 
-const Log = require("./Log");
 function redirectToGroupMainScreen() {
     const { history } = this.props;
     const { group } = this.state;

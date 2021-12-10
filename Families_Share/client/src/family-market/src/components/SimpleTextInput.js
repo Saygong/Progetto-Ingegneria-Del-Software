@@ -70,4 +70,4 @@ SimpleTextInput.propTypes = {
     language: PropTypes.string
 }
 
-module.exports = withLanguage(SimpleTextInput);
+export default withLanguage(SimpleTextInput);

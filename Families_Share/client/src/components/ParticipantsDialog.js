@@ -16,7 +16,7 @@ import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import Texts from "../Constants/Texts";
 import withLanguage from "./LanguageContext";
 
-const Log = require("./Log");
+import Log from "./Log";
 
 const theme = createMuiTheme({
   typography: {

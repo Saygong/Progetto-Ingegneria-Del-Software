@@ -74,7 +74,7 @@ const Hungary = [
   }
 ];
 
-module.exports = {
+export default {
   Italy,
   Belgium,
   Greece,

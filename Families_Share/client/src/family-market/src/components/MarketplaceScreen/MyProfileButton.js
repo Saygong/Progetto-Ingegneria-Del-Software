@@ -56,4 +56,4 @@ MyProfileButton.propTypes = {
     language: PropTypes.string
 }
 
-module.exports = withRouter(withLanguage(MyProfileButton));
+export default withRouter(withLanguage(MyProfileButton));

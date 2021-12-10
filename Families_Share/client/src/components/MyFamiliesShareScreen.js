@@ -10,7 +10,7 @@ import TimeslotsList from "./TimeslotsList";
 import Texts from "../Constants/Texts";
 import Images from "../Constants/Images";
 
-const Log = require("./Log");
+import Log from "./Log";
 
 const getMyGroups = userId => {
   return axios

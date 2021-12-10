@@ -13,7 +13,7 @@ import ConfirmDialog from "./ConfirmDialog";
 import LoadingSpinner from "./LoadingSpinner";
 import TimeslotSubcribe from "./TimeslotSubcribe";
 import Images from "../Constants/Images";
-const Log = require("./Log");
+import Log from "./Log";
 
 const styles = () => ({
   avatar: {

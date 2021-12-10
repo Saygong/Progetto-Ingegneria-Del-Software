@@ -163,4 +163,4 @@ PostingsList.propTypes = {
     language: PropTypes.string
 }
 
-module.exports = withLanguage(PostingsList);
+export default withLanguage(PostingsList);

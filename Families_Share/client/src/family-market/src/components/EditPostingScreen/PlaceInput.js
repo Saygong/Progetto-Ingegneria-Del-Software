@@ -57,4 +57,4 @@ PlaceInput.propTypes = {
     language: PropTypes.string
 }
 
-module.exports = withLanguage(PlaceInput);
+export default withLanguage(PlaceInput);

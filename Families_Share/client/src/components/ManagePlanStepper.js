@@ -25,7 +25,8 @@ import ManagePlanSolution from "./ManagePlanSolution";
 import "../styles/DayPicker.css";
 import TimeslotSubscribe from "./TimeslotSubcribe";
 
-const Log = require("./Log");
+import Log from "./Log";
+
 const modifiersStyles = {
   selected: {
     backgroundColor: "#00838F"

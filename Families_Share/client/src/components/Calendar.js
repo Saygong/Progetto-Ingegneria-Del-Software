@@ -10,7 +10,7 @@ import AgendaView from "./AgendaView";
 import "../styles/react-big-calendar.css";
 import withLanguage from "./LanguageContext";
 import Texts from "../Constants/Texts";
-const Log = require("./Log");
+import Log from "./Log";
 
 const getGroupEvents = groupId => {
   return axios

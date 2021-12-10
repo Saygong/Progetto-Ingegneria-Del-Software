@@ -55,4 +55,4 @@ AccessMarketplaceButton.propTypes = {
     language: PropTypes.string
 }
 
-module.exports = withRouter(withLanguage(AccessMarketplaceButton));
+export default withRouter(withLanguage(AccessMarketplaceButton));

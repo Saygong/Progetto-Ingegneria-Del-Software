@@ -67,4 +67,4 @@ MailInput.propTypes = {
     language: PropTypes.string
 }
 
-module.exports = withLanguage(MailInput);
+export default withLanguage(MailInput);

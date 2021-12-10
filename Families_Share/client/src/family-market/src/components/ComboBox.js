@@ -42,4 +42,4 @@ ComboBox.propTypes = {
     selectionChangeHandler: PropTypes.func.isRequired
 }
 
-module.exports = withLanguage(ComboBox);
+export default withLanguage(ComboBox);

@@ -8,7 +8,7 @@ import InviteDialog from "./InviteDialog";
 import Images from "../Constants/Images";
 import Texts from "../Constants/Texts";
 import ConfirmDialog from "./ConfirmDialog";
-const Log = require("./Log");
+import Log from "./Log";
 
 class ChildProfileInfo extends React.Component {
   state = { modalIsOpen: false, confirmDialogIsOpen: false, deleteIndex: "" };

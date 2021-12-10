@@ -5,7 +5,7 @@ import axios from "axios";
 import { Waypoint } from "react-waypoint";
 import Texts from "../Constants/Texts";
 import withLanguage from "./LanguageContext";
-const Log = require("./Log");
+import Log from "./Log";
 
 Modal.setAppElement("#root");
 

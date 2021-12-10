@@ -15,7 +15,7 @@ import LoadingSpinner from "./LoadingSpinner";
 import Images from "../Constants/Images";
 import Avatar from "./Avatar";
 
-const Log = require("./Log");
+import Log from "./Log";
 
 const styles = {
   add: {

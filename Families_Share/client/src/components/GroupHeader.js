@@ -5,7 +5,7 @@ import axios from "axios";
 import ConfirmDialog from "./ConfirmDialog";
 import Texts from "../Constants/Texts";
 import withLanguage from "./LanguageContext";
-const Log = require("./Log");
+import Log from "./Log";
 
 class GroupHeader extends React.Component {
   state = { confirmDialogIsOpen: false };

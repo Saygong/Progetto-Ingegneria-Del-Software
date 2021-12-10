@@ -4,7 +4,7 @@ import { Skeleton } from "antd";
 import axios from "axios";
 import MemberContact from "./MemberContact";
 import ChildContact from "./ChildContact";
-const Log = require("./Log");
+import Log from "./Log";
 
 export default class GroupMembersList extends React.Component {
   state = { fetchedResources: false };

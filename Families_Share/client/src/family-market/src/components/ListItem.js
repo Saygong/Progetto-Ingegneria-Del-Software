@@ -55,4 +55,4 @@ ListItem.propTypes = {
     language: PropTypes.string
 }
 
-module.exports = withLanguage(ListItem);
+export default withLanguage(ListItem);

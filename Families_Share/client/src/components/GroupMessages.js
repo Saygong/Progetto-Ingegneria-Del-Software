@@ -7,7 +7,7 @@ import AnnouncementHeader from "./AnnouncementHeader";
 import AnnouncementMain from "./AnnouncementMain";
 import AnnouncementReplies from "./AnnouncementReplies";
 import LoadingSpinner from "./LoadingSpinner";
-const Log = require("./Log");
+import Log from "./Log";
 
 class GroupMessages extends React.Component {
   state = { fetchedAnnouncements: false };

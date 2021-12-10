@@ -1,5 +1,5 @@
-const PostingInfo = require("./PostingInfo");
-const Contact = require("./Contact");
+import PostingInfo from "./PostingInfo";
+import Contact from "./Contact";
 
 /**
  * Class representing a posting present in the database.

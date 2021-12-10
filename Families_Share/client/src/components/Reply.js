@@ -8,7 +8,7 @@ import Avatar from "./Avatar";
 import TimeAgo from "./TimeAgo";
 import withLanguage from "./LanguageContext";
 import Texts from "../Constants/Texts";
-const Log = require("./Log");
+import Log from "./Log";
 
 class Reply extends React.Component {
   constructor(props) {

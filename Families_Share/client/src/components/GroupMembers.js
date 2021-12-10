@@ -10,7 +10,7 @@ import GroupMembersAdminOptions from "./GroupMembersAdminOptions";
 import LoadingSpinner from "./LoadingSpinner";
 import GroupMembersNavbar from "./GroupMembersNavbar";
 
-const Log = require("./Log");
+import Log from "./Log";
 
 const getGroupChildren = groupId => {
   return axios

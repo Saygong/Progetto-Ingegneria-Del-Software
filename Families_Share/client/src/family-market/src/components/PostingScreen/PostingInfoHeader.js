@@ -40,4 +40,4 @@ PostingInfoHeader.propTypes = {
     language: PropTypes.string
 }
 
-module.exports = withLanguage(PostingInfoHeader);
+export default withLanguage(PostingInfoHeader);

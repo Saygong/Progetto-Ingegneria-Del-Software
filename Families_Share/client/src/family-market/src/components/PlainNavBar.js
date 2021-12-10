@@ -66,4 +66,4 @@ PlainNavBar.propTypes = {
     language: PropTypes.string
 }
 
-module.exports = withRouter(withLanguage(PlainNavBar));
+export default withRouter(withLanguage(PlainNavBar));
