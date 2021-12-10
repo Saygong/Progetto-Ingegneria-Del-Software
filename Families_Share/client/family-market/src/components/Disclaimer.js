@@ -22,4 +22,11 @@ class Disclaimer extends React.Component {
 
 }
 
+Disclaimer.propTypes = {
+    /**
+     * Passed by the withLanguage HOC, used to determine which texts to display.
+     */
+    language: PropTypes.string
+}
+
 module.exports = withLanguage(Disclaimer);

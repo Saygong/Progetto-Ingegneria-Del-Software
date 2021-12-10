@@ -31,21 +31,25 @@ class CreatePostingButton extends React.Component {
     redirectToEditPostingScreen() {
         const userId = JSON.parse(localStorage.getItem("user")).id;
         const groupId = JSON.parse(localStorage.getItem("group")).id;
-        const onCreateUrl = this.props.onCreateUrl;
+        const toCreateScreenUrl = this.props.toCreateScreenUrl;
 
         const redirectionHandler =
-            buildCreateModeRedirectionHandler(this.props.history, userId, groupId, onCreateUrl);
+            buildCreateModeRedirectionHandler(this.props.history, userId, groupId, toCreateScreenUrl);
 
         redirectionHandler();
     }
 }
 
-CreatePostingButton.defaultProps = {
-    onCreateUrl: null
-}
-
 CreatePostingButton.propTypes = {
-    onCreateUrl: PropTypes.string.isRequired
+    /**
+     * Url to redirect to when the button is clicked
+     */
+    toCreateScreenUrl: PropTypes.string.isRequired,
+
+    /**
+     * Passed by the withLanguage HOC, used to determine which texts to display.
+     */
+    language: PropTypes.string
 }
 
 module.exports = withRouter(withLanguage(CreatePostingButton));

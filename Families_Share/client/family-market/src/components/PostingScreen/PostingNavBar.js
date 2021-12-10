@@ -38,11 +38,6 @@ class PostingNavBar extends React.Component {
     }
 }
 
-PostingNavBar.defaultProps = {
-    postingId: "",
-    postingCreatorId: ""
-};
-
 PostingNavBar.propTypes = {
     /**
      * Passed as prop to the favourite and edit button.
@@ -54,7 +49,12 @@ PostingNavBar.propTypes = {
      * Used to determine if the current user is the owner of the posting and
      * consequently which buttons to show .
      */
-    postingCreatorId: PropTypes.string.isRequired
+    postingCreatorId: PropTypes.string.isRequired,
+
+    /**
+     * Passed by the withLanguage HOC, used to determine which texts to display.
+     */
+    language: PropTypes.string
 };
 
 module.exports = withLanguage(PostingNavBar);

@@ -27,7 +27,12 @@ ListItem.defaultProps = {
 ListItem.propTypes = {
     image: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
     title: PropTypes.string,
-    description: PropTypes.string
+    description: PropTypes.string,
+
+    /**
+     * Passed by the withLanguage HOC, used to determine which texts to display.
+     */
+    language: PropTypes.string
 }
 
 module.exports = withLanguage(ListItem);

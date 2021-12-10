@@ -57,4 +57,11 @@ PlainNavBar.propTypes = {
     goBackUrl: PropTypes.string
 }
 
+PlainNavBar.propTypes = {
+    /**
+     * Passed by the withLanguage HOC, used to determine which texts to display.
+     */
+    language: PropTypes.string
+}
+
 module.exports = withRouter(withLanguage(PlainNavBar));

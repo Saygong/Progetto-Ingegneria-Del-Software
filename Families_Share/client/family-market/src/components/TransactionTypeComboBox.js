@@ -38,10 +38,30 @@ TransactionTypeComboBox.defaultProps = {
 }
 
 TransactionTypeComboBox.propTypes = {
+    /**
+     * List of items to display
+     */
     itemList: PropTypes.arrayOf(PropTypes.string),
+
+    /**
+     * Currently selected item
+     */
     selectedItem: PropTypes.string,
+
+    /**
+     * Path of the image to show alongside the combobox
+     */
     iconPath: PropTypes.string,
-    tnTypeChangeHandler: PropTypes.func.isRequired
+
+    /**
+     * Function that handles what happens when the selected item changes
+     */
+    tnTypeChangeHandler: PropTypes.func.isRequired,
+
+    /**
+     * Passed by the withLanguage HOC, used to determine which texts to display.
+     */
+    language: PropTypes.string
 }
 
 module.exports = withLanguage(TransactionTypeComboBox);

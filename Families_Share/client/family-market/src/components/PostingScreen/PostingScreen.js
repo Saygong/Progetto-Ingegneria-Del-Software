@@ -1,3 +1,5 @@
+const PropTypes = require("prop-types");
+
 const ApiHandler = require("../../api/ApiHandler");
 const Posting = require("../../api/model/Posting");
 
@@ -92,6 +94,13 @@ class PostingScreen extends React.Component {
             history.push(PostingScreen.buildUrl(postingId))
         }
     }
+}
+
+PostingScreen.propTypes = {
+    /**
+     * Passed by the withLanguage HOC, used to determine which texts to display.
+     */
+    language: PropTypes.string
 }
 
 module.exports = {

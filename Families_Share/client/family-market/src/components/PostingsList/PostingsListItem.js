@@ -90,7 +90,13 @@ PostingsListItem.propTypes = {
     /**
      * Determines if the favourite or the edit button is displayed
      */
-    mode: PropTypes.oneOf([PostingsListItem.EDIT_MODE, PostingsListItem.FAVOURITES_MODE])
+    mode: PropTypes.oneOf(
+        [PostingsListItem.EDIT_MODE, PostingsListItem.FAVOURITES_MODE]),
+
+    /**
+     * Passed by the withLanguage HOC, used to determine which texts to display.
+     */
+    language: PropTypes.string
 };
 
 module.exports = {

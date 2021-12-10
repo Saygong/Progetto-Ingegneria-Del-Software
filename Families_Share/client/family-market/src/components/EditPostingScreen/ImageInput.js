@@ -27,18 +27,31 @@ class ImageInput extends React.Component {
      */
     async handleImageSelection(acceptedFiles) {
         // This is because only one image should be allowed
-        this.props.photoChangeHandler(acceptedFiles[0]);
+        this.props.imageChangeHandler(acceptedFiles[0]);
     }
 }
 
 ImageInput.defaultProps = {
     image: "",
-    photoChangeHandler: null
+    imageChangeHandler: null
 }
 
 ImageInput.propTypes = {
-    image: PropTypes.string,
-    photoChangeHandler: PropTypes.func
+    /**
+     * Image to display
+     */
+    currentImage: PropTypes.oneOfType(
+        [PropTypes.string, PropTypes.instanceOf(File), PropTypes.instanceOf(Blob)]),
+
+    /**
+     * Function that handles what happens when the selected image is changed
+     */
+    imageChangeHandler: PropTypes.func,
+
+    /**
+     * Passed by the withLanguage HOC, used to determine which texts to display.
+     */
+    language: PropTypes.string
 }
 
 module.exports = withLanguage(ImageInput);

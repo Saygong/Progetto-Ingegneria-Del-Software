@@ -378,6 +378,14 @@ class EditPostingScreen extends React.Component {
     }
 }
 
+EditPostingScreen.propTypes = {
+
+    /**
+     * Passed by the withLanguage HOC, used to determine which texts to display.
+     */
+    language: PropTypes.string
+};
+
 module.exports = {
     EditPostingScreen: withLanguage(EditPostingScreen),
     EditModeRoute: EditPostingScreen.EDIT_MODE_ROUTE,

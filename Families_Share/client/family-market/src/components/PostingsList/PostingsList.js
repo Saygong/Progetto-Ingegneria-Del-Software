@@ -137,7 +137,12 @@ PostingsList.propTypes = {
     /**
      * Used to filter posts based on this category.
      */
-    filterCategory: PropTypes.string
+    filterCategory: PropTypes.string,
+
+    /**
+     * Passed by the withLanguage HOC, used to determine which texts to display.
+     */
+    language: PropTypes.string
 }
 
 module.exports = withLanguage(PostingsList);

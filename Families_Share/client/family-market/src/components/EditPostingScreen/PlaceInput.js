@@ -38,8 +38,20 @@ PlaceInput.defaultProps = {
 }
 
 PlaceInput.propTypes = {
+    /**
+     * Place to currently show
+     */
     place: PropTypes.string,
-    placeChangeHandler: PropTypes.func.isRequired
+
+    /**
+     * Function that handles what happens when the place is changed
+     */
+    placeChangeHandler: PropTypes.func.isRequired,
+
+    /**
+     * Passed by the withLanguage HOC, used to determine which texts to display.
+     */
+    language: PropTypes.string
 }
 
 module.exports = withLanguage(PlaceInput);

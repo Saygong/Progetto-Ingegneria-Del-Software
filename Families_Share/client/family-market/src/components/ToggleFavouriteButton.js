@@ -3,6 +3,8 @@ const ApiHandler = require("../api/ApiHandler");
 const React = require("react");
 const PropTypes = require("prop-types");
 const Log = require("../../../src/components/Log");
+
+const texts = require("../texts");
 import withLanguage from "../../../src/components/LanguageContext";
 
 
@@ -32,6 +34,22 @@ class ToggleFavouriteButton extends React.Component {
 
     render() {
         // TODO: change the displayed image based on the isFavourite prop
+        // Determine which image to display
+        const isFavPath = "../../assets/fav-icon-yes.png";
+        const isNotFavPath = "../../assets/fav-icon-no.png";
+        const imgPath = this.state.isFavourite ? isFavPath : isNotFavPath;
+
+        // Get texts based on current language
+        const language = this.props.language;
+        const txt = texts[language].deletePostingButton;
+
+        return (
+            <button>
+                <img src={imgPath} alt={txt.altImageText}
+                     width={200} height={200}
+                     onClick={this.handleClick}/>
+            </button>
+        )
     }
 
     async componentDidMount() {
@@ -71,15 +89,16 @@ class ToggleFavouriteButton extends React.Component {
     }
 }
 
-ToggleFavouriteButton.defaultProps = {
-    postingId: ""
-}
-
 ToggleFavouriteButton.propTypes = {
     /**
      * Id of the posting to change the favourite state of
      */
-    postingId: PropTypes.string.isRequired
-}
+    postingId: PropTypes.string.isRequired,
+
+    /**
+     * Passed by the withLanguage HOC, used to determine which texts to display.
+     */
+    language: PropTypes.string
+};
 
 module.exports = withLanguage(ToggleFavouriteButton);

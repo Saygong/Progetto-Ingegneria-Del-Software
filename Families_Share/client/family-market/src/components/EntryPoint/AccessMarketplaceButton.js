@@ -1,4 +1,6 @@
+
 const React = require("react");
+const PropTypes =  require("prop-types");
 const Log = require("../../../../src/components/Log");
 const ListItem = require("../ListItem");
 const {buildRedirectionHandler} = require("../MarketplaceScreen/MarketplaceScreen");
@@ -34,6 +36,13 @@ class AccessMarketplaceButton extends React.Component {
 
         redirectionHandler();
     }
+}
+
+AccessMarketplaceButton.propTypes = {
+    /**
+     * Passed by the withLanguage HOC, used to determine which texts to display.
+     */
+    language: PropTypes.string
 }
 
 module.exports = withRouter(withLanguage(AccessMarketplaceButton));

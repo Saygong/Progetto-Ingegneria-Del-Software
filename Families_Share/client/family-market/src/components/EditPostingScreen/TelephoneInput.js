@@ -33,8 +33,20 @@ TelephoneInput.defaultProps = {
 }
 
 TelephoneInput.propTypes = {
+    /**
+     * Text to display in the input zone
+     */
     text: PropTypes.string,
-    textChangeHandler: PropTypes.func.isRequired
+
+    /**
+     * Function that handles what happens when the text is changed
+     */
+    textChangeHandler: PropTypes.func.isRequired,
+
+    /**
+     * Passed by the withLanguage HOC, used to determine which texts to display.
+     */
+    language: PropTypes.string
 }
 
 module.exports = withLanguage(TelephoneInput);

@@ -1,3 +1,5 @@
+const PropTypes = require("prop-types");
+
 const ApiHandler = require("../../api/ApiHandler");
 const Posting = require("../../api/model/Posting");
 
@@ -90,6 +92,13 @@ class MyFavouritesScreen extends React.Component {
             history.push(MyFavouritesScreen.buildUrl(userId))
         }
     }
+}
+
+MyFavouritesScreen.propTypes = {
+    /**
+     * Passed by the withLanguage HOC, used to determine which texts to display.
+     */
+    language: PropTypes.string
 }
 
 module.exports = {

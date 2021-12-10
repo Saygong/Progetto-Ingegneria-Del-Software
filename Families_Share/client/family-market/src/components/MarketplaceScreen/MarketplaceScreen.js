@@ -1,3 +1,5 @@
+const PropTypes = require("prop-types");
+
 const ApiHandler = require("../../api/ApiHandler");
 const Posting = require("../../api/model/Posting");
 
@@ -129,6 +131,13 @@ class MarketplaceScreen extends React.Component {
             history.push(MarketplaceScreen.buildUrl());
         }
     }
+}
+
+MarketplaceScreen.propTypes = {
+    /**
+     * Passed by the withLanguage HOC, used to determine which texts to display.
+     */
+    language: PropTypes.string
 }
 
 module.exports = {

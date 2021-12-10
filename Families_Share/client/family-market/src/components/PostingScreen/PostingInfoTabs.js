@@ -26,7 +26,15 @@ PostingInfoTabs.defaultProps = {
 }
 
 PostingInfoTabs.propTypes = {
-    posting: PropTypes.instanceOf(Posting)
+    /**
+     * Posting to display the info of
+     */
+    posting: PropTypes.instanceOf(Posting),
+
+    /**
+     * Passed by the withLanguage HOC, used to determine which texts to display.
+     */
+    language: PropTypes.string
 }
 
 module.exports = withLanguage(PostingInfoTabs);

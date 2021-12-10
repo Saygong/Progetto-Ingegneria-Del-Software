@@ -1,3 +1,5 @@
+const PropTypes = require("prop-types");
+
 const React = require("react");
 const Log = require("../../../../src/components/Log");
 const ListItem = require("../ListItem");
@@ -37,6 +39,13 @@ class MyFavouritesButton extends React.Component {
 
         redirectionHandler();
     }
+}
+
+MyFavouritesButton.propTypes = {
+    /**
+     * Passed by the withLanguage HOC, used to determine which texts to display.
+     */
+    language: PropTypes.string
 }
 
 module.exports = withRouter(withLanguage(MyFavouritesButton));

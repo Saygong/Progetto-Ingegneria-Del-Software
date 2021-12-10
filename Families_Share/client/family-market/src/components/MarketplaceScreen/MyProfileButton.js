@@ -1,3 +1,5 @@
+const PropTypes = require("prop-types");
+
 const React = require("react");
 const Log = require("../../../../src/components/Log");
 const {withRouter} = require("react-router-dom");
@@ -31,6 +33,13 @@ class MyProfileButton extends React.Component {
         Log.info("Redirecting to ProfileScreen " + `(${profileScreenUrl})`, this);
         this.props.history.push(profileScreenUrl);
     }
+}
+
+MyProfileButton.propTypes = {
+    /**
+     * Passed by the withLanguage HOC, used to determine which texts to display.
+     */
+    language: PropTypes.string
 }
 
 module.exports = withRouter(withLanguage(MyProfileButton));

@@ -1,3 +1,5 @@
+const PropTypes = require("prop-types");
+
 const Posting = require("../../api/model/Posting");
 const GroupInfo = require("../../api/model/GroupInfo");
 
@@ -90,6 +92,13 @@ class MyGroupPostingsScreen extends React.Component {
             history.push(MyGroupPostingsScreen.buildUrl(userId, groupId))
         }
     }
+}
+
+MyGroupPostingsScreen.propTypes = {
+    /**
+     * Passed by the withLanguage HOC, used to determine which texts to display.
+     */
+    language: PropTypes.string
 }
 
 module.exports = {

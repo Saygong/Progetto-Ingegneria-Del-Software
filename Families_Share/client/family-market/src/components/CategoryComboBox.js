@@ -37,10 +37,30 @@ CategoryComboBox.defaultProps = {
 }
 
 CategoryComboBox.propTypes = {
+    /**
+     * List of items to display
+     */
     itemList: PropTypes.arrayOf(PropTypes.string),
+
+    /**
+     * Item currently selected
+     */
     selectedItem: PropTypes.string,
+
+    /**
+     * Path of the icon to display along the combobox
+     */
     iconPath: PropTypes.string,
-    categoryChangeHandler: PropTypes.func.isRequired
+
+    /**
+     * Function that handles what happen when the selected category is changed
+     */
+    categoryChangeHandler: PropTypes.func.isRequired,
+
+    /**
+     * Passed by the withLanguage HOC, used to determine which texts to display.
+     */
+    language: PropTypes.string
 }
 
 module.exports = withLanguage(CategoryComboBox);

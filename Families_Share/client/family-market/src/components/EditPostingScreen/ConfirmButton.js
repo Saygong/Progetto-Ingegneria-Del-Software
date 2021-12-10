@@ -29,12 +29,16 @@ class ConfirmButton extends React.Component {
 
 }
 
-ConfirmButton.defaultProps = {
-    confirmationHandler: null
-}
-
 ConfirmButton.propTypes = {
-    confirmationHandler: PropTypes.func.isRequired
+    /**
+     * Function that handles what happens when this button is pressed
+     */
+    confirmationHandler: PropTypes.func.isRequired,
+
+    /**
+     * Passed by the withLanguage HOC, used to determine which texts to display.
+     */
+    language: PropTypes.string
 }
 
 module.exports = withLanguage(ConfirmButton);

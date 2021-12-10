@@ -3,6 +3,8 @@ const ApiHandler = require("../api/ApiHandler");
 const React = require("react");
 const PropTypes = require("prop-types");
 const Log = require("../../../src/components/Log");
+
+const texts = require("../texts");
 import withLanguage from "../../../src/components/LanguageContext";
 
 
@@ -26,7 +28,16 @@ class DeletePostingButton extends React.Component {
 
     render() {
         // TODO (magari aggiungere pure una finestra di dialogo per dire "sei sicuro"?
-        return (<button/>)
+        const language = this.props.language;
+        const txt = texts[language].deletePostingButton;
+
+        return (
+            <button>
+                <img src="../../assets/delete-icon.png" alt={txt.altImageText}
+                     width={200} height={200}
+                     onClick={this.handleClick}/>
+            </button>
+        )
     }
 
     /**
@@ -50,11 +61,6 @@ class DeletePostingButton extends React.Component {
     }
 }
 
-DeletePostingButton.defaultProps = {
-    postingId: "",
-    redirectionHandler: () => {}
-}
-
 DeletePostingButton.propTypes = {
     /**
      * Id of the posting to delete if the button is pressed.
@@ -64,7 +70,12 @@ DeletePostingButton.propTypes = {
     /**
      * Function that handles the redirection after the posting has been deleted
      */
-    redirectionHandler: PropTypes.func
+    redirectionHandler: PropTypes.func.isRequired,
+
+    /**
+     * Passed by the withLanguage HOC, used to determine which texts to display.
+     */
+    language: PropTypes.string
 }
 
 module.exports = withLanguage(DeletePostingButton);
