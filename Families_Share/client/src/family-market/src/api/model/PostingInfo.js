@@ -71,4 +71,4 @@ class PostingInfo {
     }
 }
 
-module.exports = PostingInfo;
+export default PostingInfo;

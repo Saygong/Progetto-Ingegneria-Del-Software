@@ -37,4 +37,4 @@ class Posting extends PostingInfo{
 
 }
 
-module.exports = Posting
+export default Posting
