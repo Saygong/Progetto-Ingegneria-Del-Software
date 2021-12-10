@@ -7,8 +7,8 @@ import withLanguage from "./LanguageContext";
 // Needed to handle Family Market redirection
 import {useLocation} from "react-router-dom";
 import {useHistory} from "react-router-dom";
-import {FAMILY_MARKET_BASE_PAGE_URL} from "../../family-market/src/constants";
-import {buildRedirectionHandler} from "../../family-market/src/components/MyPostingsScreens/MyGroupPostingsScreen";
+import {FAMILY_MARKET_BASE_PAGE_URL} from "../family-market/src/constants";
+import {buildRedirectionHandler} from "../family-market/src/components/MyPostingsScreens/MyGroupPostingsScreen";
 
 
 const Log = require("./Log");
