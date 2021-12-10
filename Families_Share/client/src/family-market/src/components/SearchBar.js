@@ -3,7 +3,7 @@ import withLanguage from "../../../components/LanguageContext";
 const React = require("react");
 const PropTypes = require("prop-types");
 const Log = require("../../../components/Log");
-const SimpleTextInput = require("/SimpleTextInput");
+const SimpleTextInput = require("./SimpleTextInput");
 
 const texts = require("../texts");
 

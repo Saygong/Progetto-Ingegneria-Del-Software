@@ -5,7 +5,7 @@ const React = require("react");
 const PropTypes = require("prop-types");
 const Log = require("../../../components/Log");
 
-const {buildEditModeRedirectionHandler} = require("/EditPostingScreen");
+const {buildEditModeRedirectionHandler} = require("./EditPostingScreen/EditPostingScreen");
 
 
 const texts = require("../texts");

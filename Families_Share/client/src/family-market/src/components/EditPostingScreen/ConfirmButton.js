@@ -1,9 +1,9 @@
-import texts from "../texts";
+import texts from "../../texts";
 import withLanguage from "../../../../components/LanguageContext";
 
 const React = require("react");
 const PropTypes = require("prop-types");
-const Log = require("../../../src/components/Log");
+const Log = require("../../../../components/Log");
 
 
 

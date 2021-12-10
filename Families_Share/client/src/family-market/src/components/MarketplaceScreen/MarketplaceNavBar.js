@@ -3,7 +3,7 @@ import withLanguage from "../../../../components/LanguageContext";
 const React = require("react");
 const Log = require("../../../../components/Log");
 const PlainNavBar = require("../PlainNavBar");
-const MyProfileButton = require("/MyProfileButton");
+const MyProfileButton = require("./MyProfileButton");
 
 
 

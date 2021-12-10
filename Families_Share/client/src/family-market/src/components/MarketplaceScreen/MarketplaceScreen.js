@@ -9,11 +9,11 @@ const {FAMILY_MARKET_BASE_PAGE_URL} = require("../../constants");
 
 const React = require("react");
 const Log = require("../../../../components/Log");
-const CreatePostingButton = require("/CreatePostingButton");
+const CreatePostingButton = require("./CreatePostingButton");
 const SearchBar = require("../SearchBar");
 const CategoryComboBox = require("../CategoryComboBox");
 const TransactionTypeComboBox = require("../TransactionTypeComboBox");
-const MarketplaceNavBar = require("/MarketplaceNavBar");
+const MarketplaceNavBar = require("./MarketplaceNavBar");
 
 
 

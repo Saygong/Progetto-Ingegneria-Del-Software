@@ -5,8 +5,8 @@ const Posting = require("../../api/model/Posting");
 const React = require("react");
 const PropTypes = require("prop-types");
 const Log = require("../../../../components/Log");
-const PostingInfoHeader = require("/PostingInfoHeader");
-const PostingInfoTabs = require("/PostingInfoTabs");
+const PostingInfoHeader = require("./PostingInfoHeader");
+const PostingInfoTabs = require("./PostingInfoTabs");
 
 
 

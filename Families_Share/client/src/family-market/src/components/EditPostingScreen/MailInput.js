@@ -25,7 +25,7 @@ class MailInput extends React.Component {
         return (
             <div className="row no-gutters">
                 {/*TODO add mail image*/}
-                <img src={} alt={txt.altImageText} className="col-2-10"/>
+                <img src="" alt={txt.altImageText} className="col-2-10"/>
                 <div className="col-8-10">
                     <SimpleTextInput text={this.props.text} description=""
                                      textChangeHandler={this.handleTextChange}
