@@ -22,10 +22,10 @@ import LoadingSpinner from "./LoadingSpinner";
 import Texts from "../Constants/Texts";
 import withLanguage from "./LanguageContext";
 import ManagePlanSolution from "./ManagePlanSolution";
-const Log = require("./Log");
 import "../styles/DayPicker.css";
 import TimeslotSubscribe from "./TimeslotSubcribe";
 
+const Log = require("./Log");
 const modifiersStyles = {
   selected: {
     backgroundColor: "#00838F"

@@ -13,8 +13,9 @@ import ConfirmDialog from "./ConfirmDialog";
 import OptionsModal from "./OptionsModal";
 import LoadingSpinner from "./LoadingSpinner";
 import Images from "../Constants/Images";
-const Log = require("./Log");
 import Avatar from "./Avatar";
+
+const Log = require("./Log");
 
 const styles = {
   add: {

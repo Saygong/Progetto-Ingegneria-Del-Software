@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes, from "prop-types";
+import PropTypes from "prop-types";
 import LazyLoad from "react-lazyload";
 import GroupListItem from "./GroupListItem";
 import withLanguage from "./LanguageContext";
@@ -9,8 +9,9 @@ import {useLocation} from "react-router-dom";
 import {useHistory} from "react-router-dom";
 import {FAMILY_MARKET_BASE_PAGE_URL} from "../../family-market/src/constants";
 import {buildRedirectionHandler} from "../../family-market/src/components/MyPostingsScreens/MyGroupPostingsScreen";
-import Log from "./Log";
 
+
+const Log = require("./Log");
 function redirectToGroupMainScreen() {
     const { history } = this.props;
     const { group } = this.state;
@@ -20,7 +21,7 @@ function redirectToGroupMainScreen() {
     history.push(`/groups/${group.group_id}/activities`);
 }
 
-function redirectToGroupPostingsScreen() {
+function RedirectToGroupPostingsScreen() {
     const history = useHistory();
     const userId = JSON.parse(localStorage.getItem("user")).id;
     const groupId = JSON.parse(localStorage.getItem("group")).id;
@@ -40,7 +41,7 @@ const GroupList = ({ groupIds }) => {
   let currentLocation = useLocation();
   if (currentLocation.pathname.includes(FAMILY_MARKET_BASE_PAGE_URL)) {
       // we are in the Family Market extension
-      navigationHandler = redirectToGroupPostingsScreen;
+      navigationHandler = RedirectToGroupPostingsScreen;
   }
   else {
       navigationHandler = redirectToGroupMainScreen;

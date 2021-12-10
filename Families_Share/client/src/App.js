@@ -13,17 +13,17 @@ import PrivateRoute from "./components/PrivateRoute";
 
 // Paths for Family Market routes
 const {MarketplaceScreen, MarketplaceScreenRoute} =
-    require("../family-market/src/components/MarketplaceScreen/MarketplaceScreen")
+    require("./family-market/src/components/MarketplaceScreen/MarketplaceScreen")
 const {PostingScreen, PostingScreenRoute} =
-    require("../family-market/src/components/PostingScreen/PostingScreen");
+    require("./family-market/src/components/PostingScreen/PostingScreen");
 const {EditPostingScreen, EditModeRoute, CreateModeRoute} =
-    require("../family-market/src/components/EditPostingScreen/EditPostingScreen");
+    require("./family-market/src/components/EditPostingScreen/EditPostingScreen");
 const {MyFavouritesScreen, MyFavouritesScreenRoute} =
-    require("../family-market/src/components/MyFavouritesScreen/MyFavouritesScreen");
+    require("./family-market/src/components/MyFavouritesScreen/MyFavouritesScreen");
 const {MyGroupsWithPostingsScreen, MyGroupsWithPostingsScreenRoute} =
-    require("../family-market/src/components/MyPostingsScreens/MyGroupsWithPostingsScreen");
+    require("./family-market/src/components/MyPostingsScreens/MyGroupsWithPostingsScreen");
 const {MyGroupPostingsScreen, MyGroupPostingsScreenRoute} =
-    require("../family-market/src/components/MyPostingsScreens/MyGroupPostingsScreen");
+    require("./family-market/src/components/MyPostingsScreens/MyGroupPostingsScreen");
 
 // Family Market components (screens)
 const LoadableMarketplaceScreen = Loadable({
