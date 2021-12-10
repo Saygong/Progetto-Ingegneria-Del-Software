@@ -16,7 +16,7 @@
     "dev": "concurrently \"npm run dev-server\" \"npm run dev-client\""
   },
   "engines": {
-    "node": "17.0.1"
+    "node": "10.14.1"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
