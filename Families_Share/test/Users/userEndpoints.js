@@ -488,9 +488,34 @@ describe('/Get/api/family-market/users/userId/groups/groupId/postings', () => {
     User.findOne({ email: 'test3@email.com' },  (err, user) => {
       Group.findOne({ name: 'Test Group 2' },  (err, group) => {
         chai.request(server)
-          .get(`/api/users/${user.userId}/groups/${group.group_id}/postings`)
-          .end((res) => {
-            res.should.have.status(404)
+          .get(`/api/family-market/users/${user.user_id}/groups/${group.group_id}/postings`)
+          .set('Authorization', user.token)
+          .end((err, res) => {
+              console.log("Response body")
+              console.log(res.body);
+
+            res.should.have.status(200)
+
+              const postings = res.body;
+              expect(postings.length).to.eql(2);
+
+              // Check that the returned postings have the right fields too
+              for(const p of postings) {
+                  p.should.have.property('id')
+                  p.should.have.property('user_id')
+                  p.should.have.property('group_id')
+                  p.should.have.property('name')
+                  p.should.have.property('category')
+                  p.should.have.property('description')
+                  p.should.have.property('photo')
+                  p.should.have.property('type')
+                  p.should.have.property('contact_id')
+
+                  contact.should.have.property('email');
+                  contact.should.have.property('place');
+                  contact.should.have.property('phone_number');
+              }
+
             done()
           })
       })

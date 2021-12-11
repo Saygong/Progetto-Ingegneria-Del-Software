@@ -65,9 +65,11 @@ router.patch('/:postingId', async (req, res, next) => {
       return res.status(401).send('Unauthorized' + log)
     }
 
-    // req.patch must be an object with the updated field
-    await Posting.findOneAndUpdate({ id: `${p_id}` }, req.patch).then(
-      res.status(204).send('Posting successfully updated')
+    // req.body must be an object with the updated field
+    const update = {...req.body}
+    log += "Update data: " + JSON.stringify(update) + "|"
+    await Posting.updateOne({ id: p_id}, update).then(
+      res.status(200).send('Posting successfully updated' + log)
     )
 
   } catch (error) {
