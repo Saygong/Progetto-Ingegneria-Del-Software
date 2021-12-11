@@ -107,8 +107,8 @@ router.delete('/:postingId', async (req, res, next) => {
   const p_id = req.params.postingId
   try {
     // Check owner consistency
-    let post_owner = await Posting.findOne({ id: `${p_id}` }, 'user_id')
-    if (req.user_id !== post_owner) { return res.status(401).send('Unauthorized') }
+    let {user_id} = await Posting.findOne({ id: `${p_id}` }, 'user_id')
+    if (req.user_id !== user_id) { return res.status(401).send('Unauthorized') }
 
     await Posting.deleteOne({ id: `${p_id}` }).then(
       res.status(200).send('Posting successfully deleted')

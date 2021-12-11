@@ -100,9 +100,11 @@ const initializeDB = async () => {
     description: 'Giving away',
     photo: '/images/profiles/posting_default_photo.png',
     type: 'Lend',
-    email: '880141@stud.unive.com',
-    place: 'Chirignago',
-    phone_number: '3406862134'
+    contact: {
+      email: '880141@stud.unive.com',
+      place: 'Chirignago',
+      phone_number: '3406862134'
+    }
   }
   const posting2 = {
     user_id: user.user_id,
@@ -112,9 +114,11 @@ const initializeDB = async () => {
     description: 'Please help me get rid',
     photo: '/images/profiles/posting_default_photo.png',
     type: 'Donation',
-    email: 'marcodifresco99@gmail.com',
-    place: 'Chiry',
-    phone_number: '3477808876'
+    contact: {
+      email: 'marcodifresco99@gmail.com',
+      place: 'Chiry',
+      phone_number: '3477808876'
+    }
   }
 
   // Adding posting1 & posting2 to database
@@ -287,17 +291,17 @@ describe('Test', () => {
 
   importTest('[family-market] User Endpoints Test', './Users/userEndpoints')
   importTest('[family-market] Group Endpoints Test', './Groups/groupEndpoints')
-  //importTest('Users Groups Endpoints Test', './Users/groupEndpoints')
-  //importTest('Users Profile Endpoints Test', './Users/profileEndpoints')
-  //importTest('Users Children Endpoints Test', './Users/childrenEndpoints')
-  //importTest('Group Members Endpoints Test', './Groups/memberEndpoints')
-  //importTest('Group Various Endpoints Test', './Groups/variousEndpoints')
-  //importTest('Group Various Endpoints Test', './Groups/activityEndpoints')
-  //importTest('Group Announcement Endpoints Test', './Groups/announcementEndpoints')
-  //importTest('User Various Endpoints Test', './Users/variousEndpoints')
-  //importTest('Child Endpoints Test', './Children/childEndpoints')
-  //importTest('Profile Endpoints Test', './Profiles/profileEndpoints')
-  //importTest('Community Endpoints Test', './Community/communityEndpoints')
+  importTest('Users Groups Endpoints Test', './Users/groupEndpoints')
+  importTest('Users Profile Endpoints Test', './Users/profileEndpoints')
+  importTest('Users Children Endpoints Test', './Users/childrenEndpoints')
+  importTest('Group Members Endpoints Test', './Groups/memberEndpoints')
+  importTest('Group Various Endpoints Test', './Groups/variousEndpoints')
+  importTest('Group Various Endpoints Test', './Groups/activityEndpoints')
+  importTest('Group Announcement Endpoints Test', './Groups/announcementEndpoints')
+  importTest('User Various Endpoints Test', './Users/variousEndpoints')
+  importTest('Child Endpoints Test', './Children/childEndpoints')
+  importTest('Profile Endpoints Test', './Profiles/profileEndpoints')
+  importTest('Community Endpoints Test', './Community/communityEndpoints')
   importTest(' [family-market] Posting Endpoints Test', './Posting/postingEndpoints')
 
   // Cleanup

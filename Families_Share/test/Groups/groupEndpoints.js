@@ -530,12 +530,37 @@ describe('/Delete/api/groups/id', () => {
 
 describe('[family-market] /Get/api/family-market/groups/groupId/postings', () => {
   it('it should correctly return a list of postings contained in a group', (done) => {
-    Group.find({ name: 'Test Group 2' }, (err, group) => {
-      chai.request(server)
-        .get(`/api/family-market/groups/${group.group_id}/postings`)
-        .end((err, res) => {
-          res.should.have.status(200)
-          done()
+    Group.findOne({ name: 'Test Group 2' }, (err, group) => {
+        User.findOne({email: "test3@email.com"}, (err, user) => {
+            chai.request(server)
+                .get(`/api/family-market/groups/${group.group_id}/postings`)
+                .set('Authorization', user.token)
+                .end((err, res) => {
+                    res.should.have.status(200)
+
+                    console.log(res.body);
+
+                    // Check that the returned postings have the right fields too
+                    const postings = res.body;
+                    for(const p of postings) {
+                        p.should.have.property('id')
+                        p.should.have.property('user_id')
+                        p.should.have.property('group_id')
+                        p.should.have.property('name')
+                        p.should.have.property('category')
+                        p.should.have.property('description')
+                        p.should.have.property('photo')
+                        p.should.have.property('type')
+                        p.should.have.property('contact')
+
+                        const contact = p.contact;
+                        contact.should.have.property('email');
+                        contact.should.have.property('place');
+                        contact.should.have.property('phone_number');
+                    }
+
+                    done();
+                })
         })
     })
   })

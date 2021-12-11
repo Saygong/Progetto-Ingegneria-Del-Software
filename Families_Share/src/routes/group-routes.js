@@ -249,7 +249,7 @@ router.post('/', async (req, res, next) => {
     //const response = await calendar.calendars.insert({ resource: newCal })
     //group.calendar_id = response.data.id
 
-    group.calendar_id = "Mandrillozzi";
+    group.calendar_id = "Mandrillozzi " + new Date().getMilliseconds();
     await Member.create(members)
     await Group.create(group)
     await Image.create(image)

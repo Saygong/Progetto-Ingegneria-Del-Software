@@ -6,7 +6,7 @@ const expect = common.chai.expect;
 const User = require('../../src/models/user')
 const Password_Reset = require('../../src/models/password-reset')
 const Group = require('../../src/models/group')
-const Posting = requirequire('../../src/models/family-market/posting')
+const Posting = require('../../src/models/family-market/posting')
 
 describe('/Post/api/users', () => {
   it('it should sign up a user with correct parameters', (done) => {
@@ -509,8 +509,9 @@ describe('[family-market] /Get/api/family-market/users/userId/groups/groupId/pos
                   p.should.have.property('description')
                   p.should.have.property('photo')
                   p.should.have.property('type')
-                  p.should.have.property('contact_id')
+                  p.should.have.property('contact')
 
+                  const contact = p.contact;
                   contact.should.have.property('email');
                   contact.should.have.property('place');
                   contact.should.have.property('phone_number');

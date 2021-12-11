@@ -58,9 +58,11 @@ describe('[family-market] /Patch/api/family-market/postings/postingId', () => {
       description: 'Bla bLa xd',
       photo: '/images/profiles/posting_default_photo.png',
       type: 'Lend',
-      email: '880141@stud.unive.com',
-      place: 'Chirignago',
-      phone_number: '3406862134'
+        contact: {
+            email: '880141@stud.unive.com',
+            place: 'Chirignago',
+            phone_number: '3406862134'
+        }
     }
 
     const group = await Group.findOne({ name: 'Test Group 2' });
@@ -109,9 +111,11 @@ describe('[family-market] /Post/api/family-market/postings/', () => {
       description: 'too much volcano',
       photo: '/images/profiles/posting_default_photo.png',
       type: 'Lend',
-      email: '880141@stud.unive.com',
-      place: 'Chirignago',
-      phone_number: '3406862134'
+      contact: {
+          email: '880141@stud.unive.com',
+            place: 'Chirignago',
+            phone_number: '3406862134'
+        }
     };
 
     const res = await chai.request(server)
@@ -120,6 +124,7 @@ describe('[family-market] /Post/api/family-market/postings/', () => {
       .send(posting);
 
     console.log(res.body);
+
     res.should.have.status(200);
 
     res.should.have.status(200)

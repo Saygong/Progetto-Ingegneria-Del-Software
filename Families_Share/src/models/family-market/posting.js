@@ -58,12 +58,12 @@ const postingSchema = new mongoose.Schema(
   { timestamps: true }
 )
 
-postingSchema.virtual('contact', {
-  ref: 'Contact',
-  localField: 'contact_id',
-  foreignField: 'contact_id',
-  justOne: true
-})
+//postingSchema.virtual('contact', {
+//  ref: 'Contact',
+//  localField: 'contact_id',
+//  foreignField: 'contact_id',
+//  justOne: true
+//})
 
 mongoose.pluralize(null)
 const model = mongoose.model('Posting', postingSchema)

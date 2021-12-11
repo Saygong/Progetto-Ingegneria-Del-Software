@@ -9,7 +9,7 @@ const router = new express.Router()
 router.get('/:groupId/postings', async (req, res) => {
   // Check if user is not authenticated
   if (!req.user_id) {
-    return res.status(401).send('Not authenticated')
+    res.status(401).send('Not authenticated')
   }
   const g_id = req.params.groupId
   const u_id = req.user_id
@@ -23,11 +23,11 @@ router.get('/:groupId/postings', async (req, res) => {
       user_accepted: true
     })
     if (!member) {
-      return res.status(401).send('Unauthorized')
+      res.status(401).send('Unauthorized')
     }
 
     // Query that retrieves all postings with group_id = g_id
-    return Posting.find({
+    await Posting.find({
       group_id: `${g_id}`
     })
       .sort({ creation_date: 'desc' })
@@ -35,12 +35,12 @@ router.get('/:groupId/postings', async (req, res) => {
       .exec()
       .then(postings => {
         if (postings.length === 0) {
-          return res.status(404).send('Group has no postings')
+          res.status(404).send('Group has no postings')
         }
         res.json(postings)
       })
   } catch (error) {
-    return res.status(401).send('Error')
+    res.status(401).send('Error')
   }
 })
 
