@@ -6,7 +6,7 @@ const expect = common.chai.expect;
 const User = require('../../src/models/user')
 const Password_Reset = require('../../src/models/password-reset')
 const Group = require('../../src/models/group')
-const Posting = require('../../src/models/family-market/posting')
+const Posting = requirequire('../../src/models/family-market/posting')
 
 describe('/Post/api/users', () => {
   it('it should sign up a user with correct parameters', (done) => {
@@ -483,7 +483,7 @@ describe('[family-market]/Get/api/family-market/users/userId/favourites', () => 
   })
 })
 
-describe('/Get/api/family-market/users/userId/groups/groupId/postings', () => {
+describe('[family-market] /Get/api/family-market/users/userId/groups/groupId/postings', () => {
   it('it should correctly return a list of postings of a user on a group', (done) => {
     User.findOne({ email: 'test3@email.com' },  (err, user) => {
       Group.findOne({ name: 'Test Group 2' },  (err, group) => {
@@ -523,17 +523,21 @@ describe('/Get/api/family-market/users/userId/groups/groupId/postings', () => {
   })
 })
 
-describe('/Patch/api/family-market/users/userId/favourites', () => {
-  it('it should patch a users saved posting', (done) => {
-    User.findOne({ email: 'test3@email.com' }, (user) => {
-      chai.request(server)
-        .patch(`/api/users/${user.user_id}`)
+describe('[family-market] /Patch/api/family-market/users/userId/favourites', () => {
+  it('it should patch a users saved posting', async () => {
+    const user = await User.findOne({ email: 'test4@email.com' });
+      const newFavs = ['Test1', 'Test2'];
+      const res = await chai.request(server)
+        .patch(`/api/family-market/users/${user.user_id}/favourites`)
         .set('Authorization', user.token)
-        .end((res) => {
-          res.should.have.status(200)
-          done()
-        })
-    })
+        .send({favourites: newFavs});
+
+      console.log(res.text);
+      console.log(res.body);
+      res.should.have.status(200);
+      const userAfter = await User.findOne({ email: 'test4@email.com' });
+      console.log(userAfter)
+      expect(userAfter.favourites).to.eql(newFavs);
   })
 })
 

@@ -525,6 +525,7 @@ describe('/Delete/api/groups/id', () => {
     })
   })
 })
+
 /* ---------------------------------------     FAMILY - MARKET  TEST    --------------------------------------------- */
 
 describe('[family-market] /Get/api/family-market/groups/groupId/postings', () => {
@@ -533,7 +534,7 @@ describe('[family-market] /Get/api/family-market/groups/groupId/postings', () =>
       chai.request(server)
         .get(`/api/family-market/groups/${group.group_id}/postings`)
         .end((err, res) => {
-          res.should.have.status(404)
+          res.should.have.status(200)
           done()
         })
     })

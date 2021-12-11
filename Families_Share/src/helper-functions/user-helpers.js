@@ -3,16 +3,20 @@ const config = require('config')
 const googleEmail = config.get('google.email')
 const googleKey = config.get('google.key')
 const scopes = 'https://www.googleapis.com/auth/calendar'
+
+
 const googleToken = new google.auth.JWT(
   process.env[googleEmail],
   null,
   process.env[googleKey].replace(/\\n/g, '\n'),
   scopes
 )
+
 const fs = require('fs')
 const moment = require('moment')
 const path = require('path')
 var PdfMake = require('pdfmake')
+
 
 const calendar = google.calendar({
   version: 'v3',

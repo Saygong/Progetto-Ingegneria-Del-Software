@@ -139,7 +139,6 @@ router.post('/', async (req, res, next) => {
       photo,
       type,
       contact_id
-      // creation_date fatto in automatico? Date.now() //se va male prendo l'esempio dell'indiano
     }
     const newContact = {
       contact_id,
@@ -168,8 +167,7 @@ router.post('/', async (req, res, next) => {
     res.json(response)
 
   } catch (err) {
-    next(err)
+    return res.status(401).send("Caught Error:" + JSON.stringify(err));
   }
 })
-
 module.exports = router

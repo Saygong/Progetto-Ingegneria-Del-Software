@@ -53,7 +53,7 @@ const initializeDB = async () => {
   await chai.request(server).post('/api/users').send(user2)
   await chai.request(server).post('/api/users').send(user3)
 
-  const user = await User.findOne({ email: 'test3@email.com' })
+  const user = await User.findOne({email: 'test3@email.com'});
   const group2 = {
     name: 'Test Group 2',
     description: 'Also awesome group',

@@ -17,9 +17,8 @@ router.get('/:userId/favourites', async (req, res) => {
 
   try {
     // Query that retrieves all the saved postings of the user user_id = u_id
-    const favouriteListId = await User.findOne({ user_id: `${u_id}` }, 'favourites').exec()
-
-    let fav_post = []
+    const {favourites} = await User.findOne({ user_id: u_id }, 'favourites')
+    let fav_post = [];
 
     // Multiple queries to insert the favourites posts into a list
     for (let favId of favourites) {
@@ -38,7 +37,8 @@ router.get('/:userId/favourites', async (req, res) => {
 // Route for getUserPosting to show all the postings from a group of a user
 router.get('/:userId/groups/:groupId/postings', async (req, res) => {
   // Check user's integrity
-  if (req.user_id !== req.params.id) { return res.status(401).send('Unauthorized') }
+  if (req.user_id !== req.params.userId) { return res.status(401).send('Unauthorized') }
+
   const g_id = req.params.groupId
   const u_id = req.params.userId
 
@@ -87,5 +87,6 @@ router.patch('/:userId/favourites', async (req, res, next) => {
     next(error);
   }
 })
+
 
 module.exports = router

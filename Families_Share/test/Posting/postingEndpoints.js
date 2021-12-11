@@ -1,3 +1,8 @@
+const common = require('../common')
+const server = common.server
+const chai = common.chai
+const expect = common.chai.expect
+
 const User = require('../../src/models/user')
 const Group = require('../../src/models/group')
 const Posting = require('../../src/models/family-market/posting')
@@ -111,10 +116,25 @@ describe('[family-market] /Post/api/family-market/postings/', () => {
 
     const res = await chai.request(server)
       .post(`/api/family-market/postings`)
-      .send(posting)
-      .end((res) => {
-        res.should.have.status(404)
-        done()
-      })
+      .set('Authorization', existingCreator.token)
+      .send(posting);
+
+    console.log(res.body);
+    res.should.have.status(200);
+
+    res.should.have.status(200)
+    res.body.should.have.property('id')
+    res.body.should.have.property('user_id')
+    res.body.should.have.property('group_id')
+    res.body.should.have.property('name')
+    res.body.should.have.property('category')
+    res.body.should.have.property('description')
+    res.body.should.have.property('photo')
+    res.body.should.have.property('type')
+    res.body.should.have.property('contact')
+    const contact = res.body.contact;
+    contact.should.have.property('email');
+    contact.should.have.property('place');
+    contact.should.have.property('phone_number');
   })
 })
