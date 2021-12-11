@@ -1,7 +1,7 @@
 const React = require("react");
 const PropTypes = require("prop-types");
 const Log = require("../../../src/components/Log");
-const SimpleTextInput = require("Families_Share/client/src/family-market (FAI COPIA) 2 2/src/components/SimpleTextInput");
+const SimpleTextInput = require("Families_Share/client/src/family-market/src/components/SimpleTextInput");
 
 const texts = require("../texts");
 import withLanguage from "../../../src/components/LanguageContext";

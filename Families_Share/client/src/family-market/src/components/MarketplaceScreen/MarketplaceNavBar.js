@@ -1,7 +1,7 @@
 const React = require("react");
 const Log = require("../../../../src/components/Log");
 const PlainNavBar = require("../PlainNavBar");
-const MyProfileButton = require("Families_Share/client/src/family-market (FAI COPIA) 2 2/src/components/MarketplaceScreen/MyProfileButton");
+const MyProfileButton = require("Families_Share/client/src/family-market/src/components/MarketplaceScreen/MyProfileButton");
 import withLanguage from "../../../../src/components/LanguageContext";
 
 

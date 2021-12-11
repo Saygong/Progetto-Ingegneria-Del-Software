@@ -2,7 +2,7 @@ const React = require("react");
 const PropTypes = require("prop-types");
 const Log = require("../../../src/components/Log");
 
-const {buildEditModeRedirectionHandler} = require("Families_Share/client/src/family-market (FAI COPIA) 2 2/src/components/EditPostingScreen/EditPostingScreen");
+const {buildEditModeRedirectionHandler} = require("Families_Share/client/src/family-market/src/components/EditPostingScreen/EditPostingScreen");
 import {withRouter} from "react-router-dom";
 
 const texts = require("../texts");

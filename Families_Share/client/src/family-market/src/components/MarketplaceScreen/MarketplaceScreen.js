@@ -7,11 +7,11 @@ const {FAMILY_MARKET_BASE_PAGE_URL} = require("../../constants");
 
 const React = require("react");
 const Log = require("../../../../src/components/Log");
-const CreatePostingButton = require("Families_Share/client/src/family-market (FAI COPIA) 2 2/src/components/MarketplaceScreen/CreatePostingButton");
+const CreatePostingButton = require("Families_Share/client/src/family-market/src/components/MarketplaceScreen/CreatePostingButton");
 const SearchBar = require("../SearchBar");
 const CategoryComboBox = require("../CategoryComboBox");
 const TransactionTypeComboBox = require("../TransactionTypeComboBox");
-const MarketplaceNavBar = require("Families_Share/client/src/family-market (FAI COPIA) 2 2/src/components/MarketplaceScreen/MarketplaceNavBar");
+const MarketplaceNavBar = require("Families_Share/client/src/family-market/src/components/MarketplaceScreen/MarketplaceNavBar");
 import withLanguage from "../../../../src/components/LanguageContext";
 
 
