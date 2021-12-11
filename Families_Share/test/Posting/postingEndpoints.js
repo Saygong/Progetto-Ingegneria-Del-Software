@@ -89,7 +89,7 @@ describe('[family-market] /Delete/api/family-market/postings/postingId', () => {
               .delete(`/api/family-market/postings/${posting.id}`)
               .set('Authorization', user.token)
               .end((err, res) => {
-
+                console.log(res.text)
                 res.should.have.status(200)
                 done()
               })
