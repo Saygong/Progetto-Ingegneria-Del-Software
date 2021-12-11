@@ -68,4 +68,4 @@ CategoryComboBox.propTypes = {
     language: PropTypes.string
 }
 
-module.exports = withLanguage(CategoryComboBox);
+export default withLanguage(CategoryComboBox);

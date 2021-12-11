@@ -51,4 +51,4 @@ ConfirmButton.propTypes = {
     language: PropTypes.string
 }
 
-module.exports = withLanguage(ConfirmButton);
+export default withLanguage(ConfirmButton);

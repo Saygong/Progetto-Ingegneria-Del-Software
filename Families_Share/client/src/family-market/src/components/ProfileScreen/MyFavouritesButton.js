@@ -54,4 +54,4 @@ MyFavouritesButton.propTypes = {
     language: PropTypes.string
 }
 
-module.exports = withRouter(withLanguage(MyFavouritesButton));
+export default withRouter(withLanguage(MyFavouritesButton));

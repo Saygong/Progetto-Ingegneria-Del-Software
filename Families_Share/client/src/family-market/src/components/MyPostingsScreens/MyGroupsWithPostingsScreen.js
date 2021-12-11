@@ -114,7 +114,7 @@ MyGroupsWithPostingsScreen.propTypes = {
     language: PropTypes.string
 }
 
-module.exports = {
+export default {
     MyGroupsWithPostingsScreen: withLanguage(MyGroupsWithPostingsScreen),
     MyGroupsWithPostingsScreenRoute: MyGroupsWithPostingsScreen.ROUTE,
     buildRedirectionHandler: MyGroupsWithPostingsScreen.buildRedirectionHandler

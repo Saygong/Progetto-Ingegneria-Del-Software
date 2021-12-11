@@ -114,7 +114,7 @@ MyFavouritesScreen.propTypes = {
     language: PropTypes.string
 }
 
-module.exports = {
+export default {
     MyFavouritesScreen: withLanguage(MyFavouritesScreen),
     MyFavouritesScreenRoute: MyFavouritesScreen.ROUTE,
     buildRedirectionHandler: MyFavouritesScreen.buildRedirectionHandler

@@ -67,4 +67,4 @@ TelephoneInput.propTypes = {
     language: PropTypes.string
 }
 
-module.exports = withLanguage(TelephoneInput);
+export default withLanguage(TelephoneInput);

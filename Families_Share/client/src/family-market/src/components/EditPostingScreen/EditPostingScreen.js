@@ -443,7 +443,7 @@ EditPostingScreen.propTypes = {
     language: PropTypes.string
 };
 
-module.exports = {
+export default {
     EditPostingScreen: withLanguage(EditPostingScreen),
     EditModeRoute: EditPostingScreen.EDIT_MODE_ROUTE,
     CreateModeRoute: EditPostingScreen.CREATE_MODE_ROUTE,

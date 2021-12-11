@@ -103,4 +103,4 @@ ToggleFavouriteButton.propTypes = {
     language: PropTypes.string
 };
 
-module.exports = withLanguage(ToggleFavouriteButton);
+export default withLanguage(ToggleFavouriteButton);

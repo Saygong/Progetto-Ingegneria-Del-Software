@@ -72,4 +72,4 @@ ImageInput.propTypes = {
     language: PropTypes.string
 }
 
-module.exports = withLanguage(ImageInput);
+export default withLanguage(ImageInput);

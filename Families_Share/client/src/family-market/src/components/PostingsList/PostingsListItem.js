@@ -134,7 +134,7 @@ PostingsListItem.propTypes = {
     language: PropTypes.string
 };
 
-module.exports = {
+export default {
     PostingsListItem: withRouter(withLanguage(PostingsListItem)),
     FAVOURITES_MODE: PostingsListItem.FAVOURITES_MODE,
     EDIT_MODE: PostingsListItem.EDIT_MODE

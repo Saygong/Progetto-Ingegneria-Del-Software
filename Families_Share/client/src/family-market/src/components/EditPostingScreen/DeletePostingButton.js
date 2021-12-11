@@ -76,4 +76,4 @@ DeletePostingButton.propTypes = {
     language: PropTypes.string
 }
 
-module.exports = withLanguage(DeletePostingButton);
+export default withLanguage(DeletePostingButton);

@@ -62,4 +62,4 @@ CreatePostingButton.propTypes = {
     language: PropTypes.string
 }
 
-module.exports = withRouter(withLanguage(CreatePostingButton));
+export default withRouter(withLanguage(CreatePostingButton));

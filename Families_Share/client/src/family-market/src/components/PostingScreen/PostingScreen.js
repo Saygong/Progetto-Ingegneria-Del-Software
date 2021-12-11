@@ -109,7 +109,7 @@ PostingScreen.propTypes = {
     language: PropTypes.string
 }
 
-module.exports = {
+export default {
     PostingScreen: withLanguage(PostingScreen),
     PostingScreenRoute: PostingScreen.ROUTE,
     buildRedirectionHandler: PostingScreen.buildRedirectionHandler

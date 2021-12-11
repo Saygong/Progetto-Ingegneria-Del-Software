@@ -63,4 +63,4 @@ PostingNavBar.propTypes = {
     language: PropTypes.string
 };
 
-module.exports = withLanguage(PostingNavBar);
+export default withLanguage(PostingNavBar);

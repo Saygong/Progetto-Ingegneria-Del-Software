@@ -71,4 +71,4 @@ EditPostingButton.propTypes = {
     language: PropTypes.string
 }
 
-module.exports = withRouter(withLanguage(EditPostingButton));
+export default withRouter(withLanguage(EditPostingButton));

@@ -70,4 +70,4 @@ LargeTextInput.propTypes = {
     language: PropTypes.string
 }
 
-module.exports = withLanguage(LargeTextInput);
+export default withLanguage(LargeTextInput);

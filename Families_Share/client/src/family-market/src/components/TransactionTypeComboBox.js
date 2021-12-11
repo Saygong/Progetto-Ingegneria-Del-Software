@@ -69,4 +69,4 @@ TransactionTypeComboBox.propTypes = {
     language: PropTypes.string
 }
 
-module.exports = withLanguage(TransactionTypeComboBox);
+export default withLanguage(TransactionTypeComboBox);

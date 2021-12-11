@@ -1,4 +1,4 @@
-const Contact = require("./Contact");
+import Contact from "./Contact";
 
 
 /**

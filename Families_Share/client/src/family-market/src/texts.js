@@ -147,6 +147,6 @@ const fr = {
 };
 
 
-module.exports = {
+export default {
     en, nl, it, el, hu, fr
 };

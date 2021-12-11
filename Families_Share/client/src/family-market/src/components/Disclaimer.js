@@ -30,4 +30,4 @@ Disclaimer.propTypes = {
     language: PropTypes.string
 }
 
-module.exports = withLanguage(Disclaimer);
+export default withLanguage(Disclaimer);

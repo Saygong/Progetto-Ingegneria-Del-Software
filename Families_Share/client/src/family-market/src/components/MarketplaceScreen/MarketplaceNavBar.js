@@ -26,4 +26,4 @@ class MarketplaceNavBar extends React.Component {
     }
 }
 
-module.exports = withLanguage(MarketplaceNavBar);
+export default withLanguage(MarketplaceNavBar);
