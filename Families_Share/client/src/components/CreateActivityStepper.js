@@ -19,8 +19,9 @@ import CreateActivityInformation from "./CreateActivityInformation";
 import CreateActivityDates from "./CreateActivityDates";
 import CreateActivityTimeslots from "./CreateActivityTimeslots";
 import Texts from "../Constants/Texts";
-const Log = require("./Log");
 import LoadingSpinner from "./LoadingSpinner";
+
+import Log from "./Log";
 
 const muiTheme = createMuiTheme({
   typography: {

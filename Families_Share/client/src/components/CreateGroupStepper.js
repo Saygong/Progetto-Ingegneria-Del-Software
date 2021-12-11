@@ -18,7 +18,7 @@ import LoadingSpinner from "./LoadingSpinner";
 import Texts from "../Constants/Texts";
 import withLanguage from "./LanguageContext";
 import InviteDialog from "./InviteDialog";
-const Log = require("./Log");
+import Log from "./Log";
 
 const muiTheme = createMuiTheme({
   typography: {

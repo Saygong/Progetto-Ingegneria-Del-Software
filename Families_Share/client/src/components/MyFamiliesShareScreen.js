@@ -8,8 +8,9 @@ import withLanguage from "./LanguageContext";
 import GroupList from "./GroupList";
 import TimeslotsList from "./TimeslotsList";
 import Texts from "../Constants/Texts";
-const Log = require("./Log");
 import Images from "../Constants/Images";
+
+import Log from "./Log";
 
 const getMyGroups = userId => {
   return axios

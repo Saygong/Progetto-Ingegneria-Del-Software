@@ -8,8 +8,9 @@ import GroupMembersList from "./GroupMembersList";
 import MembersOptionsModal from "./OptionsModal";
 import GroupMembersAdminOptions from "./GroupMembersAdminOptions";
 import LoadingSpinner from "./LoadingSpinner";
-const Log = require("./Log");
 import GroupMembersNavbar from "./GroupMembersNavbar";
+
+import Log from "./Log";
 
 const getGroupChildren = groupId => {
   return axios

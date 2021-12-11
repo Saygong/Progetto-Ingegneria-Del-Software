@@ -7,7 +7,7 @@ import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import withLanguage from "./LanguageContext";
 import Texts from "../Constants/Texts";
-const Log = require("./Log");
+import Log from "./Log";
 
 const styles = {
   checkbox: {

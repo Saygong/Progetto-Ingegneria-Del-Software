@@ -7,7 +7,7 @@ import withLanguage from "./LanguageContext";
 import Images from "../Constants/Images";
 import BackNavigation from "./BackNavigation";
 import LoadingSpinner from "./LoadingSpinner";
-const Log = require("./Log");
+import Log from "./Log";
 
 class ForgotPasswordScreen extends React.Component {
   state = {

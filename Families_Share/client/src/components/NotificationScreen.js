@@ -5,7 +5,7 @@ import { Skeleton } from "antd";
 import Texts from "../Constants/Texts";
 import BackNavigation from "./BackNavigation";
 import withLanguage from "./LanguageContext";
-const Log = require("./Log");
+import Log from "./Log";
 
 class NotificationScreen extends React.Component {
   state = { fetchedNotificationData: false };

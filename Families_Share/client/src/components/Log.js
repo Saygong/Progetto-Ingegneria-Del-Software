@@ -48,4 +48,4 @@ class Log {
   }
 }
 
-module.exports = new Log();
+export default new Log();

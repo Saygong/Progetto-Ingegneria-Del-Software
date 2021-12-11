@@ -9,7 +9,7 @@ import withLanguage from "./LanguageContext";
 import Texts from "../Constants/Texts";
 import ConfirmDialog from "./ConfirmDialog";
 import ExpandedImageModal from "./ExpandedImageModal";
-const Log = require("./Log");
+import Log from "./Log";
 
 class ProfileHeader extends React.Component {
   state = {

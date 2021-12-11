@@ -5,7 +5,7 @@ import { withSnackbar } from "notistack";
 import Texts from "../Constants/Texts";
 import withLanguage from "./LanguageContext";
 import PhotoPreviewBubble from "./PhotoPreviewBubble";
-const Log = require("./Log");
+import Log from "./Log";
 
 const dataURLtoFile = (dataurl, filename) => {
   const arr = dataurl.split(",");

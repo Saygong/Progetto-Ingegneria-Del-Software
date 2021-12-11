@@ -9,7 +9,7 @@ import ActivityOptionsModal from "./OptionsModal";
 import ActivityListItem from "./ActivityListItem";
 import PlanListItem from "./PlanListItem";
 import ConfirmDialog from "./ConfirmDialog";
-const Log = require("./Log");
+import Log from "./Log";
 
 const styles = {
   add: {
