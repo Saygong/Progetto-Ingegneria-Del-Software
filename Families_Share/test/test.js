@@ -118,8 +118,42 @@ const initializeDB = async () => {
   }
 
   // Adding posting1 & posting2 to database
-  await chai.request(server).post(`/api/groups/${group.group_id}/postings`).send(posting1).set('Authorization', user.token)
-  await chai.request(server).post(`/api/groups/${group.group_id}/postings`).send(posting2).set('Authorization', user.token)
+  await chai.request(server).post(`/api/family-market/postings`)
+      .send(posting1)
+      .set('Authorization', user.token)
+
+  await chai.request(server).post(`/api/family-market/postings`)
+      .send(posting2)
+      .set('Authorization', user.token)
+
+  // Add postings to favourites of user and user4
+  const user4 = {
+    given_name: 'Test',
+    family_name: 'User3',
+    number: '0123546879',
+    email: 'test4@email.com',
+    password: 'password',
+    visible: true,
+    language: 'en',
+    favourites: ['ciao', 'come', 'stai']
+  }
+  await chai.request(server).post('/api/users').send(user4)
+  const myUser = await User.findOne({email: 'test4@email.com'}).lean().exec()
+
+  const fav1 = await Posting.findOne({ name: 'Lego BrickHeadz' });
+  const fav2 = await Posting.findOne({ name: 'Barbie Fairy' });
+
+  await chai.request(server).patch(`/api/family-market/users/${myUser.user_id}/favourites`)
+      .send({
+        favourites: [fav1.id, fav2.id]
+      })
+      .set('Authorization', myUser.token);
+
+  await chai.request(server).patch(`/api/family-market/users/${user.user_id}/favourites`)
+      .send({
+        favourites: [fav1.id, fav2.id]
+      })
+      .set('Authorization', user.token);
 
   const events = [
     {
@@ -247,27 +281,27 @@ const initializeDB = async () => {
 }
 describe('Test', () => {
   // Init Database
-  beforeAll(async () => {
+  before(async () => {
     await initializeDB()
   })
 
-  importTest('User Endpoints Test', './Users/userEndpoints')
-  importTest('Group Endpoints Test', './Groups/groupEndpoints')
-  importTest('Users Groups Endpoints Test', './Users/groupEndpoints')
-  importTest('Users Profile Endpoints Test', './Users/profileEndpoints')
-  importTest('Users Children Endpoints Test', './Users/childrenEndpoints')
-  importTest('Group Members Endpoints Test', './Groups/memberEndpoints')
-  importTest('Group Various Endpoints Test', './Groups/variousEndpoints')
-  importTest('Group Various Endpoints Test', './Groups/activityEndpoints')
-  importTest('Group Announcement Endpoints Test', './Groups/announcementEndpoints')
-  importTest('User Various Endpoints Test', './Users/variousEndpoints')
-  importTest('Child Endpoints Test', './Children/childEndpoints')
-  importTest('Profile Endpoints Test', './Profiles/profileEndpoints')
-  importTest('Community Endpoints Test', './Community/communityEndpoints')
-  importTest('Posting Endpoints Test', './Posting/postingEndpoints')
+  importTest('[family-market] User Endpoints Test', './Users/userEndpoints')
+  importTest('[family-market] Group Endpoints Test', './Groups/groupEndpoints')
+  //importTest('Users Groups Endpoints Test', './Users/groupEndpoints')
+  //importTest('Users Profile Endpoints Test', './Users/profileEndpoints')
+  //importTest('Users Children Endpoints Test', './Users/childrenEndpoints')
+  //importTest('Group Members Endpoints Test', './Groups/memberEndpoints')
+  //importTest('Group Various Endpoints Test', './Groups/variousEndpoints')
+  //importTest('Group Various Endpoints Test', './Groups/activityEndpoints')
+  //importTest('Group Announcement Endpoints Test', './Groups/announcementEndpoints')
+  //importTest('User Various Endpoints Test', './Users/variousEndpoints')
+  //importTest('Child Endpoints Test', './Children/childEndpoints')
+  //importTest('Profile Endpoints Test', './Profiles/profileEndpoints')
+  //importTest('Community Endpoints Test', './Community/communityEndpoints')
+  importTest(' [family-market] Posting Endpoints Test', './Posting/postingEndpoints')
 
   // Cleanup
-  afterAll(async () => {
+  after(async () => {
     await User.deleteMany({})
     await Profile.deleteMany({})
     await Image.deleteMany({})

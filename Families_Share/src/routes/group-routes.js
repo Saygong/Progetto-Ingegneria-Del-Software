@@ -4,16 +4,18 @@ const router = new express.Router()
 const multer = require('multer')
 const objectid = require('objectid')
 const fr = require('find-remove')
-const { google } = require('googleapis')
-const googleEmail = config.get('google.email')
-const googleKey = config.get('google.key')
-const scopes = 'https://www.googleapis.com/auth/calendar'
-const jwt = new google.auth.JWT(
-  process.env[googleEmail],
-  null,
-  process.env[googleKey].replace(/\\n/g, '\n'),
-  scopes
-)
+
+// Mandrillozzi
+//const { google } = require('googleapis')
+//const googleEmail = config.get('google.email')
+//const googleKey = config.get('google.key')
+//const scopes = 'https://www.googleapis.com/auth/calendar'
+//const jwt = new google.auth.JWT(
+//  process.env[googleEmail],
+//  null,
+//  process.env[googleKey].replace(/\\n/g, '\n'),
+//  scopes
+//)
 const path = require('path')
 const sharp = require('sharp')
 const nodemailer = require('nodemailer')
@@ -32,10 +34,11 @@ if (process.env.NODE_APP_INSTANCE === 0) {
   })
 }
 
-const calendar = google.calendar({
-  version: 'v3',
-  auth: jwt
-})
+//Mandrillozzi
+//const calendar = google.calendar({
+//  version: 'v3',
+//  auth: jwt
+//})
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -242,8 +245,11 @@ router.post('/', async (req, res, next) => {
     })
   })
   try {
-    const response = await calendar.calendars.insert({ resource: newCal })
-    group.calendar_id = response.data.id
+    //Mandrillozzi
+    //const response = await calendar.calendars.insert({ resource: newCal })
+    //group.calendar_id = response.data.id
+
+    group.calendar_id = "Mandrillozzi";
     await Member.create(members)
     await Group.create(group)
     await Image.create(image)

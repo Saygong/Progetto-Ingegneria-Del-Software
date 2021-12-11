@@ -1,6 +1,7 @@
 const common = require('../common')
 const server = common.server
 const chai = common.chai
+const expect = common.chai.expect;
 
 const User = require('../../src/models/user')
 const Password_Reset = require('../../src/models/password-reset')
@@ -467,14 +468,16 @@ describe('/Get/api/users/userId/events', () => {
 
 /* ---------------------------------------     FAMILY - MARKET  TEST    --------------------------------------------- */
 
-describe('/Get/api/family-market/users/userId/favourites', () => {
+describe('[family-market]/Get/api/family-market/users/userId/favourites', () => {
   it('it should correctly return a list of favourite postings of a user', (done) => {
-    User.find({ email: 'test3@email.com' }, (user) => {
+    User.findOne({ email: 'test3@email.com' }, (err, user) => {
       chai.request(server)
-        .get(`/api/users/${user.user_id}/favourites`)
-        .end((res) => {
-          res.should.have.status(200)
-          done()
+        .get(`/api/family-market/users/${user.user_id}/favourites`)
+        .end((err, res) => {
+            res.should.have.status(200)
+            expect(res.body.length).to.equal(2);
+
+            done()
         })
     })
   })
@@ -482,8 +485,8 @@ describe('/Get/api/family-market/users/userId/favourites', () => {
 
 describe('/Get/api/family-market/users/userId/groups/groupId/postings', () => {
   it('it should correctly return a list of postings of a user on a group', (done) => {
-    User.find({ email: 'test3@email.com' }, (user) => {
-      Group.findOne({ name: 'Test Group 2' }, (group) => {
+    User.findOne({ email: 'test3@email.com' },  (err, user) => {
+      Group.findOne({ name: 'Test Group 2' },  (err, group) => {
         chai.request(server)
           .get(`/api/users/${user.userId}/groups/${group.group_id}/postings`)
           .end((res) => {

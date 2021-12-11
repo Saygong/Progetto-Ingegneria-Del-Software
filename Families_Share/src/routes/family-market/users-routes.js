@@ -22,16 +22,15 @@ router.get('/:userId/favourites', async (req, res) => {
     let fav_post = []
 
     // Multiple queries to insert the favourites posts into a list
-    for (let post of favouriteListId) {
-      fav_post.push(await Posting.findOne({ id: `${post.id}` }).lean().exec())
+    for (let favId of favourites) {
+      const posting = await Posting.findOne({ id: favId }).lean().exec();
+      fav_post.push(posting);
     }
 
-    if (fav_post.length === 0) {
-      return res.status(404).send('This user has no saved postings')
-    }
-    res.json(fav_post)
+    res.json(fav_post);
+
   } catch (error) {
-    return res.status(401).send('Error')
+    return res.status(401).send("Caught Error:" + JSON.stringify(error));
   }
 })
 
@@ -64,13 +63,10 @@ router.get('/:userId/groups/:groupId/postings', async (req, res) => {
       .lean()
       .exec()
       .then(postings => {
-        if (postings.length === 0) {
-          return res.status(404).send('This user has no posting in this group')
-        }
         res.json(postings)
       })
   } catch (error) {
-    return res.status(401).send('Error')
+    return res.status(401).send("Caught Error:" + JSON.stringify(error));
   }
 })
 
@@ -81,15 +77,14 @@ router.patch('/:userId/favourites', async (req, res, next) => {
   if (!req.user_id) {
     return res.status(401).send('Not authenticated')
   }
-  const u_id = req.params.userId
+  const u_id = req.params.userId;
+  const update = {$set: {favourites: req.body.favourites}};
 
   try {
-    // req.patch must be the updated favourites postings list
-    await User.findOneAndUpdate({ user_id: `${u_id}` }, req.patch).then(
-      res.status(204).send('Favourites successfully updated')
-    )
+    await User.updateOne({user_id: u_id}, update)
+    res.status(200).send('Favourites successfully updated');
   } catch (error) {
-    next(error)
+    next(error);
   }
 })
 

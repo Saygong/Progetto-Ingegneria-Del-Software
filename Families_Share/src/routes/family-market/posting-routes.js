@@ -55,10 +55,15 @@ router.patch('/:postingId', async (req, res, next) => {
     return res.status(401).send('Not authenticated')
   }
   const p_id = req.params.postingId
+  let log = " ££££ ";
   try {
     // Check owner consistency
-    let post_owner = await Posting.findOne({ id: `${p_id}` }, 'user_id')
-    if (req.user_id !== post_owner) { return res.status(401).send('Unauthorized') }
+    const {user_id} = await Posting.findOne({ id: p_id }, 'user_id')
+    log += "User: " + user_id + "))";
+    if (req.user_id !== user_id)
+    {
+      return res.status(401).send('Unauthorized' + log)
+    }
 
     // req.patch must be an object with the updated field
     await Posting.findOneAndUpdate({ id: `${p_id}` }, req.patch).then(
@@ -157,7 +162,9 @@ router.post('/', async (req, res, next) => {
         phone_number: phone_number
       }
     }
+
     res.json(response)
+
   } catch (err) {
     next(err)
   }
