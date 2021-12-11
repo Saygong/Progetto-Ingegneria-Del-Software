@@ -449,4 +449,4 @@ class ApiHandler {
     }
 }
 
-module.exports = ApiHandler;
+export default ApiHandler;

@@ -1,11 +1,11 @@
-const ApiHandler = require("../api/ApiHandler");
+const ApiHandler = require("../../api/ApiHandler");
 
 const React = require("react");
 const PropTypes = require("prop-types");
-const Log = require("../../../src/components/Log");
+const Log = require("../../../../src/components/Log");
 
-const texts = require("../texts");
-import withLanguage from "../../../src/components/LanguageContext";
+const texts = require("../../texts");
+import withLanguage from "../../../../src/components/LanguageContext";
 
 
 /**
@@ -29,12 +29,11 @@ class DeletePostingButton extends React.Component {
     render() {
         // TODO (magari aggiungere pure una finestra di dialogo per dire "sei sicuro"?
         const language = this.props.language;
-        const txt = texts[language].deletePostingButton;
-        const deleteIconPath = "../../assets/delete-icon.png";
+        const buttonText = texts[language].deletePostingButton.text;
 
         return (
             <button onClick={this.handleClick} style="height:200px;width:200px">
-                <img src={deleteIconPath} alt={txt.altImageText} className="center"/>
+                {buttonText}
             </button>
         )
     }

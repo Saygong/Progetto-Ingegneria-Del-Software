@@ -9,6 +9,7 @@ const en = {
     },
 
     deletePostingButton: {
+        text: "Delete",
         altImageText: "delete image"
     },
 
@@ -63,6 +64,33 @@ const en = {
             namePart: "Results for",
             categoryPart: "in category",
             transactionTypePart: "of type"
+        }
+    },
+
+    editPostingScreen: {
+        navBar: {
+            title: {
+                createMode: "Create new posting",
+                editMode: "Edit posting"
+            }
+        },
+        nameInput: {
+            description: "Title",
+            placeholder: "Insert title"
+        },
+        descriptionInput: {
+            description: "Description",
+            placeholder: "Insert description"
+        },
+        editContactTitle: "Contact information:",
+        imageInput: {
+            dropzoneText: "Drop an image for the posting here"
+        }
+    },
+
+    favouritesScreen: {
+        navBar: {
+            title: "Saved posts"
         }
     }
 }

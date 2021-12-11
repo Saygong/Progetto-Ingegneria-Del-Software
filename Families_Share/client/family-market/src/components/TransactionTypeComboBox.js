@@ -58,11 +58,6 @@ TransactionTypeComboBox.defaultProps = {
 
 TransactionTypeComboBox.propTypes = {
     /**
-     * List of items to display
-     */
-    itemList: PropTypes.arrayOf(PropTypes.string),
-
-    /**
      * Function that handles what happens when the selected item changes
      */
     tnTypeChangeHandler: PropTypes.func.isRequired,

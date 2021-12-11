@@ -57,11 +57,6 @@ CategoryComboBox.defaultProps = {
 
 CategoryComboBox.propTypes = {
     /**
-     * List of items to display
-     */
-    itemList: PropTypes.arrayOf(PropTypes.string),
-
-    /**
      * Function that handles what happen when the selected category is changed
      */
     categoryChangeHandler: PropTypes.func.isRequired,

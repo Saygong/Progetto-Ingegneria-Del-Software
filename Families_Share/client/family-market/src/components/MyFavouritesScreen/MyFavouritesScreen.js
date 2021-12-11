@@ -1,4 +1,4 @@
-const PropTypes = require("prop-types");
+import withLanguage from "../../../../src/components/LanguageContext";
 
 const ApiHandler = require("../../api/ApiHandler");
 const Posting = require("../../api/model/Posting");
@@ -6,8 +6,10 @@ const Posting = require("../../api/model/Posting");
 const {FAMILY_MARKET_BASE_PAGE_URL} = require("../../constants");
 
 const React = require("react");
+const PropTypes = require("prop-types");
 const Log = require("../../../../src/components/Log");
-import withLanguage from "../../../../src/components/LanguageContext";
+const PlainNavBar = require("../PlainNavBar");
+const texts = require("../../texts");
 
 
 /**
@@ -44,11 +46,22 @@ class MyFavouritesScreen extends React.Component {
     }
 
     render() {
-        // TODO postings from state
+        const language = this.props.language;
+        const txt = texts[language].favouritesScreen;
+
+        return (
+            <div>
+                <PlainNavBar title={txt.navBar.title} goBackUrl={} />
+                // TODO
+            </div>
+        )
     }
 
     async componentDidMount() {
-        // TODO fetch fav postings here and set state
+        const favPostings = this.getFavouritePostings(this.matchParams.userId);
+        this.setState({
+            postings: favPostings
+        });
     }
 
     /**

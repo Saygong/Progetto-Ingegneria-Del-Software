@@ -1,3 +1,5 @@
+import withLanguage from "../../../../src/components/LanguageContext";
+
 const ApiHandler = require("../../api/ApiHandler");
 const Posting = require("../../api/model/Posting");
 const PostingInfo = require("../../api/model/PostingInfo");
@@ -9,15 +11,17 @@ const React = require("react");
 const PropTypes = require("prop-types");
 const Log = require("../../../../src/components/Log");
 const PlainNavBar = require("../PlainNavBar");
-const ConfirmButton = require("ConfirmButton");
-const DeleteButton = require("../DeletePostingButton");
-const MailInput = require("MailInput");
-const TelephoneInput = require("TelephoneInput");
-const PlaceInput = require("PlaceInput");
-const ImageInput = require("Families_Share/client/family-market/src/components/EditPostingScreen/ImageInput");
+const SimpleTextInput = require("../SimpleTextInput");
+const LargeTextInput = require("../LargeTextInput");
+const ConfirmButton = require("./ConfirmButton");
+const DeleteButton = require("./DeletePostingButton");
+const MailInput = require("./MailInput");
+const TelephoneInput = require("./TelephoneInput");
+const PlaceInput = require("./PlaceInput");
+const ImageInput = require("./ImageInput");
 const CategoryComboBox = require("../CategoryComboBox");
 const TransactionTypeComboBox = require("../TransactionTypeComboBox");
-import withLanguage from "../../../../src/components/LanguageContext";
+const texts = require("../../texts");
 
 
 /**
@@ -86,15 +90,62 @@ class EditPostingScreen extends React.Component {
     }
 
     render() {
-        // TODO
+        const language = this.props.language;
+        const txt = texts[language].editPostingScreen;
+        const title = this.isCreateMode() ? txt.navBar.title.createMode : txt.navBar.title.editMode;
+
+        return (
+            <div>
+                <PlainNavBar title={title} goBackUrl={} />
+                <ImageInput currentImage={this.state.photo}
+                            imageChangeHandler={this.handlePhotoChange} />
+
+                {/*TextBox where the name is inserted*/}
+                <SimpleTextInput description={txt.nameInput.description}
+                                 text={this.state.name}
+                                 placeholder={txt.nameInput.placeholder}
+                                 textChangeHandler={this.handleNameChange} />
+
+                <CategoryComboBox categoryChangeHandler={this.handleCategoryChange} />
+                <TransactionTypeComboBox tnTypeChangeHandler={this.handleTnTypeChange} />
+
+                {/*TextBox where the description is inserted*/}
+                <LargeTextInput description={txt.descriptionInput.description}
+                                text={this.state.description}
+                                placeholder={txt.descriptionInput.placeholder}
+                                textChangeHandler={this.handleDescriptionChange} />
+
+                <PlaceInput place={this.state.place}
+                            placeChangeHandler={this.handlePlaceChange} />
+
+                <h2>{txt.editContactTitle}</h2>
+                <TelephoneInput text={this.state.phoneNumber}
+                                textChangeHandler={this.handleTelephoneChange} />
+                <MailInput text={this.state.mail}
+                           textChangeHandler={this.handleMailChange} />
+                <div className="row">
+                    <ConfirmButton confirmationHandler={this.handleConfirmation} />
+                    <DeleteButton postingId={this.matchParams.postingId}
+                                  redirectionHandler={this.handleDeleteRedirection} />
+                </div>
+            </div>
+        );
     }
 
     async componentDidMount() {
         // Fetch the posting info to load only in edit mode
         if (!this.isCreateMode()) {
-            // TODO fetch posting and set state accordingly
             const currentPosting = await this.fetchPosting();
-            this.setState(currentPosting);
+            this.setState({
+                name: currentPosting.name,
+                description: currentPosting.description,
+                photo: currentPosting.photo,
+                category: currentPosting.category,
+                tnType: currentPosting.type,
+                mail: currentPosting.contact.email,
+                phoneNumber: currentPosting.contact.phone_number,
+                place: currentPosting.contact.place
+            });
         }
     }
 
@@ -125,6 +176,8 @@ class EditPostingScreen extends React.Component {
         const creationInfo = this.getPostingInfoFromState()
         const {userId, groupId} = this.matchParams;
 
+        Log.info(`Creating posting for user: ${userId} in group ${groupId} with info: ${creationInfo}`);
+
         await this.apiHandler.createPosting(userId, groupId, creationInfo);
     }
 
@@ -136,6 +189,8 @@ class EditPostingScreen extends React.Component {
         const idToEdit = this.matchParams.postingId;
         const editedInfo = this.getPostingInfoFromState()
 
+        Log.info(`Editing posting [id]${idToEdit} with info: ${editedInfo}`);
+
         await this.apiHandler.editPosting(idToEdit, editedInfo);
     }
 
@@ -145,6 +200,8 @@ class EditPostingScreen extends React.Component {
      */
     async deletePosting() {
         const idToDelete = this.matchParams.postingId;
+
+        Log.info(`Delete posting [id]${idToDelete}`);
 
         await this.apiHandler.deletePosting(idToDelete);
     }

@@ -1,7 +1,9 @@
+import withLanguage from "../../../../src/components/LanguageContext";
+import LocationPicker from "react-location-picker";
+
 const React = require("react");
 const PropTypes = require("prop-types");
 const Log = require("../../../../src/components/Log");
-import withLanguage from "../../../../src/components/LanguageContext";
 
 
 class PlaceInput extends React.Component {
@@ -9,7 +11,7 @@ class PlaceInput extends React.Component {
     constructor(props) {
         super(props);
 
-        this.handlePlaceSelection = this.handlePlaceSelection.bind(this);
+        this.handlePlaceChange = this.handlePlaceChange.bind(this);
     }
 
     render() {
@@ -20,15 +22,38 @@ class PlaceInput extends React.Component {
         // Non ho capito concretamente cosa cambia tra i due.
         // Importante è scegliere uno che ti permetta di ottenere anche l'indirizzo
         // come stringa e non solo le coordinate.
+
+        // Reference tutorial:
+        // https://codesandbox.io/s/qljl8y8nwq?file=/src/LPicker.js:144-202
+        const defaultPos = {
+            lat: 27.9878,
+            lng: 86.925
+        };
+
+        return (
+            <LocationPicker containerElement={<div style={{ height: "100%" }} />}
+                            mapElement={<div style={{ height: "400px" }} />}
+                            zoom={17}
+                            radius={-1}
+                            defaultPosition={defaultPos}
+                            onChange={this.handlePlaceChange}
+            />
+        );
+
     }
 
     /**
      * Called when a new place is picked.
-     * @param newPlace {string}
+     * @param position {string}
+     * @param address {string}
+     * @param places
      * @return {Promise<void>}
      */
-    async handlePlaceSelection(newPlace) {
-        this.props.placeChangeHandler(newPlace);
+    async handlePlaceChange(position, address, places) {
+        // TODO a questo punto potrebbe essere da cambiare il modo in cui vengono salvati i posti
+        // perché servono anche le coordinate -> dunque c'è da cambiare anche il meccanismo dei props,
+        // perché andrebbero passati sia coordinate che address
+        this.props.placeChangeHandler(address);
     }
 }
 

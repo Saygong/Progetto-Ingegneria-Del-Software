@@ -1,13 +1,12 @@
+import withLanguage from "../../../../src/components/LanguageContext";
 
 const React = require("react");
 const PropTypes =  require("prop-types");
 const Log = require("../../../../src/components/Log");
 const ListItem = require("../ListItem");
 const {buildRedirectionHandler} = require("../MarketplaceScreen/MarketplaceScreen");
-const {withRouter} = require("react-router-dom");
-
 const texts = require("../../texts");
-import withLanguage from "../../../../src/components/LanguageContext";
+const {withRouter} = require("react-router-dom");
 
 
 /**

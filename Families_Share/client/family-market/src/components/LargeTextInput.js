@@ -19,7 +19,7 @@ class LargeTextInput extends React.Component {
         return (
             <div>
                 <h2>{this.props.description}</h2>
-                <textarea onChange={this.handleTextChange}>
+                <textarea onChange={this.handleTextChange} placeholder={}>
                     {this.props.text}
                 </textarea>
             </div>
@@ -47,6 +47,11 @@ LargeTextInput.propTypes = {
      * Text to display in the input zone
      */
     text: PropTypes.string,
+
+    /**
+     * Text shown when there is no input
+     */
+    placeholder: PropTypes.string,
 
     /**
      * Description that is showed alongside the input zone
