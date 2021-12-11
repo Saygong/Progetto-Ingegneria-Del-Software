@@ -49,9 +49,12 @@ class MyFavouritesScreen extends React.Component {
         const language = this.props.language;
         const txt = texts[language].favouritesScreen;
 
+        //TODO va messo qualche url particolare?
+        const goBackRedirectionUrl = "";
+
         return (
             <div>
-                <PlainNavBar title={txt.navBar.title} goBackUrl="" />
+                <PlainNavBar title={txt.navBar.title} goBackUrl={goBackRedirectionUrl} />
                 // TODO
             </div>
         )

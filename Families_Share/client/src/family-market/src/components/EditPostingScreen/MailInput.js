@@ -27,7 +27,7 @@ class MailInput extends React.Component {
                 {/*TODO add mail image*/}
                 <img src={mailIconPath} alt={txt.altImageText} className="col-2-10"/>
                 <div className="col-8-10">
-                    <SimpleTextInput text={this.props.text} description=""
+                    <SimpleTextInput text={this.props.text} description={txt.description}
                                      textChangeHandler={this.handleTextChange}
                                      placeholder={txt.placeholder}/>
                 </div>

@@ -33,12 +33,14 @@ const en = {
 
     mailInput: {
         altImageText: "email image",
-        placeholder: "youremail@yourdom.something"
+        placeholder: "youremail@yourdom.something",
+        description: "E-Mail"
     },
 
     telephoneInput: {
         altImageText: "telephone image",
-        placeholder: "Insert your phone number"
+        placeholder: "Insert your phone number",
+        description: "Telephone"
     },
 
     categoryComboBox: {

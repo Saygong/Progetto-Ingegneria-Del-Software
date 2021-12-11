@@ -20,7 +20,8 @@ class LargeTextInput extends React.Component {
         return (
             <div>
                 <h2>{this.props.description}</h2>
-                <textarea onChange={this.handleTextChange} placeholder="">
+                <textarea onChange={this.handleTextChange}
+                          placeholder={this.props.placeholder}>
                     {this.props.text}
                 </textarea>
             </div>

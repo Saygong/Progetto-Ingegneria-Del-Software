@@ -93,10 +93,12 @@ class EditPostingScreen extends React.Component {
         const language = this.props.language;
         const txt = texts[language].editPostingScreen;
         const title = this.isCreateMode() ? txt.navBar.title.createMode : txt.navBar.title.editMode;
+        //TODO va messo qualche url particolare?
+        const goBackRedirectionUrl = "";
 
         return (
             <div>
-                <PlainNavBar title={title} goBackUrl="" />
+                <PlainNavBar title={title} goBackUrl={goBackRedirectionUrl} />
                 <ImageInput currentImage={this.state.photo}
                             imageChangeHandler={this.handlePhotoChange} />
 
