@@ -128,10 +128,11 @@ router.post('/', async (req, res, next) => {
   }
 
   const {
-    user_id, group_id, name, category, description, photo, type, email, place, phone_number
+    user_id, group_id, name, category, description, photo, type, contact
   } = req.body
 
-  if (!(user_id && group_id && name && category && description && photo && type && email && place && phone_number)) {
+  if (!(user_id && group_id && name && category && description && photo && type
+      && contact.email && contact.place && contact.phone_number)) {
     return res.status(400).send('Bad Request')
   }
 
@@ -146,9 +147,9 @@ router.post('/', async (req, res, next) => {
     if (!member) {
       return res.status(401).send('Unauthorized')
     }
-//cino da qua fare
+
     const id = objectid()
-    const contact_id = objectid()
+    // const contact_id = objectid()
     const newPosting = {
       id,
       user_id,
@@ -158,16 +159,16 @@ router.post('/', async (req, res, next) => {
       description,
       photo,
       type,
-      contact_id
+      contact
     }
-    const newContact = {
-      contact_id,
-      email,
-      place,
-      phone_number
-    }
+    // const newContact = {
+    //   contact_id,
+    //   email,
+    //   place,
+    //   phone_number
+    // }
     await Posting.create(newPosting)
-    await Contact.create(newContact)
+    // await Contact.create(newContact)
     const response = {
       id: id,
       user_id: user_id,
@@ -177,11 +178,7 @@ router.post('/', async (req, res, next) => {
       description: description,
       photo: photo,
       type: type,
-      contact: {
-        email: email,
-        place: place,
-        phone_number: phone_number
-      }
+      contact: contact
     }
 
     res.json(response)
