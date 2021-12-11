@@ -36,9 +36,19 @@ const postingSchema = new mongoose.Schema(
       type: String,
       required: true
     },
-    contact_id: {
-      type: String,
-      required: true
+    contact: {
+      email: {
+          type: String,
+          required: true
+      },
+      place: {
+          type: String,
+          required: true
+      },
+      phone_number: {
+          type: String,
+          required: true
+      },
     },
     creation_date: {
       type: Date,

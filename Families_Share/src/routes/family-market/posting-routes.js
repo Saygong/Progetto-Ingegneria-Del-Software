@@ -40,6 +40,26 @@ router.get('/:postingId', async (req, res) => {
           return res.status(401).send('Unauthorized')
         }
 
+        // const contct = await Contact.findOne({
+        //   contact_id: posting.contact_id
+        // })
+
+        // const response = {
+        //   id: posting.id,
+        //   user_id: posting.user_id,
+        //   group_id: posting.group_id,
+        //   name: posting.name,
+        //   category: posting.category,
+        //   description: posting.description,
+        //   photo: posting.photo,
+        //   type: posting.type,
+        //   contact: {
+        //     email: contct.email,
+        //     place: contct.place,
+        //     phone_number: contct.phone_number
+        //   }
+        // }
+
         res.json(posting)
       })
   } catch (error) {
@@ -126,7 +146,7 @@ router.post('/', async (req, res, next) => {
     if (!member) {
       return res.status(401).send('Unauthorized')
     }
-
+//cino da qua fare
     const id = objectid()
     const contact_id = objectid()
     const newPosting = {
