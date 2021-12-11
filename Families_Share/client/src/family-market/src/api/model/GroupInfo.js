@@ -33,5 +33,4 @@ class GroupInfo {
         return new GroupInfo();
     }
 }
-
-module.exports = GroupInfo;
+export default GroupInfo;

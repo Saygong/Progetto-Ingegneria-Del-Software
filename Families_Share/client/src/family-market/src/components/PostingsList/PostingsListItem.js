@@ -1,8 +1,10 @@
+import withLanguage from "../../../../components/LanguageContext";
+
 const Posting = require("../../api/model/Posting");
 
 const React = require("react");
 const PropTypes = require("prop-types");
-const Log = require("../../../../src/components/Log");
+const Log = require("../../../../components/Log");
 const ListItem = require("../ListItem");
 const EditPostingButton = require("../EditPostingButton");
 const ToggleFavouriteButton = require("../ToggleFavouriteButton");
@@ -11,7 +13,6 @@ const {buildRedirectionHandler} = require("../PostingScreen/PostingScreen")
 const {withRouter} = require("react-router-dom");
 
 const texts = require("../../texts");
-import withLanguage from "../../../../src/components/LanguageContext";
 
 
 /**

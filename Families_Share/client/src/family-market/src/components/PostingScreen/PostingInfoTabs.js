@@ -1,9 +1,10 @@
+import withLanguage from "../../../../components/LanguageContext";
+
 const Posting = require("../../api/model/Posting");
 
 const React = require("react");
 const PropTypes = require("prop-types");
-const Log = require("../../../../src/components/Log");
-import withLanguage from "../../../../src/components/LanguageContext";
+const Log = require("../../../../components/Log");
 
 
 /**
@@ -17,6 +18,11 @@ class PostingInfoTabs extends React.Component {
     }
 
     render() {
+        return (
+            <div>
+
+            </div>
+        );
         // TODO
     }
 }

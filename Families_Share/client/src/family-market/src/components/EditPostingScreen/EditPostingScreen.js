@@ -1,4 +1,4 @@
-import withLanguage from "../../../../src/components/LanguageContext";
+import withLanguage from "../../../../components/LanguageContext";
 
 const ApiHandler = require("../../api/ApiHandler");
 const Posting = require("../../api/model/Posting");
@@ -9,7 +9,7 @@ const {FAMILY_MARKET_BASE_PAGE_URL} = require("../../constants");
 
 const React = require("react");
 const PropTypes = require("prop-types");
-const Log = require("../../../../src/components/Log");
+const Log = require("../../../../components/Log");
 const PlainNavBar = require("../PlainNavBar");
 const SimpleTextInput = require("../SimpleTextInput");
 const LargeTextInput = require("../LargeTextInput");
@@ -96,7 +96,7 @@ class EditPostingScreen extends React.Component {
 
         return (
             <div>
-                <PlainNavBar title={title} goBackUrl={} />
+                <PlainNavBar title={title} goBackUrl="" />
                 <ImageInput currentImage={this.state.photo}
                             imageChangeHandler={this.handlePhotoChange} />
 

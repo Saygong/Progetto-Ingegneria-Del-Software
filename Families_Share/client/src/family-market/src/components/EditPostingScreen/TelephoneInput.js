@@ -1,10 +1,11 @@
+import withLanguage from "../../../../components/LanguageContext";
+
 const React = require("react");
 const PropTypes = require("prop-types");
-const Log = require("../../../../src/components/Log");
+const Log = require("../../../../components/Log");
 const SimpleTextInput = require("../SimpleTextInput");
 
 const texts = require("../../texts");
-import withLanguage from "../../../../src/components/LanguageContext";
 
 
 class TelephoneInput extends React.Component {

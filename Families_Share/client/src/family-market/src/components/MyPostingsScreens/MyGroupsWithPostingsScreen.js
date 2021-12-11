@@ -1,3 +1,5 @@
+import withLanguage from "../../../../components/LanguageContext";
+
 const PropTypes = require("prop-types");
 
 const ApiHandler = require("../../api/ApiHandler");
@@ -7,11 +9,10 @@ const GroupInfo = require("../../api/model/GroupInfo");
 const {FAMILY_MARKET_BASE_PAGE_URL} = require("../../constants");
 
 const React = require("react");
-const Log = require("../../../../src/components/Log");
+const Log = require("../../../../components/Log");
 const PlainNavBar = require("../PlainNavBar");
-const GroupList = require("../../../../src/components/GroupList");
+const GroupList = require("../../../../components/GroupList");
 const {buildRedirectionHandler} = require( "./MyGroupPostingsScreen");
-import withLanguage from "../../../../src/components/LanguageContext";
 
 
 /**
@@ -50,6 +51,11 @@ class MyGroupsWithPostingsScreen extends React.Component {
     }
 
     render() {
+        return (
+            <div>
+
+            </div>
+        );
         // TODO PlainNavBar e GroupList (quest'ultimo riadattato per accettare navigation handler)
     }
 

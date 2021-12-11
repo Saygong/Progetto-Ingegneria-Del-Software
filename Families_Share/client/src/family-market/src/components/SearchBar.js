@@ -1,10 +1,11 @@
+import withLanguage from "../../../components/LanguageContext";
+
 const React = require("react");
 const PropTypes = require("prop-types");
-const Log = require("../../../src/components/Log");
-const SimpleTextInput = require("Families_Share/client/src/family-market/src/components/SimpleTextInput");
+const Log = require("../../../components/Log");
+const SimpleTextInput = require("./SimpleTextInput");
 
 const texts = require("../texts");
-import withLanguage from "../../../src/components/LanguageContext";
 
 
 class SearchBar extends React.Component {
@@ -23,7 +24,7 @@ class SearchBar extends React.Component {
         return (
             <div className="row no-gutters">
                 {/*TODO add image*/}
-                <img src={} alt={txt.altImageText} className="col-2-10"/>
+                <img src="" alt={txt.altImageText} className="col-2-10"/>
                 <div className="col-8-10">
                     <SimpleTextInput text={this.props.text}
                                      description={this.props.description}

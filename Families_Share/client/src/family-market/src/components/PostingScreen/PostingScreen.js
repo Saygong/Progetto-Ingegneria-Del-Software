@@ -1,3 +1,5 @@
+import withLanguage from "../../../../components/LanguageContext";
+
 const PropTypes = require("prop-types");
 
 const ApiHandler = require("../../api/ApiHandler");
@@ -6,10 +8,9 @@ const Posting = require("../../api/model/Posting");
 const {FAMILY_MARKET_BASE_PAGE_URL} = require("../../constants");
 
 const React = require("react");
-const Log = require("../../../../src/components/Log");
+const Log = require("../../../../components/Log");
 const PostingNavBar = require("./PostingNavBar");
 const PostingInfo = require("./PostingInfo");
-import withLanguage from "../../../../src/components/LanguageContext";
 
 
 /**
@@ -43,6 +44,11 @@ class PostingScreen extends React.Component {
     }
 
     render() {
+        return (
+            <div>
+
+            </div>
+        );
         // TODO PostingNavBar + PostingInfo
     }
 

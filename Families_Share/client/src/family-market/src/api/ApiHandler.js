@@ -1,8 +1,9 @@
+import Log from "../../../components/Log";
+
 const Posting = require("./model/Posting")
 const PostingInfo = require("./model/PostingInfo")
 const GroupInfo = require("./model/GroupInfo")
 const axios = require("axios");
-const Log = require( "../../../src/components/Log");
 
 /** TODO capire come va gestito il "data:image/<format>;base64,".
  * https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readAsDataURL
@@ -84,7 +85,7 @@ class ApiHandler {
                 Log.info(`Postings of group '${groupId}' have been fetched`, this);
                 Log.info(response, this);
 
-                postings = ApiHandler.#parsePostingArray(response.data);
+                postings = ApiHandler.parsePostingArray(response.data);
             })
             .catch(error => {
                 Log.error(`An error occurred on the request for the postings of group '${groupId}'`, this);
@@ -276,7 +277,7 @@ class ApiHandler {
                 Log.info(response, this);
 
                 // Response data is an array of postings
-                postings = ApiHandler.#parsePostingArray(response.data);
+                postings = ApiHandler.parsePostingArray(response.data);
             })
             .catch(error => {
                 Log.error("An error occurred on the request" +
@@ -296,7 +297,7 @@ class ApiHandler {
      */
     async getUserFavouritePostings(userId) {
         // First make a request for the user's favourite postings ids
-        const favouritesIds = await this.#getUserFavouritesIds(userId);
+        const favouritesIds = await this.getUserFavouritesIds(userId);
 
         // After having fetched the ids,
         // fetch the individual postings and then return them
@@ -318,7 +319,7 @@ class ApiHandler {
      * @param userId {string} user to fetch the favourite postings ids of
      * @return {Promise<string[] | []>}
      */
-    async #getUserFavouritesIds(userId) {
+    async getUserFavouritesIds(userId) {
         const favouritesIds = [];
         const routeUrl = `${ApiHandler.POSTINGS_BASE_URL}/users/${userId}/favourites`
         await axios.get(routeUrl)
@@ -347,7 +348,7 @@ class ApiHandler {
      * @return {Promise<boolean>}
      */
     async isUserFavourite(userId, postingId) {
-        const favouriteIds = await this.#getUserFavouritesIds(userId);
+        const favouriteIds = await this.getUserFavouritesIds(userId);
 
         return favouriteIds.includes(postingId);
     }
@@ -362,7 +363,7 @@ class ApiHandler {
      */
     async addUserFavourite(userId, postingId) {
         let success = true;
-        const favouriteIds = await this.#getUserFavouritesIds(userId);
+        const favouriteIds = await this.getUserFavouritesIds(userId);
 
         if (favouriteIds.includes(postingId)) {
             // Nothing to do, operation successful
@@ -388,7 +389,7 @@ class ApiHandler {
      */
     async removeUserFavourite(userId, postingId) {
         let success = true;
-        const favouriteIds = await this.#getUserFavouritesIds(userId);
+        const favouriteIds = await this.getUserFavouritesIds(userId);
 
         const index = favouriteIds.indexOf(postingId);
         if (index === -1) {
@@ -415,7 +416,10 @@ class ApiHandler {
     async editUserFavourites(userId, newFavouritesIds) {
         let success = false;
         const routeUrl = `${ApiHandler.POSTINGS_BASE_URL}/users/${userId}/favourites`
-        await axios.put(routeUrl, data)
+        const data = {
+            favourites: newFavouritesIds
+        };
+        await axios.patch(routeUrl, data)
             .then(response => {
                 Log.info(`Favourite postings of user '${userId}' have been edited`, this);
                 Log.info(response, this);
@@ -438,7 +442,7 @@ class ApiHandler {
      * @param responseData
      * @return {Posting[]}
      */
-    static #parsePostingArray(responseData) {
+    static parsePostingArray(responseData) {
         const postings = []
         for (const item of responseData) {
             const p = new Posting(item);

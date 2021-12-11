@@ -1,12 +1,13 @@
+import withLanguage from "../../../components/LanguageContext";
 const VALID_CATEGORIES = require("../constants").CATEGORIES;
 
 const React = require("react");
 const PropTypes = require("prop-types");
-const Log = require("../../../src/components/Log");
+
+
 const ComboBox = require("react-responsive-combo-box");
 
 const texts = require("../texts");
-import withLanguage from "../../../src/components/LanguageContext";
 
 
 class CategoryComboBox extends React.Component {

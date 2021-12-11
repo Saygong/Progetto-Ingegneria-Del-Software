@@ -17,4 +17,4 @@ framilySchema.index({ user_id: 1, framily_id: 1 }, { unique: true })
 mongoose.pluralize(null)
 const model = mongoose.model('Framily', framilySchema)
 
-module.exports = model
+export default model

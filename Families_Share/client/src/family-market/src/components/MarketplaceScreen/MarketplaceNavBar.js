@@ -1,8 +1,9 @@
+import withLanguage from "../../../../components/LanguageContext";
+
 const React = require("react");
-const Log = require("../../../../src/components/Log");
+const Log = require("../../../../components/Log");
 const PlainNavBar = require("../PlainNavBar");
-const MyProfileButton = require("Families_Share/client/src/family-market/src/components/MarketplaceScreen/MyProfileButton");
-import withLanguage from "../../../../src/components/LanguageContext";
+const MyProfileButton = require("./MyProfileButton");
 
 
 /**
@@ -16,6 +17,11 @@ class MarketplaceNavBar extends React.Component {
     }
 
     render() {
+        return (
+            <div>
+
+            </div>
+        );
         // TODO PlainNavBar + MyProfileButton
     }
 }

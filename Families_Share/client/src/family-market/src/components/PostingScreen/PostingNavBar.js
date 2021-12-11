@@ -1,13 +1,14 @@
+import withLanguage from "../../../../components/LanguageContext";
+
 const ApiHandler = require("../../api/ApiHandler");
 const Posting = require("../../api/model/Posting");
 
 const React = require("react");
 const PropTypes = require("prop-types");
-const Log = require("../../../../src/components/Log");
+const Log = require("../../../../components/Log");
 const PlainNavBar = require("../PlainNavBar");
 const EditPostingButton = require("../EditPostingButton");
 const ToggleFavouriteButton = require("../ToggleFavouriteButton");
-import withLanguage from "../../../../src/components/LanguageContext";
 
 
 /**
@@ -22,6 +23,11 @@ class PostingNavBar extends React.Component {
     }
 
     render() {
+        return (
+            <div>
+
+            </div>
+        );
         // TODO PlainNavBar + (EditPostingButton + ToggleFavouriteButton if owner)
     }
 

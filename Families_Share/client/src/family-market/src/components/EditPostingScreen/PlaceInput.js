@@ -1,9 +1,9 @@
-import withLanguage from "../../../../src/components/LanguageContext";
+import withLanguage from "../../../../components/LanguageContext";
 import LocationPicker from "react-location-picker";
 
 const React = require("react");
 const PropTypes = require("prop-types");
-const Log = require("../../../../src/components/Log");
+const Log = require("../../../../components/Log");
 
 
 class PlaceInput extends React.Component {

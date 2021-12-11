@@ -1,12 +1,12 @@
 import texts from "../../texts";
+import withLanguage from "../../../../components/LanguageContext";
 
 const React = require("react");
 const PropTypes = require("prop-types");
-const Log = require("../../../../src/components/Log");
+const Log = require("../../../../components/Log");
 const {withRouter} = require("react-router-dom");
 
 
-import withLanguage from "../../../../src/components/LanguageContext";
 
 
 /**

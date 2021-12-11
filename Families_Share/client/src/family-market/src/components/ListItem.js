@@ -1,9 +1,10 @@
+import withLanguage from "../../../components/LanguageContext";
+
 const React = require("react");
 const PropTypes = require("prop-types");
-const Log = require("../../../src/components/Log");
+const Log = require("../../../components/Log");
 
 const texts = require("../texts");
-import withLanguage from "../../../src/components/LanguageContext";
 
 /**
  * Class that represents a generic rectangular list item, with an image, title and description.

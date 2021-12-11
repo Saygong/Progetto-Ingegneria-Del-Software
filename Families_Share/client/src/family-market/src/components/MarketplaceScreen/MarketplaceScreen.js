@@ -1,3 +1,5 @@
+import withLanguage from "../../../../components/LanguageContext";
+
 const PropTypes = require("prop-types");
 
 const ApiHandler = require("../../api/ApiHandler");
@@ -6,13 +8,12 @@ const Posting = require("../../api/model/Posting");
 const {FAMILY_MARKET_BASE_PAGE_URL} = require("../../constants");
 
 const React = require("react");
-const Log = require("../../../../src/components/Log");
-const CreatePostingButton = require("Families_Share/client/src/family-market/src/components/MarketplaceScreen/CreatePostingButton");
+const Log = require("../../../../components/Log");
+const CreatePostingButton = require("./CreatePostingButton");
 const SearchBar = require("../SearchBar");
 const CategoryComboBox = require("../CategoryComboBox");
 const TransactionTypeComboBox = require("../TransactionTypeComboBox");
-const MarketplaceNavBar = require("Families_Share/client/src/family-market/src/components/MarketplaceScreen/MarketplaceNavBar");
-import withLanguage from "../../../../src/components/LanguageContext";
+const MarketplaceNavBar = require("./MarketplaceNavBar");
 
 
 /**
@@ -50,6 +51,11 @@ class MarketplaceScreen extends React.Component {
     }
 
     render() {
+        return (
+            <div>
+
+            </div>
+        );
         // TODO
     }
 
@@ -107,7 +113,7 @@ class MarketplaceScreen extends React.Component {
      * @return {string}
      */
     static buildUrl() {
-        MarketplaceScreen.ROUTE;
+        return MarketplaceScreen.ROUTE;
     }
 
     /**

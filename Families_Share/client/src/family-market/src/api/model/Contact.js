@@ -49,4 +49,4 @@ class Contact {
     }
 }
 
-module.exports = Contact;
+export default Contact;

@@ -1,11 +1,12 @@
+import withLanguage from "../../../../components/LanguageContext";
+
 const Posting = require("../../api/model/Posting");
 
 const React = require("react");
 const PropTypes = require("prop-types");
-const Log = require("../../../../src/components/Log");
-const PostingInfoHeader = require("Families_Share/client/src/family-market/src/components/PostingScreen/PostingInfoHeader");
-const PostingInfoTabs = require("Families_Share/client/src/family-market/src/components/PostingScreen/PostingInfoTabs");
-import withLanguage from "../../../../src/components/LanguageContext";
+const Log = require("../../../../components/Log");
+const PostingInfoHeader = require("./PostingInfoHeader");
+const PostingInfoTabs = require("./PostingInfoTabs");
 
 
 /**
@@ -18,6 +19,11 @@ class PostingInfo extends React.Component {
     }
 
     render() {
+        return (
+            <div>
+
+            </div>
+        );
         // TODO usare Image + PostingInfoHeader + PostingInfoTabs
     }
 }

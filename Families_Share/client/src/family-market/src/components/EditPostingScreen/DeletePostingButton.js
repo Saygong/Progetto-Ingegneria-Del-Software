@@ -1,11 +1,11 @@
+import withLanguage from "../../../../components/LanguageContext";
+
 const ApiHandler = require("../../api/ApiHandler");
 
 const React = require("react");
 const PropTypes = require("prop-types");
-const Log = require("../../../../src/components/Log");
-
+const Log = require("../../../../components/Log");
 const texts = require("../../texts");
-import withLanguage from "../../../../src/components/LanguageContext";
 
 
 /**

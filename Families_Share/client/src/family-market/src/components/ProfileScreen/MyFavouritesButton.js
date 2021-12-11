@@ -1,11 +1,12 @@
+import withLanguage from "../../../../components/LanguageContext";
+
 const PropTypes = require("prop-types");
 
 const React = require("react");
-const Log = require("../../../../src/components/Log");
+const Log = require("../../../../components/Log");
 const ListItem = require("../ListItem");
 const {buildRedirectionHandler} = require("../MyFavouritesScreen/MyFavouritesScreen");
 const {withRouter} = require("react-router-dom");
-import withLanguage from "../../../../src/components/LanguageContext";
 
 
 /**
@@ -26,6 +27,11 @@ class MyFavouritesButton extends React.Component {
     }
 
     render() {
+        return (
+            <div>
+
+            </div>
+        );
         // TODO this button is a ListItem
     }
 

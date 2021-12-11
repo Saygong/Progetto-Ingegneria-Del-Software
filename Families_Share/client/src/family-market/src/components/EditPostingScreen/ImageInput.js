@@ -1,9 +1,9 @@
-import withLanguage from "../../../../src/components/LanguageContext";
+import withLanguage from "../../../../components/LanguageContext";
 import Dropzone from "react-dropzone";
 
 const React = require("react");
 const PropTypes = require("prop-types");
-const Log = require("../../../../src/components/Log");
+const Log = require("../../../../components/Log");
 const texts = require("../../texts");
 
 

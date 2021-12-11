@@ -1,3 +1,5 @@
+import withLanguage from "../../../../components/LanguageContext";
+
 const PropTypes = require("prop-types");
 
 const Posting = require("../../api/model/Posting");
@@ -6,10 +8,9 @@ const GroupInfo = require("../../api/model/GroupInfo");
 const {FAMILY_MARKET_BASE_PAGE_URL} = require( "../../constants");
 
 const React = require("react");
-const Log = require("../../../../src/components/Log");
+const Log = require("../../../../components/Log");
 const PlainNavBar = require("../PlainNavBar");
 const PostingsList = require("../PostingsList/PostingsList");
-import withLanguage from "../../../../src/components/LanguageContext";
 
 
 /**
@@ -38,6 +39,11 @@ class MyGroupPostingsScreen extends React.Component {
     }
 
     render() {
+        return (
+            <div>
+
+            </div>
+        );
         // TODO postings si prendono da state
     }
 

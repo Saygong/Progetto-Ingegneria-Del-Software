@@ -1,9 +1,10 @@
+import withLanguage from "../../../components/LanguageContext";
+
 const React = require("react");
 const PropTypes = require("prop-types");
-const Log = require("../../../src/components/Log");
+const Log = require("../../../components/Log");
 
 const texts = require("../texts");
-import withLanguage from "../../../src/components/LanguageContext";
 
 
 class LargeTextInput extends React.Component {
@@ -19,7 +20,7 @@ class LargeTextInput extends React.Component {
         return (
             <div>
                 <h2>{this.props.description}</h2>
-                <textarea onChange={this.handleTextChange} placeholder={}>
+                <textarea onChange={this.handleTextChange} placeholder="">
                     {this.props.text}
                 </textarea>
             </div>

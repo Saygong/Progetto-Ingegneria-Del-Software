@@ -1,12 +1,14 @@
-const React = require("react");
-const PropTypes = require("prop-types");
-const Log = require("../../../src/components/Log");
+import withLanguage from "../../../components/LanguageContext";
 
-const {buildEditModeRedirectionHandler} = require("Families_Share/client/src/family-market/src/components/EditPostingScreen/EditPostingScreen");
 import {withRouter} from "react-router-dom";
 
+const React = require("react");
+const PropTypes = require("prop-types");
+const Log = require("../../../components/Log");
+
+const {buildEditModeRedirectionHandler} = require("./EditPostingScreen/EditPostingScreen");
+
 const texts = require("../texts");
-import withLanguage from "../../../src/components/LanguageContext";
 
 
 /**
