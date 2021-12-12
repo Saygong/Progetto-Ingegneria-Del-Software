@@ -112,7 +112,7 @@ router.post('/', async (req, res, next) => {
 
   if (!(user_id && group_id && name && category && description && photo && type
       && contact.email && contact.place && contact.phone_number)) {
-    return res.status(400).send('Bad Request')
+    return res.status(400).send('Some fields are missing!')
   }
 
   try {
@@ -124,7 +124,7 @@ router.post('/', async (req, res, next) => {
       user_accepted: true
     })
     if (!member) {
-      return res.status(401).send('Unauthorized')
+      return res.status(401).send('The user is not a member of the group')
     }
 
     const id = objectid()

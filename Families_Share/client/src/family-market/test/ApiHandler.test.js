@@ -8,7 +8,6 @@ const axios = require("axios");
 axios.defaults.adapter = require('axios/lib/adapters/http');
 
 const BASE_URL = "http://localhost:4000";
-const POSTINGS_BASE_URL = ApiHandler.POSTINGS_BASE_URL;
 const MIN_PWD_LENGTH = 8;
 
 
@@ -58,10 +57,14 @@ function getRandomPostingInfo() {
         name: getRandomString(),
         category: getRandomString(),
         description: getRandomString(),
-        photo: "",
+        photo: getRandomString(),
         type: "loan",
-        contact: Contact.EMPTY
-    })
+        contact: new Contact({
+            email: getRandomString(),
+            place: getRandomString(),
+            phone_number: getRandomString()
+        })
+    });
 }
 
 
@@ -92,15 +95,12 @@ function assertList(actualList, expectedList) {
 }
 
 
-// TODO dato che assertTrue è sempre true, si può fare refactoring e generalizzare i metodi
-//  oppure eliminarli del tutto ed usare expect().toEqual()
-//  Io aspetterei di vedere se prima così runna i test e li passa
 /**
  * Performs deep asserts for equality (default) or inequality of all properties
  * of the two provided PostingInfo objects
  * @param actual {Posting}
  * @param expected {Posting}
- * @param assertTrue {boolean} if false, the assert checks for inequality of all properties instead
+ * @param assertTrue {boolean} if false, the assertion checks for inequality of all properties instead
  */
 function strictAssertPosting(actual, expected, assertTrue=true) {
     expect(actual.id === expected.id).toBe(assertTrue);
@@ -116,7 +116,7 @@ function strictAssertPosting(actual, expected, assertTrue=true) {
  * of the two provided PostingInfo objects
  * @param actual {PostingInfo}
  * @param expected {PostingInfo}
- * @param assertTrue {boolean} if false, the assert checks for inequality of all properties instead
+ * @param assertTrue {boolean} if false, the assertion checks for inequality of all properties instead
  */
 function strictAssertPostingInfo(actual, expected, assertTrue=true) {
     expect(actual.name === expected.name).toBe(assertTrue);
@@ -127,6 +127,39 @@ function strictAssertPostingInfo(actual, expected, assertTrue=true) {
     expect(actual.contact.email === expected.contact.email).toBe(assertTrue);
     expect(actual.contact.phone_number === expected.contact.phone_number).toBe(assertTrue);
     expect(actual.contact.place === expected.contact.place).toBe(assertTrue);
+}
+
+
+/**
+ * Logs an axios response to the console
+ * @param response
+ */
+function logResponse(response) {
+    logResponseInternal("Response data: ", response);
+}
+
+/**
+ * Logs an axios error response to the console
+ * @param errResponse
+ */
+function logErrorResponse(errResponse) {
+    logResponseInternal("Error response data:", errResponse);
+}
+
+function logResponseInternal(message, response) {
+    if (response === null || response === undefined) {
+        return;
+    }
+
+    const logData = {
+        RequestUrl: response.config.url,
+        Method: response.config.method,
+        Status: response.status,
+        StatusText: response.statusText,
+        Data: response.data
+    }
+
+    console.log(`${message} \n` + JSON.stringify(logData, null, 4));
 }
 
 
@@ -150,18 +183,14 @@ async function createRandomUser() {
     const response = await axios.post(routeUrl, user)
         .then(response => {
             console.log(`Successfully created user [${response.data.id}]`);
-            console.log("Request Url: " + response.config.url);
-            console.log("HTTP method: " + response.config.method);
-            console.log("Status code: " + response.status);
-            console.log("Status text: " + response.statusText);
-            console.log("Data: " + response.data);
+            logResponse(response);
 
             // see line 154 of user-routes.js to understand what data is returned
             return response;
         })
         .catch(error => {
-            console.log(`Error while creating user`)
-            console.log(error);
+            console.log(`Error while creating user`);
+            logErrorResponse(error.response);
         });
 
     const userData = response.data;
@@ -193,13 +222,13 @@ async function createRandomGroup(creator) {
         {headers: {"Authorization": creator.token}})
         .then(response => {
             console.log(`Successfully created group [${response.data.group_id}]`);
-            console.log(response)
+            logResponse(response)
 
             return response;
         })
         .catch(error => {
-            console.log(`Error while creating group`)
-            console.log(error);
+            console.log(`Error while creating group`);
+            logErrorResponse(error.response);
         });
 
     const groupId = response.data.group_id;
@@ -223,22 +252,24 @@ async function createRandomPosting(creator, groupId) {
         ...rndInfo
     };
 
-    // TODO check this route
-    const routeUrl = `${POSTINGS_BASE_URL}`;
+    const routeUrl = `${ApiHandler.POSTINGS_BASE_URL}`;
     const response = await axios.post(routeUrl, creationData,
         {headers: {"Authorization": creator.token}})
         .then(response => {
             console.log(`Successfully created posting [${response.data.id}]`);
-            console.log(response)
+            logResponse(response)
 
             return response;
         })
         .catch(error => {
-            console.log(`Error while creating posting`)
-            console.log(error);
+            console.log(`Error while creating posting`);
+            logErrorResponse(error.response);
+            console.log(error.response);
         });
 
-    return new Posting(response.data);
+    const postingData = response.data;
+
+    return new Posting(postingData);
 }
 
 
@@ -313,36 +344,53 @@ async function createUserWithSomeFavourites() {
         pg.postings.forEach(p => postings.push(p));
     }
 
+    const favouritesIds = postings.map(p => p.id);
+    const reqData = {
+        favorites: favouritesIds
+    };
+    const routeUrl = `${ApiHandler.USERS_BASE_URL}/${user.id}/favourites`
+    await axios.patch(routeUrl, reqData,
+        {headers: {"Authorization": user.token}})
+        .then(response => {
+            console.log(`Favourites of user '${user.id}' have been updated`)
+            logResponse(response);
+        })
+        .catch(error => {
+            console.log("An error occurred while updating user favorites of user: " + user.id)
+            logErrorResponse(error.response);
+        });
+
+
     return {user: user, groupIds: groupIds, favouritePostings: postings};
 }
 
 
 async function deleteGroup(groupId, creatorToken) {
     await axios
-        .delete(`/api/groups/${groupId}`,
+        .delete(BASE_URL + `/api/groups/${groupId}`,
             {headers: {"Authorization": creatorToken}})
         .then(response => {
             console.log(`Successfully deleted group [${groupId}]`);
-            console.log(response)
+            logResponse(response)
         })
         .catch(error => {
-            console.log(`Error while deleting group [${groupId}]`)
-            console.log(error);
+            console.log(`Error while deleting group [${groupId}]`);
+            logErrorResponse(error.response);
         });
 }
 
 
 async function deletePosting(postingId, creatorToken) {
     await axios
-        .delete(`${POSTINGS_BASE_URL}/${postingId}`,
+        .delete(`${ApiHandler.POSTINGS_BASE_URL}/${postingId}`,
             {headers: {"Authorization": creatorToken}})
         .then(response => {
             console.log(`Successfully deleted posting [${postingId}]`);
-            console.log(response)
+            logResponse(response)
         })
         .catch(error => {
             console.log(`Error while deleting posting [${postingId}]`)
-            console.log(error);
+            logErrorResponse(error.response);
         });
 }
 
@@ -354,15 +402,15 @@ async function deletePosting(postingId, creatorToken) {
  */
 async function deleteUser(user) {
     await axios
-        .delete(`/api/users/${user.id}`,
+        .delete(BASE_URL + `/api/users/${user.id}`,
             {headers: {"Authorization": user.token}})
         .then(response => {
             console.log(`Successfully deleted user [${user.id}]`);
-            console.log(response)
+            logResponse(response)
         })
         .catch(error => {
-            console.log(`Error while deleting user [${user.id}]`)
-            console.log(error);
+            console.log(`Error while deleting user [${user.id}]`);
+            logErrorResponse(error.response);
         });
 }
 
@@ -375,14 +423,14 @@ async function deleteUser(user) {
  * situation, since a user must create a posting on a certain group.
  * To be even more realistic the user should belong to that group, but in this case
  * it's good enough.
- * @return {Promise<{groupId: GroupInfo, posting: Posting, user: User}>}
+ * @return {Promise<{groupId: string, posting: Posting, user: User}>}
  */
 async function setupPosting() {
     const user = await createRandomUser();
-    const groupId = await createRandomGroup(user);
-    const posting = await createRandomPosting(user, groupId);
+    const group = await createRandomGroup(user);
+    const posting = await createRandomPosting(user, group.id);
 
-    return {user: user, groupId: groupId, posting: posting};
+    return {user: user, groupId: group.id, posting: posting};
 }
 
 
@@ -424,7 +472,7 @@ describe('Get all group postings', function () {
             return await createGroupWithSomePostings();
         };
 
-        const tearDown = async ({user, groupId, postings}) => {
+        const tearDown = async (user, groupId, postings) => {
             const postingIds = [];
             for (const p of postings) {
                 postingIds.push(p.id);
@@ -448,7 +496,7 @@ describe('Get all group postings', function () {
         }
         finally {
             // Teardown
-            await tearDown(setupData);
+            await tearDown(setupData.user, setupData.groupId, setupData.postings);
         }
     });
 
@@ -477,7 +525,7 @@ describe('Get group info', function () {
             return {user: user, group: group};
         };
 
-        const tearDown = async ({user, groupId}) => {
+        const tearDown = async (user, groupId) => {
             await deleteGroup(groupId);
             await deleteUser(user);
         };
@@ -492,12 +540,11 @@ describe('Get group info', function () {
             const actualGroup = await apiHandler.getGroupInfo(group.id);
 
             // Assert
-            expect(group.id === actualGroup.id).toBe(true);
-            expect(group.name === actualGroup.name).toBe(true);
+            expect(actualGroup).toEqual(group);
         }
         finally {
             // Teardown
-            await tearDown(setupData);
+            await tearDown(setupData.user, setupData.group.id);
         }
     });
 
@@ -525,14 +572,14 @@ describe('Get group info of all user groups', function () {
 
                 const groups = [];
                 for (let i = 0; i < 5; i++) {
-                    const g = await createRandomGroup(user.id);
+                    const g = await createRandomGroup(user);
                     groups.push(g);
                 }
 
                 return {user: user, groups: groups};
             };
 
-            const tearDown = async ({user, groups}) => {
+            const tearDown = async (user, groups) => {
                 for (const g of groups) {
                     await deleteGroup(g.id);
                 }
@@ -554,7 +601,7 @@ describe('Get group info of all user groups', function () {
             }
             finally {
                 // Teardown
-                await tearDown(setupData);
+                await tearDown(setupData.user, setupData.groups);
             }
     });
 
@@ -581,25 +628,28 @@ describe('Get single posting', function () {
             return await setupPosting();
         };
 
-        const tearDown = async ({user, groupId, postingId}) => {
+        const tearDown = async (user, groupId, postingId) => {
             return await tearDownPosting(user, groupId, postingId);
         };
 
         let setupData;
         try {
             setupData = await setup();
-            const {user, expectedPosting} = setupData;
+            const {user, posting} = setupData;
             const apiHandler = new ApiHandler(user.token);
 
             // Act
-            const actualPosting = await apiHandler.getPosting(expectedPosting.id);
+            const actualPosting = await apiHandler.getPosting(posting.id);
 
             // Assert
-            strictAssertPosting(actualPosting, expectedPosting);
+            strictAssertPosting(actualPosting, posting);
+        }
+        catch (error) {
+            console.log(error);
         }
         finally {
             // Teardown
-            await tearDown(setupData);
+            await tearDown(setupData.user, setupData.groupId, setupData.posting.id);
         }
     });
 
@@ -624,9 +674,9 @@ describe('Create posting', function () {
         // Arrange
         const setup = async () => {
             const user = await createRandomUser();
-            const groupId = await createRandomGroup(user.id);
+            const group = await createRandomGroup(user);
 
-            return {user: user, groupId: groupId};
+            return {user: user, groupId: group.id};
         };
 
         const tearDown = async (userId, groupId, postingId) => {
@@ -634,6 +684,7 @@ describe('Create posting', function () {
         };
 
         let setupData;
+        let postingToTeardown;
         try {
             setupData = await setup();
             const {user, groupId} = setupData;
@@ -647,10 +698,16 @@ describe('Create posting', function () {
             // Deep equality check
             expect(createdPosting.group_id === groupId).toBe(true);
             strictAssertPostingInfo(creationInfo, createdPosting);
+
+            // Passed to teardown function
+            postingToTeardown = createdPosting;
+        }
+        catch (error) {
+            console.log(error);
         }
         finally {
             // Teardown
-            await tearDown(setupData);
+            await tearDown(setupData.user, setupData.groupId, postingToTeardown.id);
         }
     });
 
@@ -691,15 +748,15 @@ describe('Edit posting', function () {
             const apiHandler = new ApiHandler(user.token);
 
             const newInfo = new PostingInfo({
-                name: postingToEdit.name + "1",
-                category: postingToEdit.category + "1",
-                description: postingToEdit.description + "1",
-                photo: postingToEdit.photo + "1",
-                type: postingToEdit.type + "1",
+                name: postingToEdit.name + " edit ",
+                category: postingToEdit.category + " edit ",
+                description: postingToEdit.description + " edit ",
+                photo: postingToEdit.photo + " edit ",
+                type: postingToEdit.type + " edit ",
                 contact: new Contact({
-                    email: postingToEdit.contact.email + "1",
-                    place: postingToEdit.contact.place + "1",
-                    phoneNumber: postingToEdit.contact.phone_number + "1"
+                    email: postingToEdit.contact.email + " edit ",
+                    place: postingToEdit.contact.place + " edit ",
+                    phone_number: postingToEdit.contact.phone_number + " edit "
                 })
             });
 
@@ -711,13 +768,12 @@ describe('Edit posting', function () {
         }
         finally {
             // Teardown
-            await tearDown(setupData);
+            await tearDown(setupData.user, setupData.groupId, setupData.posting.id);
         }
     });
 
-    it('should return an empty posting when invalid information is provided', async function () {
+    it('should return false when invalid information is provided', async function () {
         //Arrange
-        const expected = Posting.EMPTY;
         const wrongUserId = "-1";
         const wrongToken = "-1"
         const wrongCreationInfo = PostingInfo.EMPTY;
@@ -725,10 +781,10 @@ describe('Edit posting', function () {
         const apiHandler = new ApiHandler(wrongToken);
 
         //Act
-        const actual = await apiHandler.editPosting(wrongUserId, wrongCreationInfo);
+        const success = await apiHandler.editPosting(wrongUserId, wrongCreationInfo);
 
         //Assert
-        expect(actual).toEqual(expected);
+        expect(success).toEqual(false);
     });
 });
 
@@ -760,7 +816,7 @@ describe('Delete posting', function () {
         }
         finally {
             // Teardown
-            await tearDown(setupData);
+            await tearDown(setupData.user, setupData.groupId, setupData.posting.id);
         }
     });
 
@@ -809,7 +865,7 @@ describe('Get all user postings of a certain group', function () {
         }
         finally {
             // Teardown
-            await tearDown(setupData);
+            await tearDown(setupData.user, setupData.groupId, setupData.postings);
         }
     });
 
@@ -860,7 +916,7 @@ describe('Get user favourite postings', function () {
         }
         finally {
             // Teardown
-            await tearDown(setupData);
+            await tearDown(setupData.user, setupData.groupIds, setupData.favouritePostings);
         }
     });
 
@@ -931,7 +987,7 @@ describe('Edit user favourite postings', function () {
         }
         finally {
             // Teardown
-            await tearDown(setupData);
+            await tearDown(setupData.user, setupData.groupIds, setupData.favouritePostings);
         }
     });
 
@@ -984,7 +1040,7 @@ describe("Check if a single posting belongs to a user's favourites list", functi
         }
         finally {
             // Teardown
-            await tearDown(setupData);
+            await tearDown(setupData.user, setupData.groupIds, setupData.favouritePostings);
         }
     });
 
@@ -1018,7 +1074,7 @@ describe("Check if a single posting belongs to a user's favourites list", functi
         }
         finally {
             // Teardown
-            await tearDown(setupData);
+            await tearDown(setupData.user, setupData.groupIds, setupData.favouritePostings);
         }
     });
 });
@@ -1048,14 +1104,14 @@ describe("Add a single posting to a user's favourites list", function () {
             const toAdd = await createRandomPosting(user.id, groupIds[0]);
 
             // Act
-            const success = apiHandler.addUserFavourite(user.id, toAdd.id);
+            const success = await apiHandler.addUserFavourite(user.id, toAdd.id);
 
             // Assert
             expect(success).toBe(true);
         }
         finally {
             // Teardown
-            await tearDown(setupData);
+            await tearDown(setupData.user, setupData.groupIds, setupData.favouritePostings);
         }
     });
 
@@ -1082,14 +1138,14 @@ describe("Add a single posting to a user's favourites list", function () {
             const alreadyAdded = favouritePostings[0]
 
             // Act
-            const success = apiHandler.addUserFavourite(user.id, alreadyAdded.id);
+            const success = await apiHandler.addUserFavourite(user.id, alreadyAdded.id);
 
             // Assert
             expect(success).toBe(false);
         }
         finally {
             // Teardown
-            await tearDown(setupData);
+            await tearDown(setupData.user, setupData.groupIds, setupData.favouritePostings);
         }
     });
 });
@@ -1119,14 +1175,14 @@ describe("Remove a single posting from a user's favourites list", function () {
             const toRemove = favouritePostings[0];
 
             // Act
-            const success = apiHandler.removeUserFavourite(user.id, toRemove.id);
+            const success = await apiHandler.removeUserFavourite(user.id, toRemove.id);
 
             // Assert
             expect(success).toBe(true);
         }
         finally {
             // Teardown
-            await tearDown(setupData);
+            await tearDown(setupData.user, setupData.groupIds, setupData.favouritePostings);
         }
     });
 
@@ -1153,14 +1209,14 @@ describe("Remove a single posting from a user's favourites list", function () {
             const wrongIdToRemove = "-1";
 
             // Act
-            const success = apiHandler.removeUserFavourite(user.id, wrongIdToRemove);
+            const success = await apiHandler.removeUserFavourite(user.id, wrongIdToRemove);
 
             // Assert
             expect(success).toBe(false);
         }
         finally {
             // Teardown
-            await tearDown(setupData);
+            await tearDown(setupData.user, setupData.groupIds, setupData.favouritePostings);
         }
     });
 });

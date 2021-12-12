@@ -51,15 +51,14 @@ class PostingInfo {
      * @param type {string} Type of the transaction proposed in the posting
      * @param contact {Contact} Contact information of the posting
      */
-    constructor({name="", category="", description="",
-                    photo="", type="",
-                    contact = Contact.EMPTY} = {}) {
+    constructor({name, category, description,
+                    photo, type, contact}) {
         this.name = name;
         this.category = category;
         this.description = description;
         this.photo = photo;
         this.type = type;
-        this.contact = new Contact(contact);
+        this.contact = contact;
     }
 
     /**
@@ -67,7 +66,16 @@ class PostingInfo {
      * @return {PostingInfo}
      */
     static get EMPTY() {
-        return new PostingInfo();
+        const empty = {
+            name:"",
+            category:"",
+            description:"",
+            photo:"",
+            type:"",
+            contact : Contact.EMPTY
+        }
+
+        return new PostingInfo(empty);
     }
 }
 

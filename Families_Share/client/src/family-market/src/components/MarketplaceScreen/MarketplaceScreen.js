@@ -1,9 +1,7 @@
 import withLanguage from "../../../../components/LanguageContext";
 import texts from "../../texts";
-import SimpleTextInput from "../SimpleTextInput";
-import LargeTextInput from "../LargeTextInput";
 import PostingsList from "../PostingsList/PostingsList";
-import {FAVOURITES_MODE} from "./PostingsListItem";
+import FAVOURITES_MODE from "../PostingsList/PostingsListItem";
 
 const PropTypes = require("prop-types");
 const ApiHandler = require("../../api/ApiHandler");
@@ -25,7 +23,8 @@ class MarketplaceScreen extends React.Component {
 
     /**
      * Changed by the search bar and the two combo boxes
-     * @type {{filterText: string, filterTnType: string, filterCategory: string}}
+     * @type {{filterText: string, filterTnType: string, filterCategory: string,
+     *          groupPostings: Posting[]}}
      */
     state;
 
@@ -66,11 +65,11 @@ class MarketplaceScreen extends React.Component {
                 <CategoryComboBox categoryChangeHandler={this.handleCategoryChange}/>
                 <TransactionTypeComboBox tnTypeChangeHandler={this.handleTransactionTypeChange}/>
 
-                //TODO bottone CreatePostButton che url mettere?
+                {/*TODO bottone CreatePostButton che url mettere?*/}
                 <CreatePostingButton onCreateUrl={}/> <hr/>
 
-                //TODO PostingList da controllare e finire
-                <PostingsList postings={this.state.groupPostings}  //TODO perche non lo prende?
+                {/*TODO PostingList da controllare e finire*/}
+                <PostingsList postings={this.state.groupPostings}
                       title={this.state.filterText === txt.placeholder ? (
                           //Newest Post
                           txt.postingList

@@ -17,10 +17,10 @@ class GroupInfo {
 
     /**
      *
-     * @param id
-     * @param name
+     * @param id {string}
+     * @param name {string}
      */
-    constructor({id="", name=""} = {}) {
+    constructor({id, name}) {
         this.id = id;
         this.name = name;
     }
@@ -30,7 +30,12 @@ class GroupInfo {
      * @return {GroupInfo}
      */
     static get EMPTY() {
-        return new GroupInfo();
+        const empty = {
+            id:"",
+            name:""
+        }
+
+        return new GroupInfo(empty);
     }
 }
 export default GroupInfo;

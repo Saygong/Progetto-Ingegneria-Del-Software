@@ -31,13 +31,13 @@ class Contact {
     /**
      *
      * @param email {string}
-     * @param place {string} string representing a location (could also be google maps coordinates)
-     * @param phoneNumber {string}
+     * @param place {string} string representing a location (TODO could also be google maps coordinates)
+     * @param phone_number {string}
      */
-    constructor({email="", place="", phoneNumber=""} = {}) {
+    constructor({email, place, phone_number}) {
         this.email = email;
         this.place = place;
-        this.phone_number = phoneNumber;
+        this.phone_number = phone_number;
     }
 
     /**
@@ -45,7 +45,13 @@ class Contact {
      * @return {Contact}
      */
     static get EMPTY() {
-        return new Contact();
+        const empty = {
+            email:"",
+            place:"",
+            phone_number:""
+        };
+
+        return new Contact(empty);
     }
 }
 

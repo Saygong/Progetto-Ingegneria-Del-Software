@@ -32,14 +32,25 @@ class Posting extends PostingInfo {
      */
     group_id = "";
 
-    constructor({id="", groupId="",
-                    name="", category="", description="",
-                    photo="", type="",
-                    contact = Contact.EMPTY} = {}) {
+    /**
+     *
+     * @param id {string}
+     * @param user_id {string}
+     * @param group_id {string}
+     * @param name {string}
+     * @param category {string}
+     * @param description {string}
+     * @param photo {string}
+     * @param type {string}
+     * @param contact {Contact}
+     */
+    constructor({ id, user_id, group_id, name, category, description,
+                    photo, type, contact}) {
         super(arguments[0]);
 
         this.id = id;
-        this.group_id = groupId;
+        this.user_id = user_id;
+        this.group_id = group_id;
     }
 
     /**
@@ -47,7 +58,19 @@ class Posting extends PostingInfo {
      * @return {Posting}
      */
     static get EMPTY() {
-        return new Posting();
+        const empty = {
+            id:"",
+            user_id: "",
+            group_id:"",
+            name:"",
+            category:"",
+            description:"",
+            photo:"",
+            type:"",
+            contact : Contact.EMPTY
+        };
+
+        return new Posting(empty);
     }
 
     /**
