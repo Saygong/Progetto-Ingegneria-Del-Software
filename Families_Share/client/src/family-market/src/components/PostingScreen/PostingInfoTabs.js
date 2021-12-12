@@ -30,7 +30,7 @@ class PostingInfoTabs extends React.Component {
                     <button className="tablinks" onClick="tabInfo(event, 'Contacts')">CONTACTS</button>
                 </div>
 
-                <!-- Tab content -->
+
                 <div id="Product" className="tabcontent">
                     <h3>Description:</h3>
                     <p>{posting.description}</p>

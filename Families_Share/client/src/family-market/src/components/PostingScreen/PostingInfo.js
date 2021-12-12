@@ -1,6 +1,6 @@
 import withLanguage from "../../../../components/LanguageContext";
 import PostingNavBar from "./PostingNavBar";
-import texts from "../texts";
+import texts from "../../texts";
 
 const Posting = require("../../api/model/Posting");
 
@@ -21,6 +21,7 @@ class PostingInfo extends React.Component {
     }
 
     render() {
+        const language = this.props.language;
         const instanceOfPosting = this.props.posting;
         const image = instanceOfPosting.image;
         const txt = texts[language].profileInfo;

@@ -268,6 +268,12 @@ const el = {
     }
 };
 
+const nl = {
+    editPostingButton: {
+
+    }
+};
+
 
 const hu = {
     editPostingButton: {

@@ -7,7 +7,7 @@ const Log = require("../../../../components/Log");
 const ListItem = require("../ListItem");
 const {buildRedirectionHandler} = require("../MyFavouritesScreen/MyFavouritesScreen");
 const {withRouter} = require("react-router-dom");
-
+const texts = require("../../texts");
 
 /**
  * Class that represents the button to access the "my favourites" screen.

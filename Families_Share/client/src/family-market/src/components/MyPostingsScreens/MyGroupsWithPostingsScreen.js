@@ -49,6 +49,7 @@ class MyGroupsWithPostingsScreen extends React.Component {
     }
 
     render() {
+        const language = this.props.language;
         const txt = texts[language].myGroupsWithPostingsScreen;
         const group_ids = this.state.groups.map((x) => x.group_id);
 
