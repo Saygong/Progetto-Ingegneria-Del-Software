@@ -140,10 +140,10 @@ PostingsList.propTypes = {
     /**
      * Mode of the list items, determines which button to show.
      */
-    itemMode: PropTypes.oneOf([EDIT_MODE, FAVOURITES_MODE]),
+    itemMode: PropTypes.string,
 
     /**
-     * Text used to filters posts based on their name.
+     * Text used to filter posts based on their name.
      */
     filterText: PropTypes.string,
 

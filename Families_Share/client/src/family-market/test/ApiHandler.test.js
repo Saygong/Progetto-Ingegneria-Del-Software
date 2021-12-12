@@ -10,6 +10,9 @@ axios.defaults.adapter = require('axios/lib/adapters/http');
 const BASE_URL = "http://localhost:4000";
 const MIN_PWD_LENGTH = 8;
 
+// Change if more output is desired: impacts the logResponse functions
+const VERBOSE = false;
+
 
 class PostingsWithGroupInfo {
     /**
@@ -147,7 +150,7 @@ function logErrorResponse(errResponse) {
 }
 
 function logResponseInternal(message, response) {
-    if (response === null || response === undefined) {
+    if (response === null || response === undefined || !VERBOSE) {
         return;
     }
 
@@ -494,6 +497,9 @@ describe('Get all group postings', function () {
             // Assert
             assertList(actualPostings, postings);
         }
+        catch (error) {
+            console.log(error)
+        }
         finally {
             // Teardown
             await tearDown(setupData.user, setupData.groupId, setupData.postings);
@@ -541,6 +547,9 @@ describe('Get group info', function () {
 
             // Assert
             expect(actualGroup).toEqual(group);
+        }
+        catch (error) {
+            console.log(error)
         }
         finally {
             // Teardown
@@ -599,6 +608,9 @@ describe('Get group info of all user groups', function () {
                 // Assert
                 assertList(actualGroups, groups);
             }
+            catch (error) {
+                console.log(error)
+            }
             finally {
                 // Teardown
                 await tearDown(setupData.user, setupData.groups);
@@ -642,7 +654,7 @@ describe('Get single posting', function () {
             const actualPosting = await apiHandler.getPosting(posting.id);
 
             // Assert
-            strictAssertPosting(actualPosting, posting);
+            strictAssertPosting(actualPosting,posting);
         }
         catch (error) {
             console.log(error);
@@ -664,7 +676,7 @@ describe('Get single posting', function () {
         const actual = await apiHandler.getPosting(wrongId);
 
         //Assert
-        strictAssertPosting(actual, expected);
+        expect(actual).toEqual(expected);
     });
 });
 
@@ -692,12 +704,12 @@ describe('Create posting', function () {
             const creationInfo = getRandomPostingInfo();
 
             // Act
-            const createdPosting = await apiHandler.createPosting(user, groupId, creationInfo);
+            const createdPosting = await apiHandler.createPosting(user.id, groupId, creationInfo);
 
             // Assert
-            // Deep equality check
-            expect(createdPosting.group_id === groupId).toBe(true);
-            strictAssertPostingInfo(creationInfo, createdPosting);
+            // Check if the group and the creation info part are equal
+            expect(createdPosting.group_id).toBe(groupId);
+            strictAssertPostingInfo(createdPosting, creationInfo);
 
             // Passed to teardown function
             postingToTeardown = createdPosting;
@@ -725,7 +737,7 @@ describe('Create posting', function () {
         const actual = await apiHandler.createPosting(wrongUserId, wrongGroupId, wrongCreationInfo);
 
         //Assert
-        strictAssertPosting(actual, expected);
+        expect(actual).toEqual(expected);
     });
 });
 
@@ -765,6 +777,9 @@ describe('Edit posting', function () {
 
             // Assert
             expect(success).toBe(true);
+        }
+        catch (error) {
+            console.log(error)
         }
         finally {
             // Teardown
@@ -814,6 +829,9 @@ describe('Delete posting', function () {
             // Assert
             expect(isDeleted).toBe(true);
         }
+        catch (error) {
+            console.log(error)
+        }
         finally {
             // Teardown
             await tearDown(setupData.user, setupData.groupId, setupData.posting.id);
@@ -862,6 +880,9 @@ describe('Get all user postings of a certain group', function () {
 
             // Assert
             assertList(actualGroupPostings, postings);
+        }
+        catch (error) {
+            console.log(error)
         }
         finally {
             // Teardown
@@ -913,6 +934,9 @@ describe('Get user favourite postings', function () {
 
             // Assert
             assertList(actualPostings, favouritePostings);
+        }
+        catch (error) {
+            console.log(error)
         }
         finally {
             // Teardown
@@ -985,6 +1009,9 @@ describe('Edit user favourite postings', function () {
             actualFavourites.forEach(fav => actualIds.push(fav.id));
             assertList(newFavouritesIds, actualIds);
         }
+        catch (error) {
+            console.log(error)
+        }
         finally {
             // Teardown
             await tearDown(setupData.user, setupData.groupIds, setupData.favouritePostings);
@@ -1038,6 +1065,9 @@ describe("Check if a single posting belongs to a user's favourites list", functi
             // Assert
             expect(isFavourite).toBe(true);
         }
+        catch (error) {
+            console.log(error)
+        }
         finally {
             // Teardown
             await tearDown(setupData.user, setupData.groupIds, setupData.favouritePostings);
@@ -1071,6 +1101,9 @@ describe("Check if a single posting belongs to a user's favourites list", functi
 
             // Assert
             expect(isFavourite).toBe(false);
+        }
+        catch (error) {
+            console.log(error)
         }
         finally {
             // Teardown
@@ -1109,6 +1142,9 @@ describe("Add a single posting to a user's favourites list", function () {
             // Assert
             expect(success).toBe(true);
         }
+        catch (error) {
+            console.log(error)
+        }
         finally {
             // Teardown
             await tearDown(setupData.user, setupData.groupIds, setupData.favouritePostings);
@@ -1142,6 +1178,9 @@ describe("Add a single posting to a user's favourites list", function () {
 
             // Assert
             expect(success).toBe(false);
+        }
+        catch (error) {
+            console.log(error)
         }
         finally {
             // Teardown
@@ -1180,6 +1219,9 @@ describe("Remove a single posting from a user's favourites list", function () {
             // Assert
             expect(success).toBe(true);
         }
+        catch (error) {
+            console.log(error)
+        }
         finally {
             // Teardown
             await tearDown(setupData.user, setupData.groupIds, setupData.favouritePostings);
@@ -1213,6 +1255,9 @@ describe("Remove a single posting from a user's favourites list", function () {
 
             // Assert
             expect(success).toBe(false);
+        }
+        catch (error) {
+            console.log(error)
         }
         finally {
             // Teardown
