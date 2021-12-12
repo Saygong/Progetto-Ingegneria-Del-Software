@@ -24,16 +24,14 @@ class EditPostingButton extends React.Component {
     }
 
     render() {
-        const language = this.props.language;
-        const txt = texts[language].editPostingButton;
-        const editIconPath = "../../assets/edit-icon.png";
 
         return (
-            <button onClick={this.handleClick} style="height:200px;width:200px">
-                <img src={editIconPath} alt={txt.altImageText} className="center"/>
+            <button onClick={this.redirectToEditPostingScreen} style="height:200px;width:200px;text-align:center">
+                <i className="far fa-edit" />
             </button>
         )
     }
+
 
     /**
      * Called when the button is clicked.

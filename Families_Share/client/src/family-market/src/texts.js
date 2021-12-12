@@ -110,7 +110,7 @@ const en = {
 
 const it = {
     editPostingButton: {
-        altImageText: "edit posting button image"
+        altImageText: "edit"
     },
 
     deletePostingButton: {

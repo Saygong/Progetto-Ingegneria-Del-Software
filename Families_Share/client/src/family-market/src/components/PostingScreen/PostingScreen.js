@@ -114,5 +114,6 @@ PostingScreen.propTypes = {
 export default {
     PostingScreen: withLanguage(PostingScreen),
     PostingScreenRoute: PostingScreen.ROUTE,
-    buildRedirectionHandler: PostingScreen.buildRedirectionHandler
+    buildRedirectionHandler: PostingScreen.buildRedirectionHandler,
+    buildUrl: PostingScreen.buildUrl
 };

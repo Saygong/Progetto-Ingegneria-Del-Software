@@ -19,11 +19,18 @@ class PlainNavBar extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="row no-gutters">
+                <div className="col-2-10">
+                    <div role="button" onClick={this.goBack}>
+                        <i className="fas fa-arrow-left" />
+                    </div>
+                </div>
+                <div className="col-8-10 center">
+                    <h1>{this.props.title}</h1>
+                </div>
 
             </div>
         );
-        // TODO
     }
 
     /**
@@ -48,7 +55,7 @@ class PlainNavBar extends React.Component {
 
 PlainNavBar.defaultProps = {
     title: "",
-    goBackUrl: ""
+    goBackUrl: "",
 }
 
 PlainNavBar.propTypes = {
@@ -60,14 +67,13 @@ PlainNavBar.propTypes = {
     /**
      * Url to redirect to when the button to go back is pressed.
      */
-    goBackUrl: PropTypes.string
-}
+    goBackUrl: PropTypes.string,
 
-PlainNavBar.propTypes = {
     /**
      * Passed by the withLanguage HOC, used to determine which texts to display.
      */
     language: PropTypes.string
 }
+
 
 export default withRouter(withLanguage(PlainNavBar));

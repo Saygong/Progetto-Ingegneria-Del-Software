@@ -1,4 +1,7 @@
+
 import withLanguage from "../../../../components/LanguageContext";
+import {buildUrl} from "./PostingScreen";
+
 
 const ApiHandler = require("../../api/ApiHandler");
 const Posting = require("../../api/model/Posting");
@@ -23,12 +26,25 @@ class PostingNavBar extends React.Component {
     }
 
     render() {
-        return (
-            <div>
+        const postingTitle = this.props.name;
 
+        return (
+            <div className="col no-gutters">
+                <div className="col-8-10">
+                    <PlainNavBar title={postingTitle} goBackUrl={""} />
+                </div>
+                {this.isCurrentUserOwner() ?(
+                    <div className="col-2-10">
+                        { /* TODO aggiungere editUrl e DeleteUrl in maniera intelligente */}
+                        <EditPostingButton postingId={this.props.postingId} onEditUrl={window.location.href} onDeleteUrl={""} />
+                    </div>
+                ):(
+                    <div className="col-2-10">
+                        <ToggleFavouriteButton postingId={this.props.postingId} />
+                    </div>
+                )}
             </div>
         );
-        // TODO PlainNavBar + (EditPostingButton + ToggleFavouriteButton if owner)
     }
 
     /**

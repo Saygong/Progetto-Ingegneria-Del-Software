@@ -70,9 +70,11 @@ const ProfileInfo = ({ language, profile }) => {
   );
 };
 
-export default withLanguage(ProfileInfo);
+
 
 ProfileInfo.propTypes = {
   profile: PropTypes.object,
   language: PropTypes.string
 };
+
+export default withLanguage(ProfileInfo);
