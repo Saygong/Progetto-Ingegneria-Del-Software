@@ -1,4 +1,5 @@
 import withLanguage from "../../../../components/LanguageContext";
+import PostingsList from "../PostingsList/PostingsList";
 
 const ApiHandler = require("../../api/ApiHandler");
 const Posting = require("../../api/model/Posting");
@@ -48,16 +49,22 @@ class MyFavouritesScreen extends React.Component {
     render() {
         const language = this.props.language;
         const txt = texts[language].favouritesScreen;
-
-        //TODO va messo qualche url particolare?
-        const goBackRedirectionUrl = "";
+        const noPostings = (this.state.postings.length === 0);
 
         return (
             <div>
-                <PlainNavBar title={txt.navBar.title} goBackUrl={goBackRedirectionUrl} />
-                // TODO
+                <div style="width:100%; text-align:center; padding: 100px">
+                    <PlainNavBar title={txt.navBar.title} goBackUrl={""}/>
+                </div>
+                <div className="w-100">
+                    { noPostings ? (
+                        <h1>{txt.noPostingsText}</h1>
+                    ) : (
+                        <PostingsList postings={this.state.postings} title={txt.navBar.title} />
+                    )}
+                </div>
             </div>
-        )
+        );
     }
 
     async componentDidMount() {

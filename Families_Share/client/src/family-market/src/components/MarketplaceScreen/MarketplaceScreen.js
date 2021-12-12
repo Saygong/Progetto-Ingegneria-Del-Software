@@ -1,12 +1,14 @@
 import withLanguage from "../../../../components/LanguageContext";
+import texts from "../../texts";
+import SimpleTextInput from "../SimpleTextInput";
+import LargeTextInput from "../LargeTextInput";
+import PostingsList from "../PostingsList/PostingsList";
+import {FAVOURITES_MODE} from "./PostingsListItem";
 
 const PropTypes = require("prop-types");
-
 const ApiHandler = require("../../api/ApiHandler");
 const Posting = require("../../api/model/Posting");
-
 const {FAMILY_MARKET_BASE_PAGE_URL} = require("../../constants");
-
 const React = require("react");
 const Log = require("../../../../components/Log");
 const CreatePostingButton = require("./CreatePostingButton");
@@ -51,19 +53,63 @@ class MarketplaceScreen extends React.Component {
     }
 
     render() {
+        //TODO capire se effettivamente servono ste robe, copiate da EditPostingScreen
+        const language = this.props.language;
+        const txt = texts[language].marketplaceScreen;
+        //TODO va messo qualche url particolare?
+        const goBackRedirectionUrl = "";
+
         return (
             <div>
+                <MarketplaceNavBar title={txt.navBar.title} goBackUrl={goBackRedirectionUrl} />
+                <SearchBar text={this.state.filterText} textChangeHandler={this.handleSearchBarChange}/>
+                <CategoryComboBox categoryChangeHandler={this.handleCategoryChange} />
+                <TransactionTypeComboBox tnTypeChangeHandler={this.handleTransactionTypeChange} />
 
+                //TODO bottone CreatePostButton
+                //chiedere per redirectToEditPostingScreen in CreatePostButton cosa serve edit se è create button
+                <CreatePostingButton toCreateScreenUrl={} />
+
+                //TODO PostingList
+                <PostingsList postings={this.getGroupPostings}
+                      title={this.state.filterText === txt.placeholder ? (
+                          //Newest Post
+                          txt.postingList
+                      ):(
+                          "TODO"
+                          //TODO
+                          //testo grande e piccolo che dice il numero di risultati
+                          //Result for "filterText" in "filterCategory"
+                          //forse va in searchbar/category/type change handler
+                      )}
+                      itemMode={FAVOURITES_MODE}
+                      filterText={this.state.filterText}
+                      filterTnType={this.state.filterTnType}
+                      filterCategory={this.state.filterCategory} />
             </div>
         );
-        // TODO
     }
 
     async componentDidMount() {
         // TODO load postings
+        //quando viene mostrato a schermo tutto quanto
+        //le richieste web vanno qua
 
 
-
+        // Fetch the posting info to load only in edit mode //TODO
+        if (!this.isCreateMode()) {
+            const currentPosting = await this.fetchPosting();
+            this.setState({
+                name: currentPosting.name,
+                description: currentPosting.description,
+                photo: currentPosting.photo,
+                category: currentPosting.category,
+                tnType: currentPosting.type,
+                mail: currentPosting.contact.email,
+                phoneNumber: currentPosting.contact.phone_number,
+                place: currentPosting.contact.place
+            });
+        }
     }
 
     /**
@@ -89,17 +135,6 @@ class MarketplaceScreen extends React.Component {
     /**
      * Called when the text in the search bar is changed.
      * Updates the state accordingly.
-     * @param newTnType {string}
-     */
-    handleTransactionTypeChange(newTnType) {
-        this.setState({
-            filterTnType: newTnType
-        });
-    }
-
-    /**
-     * Called when the text in the search bar is changed.
-     * Updates the state accordingly.
      * @param newCategory {string}
      */
     handleCategoryChange(newCategory) {
@@ -109,20 +144,22 @@ class MarketplaceScreen extends React.Component {
     }
 
     /**
+     * Called when the text in the TransactionTypeComboBox. is changed.
+     * Updates the state accordingly.
+     * @param newTnType {string}
+     */
+    handleTransactionTypeChange(newTnType) {
+        this.setState({
+            filterTnType: newTnType
+        });
+    }
+
+    /**
      * Returns a url used to redirect to this page.
      * @return {string}
      */
     static buildUrl() {
         return MarketplaceScreen.ROUTE;
-    }
-
-    /**
-     * Returns the route path to load this page.
-     * Intended for use in react router.
-     * @return {string}
-     */
-    static get ROUTE() {
-        return FAMILY_MARKET_BASE_PAGE_URL + "/marketplace";
     }
 
     /**
@@ -136,6 +173,15 @@ class MarketplaceScreen extends React.Component {
         return () => {
             history.push(MarketplaceScreen.buildUrl());
         }
+    }
+
+    /**
+     * Returns the route path to load this page.
+     * Intended for use in react router.
+     * @return {string}
+     */
+    static get ROUTE() {
+        return FAMILY_MARKET_BASE_PAGE_URL + "/marketplace";
     }
 }
 

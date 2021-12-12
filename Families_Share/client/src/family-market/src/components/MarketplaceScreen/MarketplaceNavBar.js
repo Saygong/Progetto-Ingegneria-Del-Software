@@ -13,17 +13,25 @@ const MyProfileButton = require("./MyProfileButton");
 class MarketplaceNavBar extends React.Component {
     constructor(props) {
         super(props);
-
     }
 
     render() {
-        return (
-            <div>
+        const marketplaceTitle = this.props.name;
 
+        return (
+            <div className="col no-gutters">
+                <div className="col-8-10">
+                    <PlainNavBar title={marketplaceTitle} goBackUrl={""} /> //TODO che url?
+                </div>
+                {this.isCurrentUserOwner() && (
+                    <div className="col-2-10">
+                        <MyProfileButton/>
+                    </div>
+                )}
             </div>
         );
-        // TODO PlainNavBar + MyProfileButton
     }
+
 }
 
 export default withLanguage(MarketplaceNavBar);

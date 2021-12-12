@@ -39,26 +39,6 @@ router.get('/:postingId', async (req, res) => {
           return res.status(401).send('Unauthorized')
         }
 
-        // const contct = await Contact.findOne({
-        //   contact_id: posting.contact_id
-        // })
-
-        // const response = {
-        //   id: posting.id,
-        //   user_id: posting.user_id,
-        //   group_id: posting.group_id,
-        //   name: posting.name,
-        //   category: posting.category,
-        //   description: posting.description,
-        //   photo: posting.photo,
-        //   type: posting.type,
-        //   contact: {
-        //     email: contct.email,
-        //     place: contct.place,
-        //     phone_number: contct.phone_number
-        //   }
-        // }
-
         res.json(posting)
       })
   } catch (error) {
@@ -74,21 +54,21 @@ router.patch('/:postingId', async (req, res, next) => {
     return res.status(401).send('Not authenticated')
   }
   const p_id = req.params.postingId
-  let log = " ££££ ";
+
   try {
     // Check owner consistency
     const {user_id} = await Posting.findOne({ id: p_id }, 'user_id')
-    log += "User: " + user_id + "))";
+
     if (req.user_id !== user_id)
     {
-      return res.status(401).send('Unauthorized' + log)
+      return res.status(401).send('Unauthorized')
     }
 
     // req.body must be an object with the updated field
     const update = {...req.body}
-    log += "Update data: " + JSON.stringify(update) + "|"
+
     await Posting.updateOne({ id: p_id}, update).then(
-      res.status(200).send('Posting successfully updated' + log)
+      res.status(200).send('Posting successfully updated')
     )
 
   } catch (error) {
@@ -148,7 +128,7 @@ router.post('/', async (req, res, next) => {
     }
 
     const id = objectid()
-    // const contact_id = objectid()
+
     const newPosting = {
       id,
       user_id,
@@ -160,14 +140,9 @@ router.post('/', async (req, res, next) => {
       type,
       contact
     }
-    // const newContact = {
-    //   contact_id,
-    //   email,
-    //   place,
-    //   phone_number
-    // }
+
     await Posting.create(newPosting)
-    // await Contact.create(newContact)
+
     const response = {
       id: id,
       user_id: user_id,

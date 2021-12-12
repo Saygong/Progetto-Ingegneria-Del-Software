@@ -1,4 +1,6 @@
 import withLanguage from "../../../../components/LanguageContext";
+import PostingNavBar from "./PostingNavBar";
+import texts from "../texts";
 
 const Posting = require("../../api/model/Posting");
 
@@ -19,12 +21,27 @@ class PostingInfo extends React.Component {
     }
 
     render() {
-        return (
-            <div>
+        const instanceOfPosting = this.props.posting;
+        const image = instanceOfPosting.image;
+        const txt = texts[language].profileInfo;
 
+        return (
+            /* Dimension: 10vh total -> (approx: 1vh Bar) + 4vh image + 2vh Header + 3vh Tabs*/
+            <div>
+                <PostingNavBar postingId={instanceOfPosting.id} postingCreatorId={instanceOfPosting.user_id} />
+                <div style="width:100%; height:4vh">
+                    <img src={image}  alt={txt.altImageText} />
+                </div>
+                <hr/>  {/* Just a line */}
+                <div style="width:100%; height:2vh">
+                    <PostingInfoHeader posting={instanceOfPosting} />
+                </div>
+                <hr/>
+                <div style="width:100%; height:3vh">
+                    <PostingInfoTabs posting={instanceOfPosting} />
+                </div>
             </div>
         );
-        // TODO usare Image + PostingInfoHeader + PostingInfoTabs
     }
 }
 

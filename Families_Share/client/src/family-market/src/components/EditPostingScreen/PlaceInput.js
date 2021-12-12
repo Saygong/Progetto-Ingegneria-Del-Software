@@ -31,13 +31,17 @@ class PlaceInput extends React.Component {
         };
 
         return (
-            <LocationPicker containerElement={<div style={{ height: "100%" }} />}
-                            mapElement={<div style={{ height: "400px" }} />}
-                            zoom={17}
-                            radius={-1}
-                            defaultPosition={defaultPos}
-                            onChange={this.handlePlaceChange}
-            />
+            <div>
+                {/* Icona del map-marker tipo GMaps */}
+                <i className="fas fa-map-marker-alt" />
+                <LocationPicker containerElement={<div style={{ height: "100%" }} />}
+                                mapElement={<div style={{ height: "400px" }} />}
+                                zoom={17}
+                                radius={-1}
+                                defaultPosition={defaultPos}
+                                onChange={this.handlePlaceChange}
+                />
+            </div>
         );
 
     }

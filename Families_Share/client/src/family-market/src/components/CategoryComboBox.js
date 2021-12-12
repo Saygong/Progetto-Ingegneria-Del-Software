@@ -1,12 +1,9 @@
 import withLanguage from "../../../components/LanguageContext";
-const VALID_CATEGORIES = require("../constants").CATEGORIES;
 
+const VALID_CATEGORIES = require("../constants").CATEGORIES;
 const React = require("react");
 const PropTypes = require("prop-types");
-
-
 const ComboBox = require("react-responsive-combo-box");
-
 const texts = require("../texts");
 
 

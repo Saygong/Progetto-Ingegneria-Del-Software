@@ -90,10 +90,19 @@ const en = {
         }
     },
 
+    marketplaceScreen: {
+        navBar: {
+            title: "Family Market"
+        },
+        postingList: "Newest Post",
+        placeholder: "What are you looking for?"
+    },
+
     favouritesScreen: {
         navBar: {
             title: "Saved posts"
-        }
+        },
+        noPostingsText: "There's no favourites posts"
     },
 
     myPostingsButton: {
@@ -105,12 +114,17 @@ const en = {
         title: "Saved posts",
         description: "Post you liked"
     },
+
+    postingInfo: {
+        altImageText: "posting image placeholder"
+    }
+
 }
 
 
 const it = {
     editPostingButton: {
-        altImageText: "edit posting button image"
+        altImageText: "edit"
     },
 
     deletePostingButton: {

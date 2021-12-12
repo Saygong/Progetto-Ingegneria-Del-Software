@@ -20,12 +20,12 @@ class MailInput extends React.Component {
         // Get texts based on current language
         const language = this.props.language;
         const txt = texts[language].mailInput;
-        const mailIconPath = "";
 
         return (
             <div className="row no-gutters">
-                {/*TODO add mail image*/}
-                <img src={mailIconPath} alt={txt.altImageText} className="col-2-10"/>
+                <div className="col-2-10">
+                    <i className="far fa-envelope" />
+                </div>
                 <div className="col-8-10">
                     <SimpleTextInput text={this.props.text} description={txt.description}
                                      textChangeHandler={this.handleTextChange}
