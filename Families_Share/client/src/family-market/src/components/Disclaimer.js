@@ -6,6 +6,9 @@ const PropTypes = require("prop-types");
 const Log = require("../../../components/Log");
 
 
+//TODO abbiamo deciso che non serve e aggiungiamo direttamente una frase nel
+// disclaimer generale che esiste già
+
 
 class Disclaimer extends React.Component {
     constructor(props) {

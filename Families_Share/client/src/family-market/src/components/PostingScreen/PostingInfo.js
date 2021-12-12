@@ -32,14 +32,6 @@ class PostingInfo extends React.Component {
                 <div style="width:100%; height:4vh">
                     <img src={image}  alt={txt.altImageText} />
                 </div>
-                <hr/>  {/* Just a line */}
-                <div style="width:100%; height:2vh">
-                    <PostingInfoHeader posting={instanceOfPosting} />
-                </div>
-                <hr/>
-                <div style="width:100%; height:3vh">
-                    <PostingInfoTabs posting={instanceOfPosting} />
-                </div>
             </div>
         );
     }
