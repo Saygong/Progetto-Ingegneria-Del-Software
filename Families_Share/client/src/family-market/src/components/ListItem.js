@@ -20,29 +20,37 @@ class ListItem extends React.Component {
         // Get texts based on current language
         const language = this.props.language;
         const txt = texts[language].listItem;
+        const isIcon = this.props.isIcon;
 
         return (
-            <div role="button" className="row no-gutters">
+            <div className="row no-gutters">
                 <div className="col-2-10">
-                    <img className="center"
-                         src={this.props.image} alt={txt.altImageText}/>
+                    {isIcon ? (
+                        <i className={this.props.image} />
+                    ) : (
+                        <img className="center"
+                        src={this.props.image} alt={txt.altImageText}/>
+                    )}
                 </div>
-                <div className="col-8-10">
+                <div className="col-6-10">
                     <h1>{this.props.title}</h1>
                     <h2>{this.props.description}</h2>
                 </div>
+
             </div>
         )
     }
 }
 
 ListItem.defaultProps = {
+    isIcon: false,
     image: "",
     title: "",
     description: ""
 }
 
 ListItem.propTypes = {
+    isIcon: PropTypes.bool,
     image: PropTypes.oneOfType(
         [PropTypes.string, PropTypes.instanceOf(File), PropTypes.instanceOf(Blob)]),
     title: PropTypes.string,

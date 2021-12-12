@@ -18,28 +18,33 @@ class MyFavouritesButton extends React.Component {
     constructor(props) {
         super(props);
 
-        // TODO these values are constant since the button is always the same
-        this.image = "";
-        this.title = "";
-        this.description = "";
-
         this.redirectToMyFavouritesScreen = this.redirectToMyFavouritesScreen.bind(this);
     }
 
     render() {
-        return (
-            <div>
+        const language = this.props.language;
+        const txt = texts[language].myPostingsButton;
+        // origin of "fas fa-heart  ->  https://fontawesome.com/v5.15/icons?d=gallery&p=2
+        const myFavouritesButtonIconPath = "fas fa-heart";
 
+        return (
+            <div className="row no-gutters" role="button" onClick={this.redirectToMyFavouritesScreen}>
+                <div className="col-8-10">
+                    <ListItem isIcon={true} image={myFavouritesButtonIconPath} title={txt.title} description={txt.description}/>
+                </div>
+                <div className="col-2-10">
+                    <i className="fas fa-chevron-right" />
+                </div>
             </div>
         );
-        // TODO this button is a ListItem
     }
 
     /**
      * Called when this button is clicked.
      */
     redirectToMyFavouritesScreen() {
-        const redirectionHandler = buildRedirectionHandler(this.props.history);
+        const userId = JSON.parse(localStorage.getItem("user")).id;
+        const redirectionHandler = buildRedirectionHandler(this.props.history, userId);
 
         Log.info("Redirecting to MyFavouritesScreen ", this);
 

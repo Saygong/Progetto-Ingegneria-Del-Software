@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import * as path from "lodash.get";
 import withLanguage from "./LanguageContext";
 import Texts from "../Constants/Texts";
+import MyFavouritesButton from "../family-market/src/components/ProfileScreen/MyFavouritesButton";
+import MyPostingsButton from "../family-market/src/components/ProfileScreen/MyPostingsButton";
 
 const ProfileInfo = ({ language, profile }) => {
   const texts = Texts[language].profileInfo;
@@ -57,6 +59,13 @@ const ProfileInfo = ({ language, profile }) => {
           </div>
         </div>
       </div>
+
+
+      {/* Family Market buttons */}
+      <MyPostingsButton />
+      <MyFavouritesButton />
+
+
     </div>
   );
 };

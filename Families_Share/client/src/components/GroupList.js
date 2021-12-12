@@ -13,74 +13,76 @@ const {FAMILY_MARKET_BASE_PAGE_URL} = require("../family-market/src/constants");
 const {buildRedirectionHandler} = require("../family-market/src/components/MyPostingsScreens/MyGroupPostingsScreen");
 
 
-function redirectToGroupMainScreen() {
-    const { history } = this.props;
-    const { group } = this.state;
+/**
+ *
+ * @param history {History}
+ * @param groupId {string}
+ * @return {function}
+ */
+function buildGroupMainScreenRedirectionHandler(history, groupId) {
+    return () => {
+        Log.info("Redirecting to GroupMainScreen...", this);
 
-    Log.info("Redirecting to GroupMainScreen...", this);
-
-    history.push(`/groups/${group.group_id}/activities`);
+        history.push(`/groups/${groupId}/activities`);
+    }
 }
 
-function RedirectToGroupPostingsScreen() {
-    const history = useHistory();
-    const userId = JSON.parse(localStorage.getItem("user")).id;
-    const groupId = JSON.parse(localStorage.getItem("group")).id;
-    const redirectionHandler = buildRedirectionHandler(history, userId, groupId);
+function buildGroupPostingsScreenRedirectionHandler(history, groupId) {
+    return () => {
+        const userId = JSON.parse(localStorage.getItem("user")).id;
+        const redirectionHandler = buildRedirectionHandler(history, userId, groupId);
 
-    Log.info("Redirecting to MyGroupPostingsScreen...", this);
-
-    redirectionHandler();
+        Log.info("Redirecting to MyGroupPostingsScreen...", this);
+        redirectionHandler();
+    }
 }
 
 const GroupList = ({ groupIds }) => {
-  const { length } = groupIds;
-  const blocks = [...Array(Math.ceil(length / 4)).keys()];
+    const { length } = groupIds;
+    const blocks = [...Array(Math.ceil(length / 4)).keys()];
 
-  // Determine which navigation handler would be correct based on the current location (route)
-  let navigationHandler = null;
-  let currentLocation = useLocation();
-  if (currentLocation.pathname.includes(FAMILY_MARKET_BASE_PAGE_URL)) {
-      // we are in the Family Market extension
-      navigationHandler = RedirectToGroupPostingsScreen;
-  }
-  else {
-      navigationHandler = redirectToGroupMainScreen;
-  }
+    // Determine which navigation handler would be correct based on the current location (route)
+    const currentLocation = useLocation();
+    const history = useHistory();
+    const isFamilyMarketRedirect = currentLocation.pathname.includes(FAMILY_MARKET_BASE_PAGE_URL)
 
 
-  return (
-    <div className="suggestionsContainer">
-      <ul>
-        {blocks.map((block, blockIndex) => {
-          let indexes;
-          if (length <= 4) {
-            indexes = [...Array(length).keys()];
-          } else {
-            indexes = [
-              ...Array(
-                (block + 1) * 4 <= length ? 4 : length - block * 4
-              ).keys()
-            ].map(x => block * 4 + x);
-          }
-          return (
-            <LazyLoad key={blockIndex} height={350} once offset={150}>
-              {indexes.map(index => (
-                <li key={index} style={{ margin: "1rem 0" }}>
-                  <GroupListItem groupId={groupIds[index]}
-                                 navigationHandler={navigationHandler}/>
-                </li>
-              ))}
-            </LazyLoad>
-          );
-        })}
-      </ul>
-    </div>
-  );
+    return (
+        <div className="suggestionsContainer">
+            <ul>
+                {blocks.map((block, blockIndex) => {
+                    let indexes;
+                    if (length <= 4) {
+                        indexes = [...Array(length).keys()];
+                    } else {
+                        indexes = [
+                            ...Array(
+                                (block + 1) * 4 <= length ? 4 : length - block * 4
+                            ).keys()
+                        ].map(x => block * 4 + x);
+                    }
+                    return (
+                        <LazyLoad key={blockIndex} height={350} once offset={150}>
+                            {indexes.map(index => (
+                                <li key={index} style={{ margin: "1rem 0" }}>
+                                    <GroupListItem
+                                        groupId={groupIds[index]}
+                                        navigationHandler={isFamilyMarketRedirect
+                                            ? buildGroupPostingsScreenRedirectionHandler(history, groupIds[index])
+                                            : buildGroupMainScreenRedirectionHandler(history, groupIds[index])}
+                                    />
+                                </li>
+                            ))}
+                        </LazyLoad>
+                    );
+                })}
+            </ul>
+        </div>
+    );
 };
 
 GroupList.propTypes = {
-  groupIds: PropTypes.array
+    groupIds: PropTypes.array
 };
 
 export default withLanguage(GroupList);

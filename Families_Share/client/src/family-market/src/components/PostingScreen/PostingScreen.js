@@ -43,6 +43,8 @@ class PostingScreen extends React.Component {
         }
     }
 
+
+    // annuncio_altrui.PNG
     render() {
         return (
             <div>

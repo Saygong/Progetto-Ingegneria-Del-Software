@@ -94,7 +94,17 @@ const en = {
         navBar: {
             title: "Saved posts"
         }
-    }
+    },
+
+    myPostingsButton: {
+        title: "My posts",
+        description: "Postings divided by groups"
+    },
+
+    myFavouritesButton: {
+        title: "Saved posts",
+        description: "Post you liked"
+    },
 }
 
 

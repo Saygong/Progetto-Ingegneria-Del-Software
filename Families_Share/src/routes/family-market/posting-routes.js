@@ -3,7 +3,6 @@ const router = new express.Router()
 const Posting = require('../../models/family-market/posting')
 const Member = require('../../models/member')
 const objectid = require('objectid')
-const Contact = require('../../models/family-market/contact')
 
 // Prefisso: “/api/family-market/postings”
 // Route for getPosting that retrieve a posting

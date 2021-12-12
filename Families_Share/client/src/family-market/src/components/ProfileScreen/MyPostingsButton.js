@@ -1,4 +1,5 @@
 import withLanguage from "../../../../components/LanguageContext";
+import texts from "../../texts";
 
 const PropTypes = require("prop-types");
 
@@ -15,24 +16,30 @@ const {withRouter} = require("react-router-dom");
  * TODO This button must be added to the ProfileScreen component
  */
 class MyPostingsButton extends React.Component {
+
     constructor(props) {
         super(props);
-
-        // TODO these values are constant since the button is always the same
-        this.image = "";
-        this.title = "";
-        this.description = "";
 
         this.redirectToMyPostingsScreens = this.redirectToMyPostingsScreens.bind(this);
     }
 
     render() {
-        return (
-            <div>
+        const language = this.props.language;
+        const txt = texts[language].myPostingsButton;
+        // origin of "fas fa-users  ->  https://fontawesome.com/v5.15/icons?d=gallery&p=2
+        const myPostingsButtonIconPath = "fas fa-users"
 
+        return (
+            <div className="row no-gutters" role="button" onClick={this.redirectToMyPostingsScreens}>
+                <div className="col-8-10">
+                    <ListItem isIcon={true} image={myPostingsButtonIconPath} title={txt.title} description={txt.description}/>
+                </div>
+                <div className="col-2-10">
+                    <i className="fas fa-chevron-right" />
+                </div>
             </div>
+
         );
-        // TODO this button is a ListItem
     }
 
     redirectToMyPostingsScreens() {
