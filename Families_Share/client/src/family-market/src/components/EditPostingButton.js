@@ -24,7 +24,6 @@ class EditPostingButton extends React.Component {
     }
 
     render() {
-
         return (
             <button onClick={this.redirectToEditPostingScreen} style="height:200px;width:200px;text-align:center">
                 <i className="far fa-edit" />

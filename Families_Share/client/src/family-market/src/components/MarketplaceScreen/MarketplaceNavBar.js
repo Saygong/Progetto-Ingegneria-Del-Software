@@ -23,11 +23,9 @@ class MarketplaceNavBar extends React.Component {
                 <div className="col-8-10">
                     <PlainNavBar title={marketplaceTitle} goBackUrl={""} /> //TODO che url?
                 </div>
-                {this.isCurrentUserOwner() && (
-                    <div className="col-2-10">
-                        <MyProfileButton/>
-                    </div>
-                )}
+                <div className="col-2-10">
+                    <MyProfileButton/>
+                </div>
             </div>
         );
     }

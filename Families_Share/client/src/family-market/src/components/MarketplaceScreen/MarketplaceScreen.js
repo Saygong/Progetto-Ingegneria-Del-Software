@@ -61,13 +61,13 @@ class MarketplaceScreen extends React.Component {
 
         return (
             <div>
-                <MarketplaceNavBar title={txt.navBar.title} goBackUrl={goBackRedirectionUrl} />
+                <MarketplaceNavBar title={txt.navBar.title} goBackUrl={goBackRedirectionUrl}/>
                 <SearchBar text={this.state.filterText} textChangeHandler={this.handleSearchBarChange}/>
-                <CategoryComboBox categoryChangeHandler={this.handleCategoryChange} />
-                <TransactionTypeComboBox tnTypeChangeHandler={this.handleTransactionTypeChange} />
+                <CategoryComboBox categoryChangeHandler={this.handleCategoryChange}/>
+                <TransactionTypeComboBox tnTypeChangeHandler={this.handleTransactionTypeChange}/>
 
                 //TODO bottone CreatePostButton che url mettere?
-                <CreatePostingButton onCreateUrl={} />
+                <CreatePostingButton onCreateUrl={}/> <hr/>
 
                 //TODO PostingList da controllare e finire
                 <PostingsList postings={this.state.groupPostings}  //TODO perche non lo prende?
@@ -81,10 +81,10 @@ class MarketplaceScreen extends React.Component {
                           //Result for "filterText" in "filterCategory" ?
                           //forse va in searchbar/category/type change handler
                       )}
-                      itemMode={FAVOURITES_MODE}
+                      itemMode={FAVOURITES_MODE} //TODO come devo inserirlo?
                       filterText={this.state.filterText}
                       filterTnType={this.state.filterTnType}
-                      filterCategory={this.state.filterCategory} />
+                      filterCategory={this.state.filterCategory}/>
             </div>
         );
     }

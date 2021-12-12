@@ -49,11 +49,14 @@ class PostingScreen extends React.Component {
         return (
             <div>
                 <PostingNavBar postingId={this.state.posting.id} postingCreatorId={this.state.posting.user_id} />
-                <ToggleFavouriteButton  postingId={this.state.posting.id}/>
                 <PostingInfo posting={this.state.posting}/>
                 <PostingInfoHeader posting={this.state.posting}/>
                 <PostingInfoTabs  posting={this.state.posting}/>
 
+                //TODO vedere se usare questi altrimenti cancellare
+                {/*<hr/>*/}
+                {/*<div style="width:100%; height:2vh">*/}
+                {/*</div>*/}
             </div>
         );
     }
