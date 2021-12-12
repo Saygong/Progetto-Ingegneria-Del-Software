@@ -6,7 +6,7 @@ import PostingInfoTabs from "./PostingInfoTabs";
 import PropTypes from "prop-types";
 import ApiHandler from "../../api/ApiHandler";
 import Posting  from "../../api/model/Posting";
-import {FAMILY_MARKET_BASE_PAGE_URL} from "../../constants";
+import base_url from "../../constants";
 import React from "react";
 import Log from "../../../../components/Log";
 import PostingNavBar from "./PostingNavBar";
@@ -96,7 +96,7 @@ class PostingScreen extends React.Component {
      * @return {string}
      */
     static get ROUTE() {
-        return FAMILY_MARKET_BASE_PAGE_URL + "/posting/:postingId";
+        return base_url.FAMILY_MARKET_BASE_PAGE_URL + "/posting/:postingId";
     }
 
     /**
