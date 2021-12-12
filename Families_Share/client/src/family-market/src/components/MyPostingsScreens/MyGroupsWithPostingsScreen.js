@@ -3,8 +3,6 @@ import withLanguage from "../../../../components/LanguageContext";
 const PropTypes = require("prop-types");
 
 const ApiHandler = require("../../api/ApiHandler");
-const Posting = require("../../api/model/Posting");
-const GroupInfo = require("../../api/model/GroupInfo");
 
 const {FAMILY_MARKET_BASE_PAGE_URL} = require("../../constants");
 
@@ -13,7 +11,7 @@ const Log = require("../../../../components/Log");
 const PlainNavBar = require("../PlainNavBar");
 const GroupList = require("../../../../components/GroupList");
 const {buildRedirectionHandler} = require( "./MyGroupPostingsScreen");
-
+const texts = require("../../texts");
 
 /**
  * Class that represents the screen where all current user's group are displayed.
@@ -51,17 +49,32 @@ class MyGroupsWithPostingsScreen extends React.Component {
     }
 
     render() {
+        const txt = texts[language].myGroupsWithPostingsScreen;
+        const group_ids = this.state.groups.map((x) => x.group_id);
+
         return (
             <div>
-                <PlainNavBar title={""} language={""}/>
-                <GroupList history={""} groupIds={""} language={""} activities={""}/>
+                <div>
+                    <PlainNavBar title={txt.title} goBackUrl={""}/>
+                </div>
+                <div style="text-align: center; width: 100%">
+                    <p> {txt.instruction} </p>
+                    <hr/>
+                    <GroupList groupIds={group_ids} />
+                </div>
             </div>
         );
-        // TODO PlainNavBar e GroupList (quest'ultimo riadattato per accettare navigation handler)
+
     }
 
     async componentDidMount() {
-        // TODO chiama getUserGroupsInfo e setta lo stato con i postings aggiornati
+
+        const userGroups = await this.fetchUserGroups()
+
+        this.setState({
+            groups: userGroups,
+        });
+
     }
 
     /**

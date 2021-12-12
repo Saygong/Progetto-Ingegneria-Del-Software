@@ -117,6 +117,15 @@ const en = {
 
     postingInfo: {
         altImageText: "posting image placeholder"
+    },
+
+    myGroupsPostingsScreen: {
+        prefix: "My posts in "
+    },
+
+    myGroupsWithPostingsScreen: {
+        title : "My groups",
+        instruction: "Select a group to see your postings"
     }
 
 }
