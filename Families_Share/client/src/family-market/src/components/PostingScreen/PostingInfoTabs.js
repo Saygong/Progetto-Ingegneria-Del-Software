@@ -67,9 +67,10 @@ PostingInfoTabs.propTypes = {
     language: PropTypes.string
 }
 
+//TODO non è usato che serve?
 function tabInfo(evt, info) {
     // Declare all variables
-    var i, tabcontent, tablinks;
+    let i, tabcontent, tablinks;
 
     // Get all elements with class="tabcontent" and hide them
     tabcontent = document.getElementsByClassName("tabcontent");

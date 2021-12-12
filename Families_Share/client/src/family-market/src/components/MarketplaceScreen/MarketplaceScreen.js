@@ -90,12 +90,10 @@ class MarketplaceScreen extends React.Component {
     }
 
     async componentDidMount() {//TODO da controllare (this loads postings)
-        if (!this.isCreateMode()) {
-            const currentGroupPostings = await this.getGroupPostings();
-            this.setState({
-                groupPostings: currentGroupPostings
-            });
-        }
+        const currentGroupPostings = await this.getGroupPostings();
+        this.setState({
+            groupPostings: currentGroupPostings
+        });
     }
 
     /**

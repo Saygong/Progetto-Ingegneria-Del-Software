@@ -1,12 +1,12 @@
 import withLanguage from "../../../../components/LanguageContext";
+import ToggleFavouriteButton from "../ToggleFavouriteButton";
+import PostingInfoHeader from "./PostingInfoHeader";
+import PostingInfoTabs from "./PostingInfoTabs";
 
 const PropTypes = require("prop-types");
-
 const ApiHandler = require("../../api/ApiHandler");
 const Posting = require("../../api/model/Posting");
-
 const {FAMILY_MARKET_BASE_PAGE_URL} = require("../../constants");
-
 const React = require("react");
 const Log = require("../../../../components/Log");
 const PostingNavBar = require("./PostingNavBar");
@@ -44,19 +44,26 @@ class PostingScreen extends React.Component {
     }
 
 
-    // annuncio_altrui.PNG
+    // annuncio_altrui.PNG  manca la foto (?)
     render() {
         return (
             <div>
+                <PostingNavBar postingId={this.state.posting.id} postingCreatorId={this.state.posting.user_id} />
+                <ToggleFavouriteButton  postingId={this.state.posting.id}/>
+                <PostingInfo posting={this.state.posting}/>
+                <PostingInfoHeader posting={this.state.posting}/>
+                <PostingInfoTabs  posting={this.state.posting}/>
 
             </div>
         );
-        // TODO PostingNavBar + PostingInfo
     }
 
     async componentDidMount() {
-        // fetch the posting and set the state
-
+        // TODO fetch the posting and set the state, --------> DA CONTROLLARE
+        const currentPosting = await this.fetchPosting();
+        this.setState({
+            posting: currentPosting
+        });
     }
 
     /**
