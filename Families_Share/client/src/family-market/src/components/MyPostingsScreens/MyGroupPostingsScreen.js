@@ -41,6 +41,7 @@ class MyGroupPostingsScreen extends React.Component {
     }
 
     render() {
+        const language = this.props.language;
         const txt = texts[language].myGroupsPostingsScreen;
 
         return (

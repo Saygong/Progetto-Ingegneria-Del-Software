@@ -10,6 +10,7 @@ import ActivityListItem from "./ActivityListItem";
 import PlanListItem from "./PlanListItem";
 import ConfirmDialog from "./ConfirmDialog";
 import Log from "./Log";
+import AccessMarketplaceButton from "../family-market/src/components/EntryPoint/AccessMarketplaceButton";
 
 const styles = {
   add: {
@@ -332,7 +333,7 @@ class GroupActivities extends React.Component {
             </div>
           )}
         </div>
-        {/*TODO: qui mettere AccessMarketplaceButton*/}
+        <AccessMarketplaceButton />
       </div>
     );
   }

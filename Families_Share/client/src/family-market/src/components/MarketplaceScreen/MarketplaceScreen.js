@@ -5,10 +5,8 @@ import FAVOURITES_MODE from "../PostingsList/PostingsListItem";
 
 const PropTypes = require("prop-types");
 const ApiHandler = require("../../api/ApiHandler");
-const Posting = require("../../api/model/Posting");
 const {FAMILY_MARKET_BASE_PAGE_URL} = require("../../constants");
 const React = require("react");
-const Log = require("../../../../components/Log");
 const CreatePostingButton = require("./CreatePostingButton");
 const SearchBar = require("../SearchBar");
 const CategoryComboBox = require("../CategoryComboBox");
@@ -66,7 +64,7 @@ class MarketplaceScreen extends React.Component {
                 <TransactionTypeComboBox tnTypeChangeHandler={this.handleTransactionTypeChange}/>
 
                 {/*TODO bottone CreatePostButton che url mettere?*/}
-                <CreatePostingButton onCreateUrl={}/> <hr/>
+                <CreatePostingButton onCreateUrl={""}/> <hr/>
 
                 {/*TODO PostingList da controllare e finire*/}
                 <PostingsList postings={this.state.groupPostings}
