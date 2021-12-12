@@ -1,10 +1,10 @@
 import withLanguage from "../../../../components/LanguageContext";
 
-const Posting = require("../../api/model/Posting");
+import Posting from "../../api/model/Posting";
 
-const React = require("react");
-const PropTypes = require("prop-types");
-const Log = require("../../../../components/Log");
+import React from "react";
+import PropTypes from "prop-types";
+import Log from "../../../../components/Log";
 
 
 /**

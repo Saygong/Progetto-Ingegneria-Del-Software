@@ -1,18 +1,15 @@
 import withLanguage from "../../../../components/LanguageContext";
+import Posting from "../../api/model/Posting";
 
-const Posting = require("../../api/model/Posting");
+import React from "react";
+import PropTypes from "prop-types";
+import Log from "../../../../components/Log";
+import ListItem from "../ListItem";
+import EditPostingButton from "../EditPostingButton";
+import ToggleFavouriteButton from "../ToggleFavouriteButton";
 
-const React = require("react");
-const PropTypes = require("prop-types");
-const Log = require("../../../../components/Log");
-const ListItem = require("../ListItem");
-const EditPostingButton = require("../EditPostingButton");
-const ToggleFavouriteButton = require("../ToggleFavouriteButton");
-
-const {buildRedirectionHandler} = require("../PostingScreen/PostingScreen")
-const {withRouter} = require("react-router-dom");
-
-const texts = require("../../texts");
+import {buildPostingScreenRedirectionHandler} from "../PostingScreen/PostingScreen";
+import {withRouter} from "react-router-dom";
 
 
 /**
@@ -104,7 +101,7 @@ class PostingsListItem extends React.Component {
      */
     redirectToPostingScreen() {
         const postingId = this.props.posting.id;
-        const redirectionHandler = buildRedirectionHandler(this.props.history, postingId)
+        const redirectionHandler = buildPostingScreenRedirectionHandler(this.props.history, postingId)
 
         Log.info("Redirecting to PostingScreen ", this);
         redirectionHandler();
@@ -125,8 +122,7 @@ PostingsListItem.propTypes = {
     /**
      * Determines if the favourite or the edit button is displayed
      */
-    mode: PropTypes.oneOf(
-        [PostingsListItem.EDIT_MODE, PostingsListItem.FAVOURITES_MODE]),
+    mode: PropTypes.string,
 
     /**
      * Passed by the withLanguage HOC, used to determine which texts to display.

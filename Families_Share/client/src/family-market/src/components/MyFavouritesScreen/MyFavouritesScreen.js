@@ -1,16 +1,14 @@
 import withLanguage from "../../../../components/LanguageContext";
 import PostingsList from "../PostingsList/PostingsList";
+import texts from "../../texts";
+import ApiHandler from "../../api/ApiHandler";
 
-const ApiHandler = require("../../api/ApiHandler");
-const Posting = require("../../api/model/Posting");
+import FAMILY_MARKET_BASE_PAGE_URL from "../../constants";
 
-const {FAMILY_MARKET_BASE_PAGE_URL} = require("../../constants");
+import React from "react";
+import PropTypes from "prop-types";
+import PlainNavBar from "../PlainNavBar";
 
-const React = require("react");
-const PropTypes = require("prop-types");
-const Log = require("../../../../components/Log");
-const PlainNavBar = require("../PlainNavBar");
-const texts = require("../../texts");
 
 
 /**

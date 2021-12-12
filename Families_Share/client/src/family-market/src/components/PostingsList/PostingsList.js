@@ -1,13 +1,14 @@
 import withLanguage from "../../../../components/LanguageContext";
+import texts from "../../texts";
+import Posting from "../../api/model/Posting";
 
-const Posting = require("../../api/model/Posting");
+import React from "react";
+import PropTypes from "prop-types";
+import Log from "../../../../components/Log";
+import PostingsListItemImport from "./PostingsListItem";
 
-const React = require("react");
-const PropTypes = require("prop-types");
-const Log = require("../../../../components/Log");
-const {PostingsListItem, EDIT_MODE, FAVOURITES_MODE} = require("./PostingsListItem");
-
-const texts = require("../../texts");
+const FAVOURITES_MODE = PostingsListItemImport.FAVOURITES_MODE;
+const PostingsListItem = PostingsListItemImport.PostingsListItem;
 
 
 class PostingsList extends React.Component {

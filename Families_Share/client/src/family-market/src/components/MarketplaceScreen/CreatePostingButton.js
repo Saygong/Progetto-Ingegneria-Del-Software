@@ -1,14 +1,14 @@
 import {withRouter} from "react-router-dom";
 import withLanguage from "../../../../components/LanguageContext";
+import texts from "../../texts";
+import Posting from "../../api/model/Posting";
 
-const Posting = require("../../api/model/Posting");
+import React from "react";
+import PropTypes from "prop-types";
+import Log from "../../../../components/Log";
+import {buildCreateModeRedirectionHandler} from "../EditPostingScreen/EditPostingScreen";
 
-const React = require("react");
-const PropTypes = require("prop-types");
-const Log = require("../../../../components/Log");
-const {buildCreateModeRedirectionHandler} = require( "../EditPostingScreen/EditPostingScreen");
 
-const texts = require("../../texts");
 
 
 /**

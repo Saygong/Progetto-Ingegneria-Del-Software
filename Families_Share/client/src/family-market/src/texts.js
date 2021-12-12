@@ -287,7 +287,7 @@ const fr = {
     }
 };
 
+const texts = { en, el, it, hu, nl, fr };
 
-export default {
-    en, nl, it, el, hu, fr
-};
+export default texts;
+

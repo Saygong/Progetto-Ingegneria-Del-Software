@@ -1,10 +1,10 @@
 import withLanguage from "../../../components/LanguageContext";
 
-const VALID_CATEGORIES = require("../constants").CATEGORIES;
-const React = require("react");
-const PropTypes = require("prop-types");
-const ComboBox = require("react-responsive-combo-box");
-const texts = require("../texts");
+import costantElements from "../constants";
+import React from "react";
+import PropTypes from "prop-types";
+import ComboBox from "react-responsive-combo-box";
+import texts from "../texts";
 
 
 class CategoryComboBox extends React.Component {
@@ -30,7 +30,7 @@ class CategoryComboBox extends React.Component {
                         <img src={catIconPath} alt={txt.altImageText} className="center"/>
                     </div>
                     <div className="col-8-10">
-                        <ComboBox itemList={VALID_CATEGORIES}
+                        <ComboBox itemList={costantElements.CATEGORIES}
                                   onSelect={this.handleCategoryChange}
                                   editable={false}/>
                     </div>

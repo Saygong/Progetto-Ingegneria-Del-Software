@@ -1,10 +1,10 @@
 import withLanguage from "../../../../components/LanguageContext";
-import { Tab, Tabs, TabList, TabPanel} from 'react-tabs';
-const Posting = require("../../api/model/Posting");
 
-const React = require("react");
-const PropTypes = require("prop-types");
-const Log = require("../../../../components/Log");
+import Posting from "../../api/model/Posting";
+
+import React from "react";
+import PropTypes from "prop-types";
+import Log from "../../../../components/Log";
 
 
 /**

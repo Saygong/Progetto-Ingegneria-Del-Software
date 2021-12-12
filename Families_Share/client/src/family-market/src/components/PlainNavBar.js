@@ -1,9 +1,9 @@
 import withLanguage from "../../../components/LanguageContext";
 
-const React = require("react");
-const PropTypes = require("prop-types");
-const Log = require("../../../components/Log");
-const {withRouter} = require("react-router-dom");
+import React from "react";
+import PropTypes from "prop-types";
+import Log from "../../../components/Log";
+import {withRouter} from "react-router-dom";
 
 
 /**

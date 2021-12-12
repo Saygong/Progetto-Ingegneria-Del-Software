@@ -1,9 +1,9 @@
 import withLanguage from "../../../../components/LanguageContext";
 
-const React = require("react");
-const Log = require("../../../../components/Log");
-const PlainNavBar = require("../PlainNavBar");
-const MyProfileButton = require("./MyProfileButton");
+import React from "react";
+import Log from "../../../../components/Log";
+import PlainNavBar from "../PlainNavBar";
+import MyProfileButton from "./MyProfileButton";
 
 
 /**

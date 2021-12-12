@@ -3,14 +3,14 @@ import ToggleFavouriteButton from "../ToggleFavouriteButton";
 import PostingInfoHeader from "./PostingInfoHeader";
 import PostingInfoTabs from "./PostingInfoTabs";
 
-const PropTypes = require("prop-types");
-const ApiHandler = require("../../api/ApiHandler");
-const Posting = require("../../api/model/Posting");
-const {FAMILY_MARKET_BASE_PAGE_URL} = require("../../constants");
-const React = require("react");
-const Log = require("../../../../components/Log");
-const PostingNavBar = require("./PostingNavBar");
-const PostingInfo = require("./PostingInfo");
+import PropTypes from "prop-types";
+import ApiHandler from "../../api/ApiHandler";
+import Posting  from "../../api/model/Posting";
+import {FAMILY_MARKET_BASE_PAGE_URL} from "../../constants";
+import React from "react";
+import Log from "../../../../components/Log";
+import PostingNavBar from "./PostingNavBar";
+import PostingInfo from "./PostingInfo";
 
 
 /**
@@ -121,6 +121,7 @@ PostingScreen.propTypes = {
     language: PropTypes.string
 }
 
+export const buildPostingScreenRedirectionHandler = PostingScreen.buildRedirectionHandler;
 export default {
     PostingScreen: withLanguage(PostingScreen),
     PostingScreenRoute: PostingScreen.ROUTE,
