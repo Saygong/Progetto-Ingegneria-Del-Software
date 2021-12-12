@@ -37,13 +37,13 @@ class MarketplaceScreen extends React.Component {
     constructor(props) {
         super(props);
 
-        this.groupPostings = [];
         this.apiHandler = new ApiHandler();
 
         this.state = {
+            groupPostings: [],
             filterText: "",
             filterTnType: "",
-            filterCategory: ""
+            filterCategory: "",
         };
 
         this.getGroupPostings = this.getGroupPostings.bind(this);
@@ -66,12 +66,11 @@ class MarketplaceScreen extends React.Component {
                 <CategoryComboBox categoryChangeHandler={this.handleCategoryChange} />
                 <TransactionTypeComboBox tnTypeChangeHandler={this.handleTransactionTypeChange} />
 
-                //TODO bottone CreatePostButton
-                //chiedere per redirectToEditPostingScreen in CreatePostButton cosa serve edit se è create button
-                <CreatePostingButton toCreateScreenUrl={} />
+                //TODO bottone CreatePostButton che url mettere?
+                <CreatePostingButton onCreateUrl={} />
 
-                //TODO PostingList
-                <PostingsList postings={this.getGroupPostings}
+                //TODO PostingList da controllare e finire
+                <PostingsList postings={this.state.groupPostings}  //TODO perche non lo prende?
                       title={this.state.filterText === txt.placeholder ? (
                           //Newest Post
                           txt.postingList
@@ -79,7 +78,7 @@ class MarketplaceScreen extends React.Component {
                           "TODO"
                           //TODO
                           //testo grande e piccolo che dice il numero di risultati
-                          //Result for "filterText" in "filterCategory"
+                          //Result for "filterText" in "filterCategory" ?
                           //forse va in searchbar/category/type change handler
                       )}
                       itemMode={FAVOURITES_MODE}
@@ -90,24 +89,11 @@ class MarketplaceScreen extends React.Component {
         );
     }
 
-    async componentDidMount() {
-        // TODO load postings
-        //quando viene mostrato a schermo tutto quanto
-        //le richieste web vanno qua
-
-
-        // Fetch the posting info to load only in edit mode //TODO
+    async componentDidMount() {//TODO da controllare (this loads postings)
         if (!this.isCreateMode()) {
-            const currentPosting = await this.fetchPosting();
+            const currentGroupPostings = await this.getGroupPostings();
             this.setState({
-                name: currentPosting.name,
-                description: currentPosting.description,
-                photo: currentPosting.photo,
-                category: currentPosting.category,
-                tnType: currentPosting.type,
-                mail: currentPosting.contact.email,
-                phoneNumber: currentPosting.contact.phone_number,
-                place: currentPosting.contact.place
+                groupPostings: currentGroupPostings
             });
         }
     }
