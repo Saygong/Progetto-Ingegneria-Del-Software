@@ -1,27 +1,27 @@
 import withLanguage from "../../../../components/LanguageContext";
+import texts from "../../texts";
+import ApiHandler from "../../api/ApiHandler";
+import Posting from "../../api/model/Posting";
+import PostingInfo from "../../api/model/PostingInfo";
+import Contact from "../../api/model/Contact";
 
-const ApiHandler = require("../../api/ApiHandler");
-const Posting = require("../../api/model/Posting");
-const PostingInfo = require("../../api/model/PostingInfo");
-const Contact = require("../../api/model/Contact");
+import {FAMILY_MARKET_BASE_PAGE_URL} from "../../constants";
 
-const {FAMILY_MARKET_BASE_PAGE_URL} = require("../../constants");
+import React from "react";
+import PropTypes from "prop-types";
+import Log from "../../../../components/Log";
+import PlainNavBar from "../PlainNavBar";
+import SimpleTextInput from "../SimpleTextInput";
+import LargeTextInput from "../LargeTextInput";
+import ConfirmButton from "./ConfirmButton";
+import DeleteButton from "./DeletePostingButton";
+import MailInput from "./MailInput";
+import TelephoneInput from "./TelephoneInput";
+import PlaceInput from "./PlaceInput";
+import ImageInput from "./ImageInput";
+import CategoryComboBox from "../CategoryComboBox";
+import TransactionTypeComboBox from "../TransactionTypeComboBox";
 
-const React = require("react");
-const PropTypes = require("prop-types");
-const Log = require("../../../../components/Log");
-const PlainNavBar = require("../PlainNavBar");
-const SimpleTextInput = require("../SimpleTextInput");
-const LargeTextInput = require("../LargeTextInput");
-const ConfirmButton = require("./ConfirmButton");
-const DeleteButton = require("./DeletePostingButton");
-const MailInput = require("./MailInput");
-const TelephoneInput = require("./TelephoneInput");
-const PlaceInput = require("./PlaceInput");
-const ImageInput = require("./ImageInput");
-const CategoryComboBox = require("../CategoryComboBox");
-const TransactionTypeComboBox = require("../TransactionTypeComboBox");
-const texts = require("../../texts");
 
 
 /**
@@ -444,6 +444,12 @@ EditPostingScreen.propTypes = {
      */
     language: PropTypes.string
 };
+
+export const EditPostingScreen = withLanguage(EditPostingScreen);
+export const EditModeRoute = EditPostingScreen.EDIT_MODE_ROUTE;
+export const CreateModeRoute = EditPostingScreen.CREATE_MODE_ROUTE;
+export const buildCreateModeRedirectionHandler = EditPostingScreen.buildCreateModeRedirectionHandler;
+export const buildEditModeRedirectionHandler = EditPostingScreen.buildEditModeRedirectionHandler;
 
 export default {
     EditPostingScreen: withLanguage(EditPostingScreen),

@@ -1,13 +1,13 @@
 import withLanguage from "../../../../components/LanguageContext";
+import texts from "../../texts";
+import PropTypes from "prop-types";
+import ApiHandler from "../../api/ApiHandler";
+import {FAMILY_MARKET_BASE_PAGE_URL} from  "../../constants";
+import React from "react";
+import Log from "../../../../components/Log";
+import PlainNavBar from "../PlainNavBar";
+import PostingsList from "../PostingsList/PostingsList";
 
-const PropTypes = require("prop-types");
-const ApiHandler = require("../../api/ApiHandler");
-const {FAMILY_MARKET_BASE_PAGE_URL} = require( "../../constants");
-const React = require("react");
-const Log = require("../../../../components/Log");
-const PlainNavBar = require("../PlainNavBar");
-const PostingsList = require("../PostingsList/PostingsList");
-const texts = require("../../texts");
 
 /**
  * Class that represents the screen where all of a group's postings are displayed.

@@ -3,15 +3,15 @@ import withLanguage from "../../../../components/LanguageContext";
 import {buildUrl} from "./PostingScreen";
 
 
-const ApiHandler = require("../../api/ApiHandler");
-const Posting = require("../../api/model/Posting");
+import ApiHandler from "../../api/ApiHandler";
+import Posting from "../../api/model/Posting";
 
-const React = require("react");
-const PropTypes = require("prop-types");
-const Log = require("../../../../components/Log");
-const PlainNavBar = require("../PlainNavBar");
-const EditPostingButton = require("../EditPostingButton");
-const ToggleFavouriteButton = require("../ToggleFavouriteButton");
+import React from "react";
+import PropTypes from "prop-types";
+import Log from "../../../../components/Log";
+import PlainNavBar from "../PlainNavBar";
+import EditPostingButton from "../EditPostingButton";
+import ToggleFavouriteButton from "../ToggleFavouriteButton";
 
 
 /**

@@ -1,9 +1,9 @@
 import withLanguage from "../../../components/LanguageContext";
 
 // TODO -> ricordare che testo va messo dentro texts.js
-const React = require("react");
-const PropTypes = require("prop-types");
-const Log = require("../../../components/Log");
+import React from "react";
+import PropTypes from "prop-types" ;
+import Log from "../../../components/Log" ;
 
 
 //TODO abbiamo deciso che non serve e aggiungiamo direttamente una frase nel

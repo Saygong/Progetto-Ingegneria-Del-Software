@@ -1,10 +1,10 @@
 import withLanguage from "../../../../components/LanguageContext";
 import Dropzone from "react-dropzone";
+import texts from "../../texts";
+import React from "react";
+import PropTypes from "prop-types";
+import Log from "../../../../components/Log";
 
-const React = require("react");
-const PropTypes = require("prop-types");
-const Log = require("../../../../components/Log");
-const texts = require("../../texts");
 
 
 class ImageInput extends React.Component {

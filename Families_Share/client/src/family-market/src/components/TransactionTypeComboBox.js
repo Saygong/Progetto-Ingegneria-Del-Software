@@ -1,11 +1,11 @@
 import withLanguage from "../../../components/LanguageContext";
 
-const VALID_TN_TYPES = require("../constants").TN_TYPES;
-const React = require("react");
-const PropTypes = require("prop-types");
-const Log = require("../../../components/Log");
-const ComboBox = require("react-responsive-combo-box");
-const texts = require("../texts");
+import types from "../constants";
+import React from "react";
+import PropTypes from "prop-types";
+import Log from "../../../components/Log";
+import ComboBox from "react-responsive-combo-box";
+import texts from "../texts";
 
 class TransactionTypeComboBox extends React.Component {
 
@@ -30,7 +30,7 @@ class TransactionTypeComboBox extends React.Component {
                         <img src={tnIconPath} alt={txt.altImageText} className="center"/>
                     </div>
                     <div className="col-8-10">
-                        <ComboBox options={VALID_TN_TYPES}
+                        <ComboBox options={types.TN_TYPES}
                                   onSelect={this.handleTnTypeChange}
                                   editable={false}/>
                     </div>

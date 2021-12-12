@@ -1,10 +1,10 @@
 import withLanguage from "../../../components/LanguageContext";
 
-const React = require("react");
-const PropTypes = require("prop-types");
-const Log = require("../../../components/Log");
+import React from "react";
+import PropTypes from "prop-types";
+import Log from "../../../components/Log";
 
-const texts = require("../texts");
+import texts from "../texts";
 
 
 class LargeTextInput extends React.Component {

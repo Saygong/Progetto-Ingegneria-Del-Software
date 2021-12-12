@@ -1,17 +1,17 @@
 import withLanguage from "../../../../components/LanguageContext";
+import texts from "../../texts";
+import PropTypes from "prop-types";
 
-const PropTypes = require("prop-types");
+import ApiHandler from "../../api/ApiHandler";
 
-const ApiHandler = require("../../api/ApiHandler");
+import {FAMILY_MARKET_BASE_PAGE_URL} from "../../constants";
 
-const {FAMILY_MARKET_BASE_PAGE_URL} = require("../../constants");
+import React from "react";
+import Log from "../../../../components/Log";
+import PlainNavBar from "../PlainNavBar";
+import GroupList from "../../../../components/GroupList";
+import {buildRedirectionHandler} from "./MyGroupPostingsScreen";
 
-const React = require("react");
-const Log = require("../../../../components/Log");
-const PlainNavBar = require("../PlainNavBar");
-const GroupList = require("../../../../components/GroupList");
-const {buildRedirectionHandler} = require( "./MyGroupPostingsScreen");
-const texts = require("../../texts");
 
 /**
  * Class that represents the screen where all current user's group are displayed.

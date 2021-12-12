@@ -1,13 +1,13 @@
 import withLanguage from "../../../../components/LanguageContext";
 import texts from "../../texts";
 
-const PropTypes = require("prop-types");
+import PropTypes from "prop-types";
 
-const React = require("react");
-const Log = require("../../../../components/Log");
-const ListItem = require("../ListItem");
-const {buildRedirectionHandler} = require("../MyPostingsScreens/MyGroupsWithPostingsScreen");
-const {withRouter} = require("react-router-dom");
+import React from "react";
+import Log from "../../../../components/Log";
+import ListItem from "../ListItem";
+import {buildRedirectionHandler} from "../MyPostingsScreens/MyGroupsWithPostingsScreen";
+import {withRouter} from "react-router-dom";
 
 
 /**

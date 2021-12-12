@@ -3,15 +3,15 @@ import texts from "../../texts";
 import PostingsList from "../PostingsList/PostingsList";
 import FAVOURITES_MODE from "../PostingsList/PostingsListItem";
 
-const PropTypes = require("prop-types");
-const ApiHandler = require("../../api/ApiHandler");
-const {FAMILY_MARKET_BASE_PAGE_URL} = require("../../constants");
-const React = require("react");
-const CreatePostingButton = require("./CreatePostingButton");
-const SearchBar = require("../SearchBar");
-const CategoryComboBox = require("../CategoryComboBox");
-const TransactionTypeComboBox = require("../TransactionTypeComboBox");
-const MarketplaceNavBar = require("./MarketplaceNavBar");
+import PropTypes from "prop-types";
+import ApiHandler from "../../api/ApiHandler";
+import FAMILY_MARKET_BASE_PAGE_URL from "../../constants";
+import React from"react";
+import CreatePostingButton from "./CreatePostingButton";
+import SearchBar from "../SearchBar";
+import CategoryComboBox from "../CategoryComboBox";
+import TransactionTypeComboBox from "../TransactionTypeComboBox";
+import MarketplaceNavBar from "./MarketplaceNavBar";
 
 
 /**

@@ -2,13 +2,11 @@ import withLanguage from "../../../../components/LanguageContext";
 import PostingNavBar from "./PostingNavBar";
 import texts from "../../texts";
 
-const Posting = require("../../api/model/Posting");
+import Posting from "../../api/model/Posting";
 
-const React = require("react");
-const PropTypes = require("prop-types");
-const Log = require("../../../../components/Log");
-const PostingInfoHeader = require("./PostingInfoHeader");
-const PostingInfoTabs = require("./PostingInfoTabs");
+import React from "react";
+import PropTypes from "prop-types";
+import Log from "../../../../components/Log";
 
 
 /**

@@ -1,13 +1,14 @@
 import withLanguage from "../../../../components/LanguageContext";
+import texts from "../../texts";
+import PropTypes from "prop-types";
 
-const PropTypes = require("prop-types");
+import React from "react";
+import Log from "../../../../components/Log";
+import ListItem from "../ListItem";
+import {buildRedirectionHandler} from "../MyFavouritesScreen/MyFavouritesScreen";
+import {withRouter} from "react-router-dom";
 
-const React = require("react");
-const Log = require("../../../../components/Log");
-const ListItem = require("../ListItem");
-const {buildRedirectionHandler} = require("../MyFavouritesScreen/MyFavouritesScreen");
-const {withRouter} = require("react-router-dom");
-const texts = require("../../texts");
+
 
 /**
  * Class that represents the button to access the "my favourites" screen.
