@@ -53,7 +53,8 @@ class MyGroupsWithPostingsScreen extends React.Component {
     render() {
         return (
             <div>
-
+                <PlainNavBar title={""} language={""}/>
+                <GroupList history={""} groupIds={""} language={""} activities={""}/>
             </div>
         );
         // TODO PlainNavBar e GroupList (quest'ultimo riadattato per accettare navigation handler)

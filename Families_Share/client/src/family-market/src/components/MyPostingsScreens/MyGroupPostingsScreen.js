@@ -41,7 +41,9 @@ class MyGroupPostingsScreen extends React.Component {
     render() {
         return (
             <div>
-
+                <PlainNavBar title={""} goBackUrl={""} language={""}/>
+                <PostingsList title={""} language={""} postings={""} filterCategory={""} filterText={""}
+                              filterTnType={""} itemMode={""}/>
             </div>
         );
         // TODO postings si prendono da state
