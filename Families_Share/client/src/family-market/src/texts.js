@@ -1,11 +1,11 @@
 // TODO scrivere i testi dei componenti nelle varie lingue
 const en = {
     listItem: {
-        altImageText: "list item placeholder"
+        altImageText: "List item placeholder"
     },
 
     editPostingButton: {
-        altImageText: "edit image"
+        altImageText: "Edit image"
     },
 
     deletePostingButton: {
@@ -132,32 +132,132 @@ const en = {
 
 
 const it = {
+    listItem: {
+        altImageText: "Segnaposto elemento della lista"
+    },
+
     editPostingButton: {
-        altImageText: "edit"
+        altImageText: "Modifica immagine"
     },
 
     deletePostingButton: {
-        altImageText: "delete posting button image"
+        text: "Elimina",
+        altImageText: "Elimina immagine"
     },
 
     toggleFavButton: {
-        altImageText: "toggle fav button image"
+        altImageText: "Immagine preferita"
     },
 
     createPostingButton: {
-        text: "Create new posting"
+        text: "Crea un nuovo annuncio"
     },
 
     accessMarketplaceButton: {
         title: "Family Market",
-        description: "Access to"
-    }
-};
+        description: "Accesso alla vetrina"
+    },
 
+    searchBar: {
+        altImageText: "Immagine lente di ingrandimento",
+        placeholder: "Cosa stai cercando?"
+    },
 
-const nl = {
-    editPostingButton: {
+    mailInput: {
+        altImageText: "Immagine email",
+        placeholder: "mariorossi@esempio.qualcosa",
+        description: "E-Mail"
+    },
 
+    telephoneInput: {
+        altImageText: "Immagine telefono",
+        placeholder: "Inserisci il tuo numero di telefono",
+        description: "Telefono"
+    },
+
+    categoryComboBox: {
+        altImageText: "Icona categoria",
+        description: "Seleziona una categoria: "
+    },
+
+    transactionTypeComboBox: {
+        altImageText: "Icona tipo di transazione",
+        description: "Seleziona il tipo di transazione: "
+    },
+
+    confirmButton: {
+        text: "Conferma"
+    },
+
+    profileButton: {
+        altImageText: "Icona profilo"
+    },
+
+    postingsLists: {
+        title: {
+            namePart: "Risultati per",
+            categoryPart: "nella categoria",
+            transactionTypePart: "di tipo"
+        }
+    },
+
+    editPostingScreen: {
+        navBar: {
+            title: {
+                createMode: "Crea un nuovo annuncio",
+                editMode: "Modifica l'annuncio"
+            }
+        },
+        nameInput: {
+            description: "Titolo",
+            placeholder: "Inserire titolo"
+        },
+        descriptionInput: {
+            description: "Descrizione",
+            placeholder: "Inserire descrizione"
+        },
+        editContactTitle: "Informazioni di contatto:",
+        imageInput: {
+            dropzoneText: "Rilascia qui un immagine per l'annuncio: "
+        }
+    },
+
+    marketplaceScreen: {
+        navBar: {
+            title: "Family Market"
+        },
+        postingList: "Nuovi annunci",
+        placeholder: "Che cosa stai cercando?"
+    },
+
+    favouritesScreen: {
+        navBar: {
+            title: "Annunci salvati"
+        },
+        noPostingsText: "Non ci sono annunci salvati"
+    },
+
+    myPostingsButton: {
+        title: "I miei annunci",
+        description: "Annunci divisi per gruppo"
+    },
+
+    myFavouritesButton: {
+        title: "Annunci salvati",
+        description: "I post che ti sono piaciuti"
+    },
+
+    postingInfo: {
+        altImageText: "Segnapost immagine annuncio"
+    },
+
+    myGroupsPostingsScreen: {
+        prefix: "I miei annunci in: "
+    },
+
+    myGroupsWithPostingsScreen: {
+        title : "I miei gruppi",
+        instruction: "Seleziona un gruppo per vedere i tuoi annunci"
     }
 }
 
