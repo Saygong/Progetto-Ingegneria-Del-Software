@@ -1,17 +1,15 @@
-const ApiHandler = require("../src/api/ApiHandler");
-const Posting = require("../src/api/model/Posting");
-const PostingInfo = require("../src/api/model/PostingInfo");
-const Contact = require("../src/api/model/Contact");
-const GroupInfo = require("../src/api/model/GroupInfo");
+import ApiHandler from "../src/api/ApiHandler";
+import Posting from "../src/api/model/Posting";
+import PostingInfo from "../src/api/model/PostingInfo";
+import Contact from "../src/api/model/Contact";
+import GroupInfo from "../src/api/model/GroupInfo";
+
 const axios = require("axios");
 axios.defaults.adapter = require('axios/lib/adapters/http');
 
 const BASE_URL = "http://localhost:4000";
-const POSTINGS_BASE_URL = BASE_URL + ApiHandler.POSTINGS_BASE_URL;
+const POSTINGS_BASE_URL = ApiHandler.POSTINGS_BASE_URL;
 const MIN_PWD_LENGTH = 8;
-
-// TODO wrappare test in try catch perché senno se crashano è pacco
-// TODO 2 aggiungere token a tutti i metodi perché per ora dà errore che richieste sono unauthorized
 
 
 class PostingsWithGroupInfo {
@@ -152,7 +150,11 @@ async function createRandomUser() {
     const response = await axios.post(routeUrl, user)
         .then(response => {
             console.log(`Successfully created user [${response.data.id}]`);
-            console.log(response)
+            console.log("Request Url: " + response.config.url);
+            console.log("HTTP method: " + response.config.method);
+            console.log("Status code: " + response.status);
+            console.log("Status text: " + response.statusText);
+            console.log("Data: " + response.data);
 
             // see line 154 of user-routes.js to understand what data is returned
             return response;
@@ -169,18 +171,17 @@ async function createRandomUser() {
 
 /**
  *
- * @param creatorId {string}
- * @param creatorToken {string} auth token of the user that created the group
+ * @param creator {User}
  * @return {Promise<GroupInfo>}
  */
-async function createRandomGroup(creatorId, creatorToken) {
+async function createRandomGroup(creator) {
     const group = {
         invite_ids: [],
         description: getRandomString(),
         location: getRandomString(),
         name: getRandomString(),
         visible: true,
-        owner_id: creatorId,
+        owner_id: creator.id,
         contact_type: "email",
         contact_info: getRandomString()
     };
@@ -189,7 +190,7 @@ async function createRandomGroup(creatorId, creatorToken) {
     // await chai.request(server).post('/api/groups').send(group2).set('Authorization', user.token)
     const routeUrl = BASE_URL + "/api/groups";
     const response = await axios.post(routeUrl, group,
-        {headers: {"Authorization": creatorToken}})
+        {headers: {"Authorization": creator.token}})
         .then(response => {
             console.log(`Successfully created group [${response.data.group_id}]`);
             console.log(response)
@@ -210,15 +211,14 @@ async function createRandomGroup(creatorId, creatorToken) {
 
 /**
  *
- * @param creatorId
+ * @param creator {User}
  * @param groupId
- * @param creatorToken {string} auth token of the user that created the group
  * @return {Promise<Posting>}
  */
-async function createRandomPosting(creatorId, groupId, creatorToken) {
+async function createRandomPosting(creator, groupId) {
     const rndInfo = getRandomPostingInfo();
     const creationData = {
-        user_id: creatorId,
+        user_id: creator.id,
         group_id: groupId,
         ...rndInfo
     };
@@ -226,7 +226,7 @@ async function createRandomPosting(creatorId, groupId, creatorToken) {
     // TODO check this route
     const routeUrl = `${POSTINGS_BASE_URL}`;
     const response = await axios.post(routeUrl, creationData,
-        {headers: {"Authorization": creatorToken}})
+        {headers: {"Authorization": creator.token}})
         .then(response => {
             console.log(`Successfully created posting [${response.data.id}]`);
             console.log(response)
@@ -248,12 +248,12 @@ async function createRandomPosting(creatorId, groupId, creatorToken) {
  */
 async function createUserWithSomePostingsSameGroup() {
     const user = await createRandomUser();
-    const groupInfo = await createRandomGroup(user.id, user.token);
+    const groupInfo = await createRandomGroup(user);
 
     const postings = [];
     const nPostings = 5;
     for (let i = 0; i < nPostings; i++) {
-        const p = await createRandomPosting(user.id, groupInfo.id, user.token);
+        const p = await createRandomPosting(user, groupInfo.id);
         postings.push(p);
     }
 
@@ -273,12 +273,12 @@ async function createUserWithSomePostingsDifferentGroups() {
     const nGroups = 3;
     const postingsByGroup = []
     for (let i = 0; i < nGroups; i++) {
-        const gInfo = await createRandomGroup(user.id, user.token);
+        const gInfo = await createRandomGroup(user);
 
         const postings = [];
         const nPostings = 3;
         for (let i = 0; i < nPostings; i++) {
-            const p = await createRandomPosting(user.id, gInfo.id, user.token);
+            const p = await createRandomPosting(user, gInfo.id);
             postings.push(p);
         }
 
@@ -379,8 +379,8 @@ async function deleteUser(user) {
  */
 async function setupPosting() {
     const user = await createRandomUser();
-    const groupId = await createRandomGroup(user.id, user.token);
-    const posting = await createRandomPosting(user.id, groupId, user.token);
+    const groupId = await createRandomGroup(user);
+    const posting = await createRandomPosting(user, groupId);
 
     return {user: user, groupId: groupId, posting: posting};
 }
@@ -389,20 +389,20 @@ async function setupPosting() {
 /**
  * Deletes from the database the user, group and posting with the specified id.
  * Creator and group ids are passed because a posting is created along with a group and a user.
- * @param creator
- * @param groupId
- * @param postingId
+ * @param creator {User}
+ * @param groupId {string}
+ * @param postingId {string}
  */
 async function tearDownPosting(creator, groupId, postingId) {
-    await tearDownPostings([creator], [groupId], [postingId]);
+    await tearDownPostings(creator, [groupId], [postingId]);
 }
 
 
 /**
  * Deletes from the database the provided postings, groups and users.
  * @param creator {User} user that created the groups and postings
- * @param groupIds
- * @param postingIds
+ * @param groupIds {string[]}
+ * @param postingIds {string[]}
  */
 async function tearDownPostings(creator, groupIds, postingIds) {
     for (const pId of postingIds) {
@@ -413,7 +413,7 @@ async function tearDownPostings(creator, groupIds, postingIds) {
         await deleteGroup(groupId);
     }
 
-    await deleteUser(user)
+    await deleteUser(creator)
 }
 
 
@@ -424,7 +424,7 @@ describe('Get all group postings', function () {
             return await createGroupWithSomePostings();
         };
 
-        const tearDown = async (user, groupId, postings) => {
+        const tearDown = async ({user, groupId, postings}) => {
             const postingIds = [];
             for (const p of postings) {
                 postingIds.push(p.id);
@@ -433,12 +433,11 @@ describe('Get all group postings', function () {
             await tearDownPostings(user, [groupId], postingIds);
         };
 
-        let user, groupId, postings;
+        let setupData
         try {
-            const setupData = await setup();
-            user = setupData.user;
-            groupId = setupData.groupId;
-            postings = setupData.postings
+            setupData = await setup();
+            const {user, groupId, postings} = setupData
+
             const apiHandler = new ApiHandler(user.token);
 
             // Act
@@ -446,11 +445,10 @@ describe('Get all group postings', function () {
 
             // Assert
             assertList(actualPostings, postings);
-
         }
         finally {
             // Teardown
-            await tearDown(user, groupId, postings);
+            await tearDown(setupData);
         }
     });
 
@@ -474,28 +472,33 @@ describe('Get group info', function () {
     it('should return the group info object given a specific group id', async function () {
         const setup = async () => {
             const user = await createRandomUser();
-            const group = await createRandomGroup(user.id);
+            const group = await createRandomGroup(user);
 
             return {user: user, group: group};
         };
 
-        const tearDown = async (userId, groupId) => {
-             await deleteGroup(groupId);
-             await deleteUser(userId);
+        const tearDown = async ({user, groupId}) => {
+            await deleteGroup(groupId);
+            await deleteUser(user);
         };
 
-        const { user, group } = await setup();
-        const apiHandler = new ApiHandler(user.token);
+        let setupData;
+        try {
+            setupData = await setup();
+            const {user, group} = setupData;
+            const apiHandler = new ApiHandler(user.token);
 
-        // Act
-        const actualGroup = await apiHandler.getGroupInfo(group.id);
+            // Act
+            const actualGroup = await apiHandler.getGroupInfo(group.id);
 
-        // Assert
-        expect(group.id === actualGroup.id).toBe(true);
-        expect(group.name === actualGroup.name).toBe(true);
-
-        // Teardown
-        await tearDown(user.id, group.id);
+            // Assert
+            expect(group.id === actualGroup.id).toBe(true);
+            expect(group.name === actualGroup.name).toBe(true);
+        }
+        finally {
+            // Teardown
+            await tearDown(setupData);
+        }
     });
 
     it('should return an empty group info object when given wrong arguments', async function () {
@@ -529,25 +532,30 @@ describe('Get group info of all user groups', function () {
                 return {user: user, groups: groups};
             };
 
-            const tearDown = async (userId, groups) => {
+            const tearDown = async ({user, groups}) => {
                 for (const g of groups) {
                     await deleteGroup(g.id);
                 }
 
-                await deleteUser(userId);
+                await deleteUser(user);
             };
 
-            const { user, groups } = await setup();
-            const apiHandler = new ApiHandler(user.token);
+            let setupData;
+            try {
+                setupData = await setup();
+                const {user, groups} = setupData;
+                const apiHandler = new ApiHandler(user.token);
 
-            // Act
-            const actualGroups = await apiHandler.getUserGroups(user.id);
+                // Act
+                const actualGroups = await apiHandler.getUserGroups(user.id);
 
-            // Assert
-            assertList(actualGroups, groups);
-
-            // Teardown
-            await tearDown(user.id, group.id);
+                // Assert
+                assertList(actualGroups, groups);
+            }
+            finally {
+                // Teardown
+                await tearDown(setupData);
+            }
     });
 
     it('should return an empty array when given wrong arguments', async function () {
@@ -573,21 +581,26 @@ describe('Get single posting', function () {
             return await setupPosting();
         };
 
-        const tearDown = async (userId, groupId, postingId) => {
-            return await tearDownPosting(userId, groupId, postingId);
+        const tearDown = async ({user, groupId, postingId}) => {
+            return await tearDownPosting(user, groupId, postingId);
         };
 
-        const { user, groupId, expectedPosting } = await setup();
-        const apiHandler = new ApiHandler(user.token);
+        let setupData;
+        try {
+            setupData = await setup();
+            const {user, expectedPosting} = setupData;
+            const apiHandler = new ApiHandler(user.token);
 
-        // Act
-        const actualPosting = await apiHandler.getPosting(expectedPosting.id);
+            // Act
+            const actualPosting = await apiHandler.getPosting(expectedPosting.id);
 
-        // Assert
-        strictAssertPosting(actualPosting, expectedPosting);
-
-        // Teardown
-        await tearDown(user.id, groupId, expectedPosting.id);
+            // Assert
+            strictAssertPosting(actualPosting, expectedPosting);
+        }
+        finally {
+            // Teardown
+            await tearDown(setupData);
+        }
     });
 
     it('should return an empty posting when given a wrong id for a specific posting', async function () {
@@ -620,20 +633,25 @@ describe('Create posting', function () {
             await tearDownPosting(userId, groupId, postingId);
         };
 
-        const { user, groupId } = setup();
-        const apiHandler = new ApiHandler(user.token);
-        const creationInfo = getRandomPostingInfo();
+        let setupData;
+        try {
+            setupData = await setup();
+            const {user, groupId} = setupData;
+            const apiHandler = new ApiHandler(user.token);
+            const creationInfo = getRandomPostingInfo();
 
-        // Act
-        const createdPosting = await apiHandler.createPosting(user, groupId, creationInfo);
+            // Act
+            const createdPosting = await apiHandler.createPosting(user, groupId, creationInfo);
 
-        // Assert
-        // Deep equality check
-        expect(createdPosting.group_id === groupId).toBe(true);
-        strictAssertPostingInfo(creationInfo, createdPosting);
-
-        // Teardown
-        await tearDown(user.id, groupId, createdPosting.id);
+            // Assert
+            // Deep equality check
+            expect(createdPosting.group_id === groupId).toBe(true);
+            strictAssertPostingInfo(creationInfo, createdPosting);
+        }
+        finally {
+            // Teardown
+            await tearDown(setupData);
+        }
     });
 
     it('should return and empty posting when invalid information is provided', async function () {
@@ -662,35 +680,39 @@ describe('Edit posting', function () {
             return await setupPosting();
         };
 
-        const tearDown = async (userId, groupId, postingId) => {
-            await tearDownPosting(userId, groupId, postingId);
+        const tearDown = async (user, groupId, postingId) => {
+            await tearDownPosting(user, groupId, postingId);
         };
 
-        const { user, groupId, postingToEdit } = setup();
-        const apiHandler = new ApiHandler(user.token);
+        let setupData;
+        try {
+            setupData = await setup();
+            const {user, postingToEdit} = setupData;
+            const apiHandler = new ApiHandler(user.token);
 
-        const newInfo = new PostingInfo({
-            name: postingToEdit.name + "1",
-            category: postingToEdit.category + "1",
-            description: postingToEdit.description + "1",
-            photo: postingToEdit.photo + "1",
-            type: postingToEdit.type + "1",
-            contact: new Contact({
-                email: postingToEdit.contact.email + "1",
-                place: postingToEdit.contact.place + "1",
-                phoneNumber: postingToEdit.contact.phone_number + "1"
-            })
-        });
+            const newInfo = new PostingInfo({
+                name: postingToEdit.name + "1",
+                category: postingToEdit.category + "1",
+                description: postingToEdit.description + "1",
+                photo: postingToEdit.photo + "1",
+                type: postingToEdit.type + "1",
+                contact: new Contact({
+                    email: postingToEdit.contact.email + "1",
+                    place: postingToEdit.contact.place + "1",
+                    phoneNumber: postingToEdit.contact.phone_number + "1"
+                })
+            });
 
-        // Act
-        const success = await apiHandler.editPosting(postingToEdit.id, newInfo);
+            // Act
+            const success = await apiHandler.editPosting(postingToEdit.id, newInfo);
 
-        // Assert
-        // Id has to be the same but the rest of the info was changed
-        expect(success).toBe(true);
-
-        // Teardown
-        await tearDown(user.id, groupId, postingToEdit.id);
+            // Assert
+            expect(success).toBe(true);
+        }
+        finally {
+            // Teardown
+            await tearDown(setupData);
+        }
     });
 
     it('should return an empty posting when invalid information is provided', async function () {
@@ -720,21 +742,26 @@ describe('Delete posting', function () {
 
         // Need to make sure that the posting is deleted
         // since the api delete method is being tested
-        const tearDown = async (userId, groupId, postingId) => {
-            await tearDownPosting(userId, groupId, postingId);
+        const tearDown = async (user, groupId, postingId) => {
+            await tearDownPosting(user, groupId, postingId);
         };
 
-        const { user, groupId, postingToDelete } = await setup();
-        const apiHandler = new ApiHandler(user.token);
+        let setupData;
+        try {
+            setupData = await setup();
+            const {user, postingToDelete} = setupData;
+            const apiHandler = new ApiHandler(user.token);
 
-        // Act
-        const isDeleted = await apiHandler.deletePosting(postingToDelete.id);
+            // Act
+            const isDeleted = await apiHandler.deletePosting(postingToDelete.id);
 
-        // Assert
-        expect(isDeleted).toBe(true);
-
-        // Teardown
-        await tearDown(user.id, groupId, postingToDelete.id);
+            // Assert
+            expect(isDeleted).toBe(true);
+        }
+        finally {
+            // Teardown
+            await tearDown(setupData);
+        }
     });
 
     it('should return false given a wrong id for a specific posting', async function () {
@@ -759,26 +786,31 @@ describe('Get all user postings of a certain group', function () {
             return await createUserWithSomePostingsSameGroup();
         };
 
-        const tearDown = async (userId, groupId, postings) => {
+        const tearDown = async (user, groupId, postings) => {
             const postingIds = [];
             for (const p of postings) {
                 postingIds.push(p.id);
             }
 
-            await tearDownPostings([userId], [groupId], postingIds);
+            await tearDownPostings(user, [groupId], postingIds);
         };
 
-        const {user, groupId, postings} = await setup();
-        const apiHandler = new ApiHandler(user.token);
+        let setupData;
+        try {
+            setupData = await setup();
+            const {user, groupId, postings} = setupData;
+            const apiHandler = new ApiHandler(user.token);
 
-        // Act
-        const actualGroupPostings = await apiHandler.getUserPostings(user.id, groupId)
+            // Act
+            const actualGroupPostings = await apiHandler.getUserPostings(user.id, groupId)
 
-        // Assert
-        assertList(actualGroupPostings, postings);
-
-        // Teardown
-        await tearDown(user.id, groupId, postings);
+            // Assert
+            assertList(actualGroupPostings, postings);
+        }
+        finally {
+            // Teardown
+            await tearDown(setupData);
+        }
     });
 
     it('should return an empty array when given a wrong id for a specific user', async function () {
@@ -805,27 +837,31 @@ describe('Get user favourite postings', function () {
             return await createUserWithSomeFavourites();
         };
 
-        const tearDown = async (userId, groupIds, postings) => {
+        const tearDown = async (user, groupIds, postings) => {
             const postingIds = [];
             for (const p of postings) {
                 postingIds.push(p.id);
             }
 
-            await tearDownPostings([userId], groupIds, postingIds);
+            await tearDownPostings(user, groupIds, postingIds);
         };
 
-        const {user, groupIds, favouritePostings} = await setup();
-        const apiHandler = new ApiHandler(user.token);
+        let setupData;
+        try {
+            setupData = await setup();
+            const {user, favouritePostings} = setupData;
+            const apiHandler = new ApiHandler(user.token);
 
-        // Act
-        const actualPostings = await apiHandler.getUserFavouritePostings(user.id);
+            // Act
+            const actualPostings = await apiHandler.getUserFavouritePostings(user.id);
 
-        // Assert
-        assertList(actualPostings, favouritePostings);
-
-        // Teardown
-        await tearDown(user.id, groupIds, favouritePostings);
-
+            // Assert
+            assertList(actualPostings, favouritePostings);
+        }
+        finally {
+            // Teardown
+            await tearDown(setupData);
+        }
     });
 
     it('should return an empty array when given a wrong id for a specific user', async function () {
@@ -852,46 +888,51 @@ describe('Edit user favourite postings', function () {
             return await createUserWithSomeFavourites();
         };
 
-        const tearDown = async (userId, groupIds, postings) => {
+        const tearDown = async (user, groupIds, postings) => {
             const postingIds = [];
             postings.forEach(p => postingIds.push(p.id));
 
-            await tearDownPostings([userId], groupIds, postingIds);
+            await tearDownPostings(user, groupIds, postingIds);
         };
 
-        const {user, groupIds, favouritePostings} = await setup();
-        const apiHandler = new ApiHandler(user.token);
+        let setupData;
+        try {
+            setupData = await setup();
+            const {user, favouritePostings} = setupData;
+            const apiHandler = new ApiHandler(user.token);
 
-        // Take only postings on odd indexes to make a different id list
-        const newFavouritesIds = [];
-        let isOdd = true;
-        for (const fav of favouritePostings) {
-            if (isOdd) {
-                newFavouritesIds.push(fav.id);
+            // Take only postings on odd indexes to make a different id list
+            const newFavouritesIds = [];
+            let isOdd = true;
+            for (const fav of favouritePostings) {
+                if (isOdd) {
+                    newFavouritesIds.push(fav.id);
 
-                isOdd = false;
+                    isOdd = false;
+                }
+
+                if (!isOdd) {
+                    isOdd = true;
+                }
             }
 
-            if (!isOdd) {
-                isOdd = true;
-            }
+            // Act
+            const success = await apiHandler.editUserFavourites(user.id, newFavouritesIds);
+            const actualFavourites = await apiHandler.getUserFavouritePostings(user.id)
+
+            // Assert
+            // First check that the edit was successful
+            expect(success).toBe(true);
+
+            // Then check that the actual fetched postings ids correspond to the edited ids
+            const actualIds = [];
+            actualFavourites.forEach(fav => actualIds.push(fav.id));
+            assertList(newFavouritesIds, actualIds);
         }
-
-        // Act
-        const success = await apiHandler.editUserFavourites(user.id, newFavouritesIds);
-        const actualFavourites = await apiHandler.getUserFavouritePostings(user.id)
-
-        // Assert
-        // First check that the edit was successful
-        expect(success).toBe(true);
-
-        // Then check that the actual fetched postings ids correspond to the edited ids
-        const actualIds = [];
-        actualFavourites.forEach(fav => actualIds.push(fav.id));
-        assertList(newFavouritesIds, actualIds);
-
-        // Teardown
-        await tearDown(user.id, groupIds, favouritePostings);
+        finally {
+            // Teardown
+            await tearDown(setupData);
+        }
     });
 
     it('should return false given a wrong id for a specific user', async function () {
@@ -917,29 +958,34 @@ describe("Check if a single posting belongs to a user's favourites list", functi
             return await createUserWithSomeFavourites();
         };
 
-        const tearDown = async (userId, groupIds, postings) => {
+        const tearDown = async (user, groupIds, postings) => {
             const postingIds = [];
             for (const p of postings) {
                 postingIds.push(p.id);
             }
 
-            await tearDownPostings([userId], groupIds, postingIds);
+            await tearDownPostings(user, groupIds, postingIds);
         };
 
-        const {user, groupIds, favouritePostings} = await setup();
-        const apiHandler = new ApiHandler(user.token);
+        let setupData;
+        try {
+            setupData = await setup();
+            const {user, favouritePostings} = setupData;
+            const apiHandler = new ApiHandler(user.token);
 
-        // this is already a favourite, so the tested method should return true
-        const toCheck = favouritePostings[0];
+            // this is already a favourite, so the tested method should return true
+            const toCheck = favouritePostings[0];
 
-        // Act
-        const isFavourite = await apiHandler.isUserFavourite(user.id, toCheck.id);
+            // Act
+            const isFavourite = await apiHandler.isUserFavourite(user.id, toCheck.id);
 
-        // Assert
-        expect(isFavourite).toBe(true);
-
-        // Teardown
-        await tearDown(user.id, groupIds, favouritePostings);
+            // Assert
+            expect(isFavourite).toBe(true);
+        }
+        finally {
+            // Teardown
+            await tearDown(setupData);
+        }
     });
 
     it('should return false if a posting is not a user favourite', async function () {
@@ -948,27 +994,32 @@ describe("Check if a single posting belongs to a user's favourites list", functi
             return await createUserWithSomeFavourites();
         };
 
-        const tearDown = async (userId, groupIds, postings) => {
+        const tearDown = async (user, groupIds, postings) => {
             const postingIds = [];
             for (const p of postings) {
                 postingIds.push(p.id);
             }
 
-            await tearDownPostings([userId], groupIds, postingIds);
+            await tearDownPostings(user, groupIds, postingIds);
         };
 
-        const {user, groupIds, favouritePostings} = await setup();
-        const apiHandler = new ApiHandler(user.token);
+        let setupData;
+        try {
+            setupData = await setup();
+            const {user} = setupData;
+            const apiHandler = new ApiHandler(user.token);
 
-        // Act
-        const wrongId = "-1";
-        const isFavourite = await apiHandler.isUserFavourite(user.id, wrongId);
+            // Act
+            const wrongId = "-1";
+            const isFavourite = await apiHandler.isUserFavourite(user.id, wrongId);
 
-        // Assert
-        expect(isFavourite).toBe(false);
-
-        // Teardown
-        await tearDown(user.id, groupIds, favouritePostings);
+            // Assert
+            expect(isFavourite).toBe(false);
+        }
+        finally {
+            // Teardown
+            await tearDown(setupData);
+        }
     });
 });
 
@@ -980,27 +1031,32 @@ describe("Add a single posting to a user's favourites list", function () {
             return await createUserWithSomeFavourites();
         };
 
-        const tearDown = async (userId, groupIds, postings) => {
+        const tearDown = async (user, groupIds, postings) => {
             const postingIds = [];
             for (const p of postings) {
                 postingIds.push(p.id);
             }
 
-            await tearDownPostings([userId], groupIds, postingIds);
+            await tearDownPostings(user, groupIds, postingIds);
         };
 
-        const {user, groupIds, favouritePostings} = await setup();
-        const apiHandler = new ApiHandler(user.token);
-        const toAdd = await createRandomPosting(user.id, groupIds[0]);
+        let setupData;
+        try {
+            setupData = await setup();
+            const {user, groupIds} = setupData;
+            const apiHandler = new ApiHandler(user.token);
+            const toAdd = await createRandomPosting(user.id, groupIds[0]);
 
-        // Act
-        const success = apiHandler.addUserFavourite(user.id, toAdd.id);
+            // Act
+            const success = apiHandler.addUserFavourite(user.id, toAdd.id);
 
-        // Assert
-        expect(success).toBe(true);
-
-        // Teardown
-        await tearDown(user.id, groupIds, favouritePostings);
+            // Assert
+            expect(success).toBe(true);
+        }
+        finally {
+            // Teardown
+            await tearDown(setupData);
+        }
     });
 
     it('should return false if the posting to be added is already a favourite', async function () {
@@ -1009,27 +1065,32 @@ describe("Add a single posting to a user's favourites list", function () {
             return await createUserWithSomeFavourites();
         };
 
-        const tearDown = async (userId, groupIds, postings) => {
+        const tearDown = async (user, groupIds, postings) => {
             const postingIds = [];
             for (const p of postings) {
                 postingIds.push(p.id);
             }
 
-            await tearDownPostings([userId], groupIds, postingIds);
+            await tearDownPostings(user, groupIds, postingIds);
         };
 
-        const {user, groupIds, favouritePostings} = await setup();
-        const apiHandler = new ApiHandler(user.token);
-        const alreadyAdded = favouritePostings[0]
+        let setupData;
+        try {
+            setupData = await setup();
+            const {user, favouritePostings} = setupData;
+            const apiHandler = new ApiHandler(user.token);
+            const alreadyAdded = favouritePostings[0]
 
-        // Act
-        const success = apiHandler.addUserFavourite(user.id, alreadyAdded.id);
+            // Act
+            const success = apiHandler.addUserFavourite(user.id, alreadyAdded.id);
 
-        // Assert
-        expect(success).toBe(false);
-
-        // Teardown
-        await tearDown(user.id, groupIds, favouritePostings);
+            // Assert
+            expect(success).toBe(false);
+        }
+        finally {
+            // Teardown
+            await tearDown(setupData);
+        }
     });
 });
 
@@ -1041,27 +1102,32 @@ describe("Remove a single posting from a user's favourites list", function () {
             return await createUserWithSomeFavourites();
         };
 
-        const tearDown = async (userId, groupIds, postings) => {
+        const tearDown = async (user, groupIds, postings) => {
             const postingIds = [];
             for (const p of postings) {
                 postingIds.push(p.id);
             }
 
-            await tearDownPostings([userId], groupIds, postingIds);
+            await tearDownPostings(user, groupIds, postingIds);
         };
 
-        const {user, groupIds, favouritePostings} = await setup();
-        const apiHandler = new ApiHandler(user.token);
-        const toRemove = await createRandomPosting(user.id, groupIds[0]);
+        let setupData;
+        try {
+            setupData = await setup();
+            const {user, favouritePostings} = await setup();
+            const apiHandler = new ApiHandler(user.token);
+            const toRemove = favouritePostings[0];
 
-        // Act
-        const success = apiHandler.removeUserFavourite(user.id, toRemove.id);
+            // Act
+            const success = apiHandler.removeUserFavourite(user.id, toRemove.id);
 
-        // Assert
-        expect(success).toBe(true);
-
-        // Teardown
-        await tearDown(user.id, groupIds, favouritePostings);
+            // Assert
+            expect(success).toBe(true);
+        }
+        finally {
+            // Teardown
+            await tearDown(setupData);
+        }
     });
 
     it('should return false if the posting to be removed is not a favourite', async function () {
@@ -1070,26 +1136,31 @@ describe("Remove a single posting from a user's favourites list", function () {
             return await createUserWithSomeFavourites();
         };
 
-        const tearDown = async (userId, groupIds, postings) => {
+        const tearDown = async (user, groupIds, postings) => {
             const postingIds = [];
             for (const p of postings) {
                 postingIds.push(p.id);
             }
 
-            await tearDownPostings([userId], groupIds, postingIds);
+            await tearDownPostings(user, groupIds, postingIds);
         };
 
-        const {user, groupIds, favouritePostings} = await setup();
-        const apiHandler = new ApiHandler(user.token);
-        const wrongIdToRemove = "-1";
+        let setupData;
+        try {
+            setupData = await setup();
+            const {user} = setupData;
+            const apiHandler = new ApiHandler(user.token);
+            const wrongIdToRemove = "-1";
 
-        // Act
-        const success = apiHandler.removeUserFavourite(user.id, wrongIdToRemove);
+            // Act
+            const success = apiHandler.removeUserFavourite(user.id, wrongIdToRemove);
 
-        // Assert
-        expect(success).toBe(false);
-
-        // Teardown
-        await tearDown(user.id, groupIds, favouritePostings);
+            // Assert
+            expect(success).toBe(false);
+        }
+        finally {
+            // Teardown
+            await tearDown(setupData);
+        }
     });
 });

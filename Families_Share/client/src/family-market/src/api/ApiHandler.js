@@ -1,7 +1,8 @@
+import Log from "../../../components/Log";
+
 const Posting = require("./model/Posting")
 const PostingInfo = require("./model/PostingInfo")
 const GroupInfo = require("./model/GroupInfo")
-const Log = require("../../../components/Log");
 const axios = require("axios");
 
 /** TODO capire come va gestito il "data:image/<format>;base64,".
