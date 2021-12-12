@@ -4,8 +4,14 @@ const PostingInfo = require("../src/api/model/PostingInfo");
 const Contact = require("../src/api/model/Contact");
 const GroupInfo = require("../src/api/model/GroupInfo");
 const axios = require("axios");
+axios.defaults.adapter = require('axios/lib/adapters/http');
 
-const POSTINGS_BASE_URL = ApiHandler.POSTINGS_BASE_URL;
+const BASE_URL = "http://localhost:4000";
+const POSTINGS_BASE_URL = BASE_URL + ApiHandler.POSTINGS_BASE_URL;
+const MIN_PWD_LENGTH = 8;
+
+// TODO wrappare test in try catch perché senno se crashano è pacco
+// TODO 2 aggiungere token a tutti i metodi perché per ora dà errore che richieste sono unauthorized
 
 
 class PostingsWithGroupInfo {
@@ -43,7 +49,7 @@ function getRandomString() {
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toString
     const randomBase = randInt(2, 36);
     const randStr = (Math.random() + 1).toString(randomBase);
-    const randLength = randInt(1, randStr.length);
+    const randLength = randInt(MIN_PWD_LENGTH, randStr.length);
 
     return randStr.substring(0, randLength);
 }
@@ -135,14 +141,14 @@ async function createRandomUser() {
         given_name: getRandomString(),
         family_name: getRandomString(),
         number: '0123546879',
-        email: 'test@email.com',
+        email: `test${getRandomString()}@email.com`,
         password: getRandomString(),
         visible: true,
         language: 'en'
     };
 
     // in test.js: await chai.request(server).post('/api/users').send(user2)
-    const routeUrl = "/api/users";
+    const routeUrl = BASE_URL + "/api/users";
     const response = await axios.post(routeUrl, user)
         .then(response => {
             console.log(`Successfully created user [${response.data.id}]`);
@@ -180,7 +186,7 @@ async function createRandomGroup(ownerId) {
 
     // in test.js:
     // await chai.request(server).post('/api/groups').send(group2).set('Authorization', user.token)
-    const routeUrl = "/api/groups";
+    const routeUrl = BASE_URL + "/api/groups";
     const response = await axios.post(routeUrl, group)
         .then(response => {
             console.log(`Successfully created group [${response.data.group_id}]`);
@@ -214,7 +220,8 @@ async function createRandomPosting(creatorId, groupId) {
         ...rndInfo
     };
 
-    const routeUrl = `${POSTINGS_BASE_URL}/`;
+    // TODO check this route
+    const routeUrl = `${POSTINGS_BASE_URL}`;
     const response = await axios.post(routeUrl, creationData)
         .then(response => {
             console.log(`Successfully created posting [${response.data.id}]`);
@@ -308,7 +315,7 @@ async function createUserWithSomeFavourites() {
 
 async function deleteGroup(groupId) {
     await axios
-        .delete(`/api/groups/${groupId}`)
+        .delete(`/api/groups/${groupId}`, {headers: {"Authorizaion: "}})
         .then(response => {
             console.log(`Successfully deleted group [${groupId}]`);
             console.log(response)

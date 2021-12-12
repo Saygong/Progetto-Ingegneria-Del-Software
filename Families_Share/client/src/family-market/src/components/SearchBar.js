@@ -28,8 +28,8 @@ class SearchBar extends React.Component {
             <div className="row no-gutters">
                 <img src={searchBarIconPath} alt={txt.altImageText} className="col-2-10"/>
                 <div className="col-8-10">
+                    {/*Description is empty in the searchbar*/}
                     <SimpleTextInput text={this.props.text}
-                                     {/*Description is empty in the searchbar*/}
                                      description={""}
                                      textChangeHandler={this.handleTextChange}
                                      placeholder={txt.placeholder}/>

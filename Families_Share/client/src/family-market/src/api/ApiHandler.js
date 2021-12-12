@@ -1,8 +1,7 @@
-import Log from "../../../components/Log";
-
 const Posting = require("./model/Posting")
 const PostingInfo = require("./model/PostingInfo")
 const GroupInfo = require("./model/GroupInfo")
+const Log = require("../../../components/Log");
 const axios = require("axios");
 
 /** TODO capire come va gestito il "data:image/<format>;base64,".
@@ -56,7 +55,7 @@ class ApiHandler {
     }
 
     static get FM_API_BASE_URL() {
-        return "/api/family-market";
+        return "http://localhost:4000/api/family-market";
     }
 
     static get POSTINGS_BASE_URL() {
