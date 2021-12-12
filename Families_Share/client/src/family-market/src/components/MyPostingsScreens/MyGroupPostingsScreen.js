@@ -1,17 +1,13 @@
 import withLanguage from "../../../../components/LanguageContext";
 
 const PropTypes = require("prop-types");
-
-const Posting = require("../../api/model/Posting");
-const GroupInfo = require("../../api/model/GroupInfo");
-
+const ApiHandler = require("../../api/ApiHandler");
 const {FAMILY_MARKET_BASE_PAGE_URL} = require( "../../constants");
-
 const React = require("react");
 const Log = require("../../../../components/Log");
 const PlainNavBar = require("../PlainNavBar");
 const PostingsList = require("../PostingsList/PostingsList");
-
+const texts = require("../../texts");
 
 /**
  * Class that represents the screen where all of a group's postings are displayed.
@@ -29,28 +25,46 @@ class MyGroupPostingsScreen extends React.Component {
      */
     state;
 
+    /**
+     * @type {ApiHandler}
+     */
+    apiHandler;
+
     constructor(props) {
         super(props);
-
+        this.apiHandler = new ApiHandler();
         this.matchParams = this.props.match.params;
         this.state = {
+            group_name: "",
             postings: []
         };
     }
 
     render() {
+        const txt = texts[language].myGroupsPostingsScreen;
+
         return (
             <div>
-                <PlainNavBar title={""} goBackUrl={""} language={""}/>
-                <PostingsList title={""} language={""} postings={""} filterCategory={""} filterText={""}
-                              filterTnType={""} itemMode={""}/>
+                <div>
+                    <PlainNavBar title={txt.prefix + this.state.group_name} goBackUrl={""}/>
+                </div>
+                <div>
+                    <PostingsList title={""} postings={this.state.postings} />
+                </div>
             </div>
         );
-        // TODO postings si prendono da state
+
     }
 
     async componentDidMount() {
-        // get postings
+
+        const currentGroupPostings = await this.fetchPostings();
+        const group_info = await this.apiHandler.getGroupInfo(this.matchParams.groupId);
+
+        this.setState({
+            group_name: group_info.name,
+            postings: currentGroupPostings
+        });
     }
 
     /**
@@ -60,7 +74,6 @@ class MyGroupPostingsScreen extends React.Component {
     async fetchPostings() {
         const userId = this.matchParams.userId;
         const groupId = this.matchParams.groupId;
-
         return this.apiHandler.getUserPostings(userId, groupId);
     }
 
