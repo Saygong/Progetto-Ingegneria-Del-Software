@@ -27,7 +27,6 @@ class PostingInfoHeader extends React.Component {
                 <h1>{posting.type}</h1>
             </div>
         );
-        // TODO
     }
 }
 
