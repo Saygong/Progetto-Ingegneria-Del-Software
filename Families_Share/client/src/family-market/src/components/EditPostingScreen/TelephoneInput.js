@@ -24,8 +24,7 @@ class TelephoneInput extends React.Component {
 
         return (
             <div className="row no-gutters">
-                {/*TODO add telephone image*/}
-                <img src={phoneIconPath} alt={txt.altImageText} className="col-2-10"/>
+                <i className="fas fa-phone-alt" />
                 <div className="col-8-10">
                     <SimpleTextInput text={this.props.text} description={txt.description}
                                      textChangeHandler={this.handleTextChange}
