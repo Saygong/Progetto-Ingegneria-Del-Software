@@ -169,17 +169,18 @@ async function createRandomUser() {
 
 /**
  *
- * @param ownerId {string}
+ * @param creatorId {string}
+ * @param creatorToken {string} auth token of the user that created the group
  * @return {Promise<GroupInfo>}
  */
-async function createRandomGroup(ownerId) {
+async function createRandomGroup(creatorId, creatorToken) {
     const group = {
         invite_ids: [],
         description: getRandomString(),
         location: getRandomString(),
         name: getRandomString(),
         visible: true,
-        owner_id: ownerId,
+        owner_id: creatorId,
         contact_type: "email",
         contact_info: getRandomString()
     };
@@ -187,7 +188,8 @@ async function createRandomGroup(ownerId) {
     // in test.js:
     // await chai.request(server).post('/api/groups').send(group2).set('Authorization', user.token)
     const routeUrl = BASE_URL + "/api/groups";
-    const response = await axios.post(routeUrl, group)
+    const response = await axios.post(routeUrl, group,
+        {headers: {"Authorization": creatorToken}})
         .then(response => {
             console.log(`Successfully created group [${response.data.group_id}]`);
             console.log(response)
@@ -210,9 +212,10 @@ async function createRandomGroup(ownerId) {
  *
  * @param creatorId
  * @param groupId
+ * @param creatorToken {string} auth token of the user that created the group
  * @return {Promise<Posting>}
  */
-async function createRandomPosting(creatorId, groupId) {
+async function createRandomPosting(creatorId, groupId, creatorToken) {
     const rndInfo = getRandomPostingInfo();
     const creationData = {
         user_id: creatorId,
@@ -222,7 +225,8 @@ async function createRandomPosting(creatorId, groupId) {
 
     // TODO check this route
     const routeUrl = `${POSTINGS_BASE_URL}`;
-    const response = await axios.post(routeUrl, creationData)
+    const response = await axios.post(routeUrl, creationData,
+        {headers: {"Authorization": creatorToken}})
         .then(response => {
             console.log(`Successfully created posting [${response.data.id}]`);
             console.log(response)
@@ -244,12 +248,12 @@ async function createRandomPosting(creatorId, groupId) {
  */
 async function createUserWithSomePostingsSameGroup() {
     const user = await createRandomUser();
-    const groupInfo = await createRandomGroup(user.id);
+    const groupInfo = await createRandomGroup(user.id, user.token);
 
     const postings = [];
     const nPostings = 5;
     for (let i = 0; i < nPostings; i++) {
-        const p = await createRandomPosting(user.id, groupInfo.id);
+        const p = await createRandomPosting(user.id, groupInfo.id, user.token);
         postings.push(p);
     }
 
@@ -269,12 +273,12 @@ async function createUserWithSomePostingsDifferentGroups() {
     const nGroups = 3;
     const postingsByGroup = []
     for (let i = 0; i < nGroups; i++) {
-        const gInfo = await createRandomGroup(user.id);
+        const gInfo = await createRandomGroup(user.id, user.token);
 
         const postings = [];
         const nPostings = 3;
         for (let i = 0; i < nPostings; i++) {
-            const p = await createRandomPosting(user.id, gInfo.id);
+            const p = await createRandomPosting(user.id, gInfo.id, user.token);
             postings.push(p);
         }
 
@@ -313,9 +317,10 @@ async function createUserWithSomeFavourites() {
 }
 
 
-async function deleteGroup(groupId) {
+async function deleteGroup(groupId, creatorToken) {
     await axios
-        .delete(`/api/groups/${groupId}`, {headers: {"Authorizaion: "}})
+        .delete(`/api/groups/${groupId}`,
+            {headers: {"Authorization": creatorToken}})
         .then(response => {
             console.log(`Successfully deleted group [${groupId}]`);
             console.log(response)
@@ -327,29 +332,36 @@ async function deleteGroup(groupId) {
 }
 
 
-async function deleteUser(userId) {
+async function deletePosting(postingId, creatorToken) {
     await axios
-        .delete(`/api/users/${userId}`)
-        .then(response => {
-            console.log(`Successfully deleted user [${userId}]`);
-            console.log(response)
-        })
-        .catch(error => {
-            console.log(`Error while deleting user [${userId}]`)
-            console.log(error);
-        });
-}
-
-
-async function deletePosting(postingId) {
-    await axios
-        .delete(`${POSTINGS_BASE_URL}/${postingId}`)
+        .delete(`${POSTINGS_BASE_URL}/${postingId}`,
+            {headers: {"Authorization": creatorToken}})
         .then(response => {
             console.log(`Successfully deleted posting [${postingId}]`);
             console.log(response)
         })
         .catch(error => {
             console.log(`Error while deleting posting [${postingId}]`)
+            console.log(error);
+        });
+}
+
+
+/**
+ *
+ * @param user {User}
+ * @return {Promise<void>}
+ */
+async function deleteUser(user) {
+    await axios
+        .delete(`/api/users/${user.id}`,
+            {headers: {"Authorization": user.token}})
+        .then(response => {
+            console.log(`Successfully deleted user [${user.id}]`);
+            console.log(response)
+        })
+        .catch(error => {
+            console.log(`Error while deleting user [${user.id}]`)
             console.log(error);
         });
 }
@@ -367,8 +379,8 @@ async function deletePosting(postingId) {
  */
 async function setupPosting() {
     const user = await createRandomUser();
-    const groupId = await createRandomGroup(user.id);
-    const posting = await createRandomPosting(user.id, groupId);
+    const groupId = await createRandomGroup(user.id, user.token);
+    const posting = await createRandomPosting(user.id, groupId, user.token);
 
     return {user: user, groupId: groupId, posting: posting};
 }
@@ -377,22 +389,22 @@ async function setupPosting() {
 /**
  * Deletes from the database the user, group and posting with the specified id.
  * Creator and group ids are passed because a posting is created along with a group and a user.
- * @param creatorId
+ * @param creator
  * @param groupId
  * @param postingId
  */
-async function tearDownPosting(creatorId, groupId, postingId) {
-    await tearDownPostings([creatorId], [groupId], [postingId]);
+async function tearDownPosting(creator, groupId, postingId) {
+    await tearDownPostings([creator], [groupId], [postingId]);
 }
 
 
 /**
  * Deletes from the database the provided postings, groups and users.
- * @param creatorIds
+ * @param creator {User} user that created the groups and postings
  * @param groupIds
  * @param postingIds
  */
-async function tearDownPostings(creatorIds, groupIds, postingIds) {
+async function tearDownPostings(creator, groupIds, postingIds) {
     for (const pId of postingIds) {
         await deletePosting(pId);
     }
@@ -401,9 +413,7 @@ async function tearDownPostings(creatorIds, groupIds, postingIds) {
         await deleteGroup(groupId);
     }
 
-    for (const userId of creatorIds) {
-        await deleteUser(userId);
-    }
+    await deleteUser(user)
 }
 
 
@@ -414,26 +424,34 @@ describe('Get all group postings', function () {
             return await createGroupWithSomePostings();
         };
 
-        const tearDown = async (userId, groupId, postings) => {
+        const tearDown = async (user, groupId, postings) => {
             const postingIds = [];
             for (const p of postings) {
                 postingIds.push(p.id);
             }
 
-            await tearDownPostings([userId], [groupId], postingIds);
+            await tearDownPostings(user, [groupId], postingIds);
         };
 
-        const { user, groupId, postings } = await setup();
-        const apiHandler = new ApiHandler(user.token);
+        let user, groupId, postings;
+        try {
+            const setupData = await setup();
+            user = setupData.user;
+            groupId = setupData.groupId;
+            postings = setupData.postings
+            const apiHandler = new ApiHandler(user.token);
 
-        // Act
-        const actualPostings = await apiHandler.getGroupPostings(groupId);
+            // Act
+            const actualPostings = await apiHandler.getGroupPostings(groupId);
 
-        // Assert
-        assertList(actualPostings, postings);
+            // Assert
+            assertList(actualPostings, postings);
 
-        // Teardown
-        await tearDown(user.id, groupId, postings);
+        }
+        finally {
+            // Teardown
+            await tearDown(user, groupId, postings);
+        }
     });
 
     it('should return empty array when given a wrong id for a specific group', async function () {
