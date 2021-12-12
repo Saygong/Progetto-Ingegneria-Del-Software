@@ -90,6 +90,14 @@ const en = {
         }
     },
 
+    marketplaceScreen: {
+        navBar: {
+            title: "Family Market"
+        },
+        postingList: "Newest Post",
+        placeholder: "What are you looking for?"
+    },
+
     favouritesScreen: {
         navBar: {
             title: "Saved posts"

@@ -6,9 +6,6 @@ const PropTypes = require("prop-types");
 const Log = require("../../../../components/Log");
 const {withRouter} = require("react-router-dom");
 
-
-
-
 /**
  * Class that represents a button used to go to
  * the profile section of the current user.

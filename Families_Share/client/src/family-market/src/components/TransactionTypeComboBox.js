@@ -1,14 +1,11 @@
 import withLanguage from "../../../components/LanguageContext";
 
 const VALID_TN_TYPES = require("../constants").TN_TYPES;
-
 const React = require("react");
 const PropTypes = require("prop-types");
 const Log = require("../../../components/Log");
 const ComboBox = require("react-responsive-combo-box");
-
 const texts = require("../texts");
-
 
 class TransactionTypeComboBox extends React.Component {
 
