@@ -93,7 +93,8 @@ const en = {
     favouritesScreen: {
         navBar: {
             title: "Saved posts"
-        }
+        },
+        noPostingsText: "There's no favourites posts"
     },
 
     myPostingsButton: {
@@ -105,6 +106,11 @@ const en = {
         title: "Saved posts",
         description: "Post you liked"
     },
+
+    postingInfo: {
+        altImageText: "posting image placeholder"
+    }
+
 }
 
 
