@@ -43,8 +43,6 @@ class MyGroupsScreen extends React.Component {
         this.state = {
             groups: []
         };
-
-        this.handleNavigation = this.handleNavigation.bind(this);
     }
 
     render() {

@@ -47,7 +47,8 @@ class ApiHandler {
             axios.defaults.headers.common["Authorization"] = authToken;
         }
 
-        this.log = log;
+        // TODO fix momentaneo
+        this.log = console;
 
         this.getGroupPostings = this.getGroupPostings.bind(this);
         this.getPosting = this.getPosting.bind(this);
@@ -57,6 +58,8 @@ class ApiHandler {
         this.getUserPostings = this.getUserPostings.bind(this);
         this.getUserFavouritePostings = this.getUserFavouritePostings.bind(this);
         this.editUserFavourites = this.editUserFavourites.bind(this);
+        this.logResponse = this.logResponse.bind(this);
+        this.logErrorResponse = this.logErrorResponse.bind(this);
         this.logResponseInternal = this.logResponseInternal.bind(this);
     }
 
@@ -486,7 +489,7 @@ class ApiHandler {
             return;
         }
 
-        this.logResponseInternal("Response data: ", response, this.log.info);
+        this.logResponseInternal("Response data: ", response, this.log.log);
     }
 
     /**
@@ -500,7 +503,7 @@ class ApiHandler {
             return;
         }
 
-        this.logResponseInternal("Error response data:", errResponse, this.log.error);
+        this.logResponseInternal("Error response data:", errResponse, this.log.log);
     }
 
     /**
