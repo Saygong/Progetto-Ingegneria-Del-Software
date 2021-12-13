@@ -12,18 +12,22 @@ import { LanguageProvider } from "./components/LanguageContext";
 import PrivateRoute from "./components/PrivateRoute";
 
 // Paths for Family Market routes
-const {MarketplaceScreen, MarketplaceScreenRoute} =
-    require("./family-market/src/components/MarketplaceScreen/MarketplaceScreen")
-const {PostingScreen, PostingScreenRoute} =
-    require("./family-market/src/components/PostingScreen/PostingScreen");
-const {EditPostingScreen, EditModeRoute, CreateModeRoute} =
-    require("./family-market/src/components/EditPostingScreen/EditPostingScreen");
-const {MyFavouritesScreen, MyFavouritesScreenRoute} =
-    require("./family-market/src/components/MyFavouritesScreen/MyFavouritesScreen");
-const {MyGroupsWithPostingsScreen, MyGroupsWithPostingsScreenRoute} =
-    require("./family-market/src/components/MyPostingsScreens/MyGroupsWithPostingsScreen");
-const {MyGroupPostingsScreen, MyGroupPostingsScreenRoute} =
-    require("./family-market/src/components/MyPostingsScreens/MyGroupPostingsScreen");
+import MarketplaceScreen from "./family-market/src/components/MarketplaceScreen/MarketplaceScreen";
+import {MarketplaceScreenRoute} from "./family-market/src/components/MarketplaceScreen/MarketplaceScreen";
+import PostingScreen from "./family-market/src/components/PostingScreen/PostingScreen";
+import {PostingScreenRoute} from "./family-market/src/components/PostingScreen/PostingScreen";
+
+import EditPostingScreen from "./family-market/src/components/EditPostingScreen/EditPostingScreen";
+import {EditModeRoute, CreateModeRoute} from "./family-market/src/components/EditPostingScreen/EditPostingScreen";
+
+import MyFavouritesScreen from "./family-market/src/components/MyFavouritesScreen/MyFavouritesScreen";
+import {MyFavouritesScreenRoute} from "./family-market/src/components/MyFavouritesScreen/MyFavouritesScreen";
+
+import MyGroupsWithPostingsScreen from "./family-market/src/components/MyPostingsScreens/MyGroupsWithPostingsScreen";
+import {MyGroupsWithPostingsScreenRoute} from "./family-market/src/components/MyPostingsScreens/MyGroupsWithPostingsScreen";
+
+import MyGroupPostingsScreen from "./family-market/src/components/MyPostingsScreens/MyGroupPostingsScreen";
+import {MyGroupPostingsScreenRoute} from "./family-market/src/components/MyPostingsScreens/MyGroupPostingsScreen";
 
 // Family Market components (screens)
 const LoadableMarketplaceScreen = Loadable({
