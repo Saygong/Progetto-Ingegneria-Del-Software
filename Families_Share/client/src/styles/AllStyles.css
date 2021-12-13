@@ -3363,21 +3363,20 @@ a:active {
 }
 
 .familyMtabs{
-  width:70%;
   text-align:center;
-  margin: 15vh auto 0;
+  margin: 0 auto;
   left:0;
   right:0;
 }
 
 .familyMtab-buttons{
-  margin-bottom:50px;
+  margin-bottom:30px;
 }
 
 .familyMbutton{
   left:0;
   right:0;
-  margin: 0 10px;
+  margin: 0 auto;
   font-size:20px;
   background:transparent;
   border:none;
@@ -3389,7 +3388,9 @@ a:active {
 }
 
 .familyMactive{
-  background-color: #31734a;
+  background-color: #00838F;
+  border:none;
+  outline:none;
   color: white;
   font-size:20px;
 }
@@ -3399,7 +3400,24 @@ a:active {
   color:white;
 }
 
+.infoHeaderTop{
+  text-align: center;
+  margin: 5px 0px 5px 0px;
+  color: #5b5b5b;
+}
+
+.infoHeaderMid{
+  text-align: center;
+  margin: 5px 0px 5px 0px;
+}
+
+.infoHeaderBot{
+  text-align: center;
+  margin: 10px 0px 5px 0px;
+  color: red;
+}
+
 .memes{
-  width: 100%;
+  width: 70%;
   height: auto;
 }
