@@ -34,9 +34,6 @@ router.get('/:groupId/postings', async (req, res) => {
       .lean()
       .exec()
       .then(postings => {
-        if (postings.length === 0) {
-          res.status(404).send('Group has no postings')
-        }
         res.json(postings)
       })
   } catch (error) {

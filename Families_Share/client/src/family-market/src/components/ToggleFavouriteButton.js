@@ -17,6 +17,7 @@ import Log from "../../../components/Log";
 class ToggleFavouriteButton extends React.Component {
 
     /**
+     * Used to communicate with the server api.
      * @type {ApiHandler}
      */
     apiHandler;

@@ -25,6 +25,7 @@ class MyFavouritesScreen extends React.Component {
     matchParams;
 
     /**
+     * Used to communicate with the server api.
      * @type {ApiHandler}
      */
     apiHandler;

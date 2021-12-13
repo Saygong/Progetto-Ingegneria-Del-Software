@@ -1,14 +1,13 @@
 import withLanguage from "../../../../components/LanguageContext";
-import PostingNavBar from "./PostingNavBar";
 import texts from "../../texts";
 
 import Posting from "../../api/model/Posting";
 
 import React from "react";
 import PropTypes from "prop-types";
-import Log from "../../../../components/Log";
 import PostingInfoHeader from "./PostingInfoHeader";
 import PostingInfoTabs from "./PostingInfoTabs";
+import Log from "../../../../components/Log";
 
 
 /**
@@ -22,9 +21,10 @@ class PostingInfo extends React.Component {
 
     render() {
         const language = this.props.language;
+        const txt = texts[language].postingInfo;
+
         const instanceOfPosting = this.props.posting;
         const image = instanceOfPosting.image;
-        const txt = texts[language].postingInfo;
 
         return (
             /* Dimension: 10vh total -> (approx: 1vh Bar) + 4vh image + 2vh Header + 3vh Tabs*/

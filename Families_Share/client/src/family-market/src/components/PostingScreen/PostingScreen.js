@@ -30,6 +30,19 @@ class PostingScreen extends React.Component {
     state;
 
     /**
+     * Retrieved from location.state as additional information that is passed when
+     * the app redirects to this screen (see buildRedirectionHandler).
+     *
+     * Url to redirect to after the posting displayed by this instance is deleted,
+     * which is possible if the user is the owner and clicks to the edit button,
+     * which in turn loads the edit screen where the posting can be deleted.
+     * Passed to lower components.
+     * @type {string}
+     */
+    onPostingDeleteUrl;
+
+    /**
+     * Used to communicate with the server api.
      * @type {ApiHandler}
      */
     apiHandler;
@@ -38,18 +51,22 @@ class PostingScreen extends React.Component {
         super(props);
 
         this.matchParams = this.props.match.params;
+        this.onPostingDeleteUrl = this.props.location.state.onDeleteUrl;
         this.apiHandler = new ApiHandler("", TESTING);
         this.state = {
             posting: Posting.EMPTY
         }
     }
 
-
-    // annuncio_altrui.PNG  manca la foto (?)
     render() {
+        const currentPosting = this.state.posting;
+
         return (
             <div>
-                <PostingNavBar postingId={this.state.posting.id} postingCreatorId={this.state.posting.user_id} />
+                <PostingNavBar postingId={currentPosting.id}
+                               postingName={currentPosting.name}
+                               postingCreatorId={currentPosting.user_id}
+                               onDeleteUrl={this.onPostingDeleteUrl}/>
                 <hr/>
                 <PostingInfo posting={this.state.posting}/>
             </div>
@@ -74,7 +91,7 @@ class PostingScreen extends React.Component {
     }
 
     /**
-     * Returns a url used to redirect to this page.
+     * Returns an url used to redirect to this page.
      * @param postingId {string} posting to load
      * @return {string}
      */
@@ -99,11 +116,17 @@ class PostingScreen extends React.Component {
      * since it makes things clearer by defining navigation behaviour for this class.
      * @param history {History}
      * @param postingId {string} posting to load
+     * @param onDeleteUrl {string} url to redirect to after the user deletes a post
      * @return {function}
      */
-    static buildRedirectionHandler(history, postingId) {
+    static buildRedirectionHandler(history, postingId, onDeleteUrl) {
         return () => {
-            history.push(PostingScreen.buildUrl(postingId))
+            history.push({
+                pathname: PostingScreen.buildUrl(postingId),
+                state: {
+                    onDeleteUrl: onDeleteUrl
+                }
+            });
         }
     }
 }
@@ -117,5 +140,4 @@ PostingScreen.propTypes = {
 
 export const buildPostingScreenRedirectionHandler = PostingScreen.buildRedirectionHandler;
 export const PostingScreenRoute = PostingScreen.ROUTE;
-export const buildUrl = PostingScreen.buildUrl;
 export default withLanguage(PostingScreen);

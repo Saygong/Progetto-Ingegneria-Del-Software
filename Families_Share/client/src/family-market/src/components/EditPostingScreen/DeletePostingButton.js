@@ -15,6 +15,7 @@ import PropTypes from "prop-types";
 class DeletePostingButton extends React.Component {
 
     /**
+     * Used to communicate with the server api.
      * @type {ApiHandler}
      */
     apiHandler;

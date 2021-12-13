@@ -30,6 +30,7 @@ class MyGroupPostingsScreen extends React.Component {
     state;
 
     /**
+     * Used to communicate with the server api.
      * @type {ApiHandler}
      */
     apiHandler;

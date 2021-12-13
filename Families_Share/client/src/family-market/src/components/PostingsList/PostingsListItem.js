@@ -20,6 +20,7 @@ import {withRouter} from "react-router-dom";
 class PostingsListItem extends React.Component {
 
     /**
+     * Used to communicate with the server api.
      * @type {ApiHandler}
      */
     apiHandler;
@@ -68,7 +69,8 @@ class PostingsListItem extends React.Component {
             // Render edit button
             sideButton = (
                 <EditPostingButton postingId={posting.id}
-                                   onEditUrl={redirectToUrl} onDeleteUrl={redirectToUrl}/>
+                                   onEditUrl={redirectToUrl}
+                                   onDeleteUrl={redirectToUrl}/>
             );
         }
         else if (this.props.mode === PostingsListItem.FAVOURITES_MODE) {
@@ -99,10 +101,13 @@ class PostingsListItem extends React.Component {
 
     /**
      * Called when this component is clicked.
+     * Redirects to PostingScreen, which displays the posting associated with this instance.
      */
     redirectToPostingScreen() {
         const postingId = this.props.posting.id;
-        const redirectionHandler = buildPostingScreenRedirectionHandler(this.props.history, postingId)
+        const onDeleteUrl = this.props.location.pathname;
+        const redirectionHandler =
+            buildPostingScreenRedirectionHandler(this.props.history, postingId, onDeleteUrl);
 
         Log.info("Redirecting to PostingScreen ", this);
         redirectionHandler();

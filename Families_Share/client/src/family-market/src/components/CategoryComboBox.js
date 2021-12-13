@@ -22,6 +22,12 @@ class CategoryComboBox extends React.Component {
         /*TODO add category icon*/
         const catIconPath = "";
 
+        /**
+         * TODO Mettere categoria "Nessuna categoria", così utente può anche decidere di non selezionare nulla
+         *      questo è utile nei filtri di marketplacescreen, perché una volta che hai selezionato
+         *      non puoi tornare indietro
+         */
+
         return (
             <div>
                 <h2>{txt.description}</h2>

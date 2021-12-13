@@ -51,9 +51,10 @@ class EditPostingScreen extends React.Component {
      * Passed as additional parameters during the redirection.
      * @type {{onEditUrl: string, onDeleteUrl} | {onCreateUrl: string}}
      */
-    redirectionsUrl;
+    redirectionUrls;
 
     /**
+     * Used to communicate with the server api.
      * @type {ApiHandler}
      */
     apiHandler;
@@ -62,7 +63,7 @@ class EditPostingScreen extends React.Component {
         super(props);
 
         this.apiHandler = new ApiHandler("", TESTING);
-        this.redirectionsUrl = this.props.location.state;
+        this.redirectionUrls = this.props.location.state;
         this.matchParams = this.props.match.params;
         this.state = {
             name: "",
@@ -95,12 +96,15 @@ class EditPostingScreen extends React.Component {
         const language = this.props.language;
         const txt = texts[language].editPostingScreen;
         const title = this.isCreateMode() ? txt.navBar.title.createMode : txt.navBar.title.editMode;
-        //TODO va messo qualche url particolare?
-        const goBackRedirectionUrl = "";
+        /**
+         * TODO:
+         *  - Se è create mode, item di default è "nessuna categoria"
+         *  - Se è edit mode, item di default è categoria già presente
+         */
 
         return (
             <div>
-                <PlainNavBar title={title} goBackUrl={goBackRedirectionUrl} />
+                <PlainNavBar title={title} />
                 <ImageInput currentImage={this.state.photo}
                             imageChangeHandler={this.handlePhotoChange} />
 
@@ -242,7 +246,7 @@ class EditPostingScreen extends React.Component {
             // Create mode
             await this.createPosting();
 
-            const {onCreateUrl} = this.redirectionsUrl;
+            const {onCreateUrl} = this.redirectionUrls;
             Log.info("Creation successful, redirecting to " + onCreateUrl, this);
             this.props.history.replace(onCreateUrl);
         }
@@ -250,7 +254,7 @@ class EditPostingScreen extends React.Component {
             // Edit mode
             await this.editPosting();
 
-            const {onEditUrl} = this.redirectionsUrl;
+            const {onEditUrl} = this.redirectionUrls;
             Log.info("Edit successful, redirecting to " + onEditUrl, this);
             this.props.history.replace(onEditUrl);
         }
@@ -261,7 +265,7 @@ class EditPostingScreen extends React.Component {
      * @return {Promise<void>}
      */
     async handleDeleteRedirection() {
-        const {onDeleteUrl} = this.props;
+        const {onDeleteUrl} = this.redirectionUrls;
         Log.info("Deletion successful, redirecting to " + onDeleteUrl, this);
         this.props.history.replace(onDeleteUrl);
     }

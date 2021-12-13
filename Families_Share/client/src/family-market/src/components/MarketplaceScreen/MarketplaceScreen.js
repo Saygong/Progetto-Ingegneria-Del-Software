@@ -1,5 +1,4 @@
 import withLanguage from "../../../../components/LanguageContext";
-import texts from "../../texts";
 
 import {TESTING} from "../../constants";
 import {FAMILY_MARKET_BASE_PAGE_URL} from "../../constants";
@@ -15,7 +14,7 @@ import SearchBar from "../SearchBar";
 import CategoryComboBox from "../CategoryComboBox";
 import TransactionTypeComboBox from "../TransactionTypeComboBox";
 import MarketplaceNavBar from "./MarketplaceNavBar";
-import Log from "../../../../components/Log";
+import {withRouter} from "react-router-dom";
 
 
 /**
@@ -31,6 +30,7 @@ class MarketplaceScreen extends React.Component {
     state;
 
     /**
+     * Used to communicate with the server api.
      * @type {ApiHandler}
      */
     apiHandler;
@@ -54,28 +54,22 @@ class MarketplaceScreen extends React.Component {
     }
 
     render() {
-
-
-        //TODO va messo qualche url particolare?
-        const goBackRedirectionUrl = "";
+        // It is fine if, after the user creates a posting, he gets redirected to this page,
+        // because it will be reloaded and the new posting will be shown.
+        const onCreateUrl = this.props.location.pathname;
 
         return (
             <div className="mx-auto w-8 mt-2">
-
-                <MarketplaceNavBar title={""} goBackUrl={goBackRedirectionUrl}/>
-
+                <MarketplaceNavBar/>
 
                 <div className="w-75 mx-auto">
-                    <div>
-                        <SearchBar text={this.state.filterText} textChangeHandler={this.handleSearchBarChange}/>
-                    </div>
+                    <SearchBar text={this.state.filterText} textChangeHandler={this.handleSearchBarChange}/>
                     <CategoryComboBox categoryChangeHandler={this.handleCategoryChange}/>
                     <TransactionTypeComboBox tnTypeChangeHandler={this.handleTransactionTypeChange}/>
 
-                    {/*TODO bottone CreatePostButton che url mettere?*/}
-                    <CreatePostingButton onCreateUrl={""}/> <hr/>
+                    <CreatePostingButton onCreateUrl={onCreateUrl}/> <hr/>
                 </div>
-                {/*TODO PostingList da controllare e finire*/}
+
                 <PostingsList postings={this.state.groupPostings}
                       itemMode={FAVOURITES_MODE}
                       filterText={this.state.filterText}
@@ -179,4 +173,4 @@ MarketplaceScreen.propTypes = {
 export const MarketplaceScreenRoute = MarketplaceScreen.ROUTE;
 export const buildRedirectionHandler = MarketplaceScreen.buildRedirectionHandler;
 
-export default withLanguage(MarketplaceScreen);
+export default withRouter(withLanguage(MarketplaceScreen));
