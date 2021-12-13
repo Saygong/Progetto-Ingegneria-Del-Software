@@ -50,12 +50,8 @@ class PostingScreen extends React.Component {
         return (
             <div>
                 <PostingNavBar postingId={this.state.posting.id} postingCreatorId={this.state.posting.user_id} />
+                <hr/>
                 <PostingInfo posting={this.state.posting}/>
-
-                {/*TODO vedere se usare questi altrimenti cancellare*/}
-                {/*<hr/>*/}
-                {/*<div style="width:100%; height:2vh">*/}
-                {/*</div>*/}
             </div>
         );
     }

@@ -5,7 +5,6 @@ class Tabs extends React.Component{
         activeTab: this.props.children[0].props.label
     }
     changeTab = (tab) => {
-
         this.setState({ activeTab: tab });
     };
     render(){

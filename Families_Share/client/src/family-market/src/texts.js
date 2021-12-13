@@ -125,8 +125,19 @@ const en = {
     myGroupsWithPostingsScreen: {
         title : "My groups",
         instruction: "Select a group to see your postings"
-    }
+    },
 
+    postingInfoTabs: {
+        product: "Product",
+        place: "Where",
+        contact: "Contacts",
+    },
+
+    postingInfoHeader: {
+        category: "Category:",
+        title: "Title:",
+        type: "Type:",
+    },
 }
 
 
@@ -257,7 +268,19 @@ const it = {
     myGroupsWithPostingsScreen: {
         title : "I miei gruppi",
         instruction: "Seleziona un gruppo per vedere i tuoi annunci"
-    }
+    },
+
+    postingInfoTabs: {
+        product: "Prodotto",
+        place: "Dove",
+        contact: "Contatti",
+    },
+
+    postingInfoHeader: {
+        category: "Categoria:",
+        title: "Titolo:",
+        type: "Tipologia:",
+    },
 }
 
 

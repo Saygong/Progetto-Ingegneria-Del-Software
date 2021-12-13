@@ -5,6 +5,7 @@ import Posting from "../../api/model/Posting";
 import React from "react";
 import PropTypes from "prop-types";
 import Log from "../../../../components/Log";
+import texts from "../../texts";
 
 
 /**
@@ -18,13 +19,20 @@ class PostingInfoHeader extends React.Component {
     }
 
     render() {
+        const language = this.props.language;
         const posting = this.props.posting;
+        const txt = texts[language].postingInfoHeader;
+
         return (
             <div>
-                {/*//TODO: aggiungere specifica a dx per dire cosa sono, es.: categoria:*/}
-                <h3>{posting.category}</h3>
+                <h6>{txt.category}</h6>
+                <h2>{posting.category}</h2>
+                <hr/>
+                <h6>{txt.title}</h6>
                 <h2>{posting.name}</h2>
-                <h3>{posting.type}</h3>
+                <hr/>
+                <h6>{txt.type}</h6>
+                <h2>{posting.type}</h2>
             </div>
         );
     }

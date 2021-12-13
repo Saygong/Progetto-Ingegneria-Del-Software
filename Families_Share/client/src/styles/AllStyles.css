@@ -3401,10 +3401,11 @@ a:active {
 /*--------------------Family Market------------------*/
 
 .familyMtabs{
-  font-family:arial;
   width:70%;
   text-align:center;
   margin: 15vh auto 0;
+  left:0;
+  right:0;
 }
 
 .familyMtab-buttons{
@@ -3412,19 +3413,31 @@ a:active {
 }
 
 .familyMbutton{
-  margin-right:15px;
+  left:0;
+  right:0;
+  margin: 0 10px;
   font-size:20px;
   background:transparent;
   border:none;
   outline:none;
-  padding:10px 20px ;
+  padding:5px 10px ;
   cursor:pointer;
   color:rgba(0,0,0,.4);
-  transition:all ease-in-out .2s;
-  border-bottom:2px solid transparent;
+  transition:all ease-in-out .3s;
 }
 
 .familyMactive{
-  border-bottom:2px solid #42b3f4;
-  color:black;
+  background-color: #31734a;
+  color: white;
+  font-size:20px;
+}
+
+.familyMbutton:hover {
+  background-color: #31736e;
+  color:white;
+}
+
+.memes{
+  width: 100%;
+  height: auto;
 }
