@@ -38,6 +38,7 @@ class PostingScreen extends React.Component {
         super(props);
 
         this.matchParams = this.props.match.params;
+        this.apiHandler = new ApiHandler("", true);
         this.state = {
             posting: Posting.EMPTY
         }
@@ -50,8 +51,6 @@ class PostingScreen extends React.Component {
             <div>
                 <PostingNavBar postingId={this.state.posting.id} postingCreatorId={this.state.posting.user_id} />
                 <PostingInfo posting={this.state.posting}/>
-                <PostingInfoHeader posting={this.state.posting}/>
-                <PostingInfoTabs  posting={this.state.posting}/>
 
                 {/*TODO vedere se usare questi altrimenti cancellare*/}
                 {/*<hr/>*/}

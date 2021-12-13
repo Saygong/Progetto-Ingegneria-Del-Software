@@ -55,6 +55,8 @@ class ApiHandler {
         this.getUserPostings = this.getUserPostings.bind(this);
         this.getUserFavouritePostings = this.getUserFavouritePostings.bind(this);
         this.editUserFavourites = this.editUserFavourites.bind(this);
+        this.addUserFavourite = this.addUserFavourite.bind(this);
+        this.removeUserFavourite = this.removeUserFavourite.bind(this);
         this.logError = this.logError.bind(this);
         this.logResponse = this.logResponse.bind(this);
         this.logErrorResponse = this.logErrorResponse.bind(this);
@@ -435,7 +437,7 @@ class ApiHandler {
      */
     async editUserFavourites(userId, newFavouritesIds) {
         let success = false;
-        const routeUrl = `${ApiHandler.POSTINGS_BASE_URL}/users/${userId}/favourites`
+        const routeUrl = `${ApiHandler.USERS_BASE_URL}/${userId}/favourites`
         const data = {
             favourites: newFavouritesIds
         };

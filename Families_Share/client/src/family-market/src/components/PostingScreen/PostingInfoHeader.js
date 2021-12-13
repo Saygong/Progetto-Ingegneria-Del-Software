@@ -18,10 +18,9 @@ class PostingInfoHeader extends React.Component {
     }
 
     render() {
-        const language = this.props.language;
         const posting = this.props.posting;
         return (
-            <div style="text-align:center">
+            <div>
                 <h1>{posting.category}</h1>
                 <h2>{posting.name}</h2>
                 <h1>{posting.type}</h1>

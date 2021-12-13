@@ -7,6 +7,8 @@ import Posting from "../../api/model/Posting";
 import React from "react";
 import PropTypes from "prop-types";
 import Log from "../../../../components/Log";
+import PostingInfoHeader from "./PostingInfoHeader";
+import PostingInfoTabs from "./PostingInfoTabs";
 
 
 /**
@@ -22,15 +24,14 @@ class PostingInfo extends React.Component {
         const language = this.props.language;
         const instanceOfPosting = this.props.posting;
         const image = instanceOfPosting.image;
-        const txt = texts[language].profileInfo;
+        const txt = texts[language].postingInfo;
 
         return (
             /* Dimension: 10vh total -> (approx: 1vh Bar) + 4vh image + 2vh Header + 3vh Tabs*/
             <div>
-                <PostingNavBar postingId={instanceOfPosting.id} postingCreatorId={instanceOfPosting.user_id} />
-                <div style="width:100%; height:4vh">
-                    <img src={image}  alt={txt.altImageText} />
-                </div>
+                <img src={image}  alt={txt.altImageText} />
+                <PostingInfoHeader posting={this.props.posting}/>
+                <PostingInfoTabs  posting={this.props.posting}/>
             </div>
         );
     }

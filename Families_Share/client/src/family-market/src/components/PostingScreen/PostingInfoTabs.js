@@ -25,9 +25,9 @@ class PostingInfoTabs extends React.Component {
         return (
             <div>
                 <div className="tab">
-                    <button className="tablinks" onClick="tabInfo(event, 'Product')">PRODUCT</button>
-                    <button className="tablinks" onClick="tabInfo(event, 'Where')">WHERE</button>
-                    <button className="tablinks" onClick="tabInfo(event, 'Contacts')">CONTACTS</button>
+                    <button className="tablinks" onClick={tabInfo}>PRODUCT</button>
+                    <button className="tablinks" onClick={tabInfo}>WHERE</button>
+                    <button className="tablinks" onClick={tabInfo}>CONTACTS</button>
                 </div>
 
 
@@ -67,8 +67,8 @@ PostingInfoTabs.propTypes = {
     language: PropTypes.string
 }
 
-//TODO non è usato che serve?
-function tabInfo(evt, info) {
+
+function tabInfo(evt, info="") {
     // Declare all variables
     let i, tabContent, tabLinks;
 
@@ -85,8 +85,9 @@ function tabInfo(evt, info) {
     }
 
     // Show the current tab, and add an "active" class to the button that opened the tab
-    document.getElementById(info).style.display = "block";
-    evt.currentTarget.className += " active";
+    // TODO commented since it does not work: info shouldn't be a parameter, onClick doesn't accept it
+    //document.getElementById(info).style.display = "block";
+    //evt.currentTarget.className += " active";
 }
 
 /*
