@@ -12,6 +12,7 @@ import SearchBar from "../SearchBar";
 import CategoryComboBox from "../CategoryComboBox";
 import TransactionTypeComboBox from "../TransactionTypeComboBox";
 import MarketplaceNavBar from "./MarketplaceNavBar";
+import Log from "../../../../components/Log";
 
 
 /**
@@ -34,7 +35,7 @@ class MarketplaceScreen extends React.Component {
     constructor(props) {
         super(props);
 
-        this.apiHandler = new ApiHandler();
+        this.apiHandler = new ApiHandler("", Log);
 
         this.state = {
             groupPostings: [],

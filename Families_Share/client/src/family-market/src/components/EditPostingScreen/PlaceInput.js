@@ -1,5 +1,5 @@
 import withLanguage from "../../../../components/LanguageContext";
-import LocationPicker from "react-location-picker";
+// import {LocationPicker} from "react-location-picker";
 
 import React from "react";
 import PropTypes from "prop-types";
@@ -32,15 +32,14 @@ class PlaceInput extends React.Component {
 
         return (
             <div>
-                {/* Icona del map-marker tipo GMaps */}
-                <i className="fas fa-map-marker-alt" />
+                {/*
                 <LocationPicker containerElement={<div style={{ height: "100%" }} />}
                                 mapElement={<div style={{ height: "400px" }} />}
                                 zoom={17}
                                 radius={-1}
                                 defaultPosition={defaultPos}
                                 onChange={this.handlePlaceChange}
-                />
+                />*/}
             </div>
         );
 

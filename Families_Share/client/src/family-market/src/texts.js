@@ -85,9 +85,10 @@ const en = {
             placeholder: "Insert description"
         },
         editContactTitle: "Contact information:",
-        imageInput: {
-            dropzoneText: "Drop an image for the posting here"
-        }
+    },
+
+    imageInput: {
+        dropzoneText: "Drop an image for the posting here"
     },
 
     marketplaceScreen: {
@@ -217,9 +218,10 @@ const it = {
             placeholder: "Inserire descrizione"
         },
         editContactTitle: "Informazioni di contatto:",
-        imageInput: {
-            dropzoneText: "Rilascia qui un immagine per l'annuncio: "
-        }
+    },
+
+    imageInput: {
+        dropzoneText: "Rilascia qui un' immagine per l'annuncio: "
     },
 
     marketplaceScreen: {

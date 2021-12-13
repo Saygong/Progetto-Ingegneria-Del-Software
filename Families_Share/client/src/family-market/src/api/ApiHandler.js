@@ -57,6 +57,7 @@ class ApiHandler {
         this.getUserPostings = this.getUserPostings.bind(this);
         this.getUserFavouritePostings = this.getUserFavouritePostings.bind(this);
         this.editUserFavourites = this.editUserFavourites.bind(this);
+        this.logResponseInternal = this.logResponseInternal.bind(this);
     }
 
     /**
@@ -179,7 +180,7 @@ class ApiHandler {
                 this.logErrorResponse(
                     `Error while creating posting for user: ${userId}, group: ${groupId}`,
                     error.response);
-                Log.error('Creation data: ' + creationData);
+                Log.error('Creation data: ' + JSON.stringify(creationData, null, 4));
             });
 
         return posting;
@@ -205,7 +206,7 @@ class ApiHandler {
             .catch(error => {
                 this.logErrorResponse(`Error while editing posting with id ${idToEdit}`,
                     error.response);
-                Log.error('Editing data: ' + newInfo);
+                Log.error('Editing data: ' + JSON.stringify(newInfo, null, 4));
             });
 
         return success;
@@ -331,8 +332,6 @@ class ApiHandler {
         // fetch the individual postings and then return them
         const favouritePostings = [];
         for (const favId of favouritesIds) {
-            // TODO: potenzialmente implementare un metodo che raggruppa più id da fetchare
-            // in modo da fare una sola chiamata al server invece che n.
             const p = await this.getPosting(favId);
             favouritePostings.push(p);
         }
@@ -512,14 +511,21 @@ class ApiHandler {
      * @param logHandler {function}
      */
     logResponseInternal(message, response, logHandler) {
+        if (response === null || response === undefined) {
+            return;
+        }
 
         const logData = {
-            RequestUrl: response.config.url,
-            Method: response.config.method,
             Status: response.status,
             StatusText: response.statusText,
             Data: response.data
         }
+
+       // const config = response.config;
+       // if (config !== null && config !== undefined) {
+       //     logData.RequestUrl = config.url;
+       //     logData.Method = config.method;
+       // }
 
         logHandler(`${message} \n` + JSON.stringify(logData, null, 4), this);
     }

@@ -8,6 +8,7 @@ import {FAMILY_MARKET_BASE_PAGE_URL} from "../../constants";
 import React from "react";
 import PropTypes from "prop-types";
 import PlainNavBar from "../PlainNavBar";
+import Log from "../../../../components/Log";
 
 
 
@@ -35,7 +36,7 @@ class MyFavouritesScreen extends React.Component {
     constructor(props) {
         super(props);
 
-        this.apiHandler = new ApiHandler();
+        this.apiHandler = new ApiHandler("", Log);
         this.matchParams = this.props.match.params;
         this.state = {
             postings: []

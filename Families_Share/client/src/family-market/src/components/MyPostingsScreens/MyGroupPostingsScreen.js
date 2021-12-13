@@ -32,7 +32,7 @@ class MyGroupPostingsScreen extends React.Component {
 
     constructor(props) {
         super(props);
-        this.apiHandler = new ApiHandler();
+        this.apiHandler = new ApiHandler("", Log);
         this.matchParams = this.props.match.params;
         this.state = {
             group_name: "",

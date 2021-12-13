@@ -21,7 +21,7 @@ class DeletePostingButton extends React.Component {
     constructor(props) {
         super(props);
 
-        this.apiHandler = new ApiHandler();
+        this.apiHandler = new ApiHandler("", Log);
         this.handleClick = this.handleClick.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
     }
@@ -32,7 +32,7 @@ class DeletePostingButton extends React.Component {
         const buttonText = texts[language].deletePostingButton.text;
 
         return (
-            <button onClick={this.handleClick} style="height:200px;width:200px">
+            <button onClick={this.handleClick}>
                 {buttonText}
             </button>
         )

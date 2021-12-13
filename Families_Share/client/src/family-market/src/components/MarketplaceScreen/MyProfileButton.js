@@ -37,7 +37,7 @@ class MyProfileButton extends React.Component {
      */
     redirectToProfileScreen() {
         // Line 322 App.js: path="/profiles/:profileId"
-        const profileId = JSON.parse(localStorage.getItem("user"));
+        const profileId = JSON.parse(localStorage.getItem("user")).id;
         const profileScreenUrl = `/profiles/${profileId}`;
 
         Log.info("Redirecting to ProfileScreen " + `(${profileScreenUrl})`, this);

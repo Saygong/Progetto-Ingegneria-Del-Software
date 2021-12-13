@@ -30,7 +30,9 @@ class ImageInput extends React.Component {
                 <Dropzone accept="image/jpeg, image/png"
                           multiple={false} maxFiles={1} maxSize={maxByteSize}
                           onDrop={this.handleImageSelection}>
-                    <p>{txt.dropzoneText}</p>
+                    {(props) =>
+                        <p>{txt.dropzoneText}</p>
+                    }
                 </Dropzone>
             </div>
         )

@@ -59,7 +59,7 @@ class EditPostingScreen extends React.Component {
     constructor(props) {
         super(props);
 
-        this.apiHandler = new ApiHandler();
+        this.apiHandler = new ApiHandler("", Log);
         this.redirectionsUrl = this.props.location.state;
         this.matchParams = this.props.match.params;
         this.state = {
@@ -127,8 +127,10 @@ class EditPostingScreen extends React.Component {
                            textChangeHandler={this.handleMailChange} />
                 <div className="row">
                     <ConfirmButton confirmationHandler={this.handleConfirmation} />
-                    <DeleteButton postingId={this.matchParams.postingId}
-                                  redirectionHandler={this.handleDeleteRedirection} />
+                    { !this.isCreateMode() && <DeleteButton postingId={this.matchParams.postingId}
+                                                           redirectionHandler={this.handleDeleteRedirection}/>
+                        /* To render only if edit mode */
+                    }
                 </div>
             </div>
         );
@@ -178,7 +180,8 @@ class EditPostingScreen extends React.Component {
         const creationInfo = this.getPostingInfoFromState()
         const {userId, groupId} = this.matchParams;
 
-        Log.info(`Creating posting for user: ${userId} in group ${groupId} with info: ${creationInfo}`);
+        Log.info("UserId" + userId + "GroupId" +  groupId, this)
+        Log.info(`Creating posting for user: ${userId} in group ${groupId} with info: ${creationInfo}`, this);
 
         await this.apiHandler.createPosting(userId, groupId, creationInfo);
     }
@@ -367,7 +370,10 @@ class EditPostingScreen extends React.Component {
      * @return {string}
      */
     static buildCreateModeUrl(userId, groupId) {
-        return EditPostingScreen.CREATE_MODE_ROUTE;
+        const basePath = EditPostingScreen.CREATE_MODE_ROUTE;
+        const withUserParam = basePath.replace(":userId", userId);
+
+        return withUserParam.replace(":groupId", groupId);
     }
 
     /**
