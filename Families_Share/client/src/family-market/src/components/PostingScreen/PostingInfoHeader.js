@@ -21,9 +21,10 @@ class PostingInfoHeader extends React.Component {
         const posting = this.props.posting;
         return (
             <div>
-                <h2>{posting.category}</h2>
-                <h1>{posting.name}</h1>
-                <h2>{posting.type}</h2>
+                {/*//TODO: aggiungere specifica a dx per dire cosa sono, es.: categoria:*/}
+                <h3>{posting.category}</h3>
+                <h2>{posting.name}</h2>
+                <h3>{posting.type}</h3>
             </div>
         );
     }

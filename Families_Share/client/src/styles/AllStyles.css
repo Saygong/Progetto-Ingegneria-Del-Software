@@ -3398,12 +3398,20 @@ a:active {
   color: #ffffff;
 }
 
-<!--------------------Family Market------------------>
+/*--------------------Family Market------------------*/
+
+.familyMtabs{
+  font-family:arial;
+  width:70%;
+  text-align:center;
+  margin: 15vh auto 0;
+}
 
 .familyMtab-buttons{
   margin-bottom:50px;
 }
 
+/*//TODO da rivedere riformatto button per infotabs*/
 .familyMbutton{
   margin-right:15px;
   font-size:20px;
@@ -3415,8 +3423,8 @@ a:active {
   color:rgba(0,0,0,.4);
   transition:all ease-in-out .2s;
   border-bottom:2px solid transparent;
-
 }
+
 .familyMactive{
   border-bottom:2px solid #42b3f4;
   color:black;
