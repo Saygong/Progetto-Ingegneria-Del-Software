@@ -55,7 +55,7 @@ class MyGroupsScreen extends React.Component {
                 <div>
                     <PlainNavBar title={txt.title} goBackUrl={""}/>
                 </div>
-                <div style="text-align: center; width: 100%">
+                <div>
                     <p> {txt.instruction} </p>
                     <hr/>
                     <GroupList groupIds={group_ids} />
