@@ -1,6 +1,6 @@
 import withLanguage from "../../../components/LanguageContext";
 
-import types from "../constants";
+import {TN_TYPES} from "../constants";
 import React from "react";
 import PropTypes from "prop-types";
 import Log from "../../../components/Log";
@@ -30,7 +30,7 @@ class TransactionTypeComboBox extends React.Component {
                         <img src={tnIconPath} alt={txt.altImageText} className="center"/>
                     </div>
                     <div className="col-8-10">
-                        <ComboBox options={types.TN_TYPES}
+                        <ComboBox options={TN_TYPES}
                                   onSelect={this.handleTnTypeChange}
                                   editable={false}/>
                     </div>

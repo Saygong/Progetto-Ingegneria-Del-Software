@@ -3,7 +3,7 @@ import PostingsList from "../PostingsList/PostingsList";
 import texts from "../../texts";
 import ApiHandler from "../../api/ApiHandler";
 
-import FAMILY_MARKET_BASE_PAGE_URL from "../../constants";
+import {FAMILY_MARKET_BASE_PAGE_URL} from "../../constants";
 
 import React from "react";
 import PropTypes from "prop-types";

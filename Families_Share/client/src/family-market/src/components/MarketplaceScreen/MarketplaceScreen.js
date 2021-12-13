@@ -5,7 +5,7 @@ import FAVOURITES_MODE from "../PostingsList/PostingsListItem";
 
 import PropTypes from "prop-types";
 import ApiHandler from "../../api/ApiHandler";
-import FAMILY_MARKET_BASE_PAGE_URL from "../../constants";
+import {FAMILY_MARKET_BASE_PAGE_URL} from "../../constants";
 import React from"react";
 import CreatePostingButton from "./CreatePostingButton";
 import SearchBar from "../SearchBar";

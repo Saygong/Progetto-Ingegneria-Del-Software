@@ -4,13 +4,12 @@ import PropTypes from "prop-types";
 
 import ApiHandler from "../../api/ApiHandler";
 
-import base_url from "../../constants";
+import {FAMILY_MARKET_BASE_PAGE_URL} from "../../constants";
 
 import React from "react";
 import Log from "../../../../components/Log";
 import PlainNavBar from "../PlainNavBar";
 import GroupList from "../../../../components/GroupList";
-import {buildRedirectionHandler} from "./MyGroupPostingsScreen";
 
 
 /**
@@ -104,7 +103,7 @@ class MyGroupsWithPostingsScreen extends React.Component {
      * @return {string}
      */
     static get ROUTE() {
-        return base_url.FAMILY_MARKET_BASE_PAGE_URL + "/users/:userId/groups";
+        return FAMILY_MARKET_BASE_PAGE_URL + "/users/:userId/groups";
     }
 
     /**
