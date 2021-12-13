@@ -25,7 +25,7 @@ class SearchBar extends React.Component {
         const searchBarIconPath = "";
 
         return (
-            <div className="row no-gutters">
+            <div className="">
                 <img src={searchBarIconPath} alt={txt.altImageText} className="col-2-10"/>
                 <div className="col-8-10">
                     {/*Description is empty in the searchbar*/}

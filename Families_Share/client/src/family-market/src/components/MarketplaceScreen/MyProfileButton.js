@@ -26,9 +26,9 @@ class MyProfileButton extends React.Component {
         const profileIconPath = "";
 
         return (
-            <button onClick={this.redirectToProfileScreen}>
-                <img src={profileIconPath} alt={txt.altImageText} className="center"/>
-            </button>
+            <div className="nav-item" role="button" onClick={this.redirectToProfileScreen}>
+                <i className="fas fa-user center" />
+            </div>
         )
     }
 

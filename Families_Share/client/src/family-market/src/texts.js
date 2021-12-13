@@ -92,9 +92,7 @@ const en = {
     },
 
     marketplaceScreen: {
-        navBar: {
-            title: "Family Market"
-        },
+        title: "Family Market",
         postingList: "Newest Post",
         placeholder: "What are you looking for?"
     },
@@ -225,9 +223,8 @@ const it = {
     },
 
     marketplaceScreen: {
-        navBar: {
-            title: "Family Market"
-        },
+
+        title: "Family Market",
         postingList: "Nuovi annunci",
         placeholder: "Che cosa stai cercando?"
     },

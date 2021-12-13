@@ -2,6 +2,7 @@ import React from "react";
 import Loadable from "react-loadable";
 import { Redirect, Route, Switch } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+
 import "./styles/stylesheet.css";
 import PropTypes from "prop-types";
 import axios from "axios";

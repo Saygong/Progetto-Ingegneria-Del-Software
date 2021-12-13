@@ -51,21 +51,27 @@ class MarketplaceScreen extends React.Component {
     }
 
     render() {
-        const language = this.props.language;
-        const txt = texts[language].marketplaceScreen;
+
+
         //TODO va messo qualche url particolare?
         const goBackRedirectionUrl = "";
 
         return (
-            <div>
-                <MarketplaceNavBar title={txt.navBar.title} goBackUrl={goBackRedirectionUrl}/>
-                <SearchBar text={this.state.filterText} textChangeHandler={this.handleSearchBarChange}/>
-                <CategoryComboBox categoryChangeHandler={this.handleCategoryChange}/>
-                <TransactionTypeComboBox tnTypeChangeHandler={this.handleTransactionTypeChange}/>
+            <div className="mx-auto w-8 mt-2">
 
-                {/*TODO bottone CreatePostButton che url mettere?*/}
-                <CreatePostingButton onCreateUrl={""}/> <hr/>
+                <MarketplaceNavBar title={""} goBackUrl={goBackRedirectionUrl}/>
 
+
+                <div className="w-75 mx-auto">
+                    <div>
+                        <SearchBar text={this.state.filterText} textChangeHandler={this.handleSearchBarChange}/>
+                    </div>
+                    <CategoryComboBox categoryChangeHandler={this.handleCategoryChange}/>
+                    <TransactionTypeComboBox tnTypeChangeHandler={this.handleTransactionTypeChange}/>
+
+                    {/*TODO bottone CreatePostButton che url mettere?*/}
+                    <CreatePostingButton onCreateUrl={""}/> <hr/>
+                </div>
                 {/*TODO PostingList da controllare e finire*/}
                 <PostingsList postings={this.state.groupPostings}
                       itemMode={FAVOURITES_MODE}

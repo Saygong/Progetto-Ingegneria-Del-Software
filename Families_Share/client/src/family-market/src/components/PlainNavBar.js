@@ -19,14 +19,13 @@ class PlainNavBar extends React.Component {
 
     render() {
         return (
-            <div className="row no-gutters">
+            <div className="w-75 navbar text-center navBarColor mx-auto">
 
-                <div className="col-2-10">
-                    <div role="button" onClick={this.goBack}>
-                        <i className="fas fa-arrow-left" />
-                    </div>
+
+                <div className="nav-item" role="button" onClick={this.goBack}>
+                    <i className="ourIcon fas fa-arrow-left " />
                 </div>
-                <div className="col-8-10 center">
+                <div className="nav-item">
                     <h1>{this.props.title}</h1>
                 </div>
 

@@ -4,6 +4,7 @@ import React from "react";
 import Log from "../../../../components/Log";
 import PlainNavBar from "../PlainNavBar";
 import MyProfileButton from "./MyProfileButton";
+import texts from "../../texts";
 
 
 /**
@@ -16,14 +17,13 @@ class MarketplaceNavBar extends React.Component {
     }
 
     render() {
-        const marketplaceTitle = this.props.name;
+        const language = this.props.language;
+        const txt = texts[language].marketplaceScreen;
 
         return (
-            <div className="col no-gutters">
-                <div className="col-8-10">
-                    <PlainNavBar title={marketplaceTitle} goBackUrl={""} /> {/*TODO che url?*/}
-                </div>
-                <div className="col-2-10">
+            <div className="mx-auto">
+                <div className="mx-auto">
+                    <PlainNavBar title={txt.title} goBackUrl={""} /> {/*TODO che url?*/}
                     <MyProfileButton/>
                 </div>
             </div>
