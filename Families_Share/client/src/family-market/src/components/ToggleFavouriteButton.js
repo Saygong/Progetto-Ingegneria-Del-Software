@@ -56,9 +56,9 @@ class ToggleFavouriteButton extends React.Component {
 
     async componentDidMount() {
         // Fetch the favourite state of the posting and set it to update the button
-        const currentPosting = this.props.posting;
+        const currentPostingId = this.props.postingId;
         const userId = JSON.parse(localStorage.getItem("user")).id;
-        const isFav = await this.apiHandler.isUserFavourite(userId, currentPosting.id);
+        const isFav = await this.apiHandler.isUserFavourite(userId, currentPostingId);
 
         // Update only if necessary
         if (this.state.isFavourite !== isFav) {

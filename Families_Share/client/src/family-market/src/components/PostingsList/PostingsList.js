@@ -17,6 +17,10 @@ class PostingsList extends React.Component {
 
     render() {
         const filteredPostings = this.getFilteredPostings()
+
+        // TODO debug
+        //console.log("Filtered Postings: " + JSON.stringify(filteredPostings, null, 4));
+
         const title = this.buildTitle();
 
         return (
@@ -24,8 +28,8 @@ class PostingsList extends React.Component {
                 <h2>{title}</h2>
                 {/* One item for each posting */
                     filteredPostings.map((p, idx) => {
-                        return <PostingsListItem key={idx}
-                                                 posting={p} mode={this.props.itemMode}/>
+                        return <PostingsListItem key={idx} mode={this.props.itemMode}
+                                                 posting={p}/>
                     })
                 }
             </div>
@@ -92,6 +96,11 @@ class PostingsList extends React.Component {
      * @return {boolean}
      */
     isMatchedByText(posting, filterText) {
+        // Everything is a match if no filter is provided
+        if (filterText === "") {
+            return true;
+        }
+
         // Make everything lower case to perform case-insensitive research
         const nameLower = posting.name.toLowerCase();
         const filterTextLower = filterText.toLowerCase();
@@ -107,6 +116,11 @@ class PostingsList extends React.Component {
      * @return {boolean}
      */
     isMatchedByCategory(posting, filterCategory) {
+        // Everything is a match if no filter is provided
+        if (filterCategory === "") {
+            return true;
+        }
+
         return posting.category === filterCategory;
     }
 
@@ -118,6 +132,11 @@ class PostingsList extends React.Component {
      * @return {boolean}
      */
     isMatchedByTnType(posting, filterTnType) {
+        // Everything is a match if no filter is provided
+        if (filterTnType === "") {
+            return true;
+        }
+
         return posting.type === filterTnType;
     }
 }
