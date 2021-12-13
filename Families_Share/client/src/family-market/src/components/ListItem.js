@@ -20,22 +20,40 @@ class ListItem extends React.Component {
         // Get texts based on current language
         const language = this.props.language;
         const txt = texts[language].listItem;
-        const isIcon = this.props.isIcon;
+        let isUser = false;
+        if(this.props.isIcon === "fas fa-users"){
+            isUser = true;
+        }
+        let isFav = false;
+        if(this.props.isIcon === "fas fa-heart"){
+            isFav = true;
+        }
+        let isImage = ((!isUser) && (!isFav))
 
         return (
-            <div className="row no-gutters">
-                <div className="col-2-10">
-                    {isIcon ? (
-                        <i className={this.props.image} />
-                    ) : (
-                        <img className="center"
-                        src={this.props.image} alt={txt.altImageText}/>
-                    )}
-                </div>
-                <div className="col-6-10">
-                    <h1>{this.props.title}</h1>
-                    <h2>{this.props.description}</h2>
-                </div>
+
+            <div className="w-100 h-80px p-5">
+                <table className="w-100">
+                    <tr className="">
+                        <td className="w-20 ">
+                            <div className="w-100 ">
+                                {isUser && (
+                                    <div className="center ">
+                                        <i className="fas fa-users family-icon" />
+                                    </div>
+                                )}
+                                {isFav &&(
+                                    <div className="center ">
+                                        <i className="fas fa-heart family-icon" />
+                                    </div>
+                                )}
+                            </div>
+                        </td>
+                        <td className="w-70">
+
+                        </td>
+                    </tr>
+                </table>
 
             </div>
         )
@@ -43,7 +61,7 @@ class ListItem extends React.Component {
 }
 
 ListItem.defaultProps = {
-    isIcon: false,
+    isIcon: "",
     image: "",
     title: "",
     description: ""
