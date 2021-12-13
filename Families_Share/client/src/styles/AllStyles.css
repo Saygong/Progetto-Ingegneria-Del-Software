@@ -3397,3 +3397,27 @@ a:active {
   text-align: left;
   color: #ffffff;
 }
+
+<!--------------------Family Market------------------>
+
+.familyMtab-buttons{
+  margin-bottom:50px;
+}
+
+.familyMbutton{
+  margin-right:15px;
+  font-size:20px;
+  background:transparent;
+  border:none;
+  outline:none;
+  padding:10px 20px ;
+  cursor:pointer;
+  color:rgba(0,0,0,.4);
+  transition:all ease-in-out .2s;
+  border-bottom:2px solid transparent;
+
+}
+.familyMactive{
+  border-bottom:2px solid #42b3f4;
+  color:black;
+}
