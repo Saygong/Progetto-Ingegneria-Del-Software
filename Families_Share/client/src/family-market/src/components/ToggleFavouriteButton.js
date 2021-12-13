@@ -35,10 +35,10 @@ class ToggleFavouriteButton extends React.Component {
     }
 
     render() {
-        // TODO: change the displayed image based on the isFavourite prop
+
         // Determine which image to display
-        const isFavPath = "../../assets/fav-icon-yes.png";
-        const isNotFavPath = "../../assets/fav-icon-no.png";
+        const isFavPath = "fas fa-bookmark";
+        const isNotFavPath = "far fa-bookmark";
         const imgPath = this.state.isFavourite ? isFavPath : isNotFavPath;
 
         // Get texts based on current language
@@ -46,11 +46,11 @@ class ToggleFavouriteButton extends React.Component {
         const txt = texts[language].toggleFavButton;
 
         return (
-            <button>
-                <img src={imgPath} alt={txt.altImageText}
-                     width={200} height={200}
-                     onClick={this.handleFavouriteChange}/>
-            </button>
+            <div className="">
+                <button onClick={this.handleFavouriteChange}>
+                    <i className={imgPath} />
+                </button>
+            </div>
         )
     }
 
