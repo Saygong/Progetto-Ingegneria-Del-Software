@@ -1,14 +1,15 @@
 import withLanguage from "../../../../components/LanguageContext";
-import PostingsList from "../PostingsList/PostingsList";
 import texts from "../../texts";
-import ApiHandler from "../../api/ApiHandler";
 
+import {TESTING} from "../../constants";
 import {FAMILY_MARKET_BASE_PAGE_URL} from "../../constants";
+
+import ApiHandler from "../../api/ApiHandler";
 
 import React from "react";
 import PropTypes from "prop-types";
 import PlainNavBar from "../PlainNavBar";
-import Log from "../../../../components/Log";
+import PostingsList from "../PostingsList/PostingsList";
 
 
 
@@ -36,7 +37,7 @@ class MyFavouritesScreen extends React.Component {
     constructor(props) {
         super(props);
 
-        this.apiHandler = new ApiHandler("", true);
+        this.apiHandler = new ApiHandler("", TESTING);
         this.matchParams = this.props.match.params;
         this.state = {
             postings: []

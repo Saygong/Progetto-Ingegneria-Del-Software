@@ -1,16 +1,16 @@
 import withLanguage from "../../../../components/LanguageContext";
-import ToggleFavouriteButton from "../ToggleFavouriteButton";
-import PostingInfoHeader from "./PostingInfoHeader";
-import PostingInfoTabs from "./PostingInfoTabs";
 
-import PropTypes from "prop-types";
+import {FAMILY_MARKET_BASE_PAGE_URL} from "../../constants";
+import {TESTING} from "../../constants";
+
 import ApiHandler from "../../api/ApiHandler";
 import Posting  from "../../api/model/Posting";
-import {FAMILY_MARKET_BASE_PAGE_URL} from "../../constants";
+
 import React from "react";
-import Log from "../../../../components/Log";
+import PropTypes from "prop-types";
 import PostingNavBar from "./PostingNavBar";
 import PostingInfo from "./PostingInfo";
+import Log from "../../../../components/Log";
 
 
 /**
@@ -38,7 +38,7 @@ class PostingScreen extends React.Component {
         super(props);
 
         this.matchParams = this.props.match.params;
-        this.apiHandler = new ApiHandler("", true);
+        this.apiHandler = new ApiHandler("", TESTING);
         this.state = {
             posting: Posting.EMPTY
         }

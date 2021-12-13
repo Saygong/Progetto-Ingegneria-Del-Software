@@ -1,11 +1,13 @@
 import withLanguage from "../../../../components/LanguageContext";
 import texts from "../../texts";
+
+import {TESTING} from "../../constants";
+import {FAMILY_MARKET_BASE_PAGE_URL} from "../../constants";
+
 import ApiHandler from "../../api/ApiHandler";
 import Posting from "../../api/model/Posting";
 import PostingInfo from "../../api/model/PostingInfo";
 import Contact from "../../api/model/Contact";
-
-import {FAMILY_MARKET_BASE_PAGE_URL} from "../../constants";
 
 import React from "react";
 import PropTypes from "prop-types";
@@ -59,7 +61,7 @@ class EditPostingScreen extends React.Component {
     constructor(props) {
         super(props);
 
-        this.apiHandler = new ApiHandler("", true);
+        this.apiHandler = new ApiHandler("", TESTING);
         this.redirectionsUrl = this.props.location.state;
         this.matchParams = this.props.match.params;
         this.state = {

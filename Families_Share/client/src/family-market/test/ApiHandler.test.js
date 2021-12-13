@@ -88,49 +88,11 @@ function isNullOrUndefined(x) {
  * @param expectedList {Array}
  */
 function assertList(actualList, expectedList) {
-    expect(actualList.length === expectedList.length).toBe(true);
+    expect(actualList.length).toBe(expectedList.length);
 
     for (const actual of actualList) {
-        const expected = expectedList.find(x => x.id === actual.id);
-
-        expect(isNullOrUndefined(expected)).toBe(false);
-        expect(actual).toEqual(expected);
+        expect(expectedList).toContainEqual(actual)
     }
-}
-
-
-/**
- * Performs deep asserts for equality (default) or inequality of all properties
- * of the two provided PostingInfo objects
- * @param actual {Posting}
- * @param expected {Posting}
- * @param assertTrue {boolean} if false, the assertion checks for inequality of all properties instead
- */
-function strictAssertPosting(actual, expected, assertTrue=true) {
-    expect(actual.id === expected.id).toBe(assertTrue);
-    expect(actual.user_id === expected.user_id).toBe(assertTrue);
-    expect(actual.group_id === expected.group_id).toBe(assertTrue);
-
-    strictAssertPostingInfo(actual, expected, assertTrue);
-}
-
-
-/**
- * Performs deep asserts for equality (default) or inequality of all properties
- * of the two provided PostingInfo objects
- * @param actual {PostingInfo}
- * @param expected {PostingInfo}
- * @param assertTrue {boolean} if false, the assertion checks for inequality of all properties instead
- */
-function strictAssertPostingInfo(actual, expected, assertTrue=true) {
-    expect(actual.name === expected.name).toBe(assertTrue);
-    expect(actual.description === expected.description).toBe(assertTrue);
-    expect(actual.type === expected.type).toBe(assertTrue);
-    expect(actual.category === expected.category).toBe(assertTrue);
-    expect(actual.photo === expected.photo).toBe(assertTrue);
-    expect(actual.contact.email === expected.contact.email).toBe(assertTrue);
-    expect(actual.contact.phone_number === expected.contact.phone_number).toBe(assertTrue);
-    expect(actual.contact.place === expected.contact.place).toBe(assertTrue);
 }
 
 
@@ -350,8 +312,9 @@ async function createUserWithSomeFavourites() {
 
     const favouritesIds = postings.map(p => p.id);
     const reqData = {
-        favorites: favouritesIds
+        favourites: favouritesIds
     };
+
     const routeUrl = `${ApiHandler.USERS_BASE_URL}/${user.id}/favourites`
     await axios.patch(routeUrl, reqData,
         {headers: {"Authorization": user.token}})
@@ -499,7 +462,7 @@ describe('Get all group postings', function () {
             assertList(actualPostings, postings);
         }
         catch (error) {
-            console.log(chalk.hex("#ffa500")(error));
+            console.log(chalk.bold.hex("#ffa500")(error));
             throw error;
         }
         finally {
@@ -519,7 +482,7 @@ describe('Get all group postings', function () {
         const actual = await apiHandler.getGroupPostings(wrongId);
 
         //Assert
-        expect(actual.length === expectedLength).toBe(true);
+        expect(actual.length).toBe(expectedLength);
     });
 });
 
@@ -551,7 +514,7 @@ describe('Get group info', function () {
             expect(actualGroup).toEqual(group);
         }
         catch (error) {
-            console.log(chalk.hex("#ffa500")(error));
+            console.log(chalk.bold.hex("#ffa500")(error));
             throw error;
         }
         finally {
@@ -612,7 +575,7 @@ describe('Get group info of all user groups', function () {
                 assertList(actualGroups, groups);
             }
             catch (error) {
-                console.log(chalk.hex("#ffa500")(error));
+                console.log(chalk.bold.hex("#ffa500")(error));
                 throw error;
             }
             finally {
@@ -632,7 +595,7 @@ describe('Get group info of all user groups', function () {
         const actual = await apiHandler.getUserGroups(wrongId);
 
         //Assert
-        expect(actual.length === expectedLength).toBe(true);
+        expect(actual.length).toBe(expectedLength);
     });
 });
 
@@ -658,10 +621,10 @@ describe('Get single posting', function () {
             const actualPosting = await apiHandler.getPosting(posting.id);
 
             // Assert
-            strictAssertPosting(actualPosting,posting);
+            expect(actualPosting).toEqual(posting);
         }
         catch (error) {
-            console.log(chalk.hex("#ffa500")(error));
+            console.log(chalk.bold.hex("#ffa500")(error));
             throw error;
         }
         finally {
@@ -714,13 +677,15 @@ describe('Create posting', function () {
             // Assert
             // Check if the group and the creation info part are equal
             expect(createdPosting.group_id).toBe(groupId);
-            strictAssertPostingInfo(createdPosting, creationInfo);
+
+            const actualInfo = new PostingInfo(createdPosting);
+            expect(actualInfo).toEqual(creationInfo);
 
             // Passed to teardown function
             postingToTeardown = createdPosting;
         }
         catch (error) {
-            console.log(chalk.hex("#ffa500")(error));
+            console.log(chalk.bold.hex("#ffa500")(error));
             throw error;
         }
         finally {
@@ -762,30 +727,30 @@ describe('Edit posting', function () {
         let setupData;
         try {
             setupData = await setup();
-            const {user, postingToEdit} = setupData;
+            const {user, posting} = setupData;
             const apiHandler = new ApiHandler(user.token);
 
             const newInfo = new PostingInfo({
-                name: postingToEdit.name + " edit ",
-                category: postingToEdit.category + " edit ",
-                description: postingToEdit.description + " edit ",
-                photo: postingToEdit.photo + " edit ",
-                type: postingToEdit.type + " edit ",
+                name: posting.name + " edit ",
+                category: posting.category + " edit ",
+                description: posting.description + " edit ",
+                photo: posting.photo + " edit ",
+                type: posting.type + " edit ",
                 contact: new Contact({
-                    email: postingToEdit.contact.email + " edit ",
-                    place: postingToEdit.contact.place + " edit ",
-                    phone_number: postingToEdit.contact.phone_number + " edit "
+                    email: posting.contact.email + " edit ",
+                    place: posting.contact.place + " edit ",
+                    phone_number: posting.contact.phone_number + " edit "
                 })
             });
 
             // Act
-            const success = await apiHandler.editPosting(postingToEdit.id, newInfo);
+            const success = await apiHandler.editPosting(posting.id, newInfo);
 
             // Assert
             expect(success).toBe(true);
         }
         catch (error) {
-            console.log(chalk.hex("#ffa500")(error));
+            console.log(chalk.bold.hex("#ffa500")(error));
             throw error;
         }
         finally {
@@ -827,17 +792,17 @@ describe('Delete posting', function () {
         let setupData;
         try {
             setupData = await setup();
-            const {user, postingToDelete} = setupData;
+            const {user, posting} = setupData;
             const apiHandler = new ApiHandler(user.token);
 
             // Act
-            const isDeleted = await apiHandler.deletePosting(postingToDelete.id);
+            const isDeleted = await apiHandler.deletePosting(posting.id);
 
             // Assert
             expect(isDeleted).toBe(true);
         }
         catch (error) {
-            console.log(chalk.hex("#ffa500")(error));
+            console.log(chalk.bold.hex("#ffa500")(error));
             throw error;
         }
         finally {
@@ -890,7 +855,7 @@ describe('Get all user postings of a certain group', function () {
             assertList(actualGroupPostings, postings);
         }
         catch (error) {
-            console.log(chalk.hex("#ffa500")(error));
+            console.log(chalk.bold.hex("#ffa500")(error));
             throw error;
         }
         finally {
@@ -911,7 +876,7 @@ describe('Get all user postings of a certain group', function () {
         const actual = await apiHandler.getUserPostings(wrongId, wrongGroupId);
 
         //Assert
-        expect(actual.length === expectedLength).toBe(true);
+        expect(actual.length).toBe(expectedLength);
     });
 });
 
@@ -945,7 +910,7 @@ describe('Get user favourite postings', function () {
             assertList(actualPostings, favouritePostings);
         }
         catch (error) {
-            console.log(chalk.hex("#ffa500")(error));
+            console.log(chalk.bold.hex("#ffa500")(error));
             throw error;
         }
         finally {
@@ -965,7 +930,7 @@ describe('Get user favourite postings', function () {
         const actual = await apiHandler.getUserFavouritePostings(wrongId);
 
         //Assert
-        expect(actual.length === expectedLength).toBe(true);
+        expect(actual.length).toBe(expectedLength);
     });
 });
 
@@ -1017,10 +982,10 @@ describe('Edit user favourite postings', function () {
             // Then check that the actual fetched postings ids correspond to the edited ids
             const actualIds = [];
             actualFavourites.forEach(fav => actualIds.push(fav.id));
-            assertList(newFavouritesIds, actualIds);
+            assertList(actualIds, newFavouritesIds);
         }
         catch (error) {
-            console.log(chalk.hex("#ffa500")(error));
+            console.log(chalk.bold.hex("#ffa500")(error));
             throw error;
         }
         finally {
@@ -1077,7 +1042,7 @@ describe("Check if a single posting belongs to a user's favourites list", functi
             expect(isFavourite).toBe(true);
         }
         catch (error) {
-            console.log(chalk.hex("#ffa500")(error));
+            console.log(chalk.bold.hex("#ffa500")(error));
             throw error;
         }
         finally {
@@ -1115,7 +1080,7 @@ describe("Check if a single posting belongs to a user's favourites list", functi
             expect(isFavourite).toBe(false);
         }
         catch (error) {
-            console.log(chalk.hex("#ffa500")(error));
+            console.log(chalk.bold.hex("#ffa500")(error));
             throw error;
         }
         finally {
@@ -1147,7 +1112,7 @@ describe("Add a single posting to a user's favourites list", function () {
             setupData = await setup();
             const {user, groupIds} = setupData;
             const apiHandler = new ApiHandler(user.token);
-            const toAdd = await createRandomPosting(user.id, groupIds[0]);
+            const toAdd = await createRandomPosting(user, groupIds[0]);
 
             // Act
             const success = await apiHandler.addUserFavourite(user.id, toAdd.id);
@@ -1156,7 +1121,7 @@ describe("Add a single posting to a user's favourites list", function () {
             expect(success).toBe(true);
         }
         catch (error) {
-            console.log(chalk.hex("#ffa500")(error));
+            console.log(chalk.bold.hex("#ffa500")(error));
             throw error;
         }
         finally {
@@ -1194,7 +1159,7 @@ describe("Add a single posting to a user's favourites list", function () {
             expect(success).toBe(false);
         }
         catch (error) {
-            console.log(chalk.hex("#ffa500")(error));
+            console.log(chalk.bold.hex("#ffa500")(error));
             throw error;
         }
         finally {
@@ -1235,7 +1200,7 @@ describe("Remove a single posting from a user's favourites list", function () {
             expect(success).toBe(true);
         }
         catch (error) {
-            console.log(chalk.hex("#ffa500")(error));
+            console.log(chalk.bold.hex("#ffa500")(error));
             throw error;
         }
         finally {
@@ -1273,7 +1238,7 @@ describe("Remove a single posting from a user's favourites list", function () {
             expect(success).toBe(false);
         }
         catch (error) {
-            console.log(chalk.hex("#ffa500")(error));
+            console.log(chalk.bold.hex("#ffa500")(error));
             throw error;
         }
         finally {

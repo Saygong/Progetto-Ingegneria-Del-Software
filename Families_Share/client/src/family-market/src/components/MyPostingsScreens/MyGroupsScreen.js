@@ -1,15 +1,16 @@
 import withLanguage from "../../../../components/LanguageContext";
 import texts from "../../texts";
-import PropTypes from "prop-types";
+
+import {TESTING} from "../../constants";
+import {FAMILY_MARKET_BASE_PAGE_URL} from "../../constants";
 
 import ApiHandler from "../../api/ApiHandler";
 
-import {FAMILY_MARKET_BASE_PAGE_URL} from "../../constants";
-
 import React from "react";
-import Log from "../../../../components/Log";
+import PropTypes from "prop-types";
 import PlainNavBar from "../PlainNavBar";
 import GroupList from "../../../../components/GroupList";
+import Log from "../../../../components/Log";
 
 
 /**
@@ -38,7 +39,7 @@ class MyGroupsScreen extends React.Component {
     constructor(props) {
         super(props);
 
-        this.apiHandler = new ApiHandler("", true);
+        this.apiHandler = new ApiHandler("", TESTING);
         this.matchParams = this.props.match.params;
         this.state = {
             groups: []

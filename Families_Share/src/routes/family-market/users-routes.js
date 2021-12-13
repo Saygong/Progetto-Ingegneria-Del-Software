@@ -15,10 +15,13 @@ router.get('/:userId/favourites', async (req, res) => {
   }
   const u_id = req.params.userId
 
+  let logData = {};
+
   try {
     // Query that retrieves all the saved postings of the user user_id = u_id
     const {favourites} = await User.findOne({ user_id: u_id }, 'favourites')
     let fav_post = [];
+    logData.favourites = favourites
 
     // Multiple queries to insert the favourites posts into a list
     for (let favId of favourites) {
@@ -29,7 +32,14 @@ router.get('/:userId/favourites', async (req, res) => {
     res.json(fav_post);
 
   } catch (error) {
-    return res.status(401).send("Caught Error:" + JSON.stringify(error));
+    const errorData = {
+      name: error.name,
+      message: error.message,
+      lineNumber: error.lineNumber,
+      stack: error.stack,
+      log: logData
+    }
+    return res.status(400).send("Caught Error:" + JSON.stringify(errorData, null, 4));
   }
 })
 

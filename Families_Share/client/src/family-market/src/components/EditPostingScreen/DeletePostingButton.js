@@ -1,11 +1,12 @@
 import withLanguage from "../../../../components/LanguageContext";
 import texts from "../../texts";
+
+import {TESTING} from "../../constants";
+
 import ApiHandler from "../../api/ApiHandler";
 
 import React from "react";
 import PropTypes from "prop-types";
-import Log from "../../../../components/Log";
-
 
 
 /**
@@ -21,7 +22,7 @@ class DeletePostingButton extends React.Component {
     constructor(props) {
         super(props);
 
-        this.apiHandler = new ApiHandler("", true);
+        this.apiHandler = new ApiHandler("", TESTING);
         this.handleClick = this.handleClick.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
     }

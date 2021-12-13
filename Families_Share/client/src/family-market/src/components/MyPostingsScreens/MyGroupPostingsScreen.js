@@ -1,12 +1,16 @@
 import withLanguage from "../../../../components/LanguageContext";
 import texts from "../../texts";
-import PropTypes from "prop-types";
-import ApiHandler from "../../api/ApiHandler";
+
 import {FAMILY_MARKET_BASE_PAGE_URL} from  "../../constants";
+import {TESTING} from "../../constants";
+
+import ApiHandler from "../../api/ApiHandler";
+
 import React from "react";
-import Log from "../../../../components/Log";
+import PropTypes from "prop-types";
 import PlainNavBar from "../PlainNavBar";
 import PostingsList from "../PostingsList/PostingsList";
+import Log from "../../../../components/Log";
 
 
 /**
@@ -32,7 +36,7 @@ class MyGroupPostingsScreen extends React.Component {
 
     constructor(props) {
         super(props);
-        this.apiHandler = new ApiHandler("", true);
+        this.apiHandler = new ApiHandler("", TESTING);
         this.matchParams = this.props.match.params;
         this.state = {
             group_name: "",
