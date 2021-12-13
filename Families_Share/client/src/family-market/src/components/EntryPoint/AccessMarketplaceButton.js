@@ -25,12 +25,32 @@ class AccessMarketplaceButton extends React.Component {
         const language = this.props.language;
         const txt = texts[language].accessMarketplaceButton;
 
-        // TODO add image
-        const marketplaceIconPath = "";
 
         return (
-            <div role="button" onClick={this.redirectToMarketplaceScreen}>
-                <ListItem image={marketplaceIconPath} title={txt.title} description={txt.description}/>
+            <div>
+                <div role="button" onClick={this.redirectToMarketplaceScreen} className="mx-auto w-40">
+                    <table className="w-50 mx-auto">
+                        <tr>
+                            <td >
+                                <div className="w-50 text-center">
+                                    <h5>Marketplace:</h5>
+                                </div>
+                            </td>
+
+                            <td >
+                                <div className="pr-0">
+                                    <i class="family-icon" className="fas fa-balance-scale" />
+                                </div>
+                            </td>
+                            <td >
+                                <div className="">
+                                    <h2 className="font-italic">{txt.title}</h2>
+                                    <h5>{txt.description}</h5>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         );
     }

@@ -21,12 +21,22 @@ class MarketplaceNavBar extends React.Component {
         const txt = texts[language].marketplaceScreen;
 
         return (
-            <div className="mx-auto">
-                <div className="mx-auto">
-                    <PlainNavBar title={txt.title} goBackUrl={""} /> {/*TODO che url?*/}
-                    <MyProfileButton/>
-                </div>
+
+            <div className="w-100 mx-auto family-color">
+                <table className="w-100 mx-auto">
+                    <tr>
+                        <td className="w-80">
+                            <PlainNavBar title={txt.title}/>
+                        </td>
+
+                        <td className="w-10">
+                           <MyProfileButton />
+                        </td>
+
+                    </tr>
+                </table>
             </div>
+
         );
     }
 
