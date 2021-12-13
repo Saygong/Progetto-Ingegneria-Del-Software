@@ -36,7 +36,9 @@ class PostingNavBar extends React.Component {
                 {this.isCurrentUserOwner() ?(
                     <div className="col-2-10">
                         { /* TODO aggiungere editUrl e DeleteUrl in maniera intelligente */}
-                        <EditPostingButton postingId={this.props.postingId} onEditUrl={window.location.href} onDeleteUrl={""} />
+                        <EditPostingButton postingId={this.props.postingId}
+                                           onEditUrl={window.location.href}
+                                           onDeleteUrl={""} />
                     </div>
                 ):(
                     <div className="col-2-10">

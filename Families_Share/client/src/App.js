@@ -11,9 +11,10 @@ import LoadingSpinner from "./components/LoadingSpinner";
 import { LanguageProvider } from "./components/LanguageContext";
 import PrivateRoute from "./components/PrivateRoute";
 
-// Paths for Family Market routes
+// imports for Family Market routes and components
 import MarketplaceScreen from "./family-market/src/components/MarketplaceScreen/MarketplaceScreen";
 import {MarketplaceScreenRoute} from "./family-market/src/components/MarketplaceScreen/MarketplaceScreen";
+
 import PostingScreen from "./family-market/src/components/PostingScreen/PostingScreen";
 import {PostingScreenRoute} from "./family-market/src/components/PostingScreen/PostingScreen";
 
@@ -23,8 +24,8 @@ import {EditModeRoute, CreateModeRoute} from "./family-market/src/components/Edi
 import MyFavouritesScreen from "./family-market/src/components/MyFavouritesScreen/MyFavouritesScreen";
 import {MyFavouritesScreenRoute} from "./family-market/src/components/MyFavouritesScreen/MyFavouritesScreen";
 
-import MyGroupsWithPostingsScreen from "./family-market/src/components/MyPostingsScreens/MyGroupsWithPostingsScreen";
-import {MyGroupsWithPostingsScreenRoute} from "./family-market/src/components/MyPostingsScreens/MyGroupsWithPostingsScreen";
+import MyGroupsScreen from "./family-market/src/components/MyPostingsScreens/MyGroupsScreen";
+import {MyGroupsScreenRoute} from "./family-market/src/components/MyPostingsScreens/MyGroupsScreen";
 
 import MyGroupPostingsScreen from "./family-market/src/components/MyPostingsScreens/MyGroupPostingsScreen";
 import {MyGroupPostingsScreenRoute} from "./family-market/src/components/MyPostingsScreens/MyGroupPostingsScreen";
@@ -47,7 +48,7 @@ const LoadableMyFavouritesScreen = Loadable({
   loading: () => Loading
 });
 const LoadableMyGroupsWithPostingsScreen = Loadable({
-  loader: () => MyGroupsWithPostingsScreen,
+  loader: () => MyGroupsScreen,
   loading: () => Loading
 });
 const LoadableMyGroupPostingsScreen = Loadable({
@@ -433,34 +434,34 @@ class App extends React.Component {
                 component={GroupMainScreen}
               />
 
-              {/* Family Market Routes*/}
+              {/* Family Market Routes TODO loadable doesn't work*/}
               <PrivateRoute
                   exact path={MarketplaceScreenRoute}
-                  component={LoadableMarketplaceScreen}
+                  component={MarketplaceScreen}
                 />
               <PrivateRoute
                   exact path={PostingScreenRoute}
-                  component={LoadablePostingScreen}
+                  component={PostingScreen}
               />
               <PrivateRoute
                   exact path={EditModeRoute}
-                  component={LoadableEditPostingScreen}
+                  component={EditPostingScreen}
               />
               <PrivateRoute
                   exact path={CreateModeRoute}
-                  component={LoadableEditPostingScreen}
+                  component={EditPostingScreen}
               />
               <PrivateRoute
                   exact path={MyFavouritesScreenRoute}
-                  component={LoadableMyFavouritesScreen}
+                  component={MyFavouritesScreen}
               />
               <PrivateRoute
-                  exact path={MyGroupsWithPostingsScreenRoute}
-                  component={LoadableMyGroupsWithPostingsScreen}
+                  exact path={MyGroupsScreenRoute}
+                  component={MyGroupsScreen}
               />
               <PrivateRoute
                   exact path={MyGroupPostingsScreenRoute}
-                  component={LoadableMyGroupPostingsScreen}
+                  component={MyGroupPostingsScreen}
               />
 
               <Route component={NoMatchScreen} />

@@ -26,7 +26,7 @@ class MyProfileButton extends React.Component {
         const profileIconPath = "";
 
         return (
-            <button onClick={this.redirectToProfileScreen} style="height:200px;width:200px">
+            <button onClick={this.redirectToProfileScreen}>
                 <img src={profileIconPath} alt={txt.altImageText} className="center"/>
             </button>
         )

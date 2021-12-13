@@ -3517,7 +3517,7 @@
 											"top": 383,
 											"width": 319.7314453125,
 											"height": 13,
-											"text": "MyGroupsWithPostingsScreen"
+											"text": "MyGroupsScreen"
 										},
 										{
 											"_type": "LabelView",
@@ -8549,7 +8549,7 @@
 											"top": 591,
 											"width": 319.7314453125,
 											"height": 13,
-											"text": "MyGroupsWithPostingsScreen"
+											"text": "MyGroupsScreen"
 										},
 										{
 											"_type": "LabelView",
@@ -31418,7 +31418,7 @@
 											"top": 2023,
 											"width": 319.7314453125,
 											"height": 13,
-											"text": "MyGroupsWithPostingsScreen"
+											"text": "MyGroupsScreen"
 										},
 										{
 											"_type": "LabelView",
@@ -36667,7 +36667,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "MyGroupsWithPostingsScreen",
+					"name": "MyGroupsScreen",
 					"ownedElements": [
 						{
 							"_type": "UMLAssociation",

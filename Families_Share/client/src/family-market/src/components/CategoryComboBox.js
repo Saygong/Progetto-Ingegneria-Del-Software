@@ -30,7 +30,7 @@ class CategoryComboBox extends React.Component {
                         <img src={catIconPath} alt={txt.altImageText} className="center"/>
                     </div>
                     <div className="col-8-10">
-                        <ComboBox itemList={CATEGORIES}
+                        <ComboBox options={CATEGORIES}
                                   onSelect={this.handleCategoryChange}
                                   editable={false}/>
                     </div>

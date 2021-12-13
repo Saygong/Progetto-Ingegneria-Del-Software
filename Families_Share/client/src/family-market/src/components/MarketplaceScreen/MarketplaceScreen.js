@@ -1,7 +1,7 @@
 import withLanguage from "../../../../components/LanguageContext";
 import texts from "../../texts";
 import PostingsList from "../PostingsList/PostingsList";
-import FAVOURITES_MODE from "../PostingsList/PostingsListItem";
+import {FAVOURITES_MODE} from "../PostingsList/PostingsListItem";
 
 import PropTypes from "prop-types";
 import ApiHandler from "../../api/ApiHandler";
@@ -50,7 +50,6 @@ class MarketplaceScreen extends React.Component {
     }
 
     render() {
-        //TODO capire se effettivamente servono ste robe, copiate da EditPostingScreen
         const language = this.props.language;
         const txt = texts[language].marketplaceScreen;
         //TODO va messo qualche url particolare?
@@ -68,17 +67,7 @@ class MarketplaceScreen extends React.Component {
 
                 {/*TODO PostingList da controllare e finire*/}
                 <PostingsList postings={this.state.groupPostings}
-                      title={this.state.filterText === txt.placeholder ? (
-                          //Newest Post
-                          txt.postingList
-                      ):(
-                          "TODO"
-                          //TODO
-                          //testo grande e piccolo che dice il numero di risultati
-                          //Result for "filterText" in "filterCategory" ?
-                          //forse va in searchbar/category/type change handler
-                      )}
-                      itemMode={FAVOURITES_MODE} //TODO come devo inserirlo?
+                      itemMode={FAVOURITES_MODE}
                       filterText={this.state.filterText}
                       filterTnType={this.state.filterTnType}
                       filterCategory={this.state.filterCategory}/>
@@ -108,6 +97,7 @@ class MarketplaceScreen extends React.Component {
      * @param newText {string}
      */
     handleSearchBarChange(newText) {
+        console.log(newText)
         this.setState({
             filterText: newText
         });

@@ -14,10 +14,10 @@ import GroupList from "../../../../components/GroupList";
 
 /**
  * Class that represents the screen where all current user's group are displayed.
- * Clicking on one group redirects to a page where all of the group's postings made
+ * Clicking on one group redirects to a page where all the group's postings made
  * by the current user are seen.
  */
-class MyGroupsWithPostingsScreen extends React.Component {
+class MyGroupsScreen extends React.Component {
 
     /**
      * @type {ApiHandler}
@@ -93,7 +93,7 @@ class MyGroupsWithPostingsScreen extends React.Component {
      * @return {string}
      */
     static buildUrl(userId) {
-        const route = MyGroupsWithPostingsScreen.ROUTE;
+        const route = MyGroupsScreen.ROUTE;
         return route.replace(":userId", userId);
     }
 
@@ -116,19 +116,19 @@ class MyGroupsWithPostingsScreen extends React.Component {
      */
     static buildRedirectionHandler(history, userId) {
         return () => {
-            history.push(MyGroupsWithPostingsScreen.buildUrl(userId))
+            history.push(MyGroupsScreen.buildUrl(userId))
         }
     }
 }
 
-MyGroupsWithPostingsScreen.propTypes = {
+MyGroupsScreen.propTypes = {
     /**
      * Passed by the withLanguage HOC, used to determine which texts to display.
      */
     language: PropTypes.string
 }
 
-export const MyGroupsWithPostingsScreenRoute = MyGroupsWithPostingsScreen.ROUTE;
-export const buildRedirectionHandler = MyGroupsWithPostingsScreen.buildRedirectionHandler;
+export const MyGroupsScreenRoute = MyGroupsScreen.ROUTE;
+export const buildRedirectionHandler = MyGroupsScreen.buildRedirectionHandler;
 
-export default withLanguage(MyGroupsWithPostingsScreen);
+export default withLanguage(MyGroupsScreen);

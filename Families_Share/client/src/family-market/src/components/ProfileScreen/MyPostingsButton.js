@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import Log from "../../../../components/Log";
 import ListItem from "../ListItem";
-import {buildRedirectionHandler} from "../MyPostingsScreens/MyGroupsWithPostingsScreen";
+import {buildRedirectionHandler} from "../MyPostingsScreens/MyGroupsScreen";
 import {withRouter} from "react-router-dom";
 
 

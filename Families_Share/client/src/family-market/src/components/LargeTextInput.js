@@ -16,7 +16,6 @@ class LargeTextInput extends React.Component {
     }
 
     render() {
-        // TODO description è il titoletto che va sopra la textbox
         return (
             <div>
                 <h2>{this.props.description}</h2>

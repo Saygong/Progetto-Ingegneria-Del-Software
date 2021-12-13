@@ -37,7 +37,7 @@ class PostingsList extends React.Component {
      * @return {string}
      */
     buildTitle() {
-        const language = this.prop.language;
+        const language = this.props.language;
         const txt = texts[language].postingsLists.title;
 
         const nameFilter = this.props.filterText;
@@ -49,8 +49,14 @@ class PostingsList extends React.Component {
         const tnTypeFilter = this.props.filterTnType;
         const typePart = `${txt.transactionTypePart} "${tnTypeFilter}"`;
 
-        // title is like "Results for "name" in category "cat" of type "type"
-        return namePart + catPart + typePart;
+        if(!(nameFilter || catFilter || tnTypeFilter)) {
+            return "Newest posts" // TODO da aggiungere a texts e/o modificare
+        }
+        else
+        {
+            // title is like "Results for "name" in category "cat" of type "type"
+            return namePart + catPart + typePart;
+        }
     }
 
     /**
@@ -86,7 +92,7 @@ class PostingsList extends React.Component {
      * @return {boolean}
      */
     isMatchedByText(posting, filterText) {
-        // Make everything lower case to perform case insensitive research
+        // Make everything lower case to perform case-insensitive research
         const nameLower = posting.name.toLowerCase();
         const filterTextLower = filterText.toLowerCase();
 
@@ -131,10 +137,10 @@ PostingsList.propTypes = {
      */
     postings: PropTypes.arrayOf(PropTypes.instanceOf(Posting)),
 
-    /**
-     * Title attached on top of the actual list of postings
-     */
-    title: PropTypes.string,
+   ///** TODO al momento inutle perché titolo è gestito internamente
+   // * Title attached on top of the actual list of postings
+   // */
+   //title: PropTypes.string,
 
     /**
      * Mode of the list items, determines which button to show.

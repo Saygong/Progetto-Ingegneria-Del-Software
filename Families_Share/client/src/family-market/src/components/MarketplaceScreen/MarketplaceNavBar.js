@@ -21,7 +21,7 @@ class MarketplaceNavBar extends React.Component {
         return (
             <div className="col no-gutters">
                 <div className="col-8-10">
-                    <PlainNavBar title={marketplaceTitle} goBackUrl={""} /> //TODO che url?
+                    <PlainNavBar title={marketplaceTitle} goBackUrl={""} /> {/*TODO che url?*/}
                 </div>
                 <div className="col-2-10">
                     <MyProfileButton/>
