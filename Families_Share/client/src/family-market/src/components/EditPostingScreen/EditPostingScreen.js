@@ -225,7 +225,7 @@ class EditPostingScreen extends React.Component {
             type: this.state.tnType,
             contact: new Contact({
                 email: this.state.mail,
-                place: this.state.place,
+                place: this.state.place ? this.state.place : "default",
                 phone_number: this.state.phoneNumber
             })
         });
