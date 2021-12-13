@@ -30,17 +30,20 @@ class MyPostingsButton extends React.Component {
         const myPostingsButtonIconPath = "fas fa-users"
 
         return (
-            <div className="row no-gutters" role="button" onClick={this.redirectToMyPostingsScreens}>
-                <div className="col-8-10">
-                    <ListItem isIcon={true} image={myPostingsButtonIconPath} title={txt.title} description={txt.description}/>
-                </div>
-                <div className="col-2-10">
-                    <i className="fas fa-chevron-right" />
-                </div>
+            <div className="w-100" role="button" onClick={this.redirectToMyPostingsScreens}>
+                <ListItem isIcon={"fas fa-users"} image={myPostingsButtonIconPath} title={txt.title} description={txt.description}/>
             </div>
 
         );
     }
+
+    /*
+    *
+                <div className="col-2-10">
+                    <i className="fas fa-chevron-right" />
+                </div>
+    * */
+
 
     redirectToMyPostingsScreens() {
         const userId = JSON.parse(localStorage.getItem("user")).id;

@@ -29,11 +29,11 @@ class MyFavouritesButton extends React.Component {
         const myFavouritesButtonIconPath = "fas fa-heart";
 
         return (
-            <div className="row no-gutters" role="button" onClick={this.redirectToMyFavouritesScreen}>
-                <div className="col-8-10">
-                    <ListItem isIcon={true} image={myFavouritesButtonIconPath} title={txt.title} description={txt.description}/>
+            <div role="button" onClick={this.redirectToMyFavouritesScreen}>
+                <div>
+                    <ListItem isIcon={"fas fa-heart"} image={myFavouritesButtonIconPath} title={txt.title} description={txt.description}/>
                 </div>
-                <div className="col-2-10">
+                <div>
                     <i className="fas fa-chevron-right" />
                 </div>
             </div>

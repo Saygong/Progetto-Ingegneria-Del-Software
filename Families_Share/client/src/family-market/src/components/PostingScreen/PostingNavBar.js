@@ -32,11 +32,13 @@ class PostingNavBar extends React.Component {
                 </div>
                 {this.isCurrentUserOwner() ? (
                     <div className="col-2-10">
-                        { /* TODO onDeleteUrl dovrebbe essere quello di due pagine prima.
+
+                        {/* TODO onDeleteUrl dovrebbe essere quello di due pagine prima.
                                 Per prenderlo bisogna probabilmente passarlo come prop,
                                 ed eventualmente passarlo al buildRedirectionHandler di
                                 Posting screen in modo che lui poi lo passi come info aggiuntiva
-                                una volta che si viene redirezionati a PostingScreen*/}
+                                una volta che si viene redirezionati a PostingScreen */}
+
                         <EditPostingButton postingId={this.props.postingId}
                                            onEditUrl={this.props.location.pathname}
                                            onDeleteUrl={""} />

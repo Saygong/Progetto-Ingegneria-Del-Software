@@ -3336,6 +3336,12 @@ a:active {
 .whity{
   color: white;
 }
+
+.h-80px{
+  height:80px;
+}
+
+
 .w-90{
   width: 90%;
 }
@@ -3355,9 +3361,6 @@ a:active {
 .w-10{
   width: 10%;
 }
-
-
-/*--------------------Family Market------------------*/
 
 .familyMtabs{
   width:70%;
