@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import ApiHandler from "../../api/ApiHandler";
 
-import {FAMILY_MARKET_BASE_PAGE_URL} from "../../constants";
+import base_url from "../../constants";
 
 import React from "react";
 import Log from "../../../../components/Log";
@@ -104,7 +104,7 @@ class MyGroupsWithPostingsScreen extends React.Component {
      * @return {string}
      */
     static get ROUTE() {
-        return FAMILY_MARKET_BASE_PAGE_URL + "/users/:userId/groups";
+        return base_url.FAMILY_MARKET_BASE_PAGE_URL + "/users/:userId/groups";
     }
 
     /**

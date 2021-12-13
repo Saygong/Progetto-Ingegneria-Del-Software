@@ -2,7 +2,7 @@ import withLanguage from "../../../../components/LanguageContext";
 import texts from "../../texts";
 import PropTypes from "prop-types";
 import ApiHandler from "../../api/ApiHandler";
-import {FAMILY_MARKET_BASE_PAGE_URL} from  "../../constants";
+import base_url from  "../../constants";
 import React from "react";
 import Log from "../../../../components/Log";
 import PlainNavBar from "../PlainNavBar";
@@ -97,7 +97,7 @@ class MyGroupPostingsScreen extends React.Component {
      * @return {string}
      */
     static get ROUTE() {
-        return FAMILY_MARKET_BASE_PAGE_URL + "/users/:userId/groups/:groupId/postings";
+        return base_url.FAMILY_MARKET_BASE_PAGE_URL + "/users/:userId/groups/:groupId/postings";
     }
 
     /**
