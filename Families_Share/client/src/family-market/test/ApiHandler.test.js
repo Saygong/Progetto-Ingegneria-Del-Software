@@ -3,6 +3,7 @@ import Posting from "../src/api/model/Posting";
 import PostingInfo from "../src/api/model/PostingInfo";
 import Contact from "../src/api/model/Contact";
 import GroupInfo from "../src/api/model/GroupInfo";
+import chalk from "chalk";
 
 const axios = require("axios");
 axios.defaults.adapter = require('axios/lib/adapters/http');
@@ -498,7 +499,8 @@ describe('Get all group postings', function () {
             assertList(actualPostings, postings);
         }
         catch (error) {
-            console.log(error)
+            console.log(chalk.hex("#ffa500")(error));
+            throw error;
         }
         finally {
             // Teardown
@@ -549,7 +551,8 @@ describe('Get group info', function () {
             expect(actualGroup).toEqual(group);
         }
         catch (error) {
-            console.log(error)
+            console.log(chalk.hex("#ffa500")(error));
+            throw error;
         }
         finally {
             // Teardown
@@ -609,7 +612,8 @@ describe('Get group info of all user groups', function () {
                 assertList(actualGroups, groups);
             }
             catch (error) {
-                console.log(error)
+                console.log(chalk.hex("#ffa500")(error));
+                throw error;
             }
             finally {
                 // Teardown
@@ -657,7 +661,8 @@ describe('Get single posting', function () {
             strictAssertPosting(actualPosting,posting);
         }
         catch (error) {
-            console.log(error);
+            console.log(chalk.hex("#ffa500")(error));
+            throw error;
         }
         finally {
             // Teardown
@@ -715,7 +720,8 @@ describe('Create posting', function () {
             postingToTeardown = createdPosting;
         }
         catch (error) {
-            console.log(error);
+            console.log(chalk.hex("#ffa500")(error));
+            throw error;
         }
         finally {
             // Teardown
@@ -779,7 +785,8 @@ describe('Edit posting', function () {
             expect(success).toBe(true);
         }
         catch (error) {
-            console.log(error)
+            console.log(chalk.hex("#ffa500")(error));
+            throw error;
         }
         finally {
             // Teardown
@@ -830,7 +837,8 @@ describe('Delete posting', function () {
             expect(isDeleted).toBe(true);
         }
         catch (error) {
-            console.log(error)
+            console.log(chalk.hex("#ffa500")(error));
+            throw error;
         }
         finally {
             // Teardown
@@ -882,7 +890,8 @@ describe('Get all user postings of a certain group', function () {
             assertList(actualGroupPostings, postings);
         }
         catch (error) {
-            console.log(error)
+            console.log(chalk.hex("#ffa500")(error));
+            throw error;
         }
         finally {
             // Teardown
@@ -936,7 +945,8 @@ describe('Get user favourite postings', function () {
             assertList(actualPostings, favouritePostings);
         }
         catch (error) {
-            console.log(error)
+            console.log(chalk.hex("#ffa500")(error));
+            throw error;
         }
         finally {
             // Teardown
@@ -1010,7 +1020,8 @@ describe('Edit user favourite postings', function () {
             assertList(newFavouritesIds, actualIds);
         }
         catch (error) {
-            console.log(error)
+            console.log(chalk.hex("#ffa500")(error));
+            throw error;
         }
         finally {
             // Teardown
@@ -1066,7 +1077,8 @@ describe("Check if a single posting belongs to a user's favourites list", functi
             expect(isFavourite).toBe(true);
         }
         catch (error) {
-            console.log(error)
+            console.log(chalk.hex("#ffa500")(error));
+            throw error;
         }
         finally {
             // Teardown
@@ -1103,7 +1115,8 @@ describe("Check if a single posting belongs to a user's favourites list", functi
             expect(isFavourite).toBe(false);
         }
         catch (error) {
-            console.log(error)
+            console.log(chalk.hex("#ffa500")(error));
+            throw error;
         }
         finally {
             // Teardown
@@ -1143,7 +1156,8 @@ describe("Add a single posting to a user's favourites list", function () {
             expect(success).toBe(true);
         }
         catch (error) {
-            console.log(error)
+            console.log(chalk.hex("#ffa500")(error));
+            throw error;
         }
         finally {
             // Teardown
@@ -1180,7 +1194,8 @@ describe("Add a single posting to a user's favourites list", function () {
             expect(success).toBe(false);
         }
         catch (error) {
-            console.log(error)
+            console.log(chalk.hex("#ffa500")(error));
+            throw error;
         }
         finally {
             // Teardown
@@ -1220,7 +1235,8 @@ describe("Remove a single posting from a user's favourites list", function () {
             expect(success).toBe(true);
         }
         catch (error) {
-            console.log(error)
+            console.log(chalk.hex("#ffa500")(error));
+            throw error;
         }
         finally {
             // Teardown
@@ -1257,7 +1273,8 @@ describe("Remove a single posting from a user's favourites list", function () {
             expect(success).toBe(false);
         }
         catch (error) {
-            console.log(error)
+            console.log(chalk.hex("#ffa500")(error));
+            throw error;
         }
         finally {
             // Teardown
