@@ -27,11 +27,12 @@ class SimpleTextInput extends React.Component {
 
     /**
      * Called when the input text of this component is changed.
-     * @param newText {string}
+     * The argument is the event raised by the html input textbox.
+     * @param e {InputEvent}
      * @return {Promise<void>}
      */
-    async handleTextChange(newText) {
-        this.props.textChangeHandler(newText);
+    async handleTextChange(e) {
+        this.props.textChangeHandler(e.target.value);
     }
 }
 
