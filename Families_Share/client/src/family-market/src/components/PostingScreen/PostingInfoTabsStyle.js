@@ -29,7 +29,7 @@ const TabButtons = ({buttons, changeTab, activeTab}) =>{
     return(
         <div className="familyMtab-buttons">
             {buttons.map(button =>{
-                return <button className={button === activeTab? 'familyMactive': ''} onClick={()=>changeTab(button)}>{button}</button>
+                return <button className={button === activeTab? 'familyMactive': 'familyMbutton'} onClick={()=>changeTab(button)}>{button}</button>
             })}
         </div>
     )
