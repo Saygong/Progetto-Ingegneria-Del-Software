@@ -28,7 +28,6 @@ class PlainNavBar extends React.Component {
                 <div className="nav-item">
                     <h1>{this.props.title}</h1>
                 </div>
-
             </div>
         );
     }

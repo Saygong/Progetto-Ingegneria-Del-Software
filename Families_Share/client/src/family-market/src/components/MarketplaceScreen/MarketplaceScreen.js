@@ -84,6 +84,10 @@ class MarketplaceScreen extends React.Component {
 
     async componentDidMount() {//TODO da controllare (this loads postings)
         const currentGroupPostings = await this.getGroupPostings();
+
+        // TODO debug
+        //console.log(JSON.stringify(currentGroupPostings))
+
         this.setState({
             groupPostings: currentGroupPostings
         });

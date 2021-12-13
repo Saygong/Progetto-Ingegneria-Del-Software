@@ -2,16 +2,13 @@
 import withLanguage from "../../../../components/LanguageContext";
 import {buildUrl} from "./PostingScreen";
 
-
-import ApiHandler from "../../api/ApiHandler";
-import Posting from "../../api/model/Posting";
-
 import React from "react";
 import PropTypes from "prop-types";
 import Log from "../../../../components/Log";
 import PlainNavBar from "../PlainNavBar";
 import EditPostingButton from "../EditPostingButton";
 import ToggleFavouriteButton from "../ToggleFavouriteButton";
+import withRouter from "react-router-dom/es/withRouter";
 
 
 /**
@@ -33,11 +30,15 @@ class PostingNavBar extends React.Component {
                 <div className="col-8-10">
                     <PlainNavBar title={postingTitle} goBackUrl={""} />
                 </div>
-                {this.isCurrentUserOwner() ?(
+                {this.isCurrentUserOwner() ? (
                     <div className="col-2-10">
-                        { /* TODO aggiungere editUrl e DeleteUrl in maniera intelligente */}
+                        { /* TODO onDeleteUrl dovrebbe essere quello di due pagine prima.
+                                Per prenderlo bisogna probabilmente passarlo come prop,
+                                ed eventualmente passarlo al buildRedirectionHandler di
+                                Posting screen in modo che lui poi lo passi come info aggiuntiva
+                                una volta che si viene redirezionati a PostingScreen*/}
                         <EditPostingButton postingId={this.props.postingId}
-                                           onEditUrl={window.location.href}
+                                           onEditUrl={this.props.location.pathname}
                                            onDeleteUrl={""} />
                     </div>
                 ):(
@@ -81,4 +82,4 @@ PostingNavBar.propTypes = {
     language: PropTypes.string
 };
 
-export default withLanguage(PostingNavBar);
+export default withRouter(withLanguage(PostingNavBar));

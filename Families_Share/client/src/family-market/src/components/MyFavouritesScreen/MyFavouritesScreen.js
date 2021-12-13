@@ -52,7 +52,7 @@ class MyFavouritesScreen extends React.Component {
 
         return (
             <div>
-                <div style="width:100%; text-align:center; padding: 100px">
+                <div>
                     <PlainNavBar title={txt.navBar.title} goBackUrl={""}/>
                 </div>
                 <div className="w-100">

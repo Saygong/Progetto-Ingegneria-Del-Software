@@ -84,7 +84,8 @@ class PostingsListItem extends React.Component {
 
         return (
             <div className="row no-gutters">
-                <div className="col-8-10">
+                <div className="col-8-10"
+                     role="button" onClick={this.redirectToPostingScreen}>
                     <ListItem image={posting.photo}
                               title={posting.name}
                               description={posting.description}/>
