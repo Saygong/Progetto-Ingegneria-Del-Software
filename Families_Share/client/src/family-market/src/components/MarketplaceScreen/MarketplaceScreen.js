@@ -97,7 +97,6 @@ class MarketplaceScreen extends React.Component {
      * @param newText {string}
      */
     handleSearchBarChange(newText) {
-        console.log(newText)
         this.setState({
             filterText: newText
         });
