@@ -19,8 +19,7 @@ class PlainNavBar extends React.Component {
 
     render() {
         return (
-            <div className="row no-gutters">
-
+            <div>
                 <div className="col-2-10">
                     <div role="button" onClick={this.goBack}>
                         <i className="fas fa-arrow-left" />
@@ -29,7 +28,6 @@ class PlainNavBar extends React.Component {
                 <div className="col-8-10 center">
                     <h1>{this.props.title}</h1>
                 </div>
-
             </div>
         );
     }
