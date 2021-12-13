@@ -21,7 +21,7 @@ class DeletePostingButton extends React.Component {
     constructor(props) {
         super(props);
 
-        this.apiHandler = new ApiHandler("", Log);
+        this.apiHandler = new ApiHandler("", true);
         this.handleClick = this.handleClick.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
     }

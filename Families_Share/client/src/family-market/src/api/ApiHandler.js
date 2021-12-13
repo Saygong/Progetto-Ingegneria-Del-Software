@@ -1,8 +1,6 @@
-import Log from "../../../components/Log";
-
 import Posting from "./model/Posting";
-import PostingInfo from "./model/PostingInfo";
 import GroupInfo from "./model/GroupInfo";
+import PostingInfo from "./model/PostingInfo";
 import Contact from "./model/Contact";
 const axios = require("axios");
 
@@ -35,11 +33,11 @@ const axios = require("axios");
 class ApiHandler {
     /**
      *
-     * @param log {Log} Logger used by this instance to log response data.
+     * @param debug {boolean} If true, console is used to log debug data.
      * @param authToken {string} Token used to authenticate the user that makes the requests.
      *      Set in the AUTHORIZATION field of the request header.
      */
-    constructor(authToken="", log=null) {
+    constructor(authToken="", debug=true) {
         if (authToken !== "") {
             // Set default auth header with the token of the user that makes the requests
             // this is necessary because the server checks if the user is authenticated
@@ -47,8 +45,7 @@ class ApiHandler {
             axios.defaults.headers.common["Authorization"] = authToken;
         }
 
-        // TODO fix momentaneo
-        this.log = console;
+        this.debug = debug;
 
         this.getGroupPostings = this.getGroupPostings.bind(this);
         this.getPosting = this.getPosting.bind(this);
@@ -58,6 +55,7 @@ class ApiHandler {
         this.getUserPostings = this.getUserPostings.bind(this);
         this.getUserFavouritePostings = this.getUserFavouritePostings.bind(this);
         this.editUserFavourites = this.editUserFavourites.bind(this);
+        this.logError = this.logError.bind(this);
         this.logResponse = this.logResponse.bind(this);
         this.logErrorResponse = this.logErrorResponse.bind(this);
         this.logResponseInternal = this.logResponseInternal.bind(this);
@@ -110,6 +108,7 @@ class ApiHandler {
                 this.logErrorResponse(
                     `An error occurred on the request for the postings of group '${groupId}'`,
                     error.response);
+                this.logError(error);
             });
 
         return postings;
@@ -128,28 +127,13 @@ class ApiHandler {
             .then(response => {
                 this.logResponse(`Posting with id '${postingId}' has been fetched`, response);
 
-                const resData = response.data;
-                const contactData = response.data.contact;
-                const postingData = {
-                    id: resData.user_id,
-                    groupId: resData .user_id,
-                    name: resData.name,
-                    category: resData.category,
-                    description: resData.description,
-                    photo: resData.photo,
-                    type: resData.type,
-                    contact: new Contact({
-                        email: contactData.email,
-                        place: contactData.place,
-                        phoneNumber: contactData.phone_number
-                    })
-                };
                 posting = new Posting(response.data);
             })
             .catch(error => {
                 this.logErrorResponse(
                     `An error occurred on the request for the Posting with id '${postingId}'`,
                     error.response);
+                this.logError(error);
             });
 
         return posting;
@@ -183,7 +167,8 @@ class ApiHandler {
                 this.logErrorResponse(
                     `Error while creating posting for user: ${userId}, group: ${groupId}`,
                     error.response);
-                Log.error('Creation data: ' + JSON.stringify(creationData, null, 4));
+                console.log('Creation data: ' + JSON.stringify(creationData, null, 4));
+                this.logError(error);
             });
 
         return posting;
@@ -209,7 +194,8 @@ class ApiHandler {
             .catch(error => {
                 this.logErrorResponse(`Error while editing posting with id ${idToEdit}`,
                     error.response);
-                Log.error('Editing data: ' + JSON.stringify(newInfo, null, 4));
+                console.log('Editing data: ' + JSON.stringify(newInfo, null, 4));
+                this.logError(error);
             });
 
         return success;
@@ -233,6 +219,7 @@ class ApiHandler {
             .catch(error => {
                 this.logErrorResponse(`Error while deleting posting with id ${postingId}`,
                     error.response);
+                this.logError(error);
             });
 
         return success;
@@ -260,6 +247,7 @@ class ApiHandler {
             .catch(error => {
                 this.logErrorResponse(`Error while fetching group infos for user '${userId}'`,
                     error.response);
+                this.logError(error);
             });
 
         return groupInfos;
@@ -289,6 +277,7 @@ class ApiHandler {
             .catch(error => {
                 this.logErrorResponse(`Error while fetching group info for id '${groupId}'`,
                     error.response);
+                this.logError(error);
             });
 
         return groupInfo;
@@ -315,6 +304,7 @@ class ApiHandler {
             .catch(error => {
                 this.logErrorResponse("An error occurred on the request" +
                     `for the postings of user '${userId}' in group '${groupId}'`, error.response);
+                this.logError(error);
             });
 
         return postings;
@@ -364,6 +354,7 @@ class ApiHandler {
             .catch(error => {
                 this.logErrorResponse(`An error occurred on the request for the 
                 favourite ids of user '${userId}'`, error.response);
+                this.logError(error);
             });
 
         return favouritesIds;
@@ -457,6 +448,7 @@ class ApiHandler {
             .catch(error => {
                 this.logErrorResponse(`An error occurred on the request for the 
                 favourite postings of user '${userId}'`, error.response);
+                this.logError(error);
             });
 
         return success;
@@ -479,17 +471,30 @@ class ApiHandler {
     }
 
     /**
+     *
+     * @param error {Error}
+     */
+    logError(error) {
+        console.log("Error caught: " + JSON.stringify({
+            name: error.name,
+            message: error.message,
+            lineNumber: error.lineNumber,
+            stack: error.stack
+        }, null, 4));
+    }
+
+    /**
      * Logs an axios response to the app logger, only if the object was instantiated
      * with the log option enabled.
      * @param response
      */
     logResponse(response) {
-        if(this.log === null || this.log === undefined)
+        if(!this.debug)
         {
             return;
         }
 
-        this.logResponseInternal("Response data: ", response, this.log.log);
+        this.logResponseInternal("Response data: ", response, console.log);
     }
 
     /**
@@ -498,12 +503,12 @@ class ApiHandler {
      * @param errResponse
      */
     logErrorResponse(errResponse) {
-        if(this.log === null || this.log === undefined)
+        if(!this.debug)
         {
             return;
         }
 
-        this.logResponseInternal("Error response data:", errResponse, this.log.log);
+        this.logResponseInternal("Error response data:", errResponse, console.log);
     }
 
     /**
@@ -524,13 +529,13 @@ class ApiHandler {
             Data: response.data
         }
 
-       // const config = response.config;
-       // if (config !== null && config !== undefined) {
-       //     logData.RequestUrl = config.url;
-       //     logData.Method = config.method;
-       // }
+        const config = response.config;
+        if (config !== null && config !== undefined) {
+            logData.RequestUrl = config.url;
+            logData.Method = config.method;
+        }
 
-        logHandler(`${message} \n` + JSON.stringify(logData, null, 4), this);
+        logHandler(`${message} \n` + JSON.stringify(logData, null, 4));
     }
 }
 

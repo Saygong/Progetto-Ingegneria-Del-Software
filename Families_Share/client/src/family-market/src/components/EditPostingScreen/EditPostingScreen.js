@@ -59,7 +59,7 @@ class EditPostingScreen extends React.Component {
     constructor(props) {
         super(props);
 
-        this.apiHandler = new ApiHandler("", Log);
+        this.apiHandler = new ApiHandler("", true);
         this.redirectionsUrl = this.props.location.state;
         this.matchParams = this.props.match.params;
         this.state = {
@@ -220,12 +220,13 @@ class EditPostingScreen extends React.Component {
             name: this.state.name,
             category: this.state.category,
             description: this.state.description,
-            photo: this.state.photo,
+            // TODO mettere valori default o controlli che forzano inserimento
+            photo: this.state.photo ? this.state.photo : "default",
             type: this.state.tnType,
             contact: new Contact({
                 email: this.state.mail,
                 place: this.state.place,
-                phoneNumber: this.state.phoneNumber
+                phone_number: this.state.phoneNumber
             })
         });
     }
