@@ -1,5 +1,7 @@
 import withLanguage from "../../../components/LanguageContext";
+import texts from "../texts";
 
+import {TESTING} from "../constants";
 
 import ApiHandler from "../api/ApiHandler";
 
@@ -7,7 +9,6 @@ import React from "react" ;
 import PropTypes from "prop-types";
 import Log from "../../../components/Log";
 
-import texts from "../texts";
 
 
 /**
@@ -26,7 +27,7 @@ class ToggleFavouriteButton extends React.Component {
         this.isFavouriteImage = "";
         this.notFavouriteImage = "";
 
-        this.apiHandler = new ApiHandler("", true);
+        this.apiHandler = new ApiHandler("", TESTING);
         this.state = {
             isFavourite: false
         };

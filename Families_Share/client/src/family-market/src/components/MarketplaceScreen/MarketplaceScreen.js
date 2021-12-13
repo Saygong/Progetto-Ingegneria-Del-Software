@@ -1,12 +1,15 @@
 import withLanguage from "../../../../components/LanguageContext";
 import texts from "../../texts";
+
+import {TESTING} from "../../constants";
+import {FAMILY_MARKET_BASE_PAGE_URL} from "../../constants";
+
+import ApiHandler from "../../api/ApiHandler";
+
+import React from"react";
+import PropTypes from "prop-types";
 import PostingsList from "../PostingsList/PostingsList";
 import {FAVOURITES_MODE} from "../PostingsList/PostingsListItem";
-
-import PropTypes from "prop-types";
-import ApiHandler from "../../api/ApiHandler";
-import {FAMILY_MARKET_BASE_PAGE_URL} from "../../constants";
-import React from"react";
 import CreatePostingButton from "./CreatePostingButton";
 import SearchBar from "../SearchBar";
 import CategoryComboBox from "../CategoryComboBox";
@@ -35,7 +38,7 @@ class MarketplaceScreen extends React.Component {
     constructor(props) {
         super(props);
 
-        this.apiHandler = new ApiHandler("", true);
+        this.apiHandler = new ApiHandler("", TESTING);
 
         this.state = {
             groupPostings: [],

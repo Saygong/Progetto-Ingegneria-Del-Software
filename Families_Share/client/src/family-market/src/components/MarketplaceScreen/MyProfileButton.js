@@ -22,13 +22,13 @@ class MyProfileButton extends React.Component {
         const language = this.props.language;
         const txt = texts[language].profileButton;
 
-        // TODO add path
-        const profileIconPath = "";
-
         return (
-            <div className="nav-item" role="button" onClick={this.redirectToProfileScreen}>
-                <i className="fas fa-user center" />
+            <div className="w-100">
+                <div className="w-20 text-center" role="button" onClick={this.redirectToProfileScreen}>
+                    <i className="family-icon fas fa-user whity" />
+                </div>
             </div>
+
         )
     }
 

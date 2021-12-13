@@ -19,16 +19,27 @@ class PlainNavBar extends React.Component {
 
     render() {
         return (
-            <div className="w-75 navbar text-center navBarColor mx-auto">
-
-
-                <div className="nav-item" role="button" onClick={this.goBack}>
-                    <i className="ourIcon fas fa-arrow-left " />
-                </div>
-                <div className="nav-item">
-                    <h1>{this.props.title}</h1>
+            <div className="py-3 w-100 family-color navBarHeight">
+                <div className="w-80 mx-auto">
+                    <table className="w-100 mx-auto">
+                        <tr>
+                            <td>
+                                <div className="w-100">
+                                    <div className="w-25" role="button" onClick={this.goBack}>
+                                        <i className="family-icon fas fa-arrow-left whity" />
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div className="text-center pt-3">
+                                    <h1 className="whity"><strong>{this.props.title}</strong></h1>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
+
         );
     }
 

@@ -215,6 +215,14 @@ class GroupActivities extends React.Component {
           isOpen={confirmDialogIsOpen}
           handleClose={this.handleConfirmDialogClose}
         />
+        {/*<AccessMarketplaceButton />*/}
+        <hr />
+        <div className="w-100 border-dark ">
+
+          <AccessMarketplaceButton />
+
+        </div>
+        <hr />
         <div className="row no-gutters" id="groupMembersHeaderContainer">
           <div className="col-2-10">
             <button
@@ -277,6 +285,7 @@ class GroupActivities extends React.Component {
         </div>
         {showAddOptions && (
           <React.Fragment>
+
             <div
               className="row no-gutters"
               style={{
@@ -287,6 +296,7 @@ class GroupActivities extends React.Component {
                 alignItems: "center"
               }}
             >
+
               <div className=" activitiesFabLabel">{texts.newActivity}</div>
               <Fab
                 color="primary"
@@ -297,6 +307,7 @@ class GroupActivities extends React.Component {
                 <i className="fas fa-certificate" />
               </Fab>
             </div>
+
             <div
               className="row no-gutters"
               style={{
@@ -307,6 +318,7 @@ class GroupActivities extends React.Component {
                 alignItems: "center"
               }}
             >
+
               <div className=" activitiesFabLabel">{texts.newPlan}</div>
               <Fab
                 color="primary"
@@ -333,7 +345,8 @@ class GroupActivities extends React.Component {
             </div>
           )}
         </div>
-        <AccessMarketplaceButton />
+        <hr />
+
       </div>
     );
   }

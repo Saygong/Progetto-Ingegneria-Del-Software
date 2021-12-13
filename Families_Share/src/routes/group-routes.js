@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require('express')
 const config = require('config')
 const router = new express.Router()
@@ -5,17 +6,27 @@ const multer = require('multer')
 const objectid = require('objectid')
 const fr = require('find-remove')
 
-// Mandrillozzi
-//const { google } = require('googleapis')
-//const googleEmail = config.get('google.email')
-//const googleKey = config.get('google.key')
-//const scopes = 'https://www.googleapis.com/auth/calendar'
-//const jwt = new google.auth.JWT(
-//  process.env[googleEmail],
-//  null,
-//  process.env[googleKey].replace(/\\n/g, '\n'),
-//  scopes
-//)
+/** Family Market testing:
+ * this constant was created because too many requests to the calendar api
+ * in a relatively short span trigger a protection event, which
+ * disables the access to said api.
+ * Since during testing a lot of requests are made, it is convenient to
+ * avoid sending google calendar requests, specifically creation requests,
+ * else groups can't be created anymore and, consequently, tests cannot run.
+ */
+const DISABLE_CALENDAR =  process.env.DISABLE_CALENDAR === "true";
+
+const { google } = require('googleapis')
+const googleEmail = config.get('google.email')
+const googleKey = config.get('google.key')
+const scopes = 'https://www.googleapis.com/auth/calendar'
+const jwt = new google.auth.JWT(
+  process.env[googleEmail],
+  null,
+  process.env[googleKey].replace(/\\n/g, '\n'),
+  scopes
+)
+
 const path = require('path')
 const sharp = require('sharp')
 const nodemailer = require('nodemailer')
@@ -34,11 +45,13 @@ if (process.env.NODE_APP_INSTANCE === 0) {
   })
 }
 
-//Mandrillozzi
-//const calendar = google.calendar({
-//  version: 'v3',
-//  auth: jwt
-//})
+let calendar;
+if (!DISABLE_CALENDAR) {
+  calendar = google.calendar({
+    version: 'v3',
+    auth: jwt
+  })
+}
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -245,11 +258,13 @@ router.post('/', async (req, res, next) => {
     })
   })
   try {
-    //Mandrillozzi
-    //const response = await calendar.calendars.insert({ resource: newCal })
-    //group.calendar_id = response.data.id
-
-    group.calendar_id = "Mandrillozzi " + new Date().getMilliseconds();
+    if (!DISABLE_CALENDAR) {
+      const response = await calendar.calendars.insert({resource: newCal})
+      group.calendar_id = response.data.id
+    }
+    else {
+      group.calendar_id = "Calendar disabled for testing purposes " + new Date().getMilliseconds();
+    }
     await Member.create(members)
     await Group.create(group)
     await Image.create(image)
