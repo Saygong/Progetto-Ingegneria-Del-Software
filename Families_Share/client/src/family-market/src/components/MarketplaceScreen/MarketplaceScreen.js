@@ -173,8 +173,7 @@ MarketplaceScreen.propTypes = {
     language: PropTypes.string
 }
 
-export default {
-    MarketplaceScreen: withLanguage(MarketplaceScreen),
-    MarketplaceScreenRoute: MarketplaceScreen.ROUTE,
-    buildRedirectionHandler: MarketplaceScreen.buildRedirectionHandler
-};
+export const MarketplaceScreenRoute = MarketplaceScreen.ROUTE;
+export const buildRedirectionHandler = MarketplaceScreen.buildRedirectionHandler;
+
+export default withLanguage(MarketplaceScreen);

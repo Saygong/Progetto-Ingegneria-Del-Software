@@ -445,16 +445,9 @@ EditPostingScreen.propTypes = {
     language: PropTypes.string
 };
 
-export const EditPostingScreen = withLanguage(EditPostingScreen);
 export const EditModeRoute = EditPostingScreen.EDIT_MODE_ROUTE;
 export const CreateModeRoute = EditPostingScreen.CREATE_MODE_ROUTE;
 export const buildCreateModeRedirectionHandler = EditPostingScreen.buildCreateModeRedirectionHandler;
 export const buildEditModeRedirectionHandler = EditPostingScreen.buildEditModeRedirectionHandler;
 
-export default {
-    EditPostingScreen: withLanguage(EditPostingScreen),
-    EditModeRoute: EditPostingScreen.EDIT_MODE_ROUTE,
-    CreateModeRoute: EditPostingScreen.CREATE_MODE_ROUTE,
-    buildCreateModeRedirectionHandler: EditPostingScreen.buildCreateModeRedirectionHandler,
-    buildEditModeRedirectionHandler: EditPostingScreen.buildEditModeRedirectionHandler
-};
+export default withLanguage(EditPostingScreen);

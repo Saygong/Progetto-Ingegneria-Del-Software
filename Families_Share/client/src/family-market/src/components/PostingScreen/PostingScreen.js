@@ -122,9 +122,6 @@ PostingScreen.propTypes = {
 }
 
 export const buildPostingScreenRedirectionHandler = PostingScreen.buildRedirectionHandler;
-export default {
-    PostingScreen: withLanguage(PostingScreen),
-    PostingScreenRoute: PostingScreen.ROUTE,
-    buildRedirectionHandler: PostingScreen.buildRedirectionHandler,
-    buildUrl: PostingScreen.buildUrl
-};
+export const PostingScreenRoute = PostingScreen.ROUTE;
+export const buildUrl = PostingScreen.buildUrl;
+export default withLanguage(PostingScreen);

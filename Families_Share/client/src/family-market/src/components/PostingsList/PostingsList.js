@@ -5,10 +5,8 @@ import Posting from "../../api/model/Posting";
 import React from "react";
 import PropTypes from "prop-types";
 import Log from "../../../../components/Log";
-import PostingsListItemImport from "./PostingsListItem";
-
-const FAVOURITES_MODE = PostingsListItemImport.FAVOURITES_MODE;
-const PostingsListItem = PostingsListItemImport.PostingsListItem;
+import PostingsListItem from "./PostingsListItem";
+import {FAVOURITES_MODE} from "./PostingsListItem";
 
 
 class PostingsList extends React.Component {

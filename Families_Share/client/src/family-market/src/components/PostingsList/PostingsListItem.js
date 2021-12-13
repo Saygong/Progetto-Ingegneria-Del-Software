@@ -130,8 +130,7 @@ PostingsListItem.propTypes = {
     language: PropTypes.string
 };
 
-export default {
-    PostingsListItem: withRouter(withLanguage(PostingsListItem)),
-    FAVOURITES_MODE: PostingsListItem.FAVOURITES_MODE,
-    EDIT_MODE: PostingsListItem.EDIT_MODE
-};
+export const FAVOURITES_MODE = PostingsListItem.FAVOURITES_MODE;
+export const EDIT_MODE = PostingsListItem.EDIT_MODE;
+
+export default withRouter(withLanguage(PostingsListItem));

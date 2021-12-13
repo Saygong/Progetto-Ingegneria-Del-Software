@@ -5,10 +5,8 @@ import React from "react";
 import PropTypes from  "prop-types";
 import Log from "../../../../components/Log";
 import ListItem from "../ListItem";
-import MarketplaceScreenImport from "../MarketplaceScreen/MarketplaceScreen";
-
+import {buildRedirectionHandler} from "../MarketplaceScreen/MarketplaceScreen";
 import {withRouter} from "react-router-dom";
-const buildMarketplaceScreenRedirectionHandler = MarketplaceScreenImport.buildRedirectionHandler;
 
 /**
  * Class that represents the button to access the Marketplace section of Family Market.
@@ -41,7 +39,7 @@ class AccessMarketplaceButton extends React.Component {
      * Called when this button is clicked.
      */
     redirectToMarketplaceScreen() {
-        const redirectionHandler = buildMarketplaceScreenRedirectionHandler(this.props.history);
+        const redirectionHandler = buildRedirectionHandler(this.props.history);
 
         Log.info("Redirecting to MarketplaceScreen ", this);
         redirectionHandler();
