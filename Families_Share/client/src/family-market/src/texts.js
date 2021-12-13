@@ -128,15 +128,13 @@ const en = {
     },
 
     postingInfoTabs: {
+        desc: "Description:",
         product: "Product",
         place: "Where",
         contact: "Contacts",
-    },
-
-    postingInfoHeader: {
-        category: "Category:",
-        title: "Title:",
-        type: "Type:",
+        user: "User:",
+        phone: "Phone number:",
+        mail: "Email:",
     },
 }
 
@@ -271,15 +269,13 @@ const it = {
     },
 
     postingInfoTabs: {
+        desc: "Descrizione:",
         product: "Prodotto",
         place: "Dove",
         contact: "Contatti",
-    },
-
-    postingInfoHeader: {
-        category: "Categoria:",
-        title: "Titolo:",
-        type: "Tipologia:",
+        user: "Utente:",
+        phone: "Cellulare:",
+        mail: "Email:",
     },
 }
 

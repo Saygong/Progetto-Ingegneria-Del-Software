@@ -19,9 +19,7 @@ class PostingInfoHeader extends React.Component {
     }
 
     render() {
-        const language = this.props.language;
         const posting = this.props.posting;
-        const txt = texts[language].postingInfoHeader;
 
         return (
             <div>
