@@ -248,7 +248,7 @@ class EditPostingScreen extends React.Component {
 
             const {onCreateUrl} = this.redirectionUrls;
             Log.info("Creation successful, redirecting to " + onCreateUrl, this);
-            this.props.history.replace(onCreateUrl);
+            this.redirectToUrl(onCreateUrl)
         }
         else {
             // Edit mode
@@ -256,7 +256,7 @@ class EditPostingScreen extends React.Component {
 
             const {onEditUrl} = this.redirectionUrls;
             Log.info("Edit successful, redirecting to " + onEditUrl, this);
-            this.props.history.replace(onEditUrl);
+            this.redirectToUrl(onEditUrl)
         }
     }
 
@@ -267,7 +267,20 @@ class EditPostingScreen extends React.Component {
     async handleDeleteRedirection() {
         const {onDeleteUrl} = this.redirectionUrls;
         Log.info("Deletion successful, redirecting to " + onDeleteUrl, this);
-        this.props.history.replace(onDeleteUrl);
+        this.redirectToUrl(onDeleteUrl)
+    }
+
+    /**
+     * Redirects to the specified url.
+     * The redirection is done by going back with the history and then replacing,
+     * which is basically a refresh. This is because, after an edit/create/delete,
+     * previous pages have to be refreshed to avoid inconsistencies caused by the
+     * history caching their previous states.
+     * @param url {string}
+     */
+    redirectToUrl(url) {
+        this.props.history.goBack();
+        this.props.history.replace(url);
     }
 
     /**
@@ -275,6 +288,8 @@ class EditPostingScreen extends React.Component {
      * @param newPhoto {string | Blob | File}
      */
     handlePhotoChange(newPhoto) {
+
+
         this.setState({
             photo: newPhoto
         });
@@ -440,7 +455,7 @@ class EditPostingScreen extends React.Component {
              * (e.g. a posting gets deleted, you go back and the page still doesn't have
              *  that posting because it hasn't been reloaded)
              */
-            history.replace({
+            history.push({
                 pathname: EditPostingScreen.buildCreateModeUrl(userId, groupId),
                 state: {
                     onCreateUrl: onCreateUrl
