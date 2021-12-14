@@ -10,7 +10,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import PlainNavBar from "../PlainNavBar";
 import PostingsList from "../PostingsList/PostingsList";
-import Log from "../../../../components/Log";
+import {EDIT_MODE} from "../PostingsList/PostingsListItem";
+import {stringify, Log} from "../../utils";
 
 
 /**
@@ -25,7 +26,7 @@ class MyGroupPostingsScreen extends React.Component {
     matchParams;
 
     /**
-     * @type {{postings: Posting[]}}
+     * @type {{group_name: string, postings: Posting[]}}
      */
     state;
 
@@ -52,10 +53,8 @@ class MyGroupPostingsScreen extends React.Component {
         return (
             <div>
                 <div>
-                    <PlainNavBar title={txt.prefix + this.state.group_name} goBackLocation={""}/>
-                </div>
-                <div>
-                    <PostingsList title={""} postings={this.state.postings} />
+                    <PlainNavBar title={txt.prefix + this.state.group_name}/>
+                    <PostingsList postings={this.state.postings} itemMode={EDIT_MODE}/>
                 </div>
             </div>
         );
@@ -63,8 +62,10 @@ class MyGroupPostingsScreen extends React.Component {
     }
 
     async componentDidMount() {
-
         const currentGroupPostings = await this.fetchPostings();
+
+        Log.info("Group postings fetched: " + stringify(currentGroupPostings));
+
         const group_info = await this.apiHandler.getGroupInfo(this.matchParams.groupId);
 
         this.setState({

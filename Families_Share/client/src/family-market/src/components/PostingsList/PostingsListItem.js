@@ -3,7 +3,7 @@ import Posting from "../../api/model/Posting";
 
 import React from "react";
 import PropTypes from "prop-types";
-import Log from "../../../../components/Log";
+import {stringify, Log} from "../../utils";
 import ListItem from "../ListItem";
 import EditPostingButton from "../EditPostingButton";
 import ToggleFavouriteButton from "../ToggleFavouriteButton";

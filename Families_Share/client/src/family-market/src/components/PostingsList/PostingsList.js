@@ -9,7 +9,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import PostingsListItem from "./PostingsListItem";
 import {FAVOURITES_MODE} from "./PostingsListItem";
-import Log from "../../../../components/Log";
+import {stringify, Log} from "../../utils";
+
+const CATEGORY_NOT_SET = "not-set";
+const TN_TYPE_NOT_SET = "not-set";
 
 
 class PostingsList extends React.Component {
@@ -74,7 +77,8 @@ class PostingsList extends React.Component {
      * @return {boolean}
      */
     isCategoryFilterValid() {
-        return this.props.filterCategory !== NO_CATEGORY[this.props.language];
+        return this.props.filterCategory !== NO_CATEGORY[this.props.language]
+            && this.props.filterCategory !== CATEGORY_NOT_SET;
     }
 
     /**
@@ -83,7 +87,8 @@ class PostingsList extends React.Component {
      * @return {boolean}
      */
     isTnTypeFilterValid() {
-        return this.props.filterTnType !== NO_TN_TYPE[this.props.language];
+        return this.props.filterTnType !== NO_TN_TYPE[this.props.language]
+            && this.props.filterTnType !== TN_TYPE_NOT_SET;
     }
 
     /**
@@ -166,11 +171,10 @@ class PostingsList extends React.Component {
 
 PostingsList.defaultProps = {
     postings: [],
-    title: "",
     itemMode: FAVOURITES_MODE,
     filterText: "",
-    filterTnType: "",
-    filterCategory: ""
+    filterTnType: TN_TYPE_NOT_SET,
+    filterCategory: CATEGORY_NOT_SET
 }
 
 PostingsList.propTypes = {
@@ -187,7 +191,7 @@ PostingsList.propTypes = {
     /**
      * Mode of the list items, determines which button to show.
      */
-    itemMode: PropTypes.string,
+    itemMode: PropTypes.string.isRequired,
 
     /**
      * Text used to filter posts based on their name.

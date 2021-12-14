@@ -11,7 +11,7 @@ import PropTypes from "prop-types";
 import PostingNavBar from "./PostingNavBar";
 import PostingInfo from "./PostingInfo";
 import Log from "../../../../components/Log";
-import {stringify} from "../utils";
+import {stringify} from "../../utils";
 
 
 /**

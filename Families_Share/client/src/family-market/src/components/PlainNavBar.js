@@ -2,7 +2,7 @@ import withLanguage from "../../../components/LanguageContext";
 
 import React from "react";
 import PropTypes from "prop-types";
-import Log from "../../../components/Log";
+import {stringify, Log} from "../utils";
 import {withRouter} from "react-router-dom";
 
 
@@ -49,7 +49,8 @@ class PlainNavBar extends React.Component {
      */
     goBack() {
         // If goBackUrl has not been set, simply go back one page
-        if (this.props.goBackLocation.pathname === "") {
+        const {goBackLocation} = this.props;
+        if (goBackLocation.pathname === "") {
             Log.info("Redirecting to the previous page...", this);
 
             this.props.history.goBack();
@@ -57,7 +58,7 @@ class PlainNavBar extends React.Component {
         else
         {
             const redirection = this.props.goBackLocation;
-            Log.info(`Redirecting to ${redirection}the previous page...`, this);
+            Log.info(`Redirecting to ${stringify(redirection)} the previous page...`, this);
 
             // Replace and not push, else the history stack gets polluted
             this.props.history.replace(redirection);

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import LazyLoad from "react-lazyload";
 import GroupListItem from "./GroupListItem";
 import withLanguage from "./LanguageContext";
-import Log from "./Log";
+import {stringify, Log} from "../family-market/src/utils";
 // Needed to handle Family Market redirection
 import {useLocation} from "react-router-dom";
 import {useHistory} from "react-router-dom";
@@ -46,6 +46,7 @@ const GroupList = ({ groupIds }) => {
     const history = useHistory();
     const isFamilyMarketRedirect = currentLocation.pathname.includes(FAMILY_MARKET_BASE_PAGE_URL)
 
+    Log.info("Is family market redirect?" + isFamilyMarketRedirect);
 
     return (
         <div className="suggestionsContainer">

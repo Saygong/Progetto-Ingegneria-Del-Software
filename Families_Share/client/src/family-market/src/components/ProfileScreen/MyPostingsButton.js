@@ -4,7 +4,7 @@ import texts from "../../texts";
 import PropTypes from "prop-types";
 
 import React from "react";
-import Log from "../../../../components/Log";
+import {stringify, Log} from "../../utils";
 import ListItem from "../ListItem";
 import {buildRedirectionHandler} from "../MyPostingsScreens/MyGroupsScreen";
 import {withRouter} from "react-router-dom";
@@ -40,20 +40,11 @@ class MyPostingsButton extends React.Component {
         );
     }
 
-    /*
-    *
-                <div className="col-2-10">
-                    <i className="fas fa-chevron-right" />
-                </div>
-    * */
-
-
     redirectToMyPostingsScreens() {
         const userId = JSON.parse(localStorage.getItem("user")).id;
         const redirectionHandler = buildRedirectionHandler(this.props.history, userId);
 
-        Log.info("Redirecting to MyGroupsWithPostingsScreen ", this);
-
+        Log.info("Redirecting to MyGroupsScreen ", this);
         redirectionHandler();
     }
 }

@@ -10,7 +10,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import PlainNavBar from "../PlainNavBar";
 import GroupList from "../../../../components/GroupList";
-import Log from "../../../../components/Log";
+import {stringify, Log} from "../../utils";
 
 
 /**
@@ -50,12 +50,12 @@ class MyGroupsScreen extends React.Component {
     render() {
         const language = this.props.language;
         const txt = texts[language].myGroupsWithPostingsScreen;
-        const group_ids = this.state.groups.map((x) => x.group_id);
+        const group_ids = this.state.groups.map((x) => x.id);
 
         return (
             <div>
                 <div>
-                    <PlainNavBar title={txt.title} goBackLocation={""}/>
+                    <PlainNavBar title={txt.title}/>
                 </div>
                 <div>
                     <p> {txt.instruction} </p>
@@ -68,13 +68,12 @@ class MyGroupsScreen extends React.Component {
     }
 
     async componentDidMount() {
-
         const userGroups = await this.fetchUserGroups()
+        Log.info("User groups: " + stringify(userGroups), this)
 
         this.setState({
             groups: userGroups,
         });
-
     }
 
     /**
