@@ -30,7 +30,9 @@ class SearchBar extends React.Component {
                 <table className="w-100 mx-auto">
                     <tr>
                         <td className="w-10icon">
-                            <img src={searchBarIconPath} alt={txt.altImageText} className=""/>
+                            <i className="family-icon fas fa-search"/>
+                            {/*TODO da cancellare
+                            <img src={searchBarIconPath} alt={txt.altImageText} className=""/>*/}
                         </td>
                         <td className="w-80Market">
                             {/*Description is empty in the searchbar*/}

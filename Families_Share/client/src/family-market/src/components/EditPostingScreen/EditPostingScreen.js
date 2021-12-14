@@ -124,6 +124,7 @@ class EditPostingScreen extends React.Component {
                                 placeholder={txt.descriptionInput.placeholder}
                                 textChangeHandler={this.handleDescriptionChange} />
 
+                {/*TODO dove sta sta roba*/}
                 <PlaceInput place={this.state.place}
                             placeChangeHandler={this.handlePlaceChange} />
 
