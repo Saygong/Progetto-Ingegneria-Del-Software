@@ -284,7 +284,7 @@ const it = {
     },
 
     postingInfo: {
-        altImageText: "Segnapost immagine annuncio"
+        altImageText: "Segnaposto immagine annuncio"
     },
 
     myGroupsPostingsScreen: {
