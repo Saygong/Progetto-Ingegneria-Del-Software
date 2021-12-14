@@ -63,7 +63,7 @@ const ProfileInfo = ({ language, profile }) => {
 
       {/* Family Market buttons */}
       <MyPostingsButton />
-      <hr />
+
       <MyFavouritesButton />
 
 

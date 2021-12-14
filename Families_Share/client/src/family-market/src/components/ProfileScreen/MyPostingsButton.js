@@ -30,9 +30,11 @@ class MyPostingsButton extends React.Component {
         const myPostingsButtonIconPath = "fas fa-users"
 
         return (
-            <div className="w-100" role="button" onClick={this.redirectToMyPostingsScreens}>
+
+            <div className="pt-3" role="button" onClick={this.redirectToMyPostingsScreens}>
                 <ListItem isIcon={true} image={myPostingsButtonIconPath}
                           title={txt.title} description={txt.description}/>
+                <hr />
             </div>
 
         );
