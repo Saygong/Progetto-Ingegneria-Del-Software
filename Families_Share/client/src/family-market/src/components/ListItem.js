@@ -66,7 +66,7 @@ class ListItem extends React.Component {
 }
 
 ListItem.defaultProps = {
-    isIcon: "",
+    isIcon: false,
     image: "",
     title: "",
     description: ""

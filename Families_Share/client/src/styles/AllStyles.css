@@ -3346,6 +3346,10 @@ a:active {
   height:80px;
 }
 
+.w-95 {
+  width: 95%;
+}
+
 .w-90{
   width: 90%;
 }
@@ -3384,18 +3388,18 @@ a:active {
   margin-right: 0;
 }
 
-.familyMtabs{
+.family-m-tabs{
   text-align:center;
   margin: 0 auto;
   left:0;
   right:0;
 }
 
-.familyMtab-buttons{
+.family-m-tab-buttons{
   margin-bottom:30px;
 }
 
-.familyMbutton{
+.family-m-button{
   left:0;
   right:0;
   margin: 0 auto;
@@ -3409,7 +3413,7 @@ a:active {
   transition:all ease-in-out .3s;
 }
 
-.familyMactive{
+.family-m-active{
   background-color: #00838F;
   border:none;
   outline:none;
@@ -3417,9 +3421,13 @@ a:active {
   font-size:20px;
 }
 
-.familyMbutton:hover {
+.family-m-button:hover {
   background-color: #31736e;
   color:white;
+}
+
+.family-m-hr {
+  border: 1px #acaab0;
 }
 
 .infoHeaderTop{
@@ -3430,7 +3438,7 @@ a:active {
 
 .infoHeaderMid{
   text-align: center;
-  margin: 5px 0px 5px 0px;
+  margin: 5px 0 5px 0;
 }
 
 .infoHeaderBot{
@@ -3449,14 +3457,14 @@ a:active {
 .img-8-10 {
   width: 90%;
   display: block;
-  margin-left: auto;
-  margin-right: auto;
+  margin: auto;
 }
 
 .posting-list-item-container {
   width: 95%;
+  height: 95%;
   margin: auto;
-  border: 1px solid #acaeb0;
+  border-bottom: 1px #acaab0;
 }
 
 .buttonCreatePosting {

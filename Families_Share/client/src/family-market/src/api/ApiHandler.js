@@ -2,8 +2,9 @@ import Posting from "./model/Posting";
 import GroupInfo from "./model/GroupInfo";
 import PostingInfo from "./model/PostingInfo";
 import Contact from "./model/Contact";
+import {stringify} from "../components/utils";
 import chalk from "chalk";
-const axios = require("axios");
+import axios from "axios";
 
 
 /**
@@ -166,7 +167,7 @@ class ApiHandler {
                 this.logErrorResponse(
                     `Error while creating posting for user: ${userId}, group: ${groupId}`,
                     error.response);
-                this.logMessage('Creation data: ' + this.stringify(creationData));
+                this.logMessage('Creation data: ' + stringify(creationData));
                 this.logError(error);
             });
 
@@ -193,7 +194,7 @@ class ApiHandler {
             .catch(error => {
                 this.logErrorResponse(`Error while editing posting with id ${idToEdit}`,
                     error.response);
-                this.logMessage('Editing data: ' + this.stringify(newInfo));
+                this.logMessage('Editing data: ' + stringify(newInfo));
                 this.logError(error);
             });
 
@@ -463,21 +464,12 @@ class ApiHandler {
     }
 
     /**
-     * Returns the string version of the provided object,
-     * beautified for readability.
-     * @param object {Object}
-     */
-    stringify(object) {
-        return JSON.stringify(object, null, 4)
-    }
-
-    /**
      * Logs a generic error,
      * only if the debug attribute of this instance was set to true
      * @param error {Error}
      */
     logError(error) {
-        this.logMessage("Error caught: " + this.stringify({
+        this.logMessage("Error caught: " + stringify({
             name: error.name,
             message: error.message,
             lineNumber: error.lineNumber,
@@ -540,7 +532,7 @@ class ApiHandler {
         logData.StatusText = response.statusText;
         logData.Data = response.data;
 
-        this.logMessage(`${message} \n` + this.stringify(logData), chalkTransformer);
+        this.logMessage(`${message} \n` + stringify(logData), chalkTransformer);
     }
 
     /**

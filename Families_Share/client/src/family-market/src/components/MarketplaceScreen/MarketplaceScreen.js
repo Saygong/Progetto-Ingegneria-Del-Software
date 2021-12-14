@@ -65,11 +65,12 @@ class MarketplaceScreen extends React.Component {
             <div className="mx-auto w-8 mt-2">
                 <MarketplaceNavBar/>
 
-                <div className="w-75 mx-auto">
+                <div className="w-95 mx-auto">
                     <SearchBar text={this.state.filterText} textChangeHandler={this.handleSearchBarChange}/>
                     <CategoryComboBox categoryChangeHandler={this.handleCategoryChange}/>
                     <TransactionTypeComboBox tnTypeChangeHandler={this.handleTransactionTypeChange}/>
-                    <CreatePostingButton onCreateRedirection={onCreateRedirection}/> <hr/>
+                    <CreatePostingButton onCreateRedirection={onCreateRedirection}/>
+                    <hr/>
                 </div>
 
                 <PostingsList postings={this.state.groupPostings}
@@ -83,9 +84,6 @@ class MarketplaceScreen extends React.Component {
 
     async componentDidMount() {//TODO da controllare (this loads postings)
         const currentGroupPostings = await this.getGroupPostings();
-
-        // TODO debug
-        //console.log(JSON.stringify(currentGroupPostings))
 
         this.setState({
             groupPostings: currentGroupPostings

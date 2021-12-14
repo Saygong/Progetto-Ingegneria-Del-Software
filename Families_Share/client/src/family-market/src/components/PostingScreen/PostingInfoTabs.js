@@ -34,7 +34,7 @@ class PostingInfoTabs extends React.Component {
 
         return (
             <div>
-                <div className="familyMtabs">
+                <div className="family-m-tabs">
                     <Tabs>
                         <Tab label={txt.product}>
                             <div className="">
