@@ -3433,10 +3433,6 @@ a:active {
 }
 
 .img-8-10 {
-  width: 80%;
-}
-
-.img_postingInfo{
   width: 90%;
   display: block;
   margin-left: auto;
@@ -3447,11 +3443,4 @@ a:active {
   width: 95%;
   margin: auto;
   border: 1px solid #acaeb0;
-}
-
-.box{
-  /*TODO vorrei fare il resize e far diventare quadro l'immagine*/
-  /*display: inline-block;*/
-  /*position: relative;*/
-  /*width: 100%;*/
 }

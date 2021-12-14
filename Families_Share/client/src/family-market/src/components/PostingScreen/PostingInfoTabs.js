@@ -62,7 +62,7 @@ class PostingInfoTabs extends React.Component {
                     </Tabs>
                 </div>
             </div>
-    );
+        );
     }
 }
 
