@@ -38,6 +38,20 @@ if (process.env.CITYLAB !== 'ALL') {
   })
 }
 
+// Set request max size to 16MB, since it is the max size that
+// MongoDb allows for a single document (collection entry)
+const MAX_REQUEST_SIZE = "16mb";
+app.use(express.json({limit: MAX_REQUEST_SIZE}));
+app.use(express.urlencoded({limit: MAX_REQUEST_SIZE}));
+
+// Allow cross-origin
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  res.header("Access-Control-Allow-Methods", "*");
+  next();
+});
+
 app.use(async (req) => {
   try {
     let token = req.headers.authorization
@@ -52,13 +66,6 @@ app.use(async (req) => {
     return req.next()
   }
 })
-
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-  res.header("Access-Control-Allow-Methods", "*");
-  next();
-});
 
 app.use(compression())
 

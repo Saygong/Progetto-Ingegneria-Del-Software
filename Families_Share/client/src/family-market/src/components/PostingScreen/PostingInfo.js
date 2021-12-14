@@ -23,15 +23,14 @@ class PostingInfo extends React.Component {
         const language = this.props.language;
         const txt = texts[language].postingInfo;
 
-        const instanceOfPosting = this.props.posting;
-        const image = instanceOfPosting.image;
+        const currentPosting = this.props.posting;
         //TODO non so ma se metto image in src={image} non viene contato come errore e non mostra monke
 
         return (
             /* Dimension: 10vh total -> (approx: 1vh Bar) + 4vh image + 2vh Header + 3vh Tabs*/
             <div>
                 {/*<img src={image}  alt={txt.altImageText}/>*/}
-                <img className="img_postingInfo" src={require('../../../../images/posting_default_photo.png')} onerror="this.onerror = null; this.src={require('../../../../images/posting_default_photo.png')}"/>
+                <img className="img_postingInfo" src={currentPosting.photo} alt={txt.altImageText}/>
                 <hr/>
                 <PostingInfoHeader posting={this.props.posting}/>
                 <hr/>

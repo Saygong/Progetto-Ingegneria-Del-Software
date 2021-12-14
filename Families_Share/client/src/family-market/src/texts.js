@@ -101,7 +101,8 @@ const en = {
     },
 
     imageInput: {
-        dropzoneText: "Drop an image for the posting here"
+        dropzoneText: "Drop an image for the posting here",
+        altImageText: "Selected image"
     },
 
     marketplaceScreen: {
@@ -254,7 +255,8 @@ const it = {
     },
 
     imageInput: {
-        dropzoneText: "Rilascia qui un' immagine per l'annuncio: "
+        dropzoneText: "Rilascia qui un' immagine per l'annuncio: ",
+        altImageText: "Immagine selezionata"
     },
 
     marketplaceScreen: {

@@ -288,8 +288,6 @@ class EditPostingScreen extends React.Component {
      * @param newPhoto {string | Blob | File}
      */
     handlePhotoChange(newPhoto) {
-
-
         this.setState({
             photo: newPhoto
         });
@@ -426,6 +424,8 @@ class EditPostingScreen extends React.Component {
              * (e.g. a posting gets deleted, you go back and the page still has that posting
              *  because it hasn't been reloaded)
              */
+            // TODO aggiungere non solo path, ma anche stato, perché alcune pagine potrebbero averne bisogno.
+            //      richiedere oggetto tipo {pathname: "", state: {}}
             history.replace({
                 pathname: EditPostingScreen.buildEditModeUrl(postingId),
                 state: {

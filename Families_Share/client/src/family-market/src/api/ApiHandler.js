@@ -5,20 +5,6 @@ import Contact from "./model/Contact";
 import chalk from "chalk";
 const axios = require("axios");
 
-/** TODO capire come va gestito il "data:image/<format>;base64,".
- * https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readAsDataURL
- * questo si occupa già di aggiungere i metadati (data:image... ecc.) e prende come argomento
- * un blob, che è quello che viene restituito da componenti html che accettano un file
- * (vedi react dropzone). Tu gli passi il blob e lui converte.
- * Di più su questo tutorial:
- * https://medium.com/js-dojo/how-to-upload-base64-images-in-vue-nodejs-4e89635daebc
- * For image compression:
- * https://stackoverflow.com/questions/14672746/how-to-compress-an-image-via-javascript-in-the-browser
- * Probabilmente ha senso mettere una size limit all'utente e far comprimere le immagini lato client
- * in maniera asincrona, in modo che non sono pesantissime da inviare e salvare.
- *
- * TODO mettere file api.config in cui si mette dimensione max immagine e rapporto compressione?
- */
 
 /**
  * Class for handling requests and responses to/from the server side api
