@@ -1,6 +1,6 @@
 import withLanguage from "../../../../components/LanguageContext";
 
-import {TESTING} from "../../constants";
+import {NO_CATEGORY, NO_TN_TYPE, TESTING} from "../../constants";
 import {FAMILY_MARKET_BASE_PAGE_URL} from "../../constants";
 
 import ApiHandler from "../../api/ApiHandler";
@@ -43,8 +43,8 @@ class MarketplaceScreen extends React.Component {
         this.state = {
             groupPostings: [],
             filterText: "",
-            filterTnType: "",
-            filterCategory: "",
+            filterTnType: NO_TN_TYPE[this.props.language],
+            filterCategory: NO_CATEGORY[this.props.language],
         };
 
         this.getGroupPostings = this.getGroupPostings.bind(this);

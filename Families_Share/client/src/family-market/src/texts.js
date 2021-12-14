@@ -62,10 +62,23 @@ const en = {
     },
 
     postingsLists: {
-        title: {
-            namePart: "Results for",
-            categoryPart: "in category",
-            transactionTypePart: "of type"
+        defaultTitle: "Newest posts",
+        titleBuilder: (name, category, tnType) => {
+            let title = "Results"
+
+            if (name) {
+                title += ` for '${name}'`;
+            }
+
+            if (category) {
+                title += ` in '${category}'`;
+            }
+
+            if (tnType) {
+                title += ` of type '${tnType}'`;
+            }
+
+            return title;
         }
     },
 
@@ -204,10 +217,23 @@ const it = {
     },
 
     postingsLists: {
-        title: {
-            namePart: "Risultati per",
-            categoryPart: "nella categoria",
-            transactionTypePart: "di tipo"
+        defaultTitle: "Newest posts",
+        titleBuilder: (name, category, tnType) => {
+            let title = "Risultati"
+
+            if (name) {
+                title += ` per '${name}'`;
+            }
+
+            if (category) {
+                title += ` in '${category}'`;
+            }
+
+            if (tnType) {
+                title += ` di tipo '${tnType}'`;
+            }
+
+            return title;
         }
     },
 

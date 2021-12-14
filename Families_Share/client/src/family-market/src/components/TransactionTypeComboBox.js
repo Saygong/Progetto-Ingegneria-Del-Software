@@ -1,11 +1,13 @@
 import withLanguage from "../../../components/LanguageContext";
+import texts from "../texts";
 
-import {TN_TYPES} from "../constants";
+import {TN_TYPES, NO_TN_TYPE} from "../constants";
+
 import React from "react";
 import PropTypes from "prop-types";
-import Log from "../../../components/Log";
 import ComboBox from "react-responsive-combo-box";
-import texts from "../texts";
+import Log from "../../../components/Log";
+
 
 class TransactionTypeComboBox extends React.Component {
 
@@ -19,7 +21,7 @@ class TransactionTypeComboBox extends React.Component {
         // Get texts based on current language
         const language = this.props.language;
         const txt = texts[language].transactionTypeComboBox;
-        /*TODO add transaction icon*/
+        /*TODO add transaction icon and change img to icon*/
         const tnIconPath = "";
 
         return (
@@ -30,7 +32,8 @@ class TransactionTypeComboBox extends React.Component {
                         <img src={tnIconPath} alt={txt.altImageText} className="center"/>
                     </div>
                     <div className="col-8-10">
-                        <ComboBox options={TN_TYPES}
+                        <ComboBox options={TN_TYPES[language]}
+                                  defaultValue={NO_TN_TYPE[language]}
                                   onSelect={this.handleTnTypeChange}
                                   editable={false}/>
                     </div>
