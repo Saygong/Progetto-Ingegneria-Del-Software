@@ -56,7 +56,10 @@ class MarketplaceScreen extends React.Component {
     render() {
         // It is fine if, after the user creates a posting, he gets redirected to this page,
         // because it will be reloaded and the new posting will be shown.
-        const onCreateUrl = this.props.location.pathname;
+        const onCreateRedirection = {
+            pathname: this.props.location.pathname,
+            state: this.props.location.state
+        };
 
         return (
             <div className="mx-auto w-8 mt-2">
@@ -67,7 +70,7 @@ class MarketplaceScreen extends React.Component {
                     <CategoryComboBox categoryChangeHandler={this.handleCategoryChange}/>
                     <TransactionTypeComboBox tnTypeChangeHandler={this.handleTransactionTypeChange}/>
 
-                    <CreatePostingButton onCreateUrl={onCreateUrl}/> <hr/>
+                    <CreatePostingButton onCreateRedirection={onCreateRedirection}/> <hr/>
                 </div>
 
                 <PostingsList postings={this.state.groupPostings}

@@ -52,7 +52,7 @@ class MyGroupPostingsScreen extends React.Component {
         return (
             <div>
                 <div>
-                    <PlainNavBar title={txt.prefix + this.state.group_name} goBackUrl={""}/>
+                    <PlainNavBar title={txt.prefix + this.state.group_name} goBackLocation={""}/>
                 </div>
                 <div>
                     <PostingsList title={""} postings={this.state.postings} />

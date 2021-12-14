@@ -55,7 +55,7 @@ class MyFavouritesScreen extends React.Component {
         return (
             <div>
                 <div>
-                    <PlainNavBar title={txt.navBar.title} goBackUrl={""}/>
+                    <PlainNavBar title={txt.navBar.title} goBackLocation={""}/>
                 </div>
                 <div className="w-100">
                     { noPostings ? (
