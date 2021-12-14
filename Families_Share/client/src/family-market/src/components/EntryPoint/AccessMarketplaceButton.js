@@ -24,27 +24,27 @@ class AccessMarketplaceButton extends React.Component {
     render() {
         const language = this.props.language;
         const txt = texts[language].accessMarketplaceButton;
-        // TODO rifare con ListItem??
+
 
         return (
             <div>
-                <div role="button" onClick={this.redirectToMarketplaceScreen} className="mx-auto w-40">
-                    <table className="w-50 mx-auto">
-                        <tr>
-                            <td >
-                                <div className="w-50 text-center">
-                                    <h5>Marketplace:</h5>
-                                </div>
-                            </td>
+                <div role="button" onClick={this.redirectToMarketplaceScreen} >
 
-                            <td >
-                                <div className="pr-0">
-                                    <i class="family-icon" className="fas fa-balance-scale" />
+                    <div className="w-100 margin-left-10">
+                        <h5>Marketplace:</h5>
+                    </div>
+
+                    <table className="w-100">
+                        <tr>
+                            <td className="w-10"/>
+                            <td className="w-10">
+                                <div>
+                                    <i className="family-icon fas fa-balance-scale"/>
                                 </div>
                             </td>
-                            <td >
+                            <td>
                                 <div className="">
-                                    <h2 className="font-italic">{txt.title}</h2>
+                                    <h2 className="font-italic w-100">{txt.title}</h2>
                                     <h5>{txt.description}</h5>
                                 </div>
                             </td>
