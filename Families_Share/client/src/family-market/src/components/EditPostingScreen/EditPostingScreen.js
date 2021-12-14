@@ -105,10 +105,8 @@ class EditPostingScreen extends React.Component {
          */
 
         return (
-            <div>
-                <PlainNavBar title={title} goBackLocation={this.redirections.goBackRedirection}/>
             <div className="titles">
-                <PlainNavBar title={title} />
+                <PlainNavBar title={title} goBackLocation={this.redirections.goBackRedirection}/>
                 <ImageInput currentImage={this.state.photo}
                             imageChangeHandler={this.handlePhotoChange} />
 
@@ -146,6 +144,7 @@ class EditPostingScreen extends React.Component {
             </div>
         );
     }
+
 
     async componentDidMount() {
         // Fetch the posting info to load only in edit mode
@@ -191,7 +190,7 @@ class EditPostingScreen extends React.Component {
         const creationInfo = this.getPostingInfoFromState()
         const {userId, groupId} = this.matchParams;
 
-        console.log(`Creating posting for user: ${userId} in group ${groupId} with info: 
+        console.log(`Creating posting for user: ${userId} in group ${groupId} with info:
         ${stringify(creationInfo)}`, this);
         await this.apiHandler.createPosting(userId, groupId, creationInfo);
     }
@@ -204,7 +203,7 @@ class EditPostingScreen extends React.Component {
         const idToEdit = this.matchParams.postingId;
         const editedInfo = this.getPostingInfoFromState()
 
-        console.log(`Editing posting [id]${idToEdit} with info: 
+        console.log(`Editing posting [id]${idToEdit} with info:
         ${stringify(editedInfo)}`);
         await this.apiHandler.editPosting(idToEdit, editedInfo);
     }
@@ -216,7 +215,7 @@ class EditPostingScreen extends React.Component {
     async deletePosting() {
         const idToDelete = this.matchParams.postingId;
 
-        
+
         console.log(`Deleting posting [id]${idToDelete}`);
         await this.apiHandler.deletePosting(idToDelete);
     }
