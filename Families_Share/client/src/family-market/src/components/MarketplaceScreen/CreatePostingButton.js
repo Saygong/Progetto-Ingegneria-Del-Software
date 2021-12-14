@@ -41,10 +41,15 @@ class CreatePostingButton extends React.Component {
     redirectToEditPostingScreen() {
         const userId = JSON.parse(localStorage.getItem("user")).id;
         const groupId = JSON.parse(localStorage.getItem("group")).id;
+        const goBackRedirection = {
+            pathname: this.props.location.pathname,
+            state: this.props.location.state
+        };
         const onCreateRedirection = this.props.onCreateRedirection;
 
         const redirectionHandler =
-            buildCreateModeRedirectionHandler(this.props.history, userId, groupId, onCreateRedirection);
+            buildCreateModeRedirectionHandler(this.props.history, userId, groupId,
+                goBackRedirection, onCreateRedirection);
 
         redirectionHandler();
     }

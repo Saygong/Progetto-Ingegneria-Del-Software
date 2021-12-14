@@ -49,12 +49,17 @@ class MyGroupPostingsScreen extends React.Component {
     render() {
         const language = this.props.language;
         const txt = texts[language].myGroupsPostingsScreen;
+        const noPostings = (this.state.postings.length === 0);
 
         return (
             <div>
-                <div>
+                <div className="w-95">
                     <PlainNavBar title={txt.prefix + this.state.group_name}/>
-                    <PostingsList postings={this.state.postings} itemMode={EDIT_MODE}/>
+                    { noPostings ? (
+                        <h1>{txt.noPostingsText}</h1>
+                    ) : (
+                        <PostingsList postings={this.state.postings}/>)
+                    }
                 </div>
             </div>
         );

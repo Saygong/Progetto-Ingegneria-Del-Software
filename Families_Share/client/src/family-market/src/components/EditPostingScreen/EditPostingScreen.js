@@ -478,6 +478,7 @@ class EditPostingScreen extends React.Component {
             history.replace({
                 pathname: EditPostingScreen.buildCreateModeUrl(userId, groupId),
                 state: {
+                    goBackRedirection: goBackRedirection,
                     onCreateRedirection: onCreateRedirection
                 }
             });

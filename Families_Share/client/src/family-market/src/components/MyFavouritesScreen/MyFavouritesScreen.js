@@ -55,13 +55,13 @@ class MyFavouritesScreen extends React.Component {
         return (
             <div>
                 <div>
-                    <PlainNavBar title={txt.navBar.title} goBackLocation={""}/>
+                    <PlainNavBar title={txt.navBar.title} />
                 </div>
-                <div className="w-100">
+                <div className="w-95">
                     { noPostings ? (
                         <h1>{txt.noPostingsText}</h1>
                     ) : (
-                        <PostingsList postings={this.state.postings} title={txt.navBar.title} />
+                        <PostingsList postings={this.state.postings}/>
                     )}
                 </div>
             </div>
@@ -69,7 +69,7 @@ class MyFavouritesScreen extends React.Component {
     }
 
     async componentDidMount() {
-        const favPostings = this.getFavouritePostings(this.matchParams.userId);
+        const favPostings = await this.getFavouritePostings(this.matchParams.userId);
         this.setState({
             postings: favPostings
         });

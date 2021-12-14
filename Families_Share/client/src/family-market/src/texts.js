@@ -116,7 +116,7 @@ const en = {
         navBar: {
             title: "Saved posts"
         },
-        noPostingsText: "There's no favourites posts"
+        noPostingsText: "You have no saved posts"
     },
 
     myPostingsButton: {
@@ -134,7 +134,8 @@ const en = {
     },
 
     myGroupsPostingsScreen: {
-        prefix: "My posts in "
+        prefix: "My posts in ",
+        noPostingsText: "You have no postings in this group"
     },
 
     myGroupsWithPostingsScreen: {
@@ -272,7 +273,7 @@ const it = {
         navBar: {
             title: "Annunci salvati"
         },
-        noPostingsText: "Non ci sono annunci salvati"
+        noPostingsText: "Non hai annunci salvati"
     },
 
     myPostingsButton: {
@@ -290,7 +291,8 @@ const it = {
     },
 
     myGroupsPostingsScreen: {
-        prefix: "I miei annunci in: "
+        prefix: "I miei annunci in: ",
+        noPostingsText: "Non hai annunci in questo gruppo"
     },
 
     myGroupsWithPostingsScreen: {
