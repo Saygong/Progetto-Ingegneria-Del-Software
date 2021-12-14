@@ -38,7 +38,7 @@ class ImageInput extends React.Component {
                         </section>
                     )}
                 </Dropzone>
-                <img className="img_postingInfo" src={this.props.currentImage} alt={txt.altImageText}/>
+                <img className="img-8-10" src={this.props.currentImage} alt={txt.altImageText}/>
             </div>
         )
     }

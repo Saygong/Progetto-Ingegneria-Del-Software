@@ -11,7 +11,6 @@ import Contact from "../../api/model/Contact";
 
 import React from "react";
 import PropTypes from "prop-types";
-import Log from "../../../../components/Log";
 import PlainNavBar from "../PlainNavBar";
 import SimpleTextInput from "../SimpleTextInput";
 import LargeTextInput from "../LargeTextInput";
@@ -23,6 +22,7 @@ import PlaceInput from "./PlaceInput";
 import ImageInput from "./ImageInput";
 import CategoryComboBox from "../CategoryComboBox";
 import TransactionTypeComboBox from "../TransactionTypeComboBox";
+import Log from "../../../../components/Log";
 
 
 
@@ -187,9 +187,8 @@ class EditPostingScreen extends React.Component {
         const creationInfo = this.getPostingInfoFromState()
         const {userId, groupId} = this.matchParams;
 
-        Log.info("UserId" + userId + "GroupId" +  groupId, this)
-        Log.info(`Creating posting for user: ${userId} in group ${groupId} with info: ${creationInfo}`, this);
-
+        console.log(`Creating posting for user: ${userId} in group ${groupId} with info: 
+        ${JSON.stringify(creationInfo, null, 4)}}`, this);
         await this.apiHandler.createPosting(userId, groupId, creationInfo);
     }
 
@@ -201,8 +200,8 @@ class EditPostingScreen extends React.Component {
         const idToEdit = this.matchParams.postingId;
         const editedInfo = this.getPostingInfoFromState()
 
-        Log.info(`Editing posting [id]${idToEdit} with info: ${editedInfo}`);
-
+        console.log(`Editing posting [id]${idToEdit} with info: 
+        ${JSON.stringify(editedInfo, null, 4)}`);
         await this.apiHandler.editPosting(idToEdit, editedInfo);
     }
 
@@ -213,8 +212,8 @@ class EditPostingScreen extends React.Component {
     async deletePosting() {
         const idToDelete = this.matchParams.postingId;
 
-        Log.info(`Delete posting [id]${idToDelete}`);
-
+        
+        console.log(`Deleting posting [id]${idToDelete}`);
         await this.apiHandler.deletePosting(idToDelete);
     }
 
@@ -250,16 +249,26 @@ class EditPostingScreen extends React.Component {
             await this.createPosting();
 
             const {onCreateRedirection} = this.redirections;
-            Log.info("Creation successful, redirecting to " + onCreateRedirection, this);
+            console.log("Creation successful, redirecting to " + onCreateRedirection, this);
             this.redirect(onCreateRedirection)
         }
         else {
             // Edit mode
-            this.editPosting().then(() => {
+            await this.editPosting();
+
+            /** TODO adding a time out here fixes race condition that
+             *      happens when the user is redirected to the onEditRedirection page.
+             *      This looks dangerous because 2000ms seems to be enough in my environment,
+             *      but in a real deployment scenario or in another machine, who knows.
+             *      Maybe just put a loading spinner and set 1 or 2 seconds timeout.
+             *      That, coupled with a performance enhancement by handling images
+             *      in a more efficient way than base64, should be enough.
+             */
+            setTimeout(() => {
                 const {onEditRedirection} = this.redirections;
-                Log.info("Edit successful, redirecting to " + onEditRedirection, this);
+                console.log("Edit successful, redirecting to " + onEditRedirection, this);
                 this.redirect(onEditRedirection)
-            });
+            }, 2000);
         }
     }
 
@@ -269,7 +278,7 @@ class EditPostingScreen extends React.Component {
      */
     async handleDeleteRedirection() {
         const {onDeleteRedirection} = this.redirections;
-        Log.info("Deletion successful, redirecting to " + onDeleteRedirection, this);
+        console.log("Deletion successful, redirecting to " + onDeleteRedirection, this);
         this.redirect(onDeleteRedirection)
     }
 

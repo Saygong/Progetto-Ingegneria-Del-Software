@@ -80,6 +80,7 @@ class PostingScreen extends React.Component {
 
     async componentDidMount() {
         const currentPosting = await this.fetchPosting();
+        console.log("Fetched posting: " + JSON.stringify(currentPosting, null, 4));
         this.setState({
             posting: currentPosting
         });

@@ -3416,11 +3416,14 @@ a:active {
   color: red;
 }
 
-.img_postingInfoTabs{
+.img-7-10{
   width: 70%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.img_postingInfo{
+.img-8-10{
   width: 80%;
   display: block;
   margin-left: auto;

@@ -30,7 +30,7 @@ class PostingInfo extends React.Component {
             /* Dimension: 10vh total -> (approx: 1vh Bar) + 4vh image + 2vh Header + 3vh Tabs*/
             <div>
                 {/*<img src={image}  alt={txt.altImageText}/>*/}
-                <img className="img_postingInfo" src={currentPosting.photo} alt={txt.altImageText}/>
+                <img className="img-8-10" src={currentPosting.photo} alt={txt.altImageText}/>
                 <hr/>
                 <PostingInfoHeader posting={this.props.posting}/>
                 <hr/>
