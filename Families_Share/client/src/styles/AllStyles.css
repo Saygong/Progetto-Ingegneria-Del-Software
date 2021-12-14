@@ -3341,7 +3341,6 @@ a:active {
   margin-left:10%;
 }
 
-
 .h-80px{
   height:80px;
 }
@@ -3430,6 +3429,11 @@ a:active {
   border: 1px #acaab0;
 }
 
+.tab-content{
+  min-height: 300px;
+  font-size: 20px;
+}
+
 .infoHeaderTop{
   text-align: center;
   margin: 5px 0px 5px 0px;
@@ -3489,6 +3493,28 @@ a:active {
   transform: translateY(2px);
 }
 
+.buttonEditPosting {
+  background-color: #00838F;
+  border: none;
+  color: white;
+  padding: 15px 30px;
+  text-align: center;
+  display: block;
+  margin: 30px auto 25px;
+  font-size: 15px;
+  border-radius: 8px;
+  box-shadow: 0 3px #999;
+  width: 25%;
+}
+.buttonEditPosting:hover {
+  background-color: #00835F;
+}
+.buttonEditPosting:active {
+  background-color: #00835F;
+  box-shadow: 0 1px #666;
+  transform: translateY(2px);
+}
+
 .txtbxPosting {
   width: 70%;
   margin-bottom: 30px;
@@ -3500,7 +3526,6 @@ a:active {
 }
 
 .descPosting{
-
   padding: 12px 20px;
   border-radius: 5px;
   border-color: #E5E4E2;

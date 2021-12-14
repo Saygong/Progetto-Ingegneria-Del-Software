@@ -34,7 +34,7 @@ class DeletePostingButton extends React.Component {
         const buttonText = texts[language].deletePostingButton.text;
 
         return (
-            <button className="buttonCreatePosting"  onClick={this.handleClick}>
+            <button className="buttonEditPosting"  onClick={this.handleClick}>
                 {buttonText}
             </button>
         )

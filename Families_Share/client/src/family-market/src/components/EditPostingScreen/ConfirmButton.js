@@ -23,7 +23,7 @@ class ConfirmButton extends React.Component {
         const buttonText = texts[language].confirmButton.text;
 
         return (
-            <button className="buttonCreatePosting" onClick={this.handleConfirmation}>
+            <button className="buttonEditPosting" onClick={this.handleConfirmation}>
                 {buttonText}
             </button>
         );

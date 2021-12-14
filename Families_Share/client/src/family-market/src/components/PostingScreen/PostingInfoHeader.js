@@ -23,9 +23,9 @@ class PostingInfoHeader extends React.Component {
 
         return (
             <div>
-                <h4 className="infoHeaderTop">{posting.category}</h4>
+                <h3 className="infoHeaderTop">{posting.category}</h3>
                 <h1 className="infoHeaderMid">{posting.name}</h1>
-                <h4 className="infoHeaderBot">{posting.type}</h4>
+                <h3 className="infoHeaderBot">{posting.type}</h3>
             </div>
         );
     }
