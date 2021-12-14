@@ -4,7 +4,7 @@ import {withRouter} from "react-router-dom";
 
 import React from "react" ;
 import PropTypes from "prop-types";
-import Log from "../../../components/Log";
+import {stringify, Log} from "../utils";
 
 import {buildEditModeRedirectionHandler} from "./EditPostingScreen/EditPostingScreen";
 

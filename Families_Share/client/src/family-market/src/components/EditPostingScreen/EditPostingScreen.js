@@ -23,7 +23,7 @@ import ImageInput from "./ImageInput";
 import CategoryComboBox from "../CategoryComboBox";
 import TransactionTypeComboBox from "../TransactionTypeComboBox";
 import Log from "../../../../components/Log";
-import {stringify} from "../utils";
+import {stringify} from "../../utils";
 
 
 

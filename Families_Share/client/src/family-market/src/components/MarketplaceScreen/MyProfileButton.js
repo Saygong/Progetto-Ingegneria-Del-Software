@@ -3,7 +3,7 @@ import withLanguage from "../../../../components/LanguageContext";
 
 import React from "react";
 import PropTypes from "prop-types";
-import Log from "../../../../components/Log";
+import {stringify, Log} from "../../utils";
 import {withRouter} from "react-router-dom";
 
 /**
@@ -28,7 +28,6 @@ class MyProfileButton extends React.Component {
                     <i className="family-icon fas fa-user whity" />
                 </div>
             </div>
-
         )
     }
 
@@ -36,9 +35,9 @@ class MyProfileButton extends React.Component {
      * Called when the button is clicked.
      */
     redirectToProfileScreen() {
-        // Line 322 App.js: path="/profiles/:profileId"
+        // Line 132 MyFamiliesShareHeader.js: "/profiles/${userId}/info"
         const profileId = JSON.parse(localStorage.getItem("user")).id;
-        const profileScreenUrl = `/profiles/${profileId}`;
+        const profileScreenUrl = `/profiles/${profileId}/info`;
 
         Log.info("Redirecting to ProfileScreen " + `(${profileScreenUrl})`, this);
         this.props.history.push(profileScreenUrl);

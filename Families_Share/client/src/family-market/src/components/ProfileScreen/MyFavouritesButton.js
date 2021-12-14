@@ -3,7 +3,7 @@ import texts from "../../texts";
 import PropTypes from "prop-types";
 
 import React from "react";
-import Log from "../../../../components/Log";
+import {stringify, Log} from "../../utils";
 import ListItem from "../ListItem";
 import {buildRedirectionHandler} from "../MyFavouritesScreen/MyFavouritesScreen";
 import {withRouter} from "react-router-dom";

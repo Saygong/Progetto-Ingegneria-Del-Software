@@ -2,8 +2,7 @@ import Posting from "./model/Posting";
 import GroupInfo from "./model/GroupInfo";
 import PostingInfo from "./model/PostingInfo";
 import Contact from "./model/Contact";
-import {stringify} from "../components/utils";
-import chalk from "chalk";
+import {stringify, Log} from "../utils";
 import axios from "axios";
 
 
@@ -474,7 +473,7 @@ class ApiHandler {
             message: error.message,
             lineNumber: error.lineNumber,
             stack: error.stack
-        }), chalk.bold.red);
+        }), Log.error);
     }
 
     /**
@@ -489,7 +488,7 @@ class ApiHandler {
             return;
         }
 
-        this.logResponseInternal(message, response, chalk.bold.green);
+        this.logResponseInternal(message, response, Log.info);
     }
 
     /**
@@ -504,7 +503,7 @@ class ApiHandler {
             return;
         }
 
-        this.logResponseInternal("Error response data:", errResponse, chalk.bold.red);
+        this.logResponseInternal("Error response data:", errResponse, Log.error);
     }
 
     /**
@@ -513,10 +512,9 @@ class ApiHandler {
      *
      * @param message {string}
      * @param response {Object}
-     * @param chalkTransformer {function(string)} chalk package function
-     *      that transforms the style of the message.
+     * @param logHandler {function(string)} function that logs the provided message
      */
-    logResponseInternal(message, response, chalkTransformer) {
+    logResponseInternal(message, response, logHandler) {
         if (response === null || response === undefined) {
             return;
         }
@@ -532,22 +530,21 @@ class ApiHandler {
         logData.StatusText = response.statusText;
         logData.Data = response.data;
 
-        this.logMessage(`${message} \n` + stringify(logData), chalkTransformer);
+        this.logMessage(`${message} \n` + stringify(logData), logHandler);
     }
 
     /**
      * Logs a message to the console,
      * only if the debug attribute of this instance was set to true.
      * @param message {string} message to be printed
-     * @param chalkTransformer {function(string)} chalk package function
-     *      that transforms the style of the message.
+     * @param logHandler {function(string)} function that logs the provided message
      */
-    logMessage(message, chalkTransformer=chalk.bold.cyan) {
+    logMessage(message, logHandler) {
         if(!this.debug) {
             return;
         }
 
-        console.log(chalkTransformer(message));
+        logHandler(message);
     }
 }
 
