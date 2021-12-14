@@ -4,7 +4,12 @@ import texts from "../../texts";
 import React from "react";
 import PropTypes from "prop-types";
 import Dropzone from "react-dropzone";
+import Compressor from 'compressorjs';
 import Log from "../../../../components/Log";
+
+
+// 10MB is more than enough, also, MongoDb allows for max document size of 16MB
+export const MAX_IMAGE_SIZE = 10000000;
 
 
 class ImageInput extends React.Component {
@@ -16,19 +21,13 @@ class ImageInput extends React.Component {
     }
 
     render() {
-        // TODO usare react-dropzone
-        // https://react-dropzone.js.org/#src
-        // permette di settare tipo di file accettati, numero file, minSize e maxSize
         const language = this.props.language;
         const txt = texts[language].imageInput;
-
-        // 5MB ?? poi sarebbe da comprimere in qualche modo
-        const maxByteSize = 5000000;
 
         return (
             <div>
                 <Dropzone accept="image/jpeg, image/png"
-                          multiple={false} maxFiles={1} maxSize={maxByteSize}
+                          multiple={false} maxFiles={1} maxSize={MAX_IMAGE_SIZE}
                           onDrop={this.handleImageSelection}>
                     {({getRootProps, getInputProps}) => (
                         <section>
@@ -66,20 +65,25 @@ class ImageInput extends React.Component {
          *
          * TODO mettere file api.config in cui si mette dimensione max immagine e rapporto compressione?
          */
-        // This is because only one image should be allowed
+        // This is fine because only one image should be allowed
         const selectedImage = acceptedFiles[0];
 
-        let base64Image;
-        const reader = new FileReader();
-        reader.onload = () => {
-            base64Image = reader.result;
+        // https://medium.com/front-end-weekly/image-compression-in-reactjs-a07ec0066b24
+        new Compressor(selectedImage, {
+            quality: 0.6, // Recommended not to go below 0.6
+            success: (compressedResult) => {
+                let base64Image;
 
-            console.log(base64Image);
+                const reader = new FileReader();
+                reader.onload = () => {
+                    base64Image = reader.result;
 
-            this.props.imageChangeHandler(base64Image);
-        }
+                    this.props.imageChangeHandler(base64Image);
+                }
 
-        reader.readAsDataURL(selectedImage);
+                reader.readAsDataURL(compressedResult);
+            },
+        });
     }
 }
 

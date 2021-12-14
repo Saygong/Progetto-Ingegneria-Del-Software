@@ -242,6 +242,8 @@ class EditPostingScreen extends React.Component {
      * @return {Promise<void>}
      */
     async handleConfirmation() {
+        // TODO pallino di caricamento oppure disabilitare i comandi mentre invia i dati?
+
         if (this.isCreateMode()) {
             // Create mode
             await this.createPosting();
