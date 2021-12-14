@@ -21,23 +21,16 @@ class SearchBar extends React.Component {
         const language = this.props.language;
         const txt = texts[language].searchBar;
 
-        /*TODO add image*/
-        const searchBarIconPath = "";
-
         return (
             <div>
-                <h4>{txt.description}</h4>
                 <table className="w-100 mx-auto">
                     <tr>
                         <td className="w-10icon">
                             <i className="family-icon fas fa-search"/>
-                            {/*TODO da cancellare
-                            <img src={searchBarIconPath} alt={txt.altImageText} className=""/>*/}
                         </td>
                         <td className="w-80Market">
-                            {/*Description is empty in the searchbar*/}
                             <SimpleTextInput text={this.props.text}
-                                             description={""}
+                                             description={txt.description}
                                              textChangeHandler={this.handleTextChange}
                                              placeholder={txt.placeholder}/>
                         </td>

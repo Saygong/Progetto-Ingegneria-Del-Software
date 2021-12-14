@@ -107,6 +107,8 @@ class EditPostingScreen extends React.Component {
         return (
             <div>
                 <PlainNavBar title={title} goBackLocation={this.redirections.goBackRedirection}/>
+            <div className="titles">
+                <PlainNavBar title={title} />
                 <ImageInput currentImage={this.state.photo}
                             imageChangeHandler={this.handlePhotoChange} />
 
@@ -125,7 +127,7 @@ class EditPostingScreen extends React.Component {
                                 placeholder={txt.descriptionInput.placeholder}
                                 textChangeHandler={this.handleDescriptionChange} />
 
-                {/*TODO dove sta sta roba*/}
+                {/*TODO sta roba è commentata*/}
                 <PlaceInput place={this.state.place}
                             placeChangeHandler={this.handlePlaceChange} />
 
