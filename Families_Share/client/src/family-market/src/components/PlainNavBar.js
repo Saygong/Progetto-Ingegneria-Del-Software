@@ -17,6 +17,7 @@ class PlainNavBar extends React.Component {
         this.goBack = this.goBack.bind(this);
     }
 
+    //TODO il titolo non e molto centrato nel caso di postings (?)
     render() {
         return (
             <div className="py-3 w-100 family-color navBarHeight">
