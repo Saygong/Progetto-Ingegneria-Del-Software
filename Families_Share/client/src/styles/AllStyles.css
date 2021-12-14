@@ -3346,6 +3346,10 @@ a:active {
   height:80px;
 }
 
+.w-95 {
+  width: 95%;
+}
+
 .w-90{
   width: 90%;
 }
@@ -3370,18 +3374,32 @@ a:active {
   width: 10%;
 }
 
-.familyMtabs{
+/*TODO in caso di icona non disponibile il testo sbanfa tutto*/
+.w-10icon{
+  width: 10%;
+  overflow: scroll;
+}
+
+/*TODO sistemare meglio le box/searchbar*/
+.w-80Market{
+  width: 80%;
+  display: block;
+  /*margin-left: auto;*/
+  /*margin-right: 0;*/
+}
+
+.family-m-tabs{
   text-align:center;
   margin: 0 auto;
   left:0;
   right:0;
 }
 
-.familyMtab-buttons{
+.family-m-tab-buttons{
   margin-bottom:30px;
 }
 
-.familyMbutton{
+.family-m-button{
   left:0;
   right:0;
   margin: 0 auto;
@@ -3395,7 +3413,7 @@ a:active {
   transition:all ease-in-out .3s;
 }
 
-.familyMactive{
+.family-m-active{
   background-color: #00838F;
   border:none;
   outline:none;
@@ -3403,9 +3421,13 @@ a:active {
   font-size:20px;
 }
 
-.familyMbutton:hover {
+.family-m-button:hover {
   background-color: #31736e;
   color:white;
+}
+
+.family-m-hr {
+  border: 1px #acaab0;
 }
 
 .infoHeaderTop{
@@ -3416,7 +3438,7 @@ a:active {
 
 .infoHeaderMid{
   text-align: center;
-  margin: 5px 0px 5px 0px;
+  margin: 5px 0 5px 0;
 }
 
 .infoHeaderBot{
@@ -3425,13 +3447,72 @@ a:active {
   color: red;
 }
 
-.img_postingInfoTabs{
+.img-7-10{
   width: 70%;
-}
-
-.img_postingInfo{
-  width: 80%;
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+
+.img-8-10 {
+  width: 90%;
+  display: block;
+  margin: auto;
+}
+
+.posting-list-item-container {
+  width: 95%;
+  height: 95%;
+  margin: auto;
+  border-bottom: 1px #acaab0;
+}
+
+.buttonCreatePosting {
+  background-color: #00838F;
+  border: none;
+  color: white;
+  padding: 15px 30px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  margin:0 auto 25px;
+  font-size: 15px;
+  border-radius: 8px;
+  box-shadow: 0 3px #999;
+}
+.buttonCreatePosting:hover {
+  background-color: #00835F;
+}
+.buttonCreatePosting:active {
+  background-color: #00835F;
+  box-shadow: 0 1px #666;
+  transform: translateY(2px);
+}
+
+.txtbxPosting {
+  width: 70%;
+  margin-bottom: 30px;
+  border-width: 1px;
+  padding: 5px;
+  border-radius: 5px;
+  border-color: #E5E4E2;
+  /*text-align: center;*/
+}
+
+.descPosting{
+
+  padding: 12px 20px;
+  border-radius: 5px;
+  border-color: #E5E4E2;
+  margin-bottom: 20px;
+  width: 80%;
+}
+
+.titles{
+  text-align: center;
+}
+
+.m-top-20{
+  margin-top: 20px;
+  margin-bottom: 5px;
 }

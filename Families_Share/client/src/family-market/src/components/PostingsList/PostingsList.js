@@ -24,7 +24,7 @@ class PostingsList extends React.Component {
 
         return (
             <div>
-                <h2>{title}</h2>
+                <h2 className="m-top-20">{title}</h2>
                 {/* One item for each posting */
                     filteredPostings.map((p, idx) => {
                         return <PostingsListItem key={idx}

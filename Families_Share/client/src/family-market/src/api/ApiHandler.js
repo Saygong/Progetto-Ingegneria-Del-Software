@@ -2,8 +2,9 @@ import Posting from "./model/Posting";
 import GroupInfo from "./model/GroupInfo";
 import PostingInfo from "./model/PostingInfo";
 import Contact from "./model/Contact";
+import {stringify} from "../components/utils";
 import chalk from "chalk";
-const axios = require("axios");
+import axios from "axios";
 
 
 /**
@@ -166,7 +167,7 @@ class ApiHandler {
                 this.logErrorResponse(
                     `Error while creating posting for user: ${userId}, group: ${groupId}`,
                     error.response);
-                this.logMessage('Creation data: ' + JSON.stringify(creationData, null, 4));
+                this.logMessage('Creation data: ' + stringify(creationData));
                 this.logError(error);
             });
 
@@ -193,7 +194,7 @@ class ApiHandler {
             .catch(error => {
                 this.logErrorResponse(`Error while editing posting with id ${idToEdit}`,
                     error.response);
-                this.logMessage('Editing data: ' + JSON.stringify(newInfo, null, 4));
+                this.logMessage('Editing data: ' + stringify(newInfo));
                 this.logError(error);
             });
 
@@ -468,12 +469,12 @@ class ApiHandler {
      * @param error {Error}
      */
     logError(error) {
-        this.logMessage("Error caught: " + JSON.stringify({
+        this.logMessage("Error caught: " + stringify({
             name: error.name,
             message: error.message,
             lineNumber: error.lineNumber,
             stack: error.stack
-        }, null, 4), chalk.bold.red);
+        }), chalk.bold.red);
     }
 
     /**
@@ -531,8 +532,7 @@ class ApiHandler {
         logData.StatusText = response.statusText;
         logData.Data = response.data;
 
-        this.logMessage(`${message} \n` + JSON.stringify(logData, null, 4),
-            chalkTransformer);
+        this.logMessage(`${message} \n` + stringify(logData), chalkTransformer);
     }
 
     /**

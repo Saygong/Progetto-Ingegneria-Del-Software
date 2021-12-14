@@ -11,7 +11,6 @@ import Contact from "../../api/model/Contact";
 
 import React from "react";
 import PropTypes from "prop-types";
-import Log from "../../../../components/Log";
 import PlainNavBar from "../PlainNavBar";
 import SimpleTextInput from "../SimpleTextInput";
 import LargeTextInput from "../LargeTextInput";
@@ -23,6 +22,8 @@ import PlaceInput from "./PlaceInput";
 import ImageInput from "./ImageInput";
 import CategoryComboBox from "../CategoryComboBox";
 import TransactionTypeComboBox from "../TransactionTypeComboBox";
+import Log from "../../../../components/Log";
+import {stringify} from "../utils";
 
 
 
@@ -49,8 +50,8 @@ class EditPostingScreen extends React.Component {
     /**
      * Urls to redirect to after the post has been edited, deleted or created.
      * Passed as additional parameters during the redirection.
-     * @type {{onEditRedirection: Object, onDeleteRedirection: Object}
-     *          | {onCreateRedirection: Object}}
+     * @type {{goBackRedirection: Object, onEditRedirection: Object, onDeleteRedirection: Object}
+     *          | {goBackRedirection: Object, onCreateRedirection: Object}}
      */
     redirections;
 
@@ -104,8 +105,8 @@ class EditPostingScreen extends React.Component {
          */
 
         return (
-            <div>
-                <PlainNavBar title={title} />
+            <div className="titles">
+                <PlainNavBar title={title} goBackLocation={this.redirections.goBackRedirection}/>
                 <ImageInput currentImage={this.state.photo}
                             imageChangeHandler={this.handlePhotoChange} />
 
@@ -124,6 +125,7 @@ class EditPostingScreen extends React.Component {
                                 placeholder={txt.descriptionInput.placeholder}
                                 textChangeHandler={this.handleDescriptionChange} />
 
+                {/*TODO sta roba è commentata*/}
                 <PlaceInput place={this.state.place}
                             placeChangeHandler={this.handlePlaceChange} />
 
@@ -142,6 +144,7 @@ class EditPostingScreen extends React.Component {
             </div>
         );
     }
+
 
     async componentDidMount() {
         // Fetch the posting info to load only in edit mode
@@ -187,9 +190,8 @@ class EditPostingScreen extends React.Component {
         const creationInfo = this.getPostingInfoFromState()
         const {userId, groupId} = this.matchParams;
 
-        Log.info("UserId" + userId + "GroupId" +  groupId, this)
-        Log.info(`Creating posting for user: ${userId} in group ${groupId} with info: ${creationInfo}`, this);
-
+        console.log(`Creating posting for user: ${userId} in group ${groupId} with info:
+        ${stringify(creationInfo)}`, this);
         await this.apiHandler.createPosting(userId, groupId, creationInfo);
     }
 
@@ -201,8 +203,8 @@ class EditPostingScreen extends React.Component {
         const idToEdit = this.matchParams.postingId;
         const editedInfo = this.getPostingInfoFromState()
 
-        Log.info(`Editing posting [id]${idToEdit} with info: ${editedInfo}`);
-
+        console.log(`Editing posting [id]${idToEdit} with info:
+        ${stringify(editedInfo)}`);
         await this.apiHandler.editPosting(idToEdit, editedInfo);
     }
 
@@ -213,8 +215,8 @@ class EditPostingScreen extends React.Component {
     async deletePosting() {
         const idToDelete = this.matchParams.postingId;
 
-        Log.info(`Delete posting [id]${idToDelete}`);
 
+        console.log(`Deleting posting [id]${idToDelete}`);
         await this.apiHandler.deletePosting(idToDelete);
     }
 
@@ -250,16 +252,26 @@ class EditPostingScreen extends React.Component {
             await this.createPosting();
 
             const {onCreateRedirection} = this.redirections;
-            Log.info("Creation successful, redirecting to " + onCreateRedirection, this);
+            console.log("Creation successful, redirecting to " + stringify(onCreateRedirection), this);
             this.redirect(onCreateRedirection)
         }
         else {
             // Edit mode
-            this.editPosting().then(() => {
+            await this.editPosting();
+
+            /** TODO adding a time out here fixes race condition that
+             *      happens when the user is redirected to the onEditRedirection page.
+             *      This looks dangerous because 3500ms seems to be enough in my environment,
+             *      but in a real deployment scenario or in another machine, who knows.
+             *      Maybe just put a loading spinner and set 1 or 2 seconds timeout.
+             *      That, coupled with a performance enhancement by handling images
+             *      in a more efficient way than base64, should be enough.
+             */
+            setTimeout(() => {
                 const {onEditRedirection} = this.redirections;
-                Log.info("Edit successful, redirecting to " + onEditRedirection, this);
+                console.log("Edit successful, redirecting to " + stringify(onEditRedirection), this);
                 this.redirect(onEditRedirection)
-            });
+            }, 3500);
         }
     }
 
@@ -269,7 +281,7 @@ class EditPostingScreen extends React.Component {
      */
     async handleDeleteRedirection() {
         const {onDeleteRedirection} = this.redirections;
-        Log.info("Deletion successful, redirecting to " + onDeleteRedirection, this);
+        console.log("Deletion successful, redirecting to " + stringify(onDeleteRedirection), this);
         this.redirect(onDeleteRedirection)
     }
 
@@ -282,7 +294,6 @@ class EditPostingScreen extends React.Component {
      * @param redirection {{pathname: string, state: Object}}
      */
     redirect(redirection) {
-        this.props.history.goBack();
         this.props.history.replace(redirection);
     }
 
@@ -418,6 +429,8 @@ class EditPostingScreen extends React.Component {
      *      page the user will be redirected to after a posting is edited.
      * @param onDeleteRedirection {{pathname: string, state: Object}} url and state that determine which
      *      page the user will be redirected to after a posting is deleted.
+     * @param goBackRedirection {{pathname: string, state: Object}} url and state that determine which
+     *      page the user will be redirected after pressing the go back button
      * @return {function}
      *
      * NOTE: state of the redirection has to be passed alongside the path because the entry
@@ -425,12 +438,14 @@ class EditPostingScreen extends React.Component {
      *      which means that it might need a fresh new state.
      */
     static buildEditModeRedirectionHandler(history, postingId,
+                                           goBackRedirection,
                                            onEditRedirection,
                                            onDeleteRedirection) {
         return () => {
-            history.push({
+            history.replace({
                 pathname: EditPostingScreen.buildEditModeUrl(postingId),
                 state: {
+                    goBackRedirection: goBackRedirection,
                     onEditRedirection: onEditRedirection,
                     onDeleteRedirection: onDeleteRedirection
                 }
@@ -445,6 +460,8 @@ class EditPostingScreen extends React.Component {
      * @param history {History}
      * @param userId {string} user that creates the posting
      * @param groupId {string} group in which the posting is created
+     * @param goBackRedirection {{pathname: string, state: Object}} url and state that determine which
+     *      page the user will be redirected after pressing the go back button
      * @param onCreateRedirection {{pathname: string, state: Object}} url and state that determine which
      *      page the user will be redirected to after a posting is created.
      * @return {function}
@@ -455,9 +472,10 @@ class EditPostingScreen extends React.Component {
      */
     static buildCreateModeRedirectionHandler(history,
                                              userId, groupId,
+                                             goBackRedirection,
                                              onCreateRedirection) {
         return () => {
-            history.push({
+            history.replace({
                 pathname: EditPostingScreen.buildCreateModeUrl(userId, groupId),
                 state: {
                     onCreateRedirection: onCreateRedirection

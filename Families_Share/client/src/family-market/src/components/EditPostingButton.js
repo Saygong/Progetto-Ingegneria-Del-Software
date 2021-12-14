@@ -37,9 +37,20 @@ class EditPostingButton extends React.Component {
      */
     redirectToEditPostingScreen() {
         const {postingId, onEditRedirection, onDeleteRedirection} = this.props;
+
+        // When the user presses the go back button, it has to be redirected to the
+        // previous page, which is the current one.
+        // NOTE: this data has to be passed because the redirection to EditPostingScreen
+        // is a replace() and not a push(), so history.goBack() doesn't work as intended:
+        // the page has to be "manually" replaced.
+        const goBackRedirection = {
+            pathname: this.props.location.pathname,
+            state: this.props.location.state
+        };
+
         const redirectionHandler =
             buildEditModeRedirectionHandler(this.props.history, postingId,
-                onEditRedirection, onDeleteRedirection);
+                goBackRedirection, onEditRedirection, onDeleteRedirection);
 
         Log.info("Redirecting to EditPostingScreen ", this);
         redirectionHandler();
