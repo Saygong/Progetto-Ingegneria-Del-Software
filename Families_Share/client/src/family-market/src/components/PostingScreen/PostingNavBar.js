@@ -24,21 +24,25 @@ class PostingNavBar extends React.Component {
         const postingTitle = this.props.postingName;
 
         return (
-            <div className="col no-gutters">
-                <div className="col-8-10">
-                    <PlainNavBar title={postingTitle} />
-                </div>
-                {this.isCurrentUserOwner() ? (
-                    <div className="col-2-10">
-                        <EditPostingButton postingId={this.props.postingId}
-                                           onEditUrl={this.props.location.pathname}
-                                           onDeleteUrl={this.props.onDeleteUrl} />
-                    </div>
-                ):(
-                    <div className="col-2-10">
-                        <ToggleFavouriteButton postingId={this.props.postingId} />
-                    </div>
-                )}
+            <div className="w-100 mx-auto family-color">
+                <table className="w-100 mx-auto">
+                    <tr>
+                        <td className="w-80">
+                            <PlainNavBar title={postingTitle} />
+                        </td>
+                    {this.isCurrentUserOwner() ? (
+                        <td className="w-10">
+                            <EditPostingButton postingId={this.props.postingId}
+                                               onEditUrl={this.props.location.pathname}
+                                               onDeleteUrl={this.props.onDeleteUrl} />
+                        </td>
+                    ):(
+                        <td className="w-10">
+                            <ToggleFavouriteButton postingId={this.props.postingId} />
+                        </td>
+                    )}
+                    </tr>
+                </table>
             </div>
         );
     }
