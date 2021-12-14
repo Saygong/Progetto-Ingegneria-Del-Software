@@ -35,13 +35,4 @@ const TabButtons = ({buttons, changeTab, activeTab}) =>{
     )
 }
 
-//TODO a che serve lol, l'esempio lo usava perche fa <Tab> ma io riesco a importare lo stesso anche se lo commento kekw
-// const Tab = props =>{
-//     return(
-//         <React.Fragment>
-//             {props.children}
-//         </React.Fragment>
-//     )
-// }
-
 export default Tabs;

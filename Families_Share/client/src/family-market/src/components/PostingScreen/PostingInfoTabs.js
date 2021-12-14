@@ -38,7 +38,7 @@ class PostingInfoTabs extends React.Component {
                     <Tabs>
                         <Tab label={txt.product}>
                             <div className="">
-                                <h4>{txt.desc}</h4>
+                                <h2>{txt.desc}</h2>
                                 <p>{posting.description}</p>
                             </div>
                         </Tab>
@@ -50,11 +50,11 @@ class PostingInfoTabs extends React.Component {
                         </Tab>
                         <Tab label={txt.contact}>
                             <div>
-                                <h4>{txt.user}</h4>
+                                <h2>{txt.user}</h2>
                                 <p>{posting.user_id}</p>
-                                <h4>{txt.phone}</h4>
+                                <h2>{txt.phone}</h2>
                                 <p>{posting.contact.phone_number}</p>
-                                <h4>{txt.mail}</h4>
+                                <h2>{txt.mail}</h2>
                                 <p>{posting.contact.email}</p>
                                 <img className="img-7-10" src="https://www.free-press.it/wp-content/uploads/2021/02/Ora-puoi-Rickroll-persone-in-4K.jpg"/>
                             </div>

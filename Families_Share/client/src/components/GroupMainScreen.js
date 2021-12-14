@@ -6,7 +6,6 @@ import PropTypes from "prop-types";
 import LoadingSpinner from "./LoadingSpinner";
 import GroupNavbar from "./GroupNavbar";
 import Log from "./Log";
-import AccessMarketplaceButton from "../family-market/src/components/EntryPoint/AccessMarketplaceButton";
 
 const GroupInfo = Loadable({
   loader: () => import("./GroupInfo"),
@@ -142,9 +141,6 @@ export default class GroupMainScreen extends React.Component {
               />
             )}
           />
-          <div className="w-100">
-            <AccessMarketplaceButton />
-          </div>
           <Route
             exact
             path={`${currentPath}/activities`}
