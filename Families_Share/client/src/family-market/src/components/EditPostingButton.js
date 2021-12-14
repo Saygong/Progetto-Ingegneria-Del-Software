@@ -36,12 +36,12 @@ class EditPostingButton extends React.Component {
      * Called when the button is clicked.
      */
     redirectToEditPostingScreen() {
-        const {postingId, onEditUrl, onDeleteUrl} = this.props;
+        const {postingId, onEditRedirection, onDeleteRedirection} = this.props;
         const redirectionHandler =
-            buildEditModeRedirectionHandler(this.props.history, postingId, onEditUrl, onDeleteUrl);
+            buildEditModeRedirectionHandler(this.props.history, postingId,
+                onEditRedirection, onDeleteRedirection);
 
         Log.info("Redirecting to EditPostingScreen ", this);
-
         redirectionHandler();
     }
 }
@@ -54,13 +54,15 @@ EditPostingButton.propTypes = {
 
     /**
      * Id to redirect to when the edit is confirmed.
+     * Needs to have a pathname and a state property.
      */
-    onEditUrl: PropTypes.string.isRequired,
+    onEditRedirection: PropTypes.object.isRequired,
 
     /**
      * Id to redirect to if the posting is deleted.
+     * Needs to have a pathname and a state property.
      */
-    onDeleteUrl: PropTypes.string.isRequired,
+    onDeleteRedirection: PropTypes.object.isRequired,
 
     /**
      * Passed by the withLanguage HOC, used to determine which texts to display.

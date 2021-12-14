@@ -2,11 +2,10 @@ import withLanguage from "../../../../components/LanguageContext";
 
 import React from "react";
 import PropTypes from "prop-types";
-import Log from "../../../../components/Log";
 import PlainNavBar from "../PlainNavBar";
 import EditPostingButton from "../EditPostingButton";
 import ToggleFavouriteButton from "../ToggleFavouriteButton";
-import {withRouter} from "react-router-dom";
+import Log from "../../../../components/Log";
 
 
 /**
@@ -33,8 +32,8 @@ class PostingNavBar extends React.Component {
                     {this.isCurrentUserOwner() ? (
                         <td className="w-10">
                             <EditPostingButton postingId={this.props.postingId}
-                                               onEditUrl={this.props.location.pathname}
-                                               onDeleteUrl={this.props.onDeleteUrl} />
+                                               onEditRedirection={this.props.onEditRedirection}
+                                               onDeleteRedirection={this.props.onDeleteRedirection} />
                         </td>
                     ):(
                         <td className="w-10">
@@ -81,8 +80,16 @@ PostingNavBar.propTypes = {
     /**
      * Url needed for EditPostingButton and, consequently, EditPostingScreen.
      * It represents the page to redirect to after the user deletes a posting.
+     * Needs to have a pathname and a state property.
      */
-    onDeleteUrl: PropTypes.string.isRequired,
+    onDeleteRedirection: PropTypes.object.isRequired,
+
+    /**
+     * Url needed for EditPostingButton and, consequently, EditPostingScreen.
+     * It represents the page to redirect to after the user edits a posting.
+     * Needs to have a pathname and a state property.
+     */
+    onEditRedirection: PropTypes.object.isRequired,
 
     /**
      * Passed by the withLanguage HOC, used to determine which texts to display.
@@ -90,4 +97,4 @@ PostingNavBar.propTypes = {
     language: PropTypes.string
 };
 
-export default withRouter(withLanguage(PostingNavBar));
+export default withLanguage(PostingNavBar);

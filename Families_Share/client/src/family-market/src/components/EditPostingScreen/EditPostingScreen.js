@@ -49,9 +49,10 @@ class EditPostingScreen extends React.Component {
     /**
      * Urls to redirect to after the post has been edited, deleted or created.
      * Passed as additional parameters during the redirection.
-     * @type {{onEditUrl: string, onDeleteUrl} | {onCreateUrl: string}}
+     * @type {{onEditRedirection: Object, onDeleteRedirection: Object}
+     *          | {onCreateRedirection: Object}}
      */
-    redirectionUrls;
+    redirections;
 
     /**
      * Used to communicate with the server api.
@@ -63,7 +64,7 @@ class EditPostingScreen extends React.Component {
         super(props);
 
         this.apiHandler = new ApiHandler("", TESTING);
-        this.redirectionUrls = this.props.location.state;
+        this.redirections = this.props.location.state;
         this.matchParams = this.props.match.params;
         this.state = {
             name: "",
@@ -248,17 +249,17 @@ class EditPostingScreen extends React.Component {
             // Create mode
             await this.createPosting();
 
-            const {onCreateUrl} = this.redirectionUrls;
-            Log.info("Creation successful, redirecting to " + onCreateUrl, this);
-            this.redirectToUrl(onCreateUrl)
+            const {onCreateRedirection} = this.redirections;
+            Log.info("Creation successful, redirecting to " + onCreateRedirection, this);
+            this.redirect(onCreateRedirection)
         }
         else {
             // Edit mode
-            await this.editPosting();
-
-            const {onEditUrl} = this.redirectionUrls;
-            Log.info("Edit successful, redirecting to " + onEditUrl, this);
-            this.redirectToUrl(onEditUrl)
+            this.editPosting().then(() => {
+                const {onEditRedirection} = this.redirections;
+                Log.info("Edit successful, redirecting to " + onEditRedirection, this);
+                this.redirect(onEditRedirection)
+            });
         }
     }
 
@@ -267,9 +268,9 @@ class EditPostingScreen extends React.Component {
      * @return {Promise<void>}
      */
     async handleDeleteRedirection() {
-        const {onDeleteUrl} = this.redirectionUrls;
-        Log.info("Deletion successful, redirecting to " + onDeleteUrl, this);
-        this.redirectToUrl(onDeleteUrl)
+        const {onDeleteRedirection} = this.redirections;
+        Log.info("Deletion successful, redirecting to " + onDeleteRedirection, this);
+        this.redirect(onDeleteRedirection)
     }
 
     /**
@@ -278,11 +279,11 @@ class EditPostingScreen extends React.Component {
      * which is basically a refresh. This is because, after an edit/create/delete,
      * previous pages have to be refreshed to avoid inconsistencies caused by the
      * history caching their previous states.
-     * @param url {string}
+     * @param redirection {{pathname: string, state: Object}}
      */
-    redirectToUrl(url) {
+    redirect(redirection) {
         this.props.history.goBack();
-        this.props.history.replace(url);
+        this.props.history.replace(redirection);
     }
 
     /**
@@ -413,26 +414,25 @@ class EditPostingScreen extends React.Component {
      * since it makes things clearer by defining navigation behaviour for this class.
      * @param history {History}
      * @param postingId {string} posting to load on the page
-     * @param onEditUrl {string} url to redirect to when a posting is edited.
-     * @param onDeleteUrl {string} url to redirect to when a posting is deleted.
+     * @param onEditRedirection {{pathname: string, state: Object}} url and state that determine which
+     *      page the user will be redirected to after a posting is edited.
+     * @param onDeleteRedirection {{pathname: string, state: Object}} url and state that determine which
+     *      page the user will be redirected to after a posting is deleted.
      * @return {function}
+     *
+     * NOTE: state of the redirection has to be passed alongside the path because the entry
+     *      on the history stack, after one of those specific actions, is replaced,
+     *      which means that it might need a fresh new state.
      */
-    static buildEditModeRedirectionHandler(history, postingId, onEditUrl, onDeleteUrl) {
+    static buildEditModeRedirectionHandler(history, postingId,
+                                           onEditRedirection,
+                                           onDeleteRedirection) {
         return () => {
-            /**
-             * Use replace here, since push can lead to inconsistencies:
-             * in this page a posting can be edited or deleted, so it is better to not leave
-             * any entry on the history stack whose state can differ from the updated one
-             * (e.g. a posting gets deleted, you go back and the page still has that posting
-             *  because it hasn't been reloaded)
-             */
-            // TODO aggiungere non solo path, ma anche stato, perché alcune pagine potrebbero averne bisogno.
-            //      richiedere oggetto tipo {pathname: "", state: {}}
-            history.replace({
+            history.push({
                 pathname: EditPostingScreen.buildEditModeUrl(postingId),
                 state: {
-                    onEditUrl: onEditUrl,
-                    onDeleteUrl: onDeleteUrl
+                    onEditRedirection: onEditRedirection,
+                    onDeleteRedirection: onDeleteRedirection
                 }
             });
         }
@@ -445,22 +445,22 @@ class EditPostingScreen extends React.Component {
      * @param history {History}
      * @param userId {string} user that creates the posting
      * @param groupId {string} group in which the posting is created
-     * @param onCreateUrl {string} url to redirect to when a posting is edited.
+     * @param onCreateRedirection {{pathname: string, state: Object}} url and state that determine which
+     *      page the user will be redirected to after a posting is created.
      * @return {function}
+     *
+     * NOTE: state of the redirection has to be passed alongside the path because the entry
+     *      on the history stack, after one of those specific actions, is replaced,
+     *      which means that it might need a fresh new state.
      */
-    static buildCreateModeRedirectionHandler(history, userId, groupId, onCreateUrl) {
+    static buildCreateModeRedirectionHandler(history,
+                                             userId, groupId,
+                                             onCreateRedirection) {
         return () => {
-            /**
-             * Use replace here, since push can lead to inconsistencies:
-             * in this page a posting can be created, so it is better to not leave
-             * any entry on the history stack whose state can differ from the updated one
-             * (e.g. a posting gets deleted, you go back and the page still doesn't have
-             *  that posting because it hasn't been reloaded)
-             */
             history.push({
                 pathname: EditPostingScreen.buildCreateModeUrl(userId, groupId),
                 state: {
-                    onCreateUrl: onCreateUrl
+                    onCreateRedirection: onCreateRedirection
                 }
             });
         }

@@ -61,7 +61,10 @@ class PostingsListItem extends React.Component {
         // won't be any inconsistencies (this component will be reloaded along with
         // its parent PostingsList, so no deleted postings or
         // postings with outdated info will be shown)
-        const redirectToUrl = this.props.location.pathname;
+        const redirection = {
+            pathname: this.props.location.pathname,
+            state: this.props.location.state
+        };
 
         // Determine which button to display based on the mode of this item
         let sideButton;
@@ -69,8 +72,8 @@ class PostingsListItem extends React.Component {
             // Render edit button
             sideButton = (
                 <EditPostingButton postingId={posting.id}
-                                   onEditUrl={redirectToUrl}
-                                   onDeleteUrl={redirectToUrl}/>
+                                   onEditRedirection={redirection}
+                                   onDeleteRedirection={redirection}/>
             );
         }
         else if (this.props.mode === PostingsListItem.FAVOURITES_MODE) {
@@ -105,9 +108,12 @@ class PostingsListItem extends React.Component {
      */
     redirectToPostingScreen() {
         const postingId = this.props.posting.id;
-        const onDeleteUrl = this.props.location.pathname;
+        const onDeleteRedirection = {
+            pathname: this.props.location.pathname,
+            state: this.props.location.state
+        };
         const redirectionHandler =
-            buildPostingScreenRedirectionHandler(this.props.history, postingId, onDeleteUrl);
+            buildPostingScreenRedirectionHandler(this.props.history, postingId, onDeleteRedirection);
 
         Log.info("Redirecting to PostingScreen ", this);
         redirectionHandler();

@@ -49,24 +49,29 @@ class PlainNavBar extends React.Component {
      */
     goBack() {
         // If goBackUrl has not been set, simply go back one page
-        if (this.props.goBackUrl === "") {
+        if (this.props.goBackLocation.pathname === "") {
             Log.info("Redirecting to the previous page...", this);
 
             this.props.history.goBack();
         }
         else
         {
-            const redirectionUrl = this.props.goBackUrl;
-            Log.info(`Redirecting to ${redirectionUrl}the previous page...`, this);
+            const redirection = this.props.goBackLocation;
+            Log.info(`Redirecting to ${redirection}the previous page...`, this);
 
-            this.props.history.replace(redirectionUrl)
+            // First go back to get to the previous history entry, and then replace it
+            this.props.history.goBack();
+            this.props.history.replace(redirection);
         }
     }
 }
 
 PlainNavBar.defaultProps = {
     title: "",
-    goBackUrl: "",
+    goBackLocation: {
+        pathname: "",
+        state: {}
+    },
 }
 
 PlainNavBar.propTypes = {
@@ -76,9 +81,9 @@ PlainNavBar.propTypes = {
     title: PropTypes.string,
 
     /**
-     * Url to redirect to when the button to go back is pressed.
+     * Location to redirect to when the button to go back is pressed.
      */
-    goBackUrl: PropTypes.string,
+    goBackLocation: PropTypes.object,
 
     /**
      * Passed by the withLanguage HOC, used to determine which texts to display.

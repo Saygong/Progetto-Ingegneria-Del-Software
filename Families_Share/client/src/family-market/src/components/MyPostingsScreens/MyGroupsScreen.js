@@ -55,7 +55,7 @@ class MyGroupsScreen extends React.Component {
         return (
             <div>
                 <div>
-                    <PlainNavBar title={txt.title} goBackUrl={""}/>
+                    <PlainNavBar title={txt.title} goBackLocation={""}/>
                 </div>
                 <div>
                     <p> {txt.instruction} </p>

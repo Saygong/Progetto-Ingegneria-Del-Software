@@ -41,10 +41,10 @@ class CreatePostingButton extends React.Component {
     redirectToEditPostingScreen() {
         const userId = JSON.parse(localStorage.getItem("user")).id;
         const groupId = JSON.parse(localStorage.getItem("group")).id;
-        const onCreateUrl = this.props.onCreateUrl;
+        const onCreateRedirection = this.props.onCreateRedirection;
 
         const redirectionHandler =
-            buildCreateModeRedirectionHandler(this.props.history, userId, groupId, onCreateUrl);
+            buildCreateModeRedirectionHandler(this.props.history, userId, groupId, onCreateRedirection);
 
         redirectionHandler();
     }
@@ -52,9 +52,10 @@ class CreatePostingButton extends React.Component {
 
 CreatePostingButton.propTypes = {
     /**
-     * Url to redirect after the posting is created
+     * Location to redirect to after the posting is created.
+     * Needs to have a pathname and a state property.
      */
-    onCreateUrl: PropTypes.string.isRequired,
+    onCreateRedirection: PropTypes.object.isRequired,
 
     /**
      * Passed by the withLanguage HOC, used to determine which texts to display.
