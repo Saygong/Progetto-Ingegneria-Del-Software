@@ -26,18 +26,20 @@ class TransactionTypeComboBox extends React.Component {
 
         return (
             <div>
-                <h2>{txt.description}</h2>
-                <div className="row no-gutters">
-                    <div className="col-2-10">
-                        <img src={tnIconPath} alt={txt.altImageText} className="center"/>
-                    </div>
-                    <div className="col-8-10">
-                        <ComboBox options={TN_TYPES[language]}
-                                  defaultValue={NO_TN_TYPE[language]}
-                                  onSelect={this.handleTnTypeChange}
-                                  editable={false}/>
-                    </div>
-                </div>
+                <h4>{txt.description}</h4>
+                <table className="w-100 mx-auto">
+                    <tr>
+                        <td className="w-10icon">
+                            <img src={tnIconPath} alt={txt.altImageText} className="center"/>
+                        </td>
+                        <td className="w-80Market">
+                            <ComboBox options={TN_TYPES[language]}
+                                      defaultValue={NO_TN_TYPE[language]}
+                                      onSelect={this.handleTnTypeChange}
+                                      editable={false}/>
+                        </td>
+                    </tr>
+                </table>
             </div>
         )
     }

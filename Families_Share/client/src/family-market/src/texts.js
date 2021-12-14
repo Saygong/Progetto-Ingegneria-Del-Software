@@ -27,8 +27,9 @@ const en = {
     },
 
     searchBar: {
-        altImageText: "magnifying lens image",
-        placeholder: "What are you looking for?"
+        altImageText: "Magnifying lens icon",
+        placeholder: "Search",
+        description: "What are you looking for?",
     },
 
     mailInput: {
@@ -44,12 +45,12 @@ const en = {
     },
 
     categoryComboBox: {
-        altImageText: "category icon",
+        altImageText: "Category icon",
         description: "Select the category:"
     },
 
     transactionTypeComboBox: {
-        altImageText: "transaction type icon",
+        altImageText: "Transaction type icon",
         description: "Select the transaction type:"
     },
 
@@ -181,8 +182,9 @@ const it = {
     },
 
     searchBar: {
-        altImageText: "Immagine lente di ingrandimento",
-        placeholder: "Cosa stai cercando?"
+        altImageText: "Icona lente di ingrandimento",
+        placeholder: "Cerca",
+        description: "Cosa stai cercando?",
     },
 
     mailInput: {

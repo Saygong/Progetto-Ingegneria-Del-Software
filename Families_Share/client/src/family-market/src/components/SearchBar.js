@@ -25,15 +25,22 @@ class SearchBar extends React.Component {
         const searchBarIconPath = "";
 
         return (
-            <div className="">
-                <img src={searchBarIconPath} alt={txt.altImageText} className="col-2-10"/>
-                <div className="col-8-10">
-                    {/*Description is empty in the searchbar*/}
-                    <SimpleTextInput text={this.props.text}
-                                     description={""}
-                                     textChangeHandler={this.handleTextChange}
-                                     placeholder={txt.placeholder}/>
-                </div>
+            <div>
+                <h4>{txt.description}</h4>
+                <table className="w-100 mx-auto">
+                    <tr>
+                        <td className="w-10icon">
+                            <img src={searchBarIconPath} alt={txt.altImageText} className=""/>
+                        </td>
+                        <td className="w-80Market">
+                            {/*Description is empty in the searchbar*/}
+                            <SimpleTextInput text={this.props.text}
+                                             description={""}
+                                             textChangeHandler={this.handleTextChange}
+                                             placeholder={txt.placeholder}/>
+                        </td>
+                    </tr>
+                </table>
             </div>
         )
     }

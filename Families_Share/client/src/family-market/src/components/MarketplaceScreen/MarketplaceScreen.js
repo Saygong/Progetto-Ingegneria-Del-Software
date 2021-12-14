@@ -69,7 +69,6 @@ class MarketplaceScreen extends React.Component {
                     <SearchBar text={this.state.filterText} textChangeHandler={this.handleSearchBarChange}/>
                     <CategoryComboBox categoryChangeHandler={this.handleCategoryChange}/>
                     <TransactionTypeComboBox tnTypeChangeHandler={this.handleTransactionTypeChange}/>
-
                     <CreatePostingButton onCreateRedirection={onCreateRedirection}/> <hr/>
                 </div>
 

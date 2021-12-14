@@ -24,18 +24,20 @@ class CategoryComboBox extends React.Component {
 
         return (
             <div>
-                <h2>{txt.description}</h2>
-                <div className="row no-gutters">
-                    <div className="col-2-10">
-                        <img src={catIconPath} alt={txt.altImageText} className="center"/>
-                    </div>
-                    <div className="col-8-10">
-                        <ComboBox options={CATEGORIES[language]}
-                                  defaultValue={NO_CATEGORY[language]}
-                                  onSelect={this.handleCategoryChange}
-                                  editable={false}/>
-                    </div>
-                </div>
+                <h4>{txt.description}</h4>
+                <table className="w-100 mx-auto">
+                    <tr>
+                        <td className="w-10icon">
+                            <img src={catIconPath} alt={txt.altImageText} className="center"/>
+                        </td>
+                        <td className="w-80Market">
+                            <ComboBox options={CATEGORIES[language]}
+                                      defaultValue={NO_CATEGORY[language]}
+                                      onSelect={this.handleCategoryChange}
+                                      editable={false}/>
+                        </td>
+                    </tr>
+                </table>
             </div>
         )
     }

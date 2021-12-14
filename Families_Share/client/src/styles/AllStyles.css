@@ -3370,6 +3370,20 @@ a:active {
   width: 10%;
 }
 
+/*TODO in caso di icona non disponibile il testo sbanfa tutto*/
+.w-10icon{
+  width: 10%;
+  overflow: scroll;
+}
+
+/*TODO sistemare meglio le box/searchbar*/
+.w-80Market{
+  width: 80%;
+  display: block;
+  margin-left: auto;
+  margin-right: 0;
+}
+
 .familyMtabs{
   text-align:center;
   margin: 0 auto;
@@ -3443,4 +3457,26 @@ a:active {
   width: 95%;
   margin: auto;
   border: 1px solid #acaeb0;
+}
+
+.buttonCreatePosting {
+  background-color: #00838F;
+  border: none;
+  color: white;
+  padding: 15px 30px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  margin:0 auto;
+  font-size: 15px;
+  border-radius: 8px;
+  box-shadow: 0 3px #999;
+}
+.buttonCreatePosting:hover {
+  background-color: #00835F;
+}
+.buttonCreatePosting:active {
+  background-color: #00835F;
+  box-shadow: 0 1px #666;
+  transform: translateY(2px);
 }
