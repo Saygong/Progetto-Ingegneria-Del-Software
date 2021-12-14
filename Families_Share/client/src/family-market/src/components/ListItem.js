@@ -60,8 +60,6 @@ class ListItem extends React.Component {
                     </div>
                 )}
 
-
-
             </div>
         )
     }

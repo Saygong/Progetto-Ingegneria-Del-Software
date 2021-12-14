@@ -3438,3 +3438,9 @@ a:active {
   margin-left: auto;
   margin-right: auto;
 }
+
+.posting-list-item-container {
+  width: 95%;
+  margin: auto;
+  border: 1px solid #acaeb0;
+}
