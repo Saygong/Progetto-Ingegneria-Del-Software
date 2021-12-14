@@ -20,11 +20,12 @@ class TelephoneInput extends React.Component {
         // Get texts based on current language
         const language = this.props.language;
         const txt = texts[language].telephoneInput;
-        const phoneIconPath = "";
 
         return (
             <div className="row no-gutters">
-                <i className="fas fa-phone-alt" />
+                <div className="col-2-10">
+                    <i className="family-icon fas fa-mobile-alt"/>
+                </div>
                 <div className="col-8-10">
                     <SimpleTextInput text={this.props.text} description={txt.description}
                                      textChangeHandler={this.handleTextChange}

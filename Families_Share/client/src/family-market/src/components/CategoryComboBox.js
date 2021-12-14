@@ -28,7 +28,9 @@ class CategoryComboBox extends React.Component {
                 <table className="w-100 mx-auto">
                     <tr>
                         <td className="w-10icon">
-                            <img src={catIconPath} alt={txt.altImageText} className="center"/>
+                            <i className="family-icon fas fa-th-large"/>
+                            {/*TODO DA CANCELLARE
+                            <img src={catIconPath} alt={txt.altImageText} className="center"/>*/}
                         </td>
                         <td className="w-80Market">
                             <ComboBox options={CATEGORIES[language]}
