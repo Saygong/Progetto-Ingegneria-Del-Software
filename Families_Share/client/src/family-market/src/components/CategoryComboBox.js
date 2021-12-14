@@ -1,6 +1,6 @@
 import withLanguage from "../../../components/LanguageContext";
 
-import {CATEGORIES} from "../constants";
+import {CATEGORIES, NO_CATEGORY} from "../constants";
 import React from "react";
 import PropTypes from "prop-types";
 import ComboBox from "react-responsive-combo-box";
@@ -19,14 +19,8 @@ class CategoryComboBox extends React.Component {
         // Get texts based on current language
         const language = this.props.language;
         const txt = texts[language].categoryComboBox;
-        /*TODO add category icon*/
+        /*TODO add category icon and change img to icon*/
         const catIconPath = "";
-
-        /**
-         * TODO Mettere categoria "Nessuna categoria", così utente può anche decidere di non selezionare nulla
-         *      questo è utile nei filtri di marketplacescreen, perché una volta che hai selezionato
-         *      non puoi tornare indietro
-         */
 
         return (
             <div>
@@ -36,7 +30,8 @@ class CategoryComboBox extends React.Component {
                         <img src={catIconPath} alt={txt.altImageText} className="center"/>
                     </div>
                     <div className="col-8-10">
-                        <ComboBox options={CATEGORIES}
+                        <ComboBox options={CATEGORIES[language]}
+                                  defaultValue={NO_CATEGORY[language]}
                                   onSelect={this.handleCategoryChange}
                                   editable={false}/>
                     </div>

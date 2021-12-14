@@ -31,7 +31,8 @@ class MyFavouritesButton extends React.Component {
         return (
             <div role="button" onClick={this.redirectToMyFavouritesScreen}>
                 <div>
-                    <ListItem isIcon={"fas fa-heart"} image={myFavouritesButtonIconPath} title={txt.title} description={txt.description}/>
+                    <ListItem isIcon={true} image={myFavouritesButtonIconPath}
+                              title={txt.title} description={txt.description}/>
                 </div>
                 <div>
                     <i className="fas fa-chevron-right" />

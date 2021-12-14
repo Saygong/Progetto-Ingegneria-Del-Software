@@ -1,12 +1,15 @@
 import withLanguage from "../../../../components/LanguageContext";
 import texts from "../../texts";
+
+import {NO_CATEGORY, NO_TN_TYPE} from "../../constants";
+
 import Posting from "../../api/model/Posting";
 
 import React from "react";
 import PropTypes from "prop-types";
-import Log from "../../../../components/Log";
 import PostingsListItem from "./PostingsListItem";
 import {FAVOURITES_MODE} from "./PostingsListItem";
+import Log from "../../../../components/Log";
 
 
 class PostingsList extends React.Component {
@@ -17,10 +20,6 @@ class PostingsList extends React.Component {
 
     render() {
         const filteredPostings = this.getFilteredPostings()
-
-        // TODO debug
-        //console.log("Filtered Postings: " + JSON.stringify(filteredPostings, null, 4));
-
         const title = this.buildTitle();
 
         return (
@@ -28,7 +27,8 @@ class PostingsList extends React.Component {
                 <h2>{title}</h2>
                 {/* One item for each posting */
                     filteredPostings.map((p, idx) => {
-                        return <PostingsListItem key={idx} mode={this.props.itemMode}
+                        return <PostingsListItem key={idx}
+                                                 mode={this.props.itemMode}
                                                  posting={p}/>
                     })
                 }
@@ -42,25 +42,48 @@ class PostingsList extends React.Component {
      */
     buildTitle() {
         const language = this.props.language;
-        const txt = texts[language].postingsLists.title;
+        const txt = texts[language].postingsLists;
 
-        const nameFilter = this.props.filterText;
-        const namePart = `${txt.namePart} "${nameFilter}"`;
-
-        const catFilter = this.props.filterCategory;
-        const catPart = `${txt.categoryPart} "${catFilter}"`;
-
-        const tnTypeFilter = this.props.filterTnType;
-        const typePart = `${txt.transactionTypePart} "${tnTypeFilter}"`;
-
-        if(!(nameFilter || catFilter || tnTypeFilter)) {
-            return "Newest posts" // TODO da aggiungere a texts e/o modificare
+        // If no filter is valid (all values are default), the title "Newest posts" should appear
+        if(!this.isNameFilterValid() && !this.isCategoryFilterValid()  && !this.isTnTypeFilterValid()) {
+            return txt.defaultTitle;
         }
         else
         {
-            // title is like "Results for "name" in category "cat" of type "type"
-            return namePart + catPart + typePart;
+            // Title is like: Results for 'name' in category 'cat' of type 'type'
+            const name = this.isNameFilterValid() ? this.props.filterText : "";
+            const category = this.isCategoryFilterValid() ? this.props.filterCategory : "";
+            const tnType = this.isTnTypeFilterValid() ?  this.props.filterTnType : "";
+
+            return txt.titleBuilder(name, category, tnType);
         }
+    }
+
+    /**
+     * Returns true if the name filter is different from default its value (empty string),
+     * which would mean it should not be used as filter.
+     * @return {boolean}
+     */
+    isNameFilterValid() {
+        return this.props.filterText !== "";
+    }
+
+    /**
+     * Returns true if the category filter is different from its default value,
+     * which would mean it should not be used as filter.
+     * @return {boolean}
+     */
+    isCategoryFilterValid() {
+        return this.props.filterCategory !== NO_CATEGORY[this.props.language];
+    }
+
+    /**
+     * Returns true if the transaction type filter is different from its default value,
+     * which would mean it should not be used as filter.
+     * @return {boolean}
+     */
+    isTnTypeFilterValid() {
+        return this.props.filterTnType !== NO_TN_TYPE[this.props.language];
     }
 
     /**
@@ -97,7 +120,7 @@ class PostingsList extends React.Component {
      */
     isMatchedByText(posting, filterText) {
         // Everything is a match if no filter is provided
-        if (filterText === "") {
+        if (!this.isNameFilterValid()) {
             return true;
         }
 
@@ -117,7 +140,7 @@ class PostingsList extends React.Component {
      */
     isMatchedByCategory(posting, filterCategory) {
         // Everything is a match if no filter is provided
-        if (filterCategory === "") {
+        if (!this.isCategoryFilterValid()) {
             return true;
         }
 
@@ -133,7 +156,7 @@ class PostingsList extends React.Component {
      */
     isMatchedByTnType(posting, filterTnType) {
         // Everything is a match if no filter is provided
-        if (filterTnType === "") {
+        if (!this.isTnTypeFilterValid()) {
             return true;
         }
 

@@ -20,7 +20,11 @@ class ListItem extends React.Component {
         // Get texts based on current language
         const language = this.props.language;
         const txt = texts[language].listItem;
+
+        // TODO logica da spostare in un altro componente?
+
         let isUser = false;
+        // TODO isIcon è un bool, va cambiato con props.imaage?
         if(this.props.isIcon === "fas fa-users"){
             isUser = true;
         }
