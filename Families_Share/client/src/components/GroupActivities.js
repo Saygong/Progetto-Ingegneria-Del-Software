@@ -216,6 +216,13 @@ class GroupActivities extends React.Component {
           handleClose={this.handleConfirmDialogClose}
         />
 
+        <hr />
+        <div className="w-100 border-dark ">
+
+          <AccessMarketplaceButton />
+
+        </div>
+        <hr />
         <div className="row no-gutters" id="groupMembersHeaderContainer">
           <div className="col-2-10">
             <button
