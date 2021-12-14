@@ -215,7 +215,7 @@ class GroupActivities extends React.Component {
           isOpen={confirmDialogIsOpen}
           handleClose={this.handleConfirmDialogClose}
         />
-        {/*<AccessMarketplaceButton />*/}
+
         <hr />
         <div className="w-100 border-dark ">
 
