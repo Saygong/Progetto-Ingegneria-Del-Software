@@ -3518,7 +3518,7 @@ a:active {
 .txtbxPosting {
   width: 70%;
   margin-bottom: 30px;
-  border-width: 1px;
+  border-width: 2px;
   padding: 5px;
   border-radius: 5px;
   border-color: #E5E4E2;
@@ -3531,6 +3531,10 @@ a:active {
   border-color: #E5E4E2;
   margin-bottom: 20px;
   width: 80%;
+}
+
+.cbox{
+  margin-bottom: 20px;
 }
 
 .titles{

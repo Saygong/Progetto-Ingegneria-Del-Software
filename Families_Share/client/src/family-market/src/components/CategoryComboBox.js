@@ -19,8 +19,6 @@ class CategoryComboBox extends React.Component {
         // Get texts based on current language
         const language = this.props.language;
         const txt = texts[language].categoryComboBox;
-        /*TODO add category icon and change img to icon*/
-        const catIconPath = "";
 
         return (
             <div>
@@ -29,14 +27,14 @@ class CategoryComboBox extends React.Component {
                     <tr>
                         <td className="w-10icon">
                             <i className="family-icon fas fa-th-large"/>
-                            {/*TODO DA CANCELLARE
-                            <img src={catIconPath} alt={txt.altImageText} className="center"/>*/}
                         </td>
                         <td className="w-80Market">
                             <ComboBox options={CATEGORIES[language]}
                                       defaultValue={NO_CATEGORY[language]}
                                       onSelect={this.handleCategoryChange}
-                                      editable={false}/>
+                                      editable={false}
+                                      className="cbox"
+                            />
                         </td>
                     </tr>
                 </table>

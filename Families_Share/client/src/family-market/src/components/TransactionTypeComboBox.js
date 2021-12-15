@@ -21,8 +21,6 @@ class TransactionTypeComboBox extends React.Component {
         // Get texts based on current language
         const language = this.props.language;
         const txt = texts[language].transactionTypeComboBox;
-        /*TODO add transaction icon and change img to icon*/
-        const tnIconPath = "";
 
         return (
             <div>
@@ -31,14 +29,14 @@ class TransactionTypeComboBox extends React.Component {
                     <tr>
                         <td className="w-10icon">
                             <i className="family-icon fas fa-filter"/>
-                            {/*TODO da cancellare
-                            <img src={tnIconPath} alt={txt.altImageText} className="center"/>*/}
                         </td>
                         <td className="w-80Market">
                             <ComboBox options={TN_TYPES[language]}
                                       defaultValue={NO_TN_TYPE[language]}
                                       onSelect={this.handleTnTypeChange}
-                                      editable={false}/>
+                                      editable={false}
+                                      className="cbox"
+                            />
                         </td>
                     </tr>
                 </table>

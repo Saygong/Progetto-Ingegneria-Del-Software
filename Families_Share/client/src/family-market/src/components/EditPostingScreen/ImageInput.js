@@ -34,7 +34,6 @@ class ImageInput extends React.Component {
                                 <input {...getInputProps()} />
                                 <p className="m-top-20">{txt.dropzoneText}</p>
                             </div>
-
                             <div className="image-preview">
                                 <img src={this.props.currentImage} alt={txt.altImageText} className="image-preview__image"/>
                             </div>
