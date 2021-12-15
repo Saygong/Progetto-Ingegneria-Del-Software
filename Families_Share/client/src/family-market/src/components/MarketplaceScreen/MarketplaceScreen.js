@@ -1,6 +1,6 @@
 import withLanguage from "../../../../components/LanguageContext";
 
-import {NO_CATEGORY, NO_TN_TYPE, TESTING} from "../../constants";
+import {NO_CATEGORY, NO_TN_TYPE, DEBUG} from "../../constants";
 import {FAMILY_MARKET_BASE_PAGE_URL} from "../../constants";
 
 import ApiHandler from "../../api/ApiHandler";
@@ -42,7 +42,7 @@ class MarketplaceScreen extends React.Component {
     constructor(props) {
         super(props);
 
-        this.apiHandler = new ApiHandler("", "", TESTING);
+        this.apiHandler = new ApiHandler("", "", DEBUG);
         this.defaultTnType = NO_TN_TYPE[this.props.language];
         this.defaultCat = NO_CATEGORY[this.props.language];
 

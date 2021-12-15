@@ -1,7 +1,7 @@
 import withLanguage from "../../../../components/LanguageContext";
 import texts from "../../texts";
 
-import {TESTING} from "../../constants";
+import {DEBUG} from "../../constants";
 import {FAMILY_MARKET_BASE_PAGE_URL} from "../../constants";
 
 import ApiHandler from "../../api/ApiHandler";
@@ -40,7 +40,7 @@ class MyGroupsScreen extends React.Component {
     constructor(props) {
         super(props);
 
-        this.apiHandler = new ApiHandler("", "", TESTING);
+        this.apiHandler = new ApiHandler("", "", DEBUG);
         this.matchParams = this.props.match.params;
         this.state = {
             groups: []
@@ -69,7 +69,7 @@ class MyGroupsScreen extends React.Component {
 
     async componentDidMount() {
         const userGroups = await this.fetchUserGroups()
-        Log.info("User groups: " + stringify(userGroups), this)
+        Log.trace("User groups: " + stringify(userGroups), this)
 
         this.setState({
             groups: userGroups,

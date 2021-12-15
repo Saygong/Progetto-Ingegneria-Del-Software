@@ -60,7 +60,7 @@ class PlainNavBar extends React.Component {
         else
         {
             const redirection = this.props.goBackLocation;
-            Log.info(`Redirecting to ${stringify(redirection)} the previous page...`, this);
+            Log.info(`Redirecting to ${stringify(redirection.pathname)}`, this);
 
             // Replace and not push, else the history stack gets polluted
             this.props.history.replace(redirection);
