@@ -3491,6 +3491,7 @@ a:active {
   font-size: 15px;
   border-radius: 8px;
   box-shadow: 0 3px #999;
+  margin: 0 auto;
 }
 .buttonCreatePosting:hover {
   background-color: #00835F;
