@@ -21,13 +21,14 @@ class SearchBar extends React.Component {
 
         return (
             <div>
-                <table className="w-100 mx-auto">
+                <table className="w-50 margin-left-20 m-top-2percent">
                     <tbody>
-                        <tr>
+                        <tr className="text-center">
                             <td className="w-10icon">
                                 <i className="family-icon fas fa-search"/>
                             </td>
-                            <td className="w-80Market">
+                            <td>
+                                <h2>{txt.description}</h2>
                                 <SimpleTextInput text={this.props.text}
                                                  description={txt.description}
                                                  textChangeHandler={this.handleTextChange}

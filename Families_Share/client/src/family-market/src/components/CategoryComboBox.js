@@ -22,15 +22,16 @@ class CategoryComboBox extends React.Component {
         const txt = texts[language].categoryComboBox;
 
         return (
-            <div>
-                <h4>{txt.description}</h4>
-                <table className="w-100 mx-auto">
+            <div className="m-top-20">
+
+                <table className="w-50 margin-left-20">
                     <tbody>
-                        <tr>
+                        <tr  className="text-center">
                             <td className="w-10icon">
                                 <i className="family-icon fas fa-th-large"/>
                             </td>
-                            <td className="w-80Market">
+                            <td>
+                                <h2>{txt.description}</h2>
                                 <ComboBox options={CATEGORIES[language]}
                                           defaultValue={this.props.defaultValue}
                                           onSelect={this.handleCategoryChange}

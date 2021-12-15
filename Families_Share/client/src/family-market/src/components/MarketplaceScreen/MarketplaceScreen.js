@@ -68,16 +68,17 @@ class MarketplaceScreen extends React.Component {
         };
 
         return (
-            <div className="mx-auto w-8 mt-2">
+            <div className="mx-auto">
                 <MarketplaceNavBar/>
-
                 <div className="w-95 mx-auto">
-                    <SearchBar text={this.state.filterText}
-                               textChangeHandler={this.handleSearchBarChange}/>
-                    <CategoryComboBox defaultValue={this.defaultCat}
-                                      categoryChangeHandler={this.handleCategoryChange}/>
-                    <TransactionTypeComboBox defaultValue={this.defaultTnType}
-                                             tnTypeChangeHandler={this.handleTransactionTypeChange}/>
+                    <div className="w-60 mx-auto">
+                        <SearchBar text={this.state.filterText}
+                                   textChangeHandler={this.handleSearchBarChange}/>
+                        <CategoryComboBox defaultValue={this.defaultCat}
+                                          categoryChangeHandler={this.handleCategoryChange}/>
+                        <TransactionTypeComboBox defaultValue={this.defaultTnType}
+                                                 tnTypeChangeHandler={this.handleTransactionTypeChange}/>
+                    </div>
                     <CreatePostingButton onCreateRedirection={onCreateRedirection}/>
                     <hr/>
                 </div>

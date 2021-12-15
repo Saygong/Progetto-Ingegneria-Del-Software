@@ -16,7 +16,6 @@ class SimpleTextInput extends React.Component {
     render() {
         return (
             <div>
-                <h2 className="m-top-20">{this.props.description}</h2>
                 <input type="text"
                        value={this.props.text}
                        onChange={this.handleTextChange}

@@ -3337,10 +3337,6 @@ a:active {
   color: white;
 }
 
-.margin-left-10{
-  margin-left:10%;
-}
-
 .h-80px{
   height:80px;
 }
@@ -3549,6 +3545,10 @@ a:active {
   margin-bottom: 5px;
 }
 
+.m-top-2percent{
+  margin-top: 2%;
+}
+
 .image-preview{
   width: 80%;
   min-height: 200px;
@@ -3565,4 +3565,16 @@ a:active {
 
 .margin-left-30{
   margin-left: 30%;
+}
+
+.margin-left-20{
+  margin-left:20%;
+}
+
+.margin-left-10{
+  margin-left:10%;
+}
+
+.z-index-100{
+  z-index: 100;
 }
