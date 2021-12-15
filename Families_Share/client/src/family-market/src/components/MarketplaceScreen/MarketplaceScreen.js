@@ -79,7 +79,10 @@ class MarketplaceScreen extends React.Component {
                         <TransactionTypeComboBox defaultValue={this.defaultTnType}
                                                  tnTypeChangeHandler={this.handleTransactionTypeChange}/>
                     </div>
-                    <CreatePostingButton onCreateRedirection={onCreateRedirection}/>
+                    <div className="margin-left-40">
+                        <CreatePostingButton onCreateRedirection={onCreateRedirection}/>
+                    </div>
+
                     <hr/>
                 </div>
 
