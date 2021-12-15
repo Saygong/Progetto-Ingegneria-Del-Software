@@ -42,11 +42,14 @@ class ConfirmDialog extends React.Component {
     return (
       <MuiThemeProvider theme={theme}>
         <Dialog
-          open={isOpen}
-          onClose={() => this.handleClose("disagree")}
+          open={isOpen === undefined || isOpen === null ? false : isOpen}
+          onClose={(event, reason) => {
+              if (reason !== "backdropClick") {
+                this.handleClose("disagree");
+              }
+          }}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
-          disableBackdropClick
           fullWidth
         >
           <DialogTitle className={classes.dialogTitle} id="alert-dialog-title">

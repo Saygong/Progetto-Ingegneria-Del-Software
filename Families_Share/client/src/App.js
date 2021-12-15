@@ -13,48 +13,37 @@ import { LanguageProvider } from "./components/LanguageContext";
 import PrivateRoute from "./components/PrivateRoute";
 
 // imports for Family Market routes and components
-import MarketplaceScreen from "./family-market/src/components/MarketplaceScreen/MarketplaceScreen";
 import {MarketplaceScreenRoute} from "./family-market/src/components/MarketplaceScreen/MarketplaceScreen";
-
-import PostingScreen from "./family-market/src/components/PostingScreen/PostingScreen";
 import {PostingScreenRoute} from "./family-market/src/components/PostingScreen/PostingScreen";
-
-import EditPostingScreen from "./family-market/src/components/EditPostingScreen/EditPostingScreen";
 import {EditModeRoute, CreateModeRoute} from "./family-market/src/components/EditPostingScreen/EditPostingScreen";
-
-import MyFavouritesScreen from "./family-market/src/components/MyFavouritesScreen/MyFavouritesScreen";
 import {MyFavouritesScreenRoute} from "./family-market/src/components/MyFavouritesScreen/MyFavouritesScreen";
-
-import MyGroupsScreen from "./family-market/src/components/MyPostingsScreens/MyGroupsScreen";
 import {MyGroupsScreenRoute} from "./family-market/src/components/MyPostingsScreens/MyGroupsScreen";
-
-import MyGroupPostingsScreen from "./family-market/src/components/MyPostingsScreens/MyGroupPostingsScreen";
 import {MyGroupPostingsScreenRoute} from "./family-market/src/components/MyPostingsScreens/MyGroupPostingsScreen";
 
 
 // Family Market components (screens)
 const LoadableMarketplaceScreen = Loadable({
-  loader: () => MarketplaceScreen,
+  loader: () => import("./family-market/src/components/MarketplaceScreen/MarketplaceScreen"),
   loading: () => Loading
 });
 const LoadablePostingScreen = Loadable({
-  loader: () => PostingScreen,
+  loader: () => import("./family-market/src/components/PostingScreen/PostingScreen"),
   loading: () => Loading
 });
 const LoadableEditPostingScreen = Loadable({
-  loader: () => EditPostingScreen,
+  loader: () => import("./family-market/src/components/EditPostingScreen/EditPostingScreen"),
   loading: () => Loading
 });
 const LoadableMyFavouritesScreen = Loadable({
-  loader: () => MyFavouritesScreen,
+  loader: () => import("./family-market/src/components/MyFavouritesScreen/MyFavouritesScreen"),
   loading: () => Loading
 });
-const LoadableMyGroupsWithPostingsScreen = Loadable({
-  loader: () => MyGroupsScreen,
+const LoadableMyGroupsScreen = Loadable({
+  loader: () => import("./family-market/src/components/MyPostingsScreens/MyGroupsScreen"),
   loading: () => Loading
 });
 const LoadableMyGroupPostingsScreen = Loadable({
-  loader: () => MyGroupPostingsScreen,
+  loader: () => import("./family-market/src/components/MyPostingsScreens/MyGroupPostingsScreen"),
   loading: () => Loading
 });
 
@@ -439,31 +428,31 @@ class App extends React.Component {
               {/* Family Market Routes TODO loadable doesn't work*/}
               <PrivateRoute
                   exact path={MarketplaceScreenRoute}
-                  component={MarketplaceScreen}
+                  component={LoadableMarketplaceScreen}
                 />
               <PrivateRoute
                   exact path={PostingScreenRoute}
-                  component={PostingScreen}
+                  component={LoadablePostingScreen}
               />
               <PrivateRoute
                   exact path={EditModeRoute}
-                  component={EditPostingScreen}
+                  component={LoadableEditPostingScreen}
               />
               <PrivateRoute
                   exact path={CreateModeRoute}
-                  component={EditPostingScreen}
+                  component={LoadableEditPostingScreen}
               />
               <PrivateRoute
                   exact path={MyFavouritesScreenRoute}
-                  component={MyFavouritesScreen}
+                  component={LoadableMyFavouritesScreen}
               />
               <PrivateRoute
                   exact path={MyGroupsScreenRoute}
-                  component={MyGroupsScreen}
+                  component={LoadableMyGroupsScreen}
               />
               <PrivateRoute
                   exact path={MyGroupPostingsScreenRoute}
-                  component={MyGroupPostingsScreen}
+                  component={LoadableMyGroupPostingsScreen}
               />
 
               <Route component={NoMatchScreen} />

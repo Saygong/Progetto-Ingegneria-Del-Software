@@ -194,6 +194,7 @@ class GroupActivities extends React.Component {
       fetchedData,
       plans
     } = this.state;
+
     const { name } = group;
     const texts = Texts[language].groupActivities;
     const options = [
@@ -258,6 +259,8 @@ class GroupActivities extends React.Component {
             </button>
           </div>
         </div>
+
+        <hr />
 
         <div className="w-100">
           <AccessMarketplaceButton />

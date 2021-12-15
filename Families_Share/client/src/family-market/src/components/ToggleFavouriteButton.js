@@ -28,7 +28,7 @@ class ToggleFavouriteButton extends React.Component {
         this.isFavouriteImage = "";
         this.notFavouriteImage = "";
 
-        this.apiHandler = new ApiHandler("", "", TESTING)("", TESTING);
+        this.apiHandler = new ApiHandler("", "", TESTING);
         this.state = {
             isFavourite: false
         };

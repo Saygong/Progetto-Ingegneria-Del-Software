@@ -35,16 +35,22 @@ class MarketplaceScreen extends React.Component {
      */
     apiHandler;
 
+    defaultTnType;
+
+    defaultCat;
+
     constructor(props) {
         super(props);
 
-        this.apiHandler = new ApiHandler("", "", TESTING)("", TESTING);
+        this.apiHandler = new ApiHandler("", "", TESTING);
+        this.defaultTnType = NO_TN_TYPE[this.props.language];
+        this.defaultCat = NO_CATEGORY[this.props.language];
 
         this.state = {
             groupPostings: [],
             filterText: "",
-            filterTnType: NO_TN_TYPE[this.props.language],
-            filterCategory: NO_CATEGORY[this.props.language],
+            filterTnType: this.defaultTnType,
+            filterCategory: this.defaultCat,
         };
 
         this.getGroupPostings = this.getGroupPostings.bind(this);
@@ -66,9 +72,12 @@ class MarketplaceScreen extends React.Component {
                 <MarketplaceNavBar/>
 
                 <div className="w-95 mx-auto">
-                    <SearchBar text={this.state.filterText} textChangeHandler={this.handleSearchBarChange}/>
-                    <CategoryComboBox categoryChangeHandler={this.handleCategoryChange}/>
-                    <TransactionTypeComboBox tnTypeChangeHandler={this.handleTransactionTypeChange}/>
+                    <SearchBar text={this.state.filterText}
+                               textChangeHandler={this.handleSearchBarChange}/>
+                    <CategoryComboBox defaultValue={this.defaultCat}
+                                      categoryChangeHandler={this.handleCategoryChange}/>
+                    <TransactionTypeComboBox defaultValue={this.defaultTnType}
+                                             tnTypeChangeHandler={this.handleTransactionTypeChange}/>
                     <CreatePostingButton onCreateRedirection={onCreateRedirection}/>
                     <hr/>
                 </div>
