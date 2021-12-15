@@ -39,7 +39,9 @@ class TransactionTypeComboBox extends React.Component {
                             <ComboBox options={TN_TYPES[language]}
                                       defaultValue={this.props.defaultValue}
                                       onSelect={this.handleTnTypeChange}
-                                      editable={false}/>
+                                      editable={false}
+                                      className="cbox"
+                            />
                         </td>
                     </tr>
                 </table>

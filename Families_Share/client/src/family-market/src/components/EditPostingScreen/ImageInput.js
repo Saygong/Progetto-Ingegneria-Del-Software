@@ -7,7 +7,6 @@ import Dropzone from "react-dropzone";
 import Compressor from 'compressorjs';
 import {stringify, Log} from "../../utils";
 
-
 // 10MB is more than enough, also, MongoDb allows for max document size of 16MB
 export const MAX_IMAGE_SIZE = 10000000;
 
@@ -33,12 +32,14 @@ class ImageInput extends React.Component {
                         <section>
                             <div {...getRootProps()}>
                                 <input {...getInputProps()} />
-                                <p>{txt.dropzoneText}</p>
+                                <p className="m-top-20">{txt.dropzoneText}</p>
+                            </div>
+                            <div className="image-preview">
+                                <img src={this.props.currentImage} alt={txt.altImageText} className="image-preview__image"/>
                             </div>
                         </section>
                     )}
                 </Dropzone>
-                <img className="img-8-10" src={this.props.currentImage} alt={txt.altImageText}/>
             </div>
         )
     }

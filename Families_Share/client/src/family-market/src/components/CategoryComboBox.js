@@ -39,7 +39,9 @@ class CategoryComboBox extends React.Component {
                             <ComboBox options={CATEGORIES[language]}
                                       defaultValue={this.props.defaultValue}
                                       onSelect={this.handleCategoryChange}
-                                      editable={false}/>
+                                      editable={false}
+                                      className="cbox"
+                            />
                         </td>
                     </tr>
                 </table>

@@ -3518,14 +3518,14 @@ a:active {
 .txtbxPosting {
   width: 70%;
   margin-bottom: 30px;
-  border-width: 1px;
+  border-width: 2px;
   padding: 5px;
   border-radius: 5px;
   border-color: #E5E4E2;
   /*text-align: center;*/
 }
 
-.descPosting {
+.descPosting{
   padding: 12px 20px;
   border-radius: 5px;
   border-color: #E5E4E2;
@@ -3533,13 +3533,27 @@ a:active {
   width: 80%;
 }
 
+.cbox{
+  margin-bottom: 20px;
+}
+
 .titles {
   text-align: center;
 }
 
-.m-top-20 {
+.m-top-20{
   margin-top: 20px;
   margin-bottom: 5px;
+}
+
+.image-preview{
+  width: 80%;
+  min-height: 200px;
+  border: 2px solid #dddddd;
+  margin: 15px auto;
+}
+.image-preview__image{
+  width: 100%;
 }
 
 .h1-error {
