@@ -35,23 +35,24 @@ class PostingInfoTabs extends React.Component {
                     <Tabs>
                         <Tab label={txt.product}>
                             <div className="">
-                                <h2>{txt.desc}</h2>
+                                <h2 className="forTabsTitle">{txt.desc}</h2>
                                 <p>{posting.description}</p>
                             </div>
                         </Tab>
-                        <Tab label={txt.place}>
+                        <Tab label={txt.where}>
                             <div>
+                                <h2 className="forTabsTitle">{txt.place}</h2>
                                 <p>{posting.contact.place}</p>
                             </div>
                         </Tab>
                         <Tab label={txt.contact}>
                             <div>
                                 {/* TODO aggiungere informazioni utente (nome)*/}
-                                <h2>{txt.phone}</h2>
+                                <h2 className="forTabsTitle">{txt.phone}</h2>
                                 <p>{posting.contact.phone_number}</p>
-                                <h2>{txt.mail}</h2>
+                                <hr/>
+                                <h2 className="forTabsTitle">{txt.mail}</h2>
                                 <p>{posting.contact.email}</p>
-
                             </div>
                         </Tab>
                     </Tabs>

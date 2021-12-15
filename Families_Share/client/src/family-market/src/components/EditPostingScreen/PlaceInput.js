@@ -16,7 +16,7 @@ class PlaceInput extends React.Component {
 
     render() {
         const language = this.props.language;
-        const txt = texts[language].placeInput;
+        const txt = texts[language].editPostingScreen.placeInput;
 
         return (
             <div className="row no-gutters">

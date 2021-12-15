@@ -3323,6 +3323,9 @@ a:active {
 
 .family-icon{
   font-size: 30px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .navBarHeight{
@@ -3463,6 +3466,13 @@ a:active {
   margin: auto;
 }
 
+.img-8-10__icons {
+  width: 90%;
+  max-height: 150px;
+  display: block;
+  margin: auto;
+}
+
 .posting-list-item-container {
   width: 95%;
   height: 95%;
@@ -3557,6 +3567,9 @@ a:active {
 }
 .image-preview__image{
   width: 100%;
+  max-height: 500px;
+  display: block;
+  margin: auto;
 }
 
 .h1-error {
@@ -3577,4 +3590,8 @@ a:active {
 
 .z-index-100{
   z-index: 100;
+}
+
+.forTabsTitle{
+  color: #808080;
 }

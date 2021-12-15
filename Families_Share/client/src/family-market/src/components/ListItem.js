@@ -40,7 +40,7 @@ class ListItem extends React.Component {
                         </div>
                     ):(
                         <div className="center mx-auto">
-                            <img className="img-8-10" src={path} alt={txt.altImageText} />
+                            <img className="img-8-10__icons" src={path} alt={txt.altImageText} />
                         </div>
                     )}
                 </div>

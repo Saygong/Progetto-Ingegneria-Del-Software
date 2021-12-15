@@ -129,6 +129,7 @@ class EditPostingScreen extends React.Component {
                                 placeholder={txt.descriptionInput.placeholder}
                                 textChangeHandler={this.handleDescriptionChange} />
 
+                <h2>{txt.placeInput.description}</h2>
                 <PlaceInput place={this.state.place}
                             placeChangeHandler={this.handlePlaceChange} />
 

@@ -29,7 +29,7 @@ class PostingInfo extends React.Component {
             <div>
 
                 <div className="image-preview">
-                    <img className="img-8-10" src={currentPosting.photo} alt={txt.altImageText}/>
+                    <img className="image-preview__image" src={currentPosting.photo} alt={txt.altImageText}/>
                 </div>
                 <hr className="family-m-hr"/>
                 <PostingInfoHeader posting={this.props.posting}/>

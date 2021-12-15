@@ -98,6 +98,10 @@ const en = {
             description: "Description",
             placeholder: "Insert description"
         },
+        placeInput: {
+            description: "Place: ",
+            placeholder: "Insert the place"
+        },
         editContactTitle: "Contact information:",
         missingValuesError: "Some values are missing!"
     },
@@ -147,16 +151,12 @@ const en = {
     postingInfoTabs: {
         desc: "Description:",
         product: "Product",
-        place: "Where",
+        where: "Where",
         contact: "Contacts",
+        place: "Place:",
         user: "User:",
         phone: "Phone number:",
         mail: "Email:",
-    },
-
-    placeInput: {
-        description: "Place: ",
-        placeholder: "Insert the place"
     }
 }
 
@@ -260,6 +260,10 @@ const it = {
             description: "Descrizione",
             placeholder: "Inserire descrizione"
         },
+        placeInput: {
+            description: "Luogo: ",
+            placeholder: "Inserisci il luogo"
+        },
         editContactTitle: "Informazioni di contatto:",
         missingValuesError: "Alcuni valori non sono stati inseriti!"
     },
@@ -310,17 +314,13 @@ const it = {
     postingInfoTabs: {
         desc: "Descrizione:",
         product: "Prodotto",
-        place: "Dove",
+        where: "Dove",
         contact: "Contatti",
+        place: "Luogo:",
         user: "Utente:",
         phone: "Cellulare:",
         mail: "Email:",
     },
-
-    placeInput: {
-        description: "Luogo: ",
-        placeholder: "Inserisci il luogo"
-    }
 }
 
 
