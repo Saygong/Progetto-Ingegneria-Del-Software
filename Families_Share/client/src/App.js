@@ -425,7 +425,6 @@ class App extends React.Component {
                 component={GroupMainScreen}
               />
 
-              {/* Family Market Routes TODO loadable doesn't work*/}
               <PrivateRoute
                   exact path={MarketplaceScreenRoute}
                   component={LoadableMarketplaceScreen}

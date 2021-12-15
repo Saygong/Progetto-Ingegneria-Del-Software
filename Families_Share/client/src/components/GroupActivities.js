@@ -259,9 +259,7 @@ class GroupActivities extends React.Component {
             </button>
           </div>
         </div>
-
-        <hr />
-
+        <div className="navBarHeight"/>
         <div className="w-100">
           <AccessMarketplaceButton />
         </div>

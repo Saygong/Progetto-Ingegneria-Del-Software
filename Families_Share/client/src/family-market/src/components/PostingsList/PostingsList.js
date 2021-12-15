@@ -183,10 +183,6 @@ PostingsList.propTypes = {
      */
     postings: PropTypes.arrayOf(PropTypes.instanceOf(Posting)),
 
-   ///** TODO al momento inutle perché titolo è gestito internamente
-   // * Title attached on top of the actual list of postings
-   // */
-   //title: PropTypes.string,
 
     /**
      * Mode of the list items, determines which button to show.

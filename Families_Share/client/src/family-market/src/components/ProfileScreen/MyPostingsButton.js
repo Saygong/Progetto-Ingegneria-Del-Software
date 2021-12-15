@@ -13,7 +13,6 @@ import {withRouter} from "react-router-dom";
 /**
  * Class that represents the button to access the "my postings" section.
  *
- * TODO This button must be added to the ProfileScreen component
  */
 class MyPostingsButton extends React.Component {
 

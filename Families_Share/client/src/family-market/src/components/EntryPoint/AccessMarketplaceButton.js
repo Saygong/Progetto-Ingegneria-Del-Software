@@ -11,7 +11,6 @@ import {withRouter} from "react-router-dom";
  * Class that represents the button to access the Marketplace section of Family Market.
  * It is the entry point to the extension.
  *
- * TODO This button must be added to the GroupActivities component (see TODO)
  */
 class AccessMarketplaceButton extends React.Component {
     constructor(props) {
@@ -34,20 +33,22 @@ class AccessMarketplaceButton extends React.Component {
                     </div>
 
                     <table className="w-100">
-                        <tr>
-                            <td className="w-10"/>
-                            <td className="w-10">
-                                <div>
-                                    <i className="family-icon fas fa-balance-scale"/>
-                                </div>
-                            </td>
-                            <td>
-                                <div className="">
-                                    <h2 className="font-italic w-100">{txt.title}</h2>
-                                    <h5>{txt.description}</h5>
-                                </div>
-                            </td>
-                        </tr>
+                        <tbody>
+                            <tr>
+                                <td className="w-10"/>
+                                <td className="w-10">
+                                    <div>
+                                        <i className="family-icon fas fa-balance-scale"/>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div className="">
+                                        <h2 className="font-italic w-100">{txt.title}</h2>
+                                        <h5>{txt.description}</h5>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
             </div>

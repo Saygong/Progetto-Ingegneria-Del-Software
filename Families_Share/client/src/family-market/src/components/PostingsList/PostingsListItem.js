@@ -48,9 +48,7 @@ class PostingsListItem extends React.Component {
     }
 
     render() {
-        // Get the texts based on the current language TODO forse non serve
-        //const language = this.props.language;
-        //const txt = texts[language].confirmButton;
+
 
         // Display posting info in the list item
         const posting = this.props.posting;

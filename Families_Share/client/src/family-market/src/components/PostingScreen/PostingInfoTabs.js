@@ -7,10 +7,8 @@ import Log from "../../../../components/Log";
 import texts from "../../texts";
 import Tabs from "./PostingInfoTabsStyle";
 
-//TODO non capisco funziona con tutti e 3 non vedo la differenza
+
 import Tab from "./PostingInfoTabsStyle";
-// import {Tab} from "@material-ui/core";
-// import {Tab} from "react-tabs";
 
 /**
  * Class that represents a component that displays
@@ -29,8 +27,7 @@ class PostingInfoTabs extends React.Component {
         const txt = texts[language].postingInfoTabs;
         //TODO ci sono i testi di utente, cellulare e email in txt
         //     ma nella demo interfaccia ci stanno le icone
-        //  SE SI VUOLE METTERE IL NOME UTENTE BISOGNA PRIMA TREVARE IL NOME DELL'UTENTE
-        //  INTANTO lASCIO L'ID
+
 
         return (
             <div>
