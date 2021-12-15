@@ -41,6 +41,7 @@ class ToggleFavouriteButton extends React.Component {
         // Determine which image to display
         const isFavPath = "fas fa-bookmark";
         const isNotFavPath = "far fa-bookmark";
+
         const imgPath = this.state.isFavourite ? isFavPath : isNotFavPath;
 
         // Get texts based on current language

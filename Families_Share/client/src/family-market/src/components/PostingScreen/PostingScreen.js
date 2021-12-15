@@ -72,7 +72,7 @@ class PostingScreen extends React.Component {
             pathname: this.props.location.pathname,
             state: this.props.location.state
         };
-
+        console.log("PostingScreen:" + currentPosting.id)
         return (
             <div>
                 <PostingNavBar postingId={currentPosting.id}
@@ -81,7 +81,7 @@ class PostingScreen extends React.Component {
                                onEditRedirection={this.onPostingDeleteRedirection}
                                onDeleteRedirection={this.onPostingDeleteRedirection}/>
                 <hr/>
-                <PostingInfo posting={this.state.posting}/>
+                <PostingInfo posting={currentPosting}/>
             </div>
         );
     }

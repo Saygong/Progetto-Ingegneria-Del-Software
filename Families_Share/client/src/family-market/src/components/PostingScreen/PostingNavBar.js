@@ -21,7 +21,7 @@ class PostingNavBar extends React.Component {
 
     render() {
         const postingTitle = this.props.postingName;
-
+       
         return (
             <div className="w-100 mx-auto family-color">
                 <table className="w-100 mx-auto">
