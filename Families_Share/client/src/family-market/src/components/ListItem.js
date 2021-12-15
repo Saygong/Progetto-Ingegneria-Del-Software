@@ -21,7 +21,7 @@ class ListItem extends React.Component {
         const language = this.props.language;
         const txt = texts[language].listItem;
 
-        // TODO logica da spostare in un altro componente?
+
 
         let isIcon = this.props.isIcon;
         let path = this.props.image;

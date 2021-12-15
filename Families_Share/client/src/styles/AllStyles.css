@@ -3373,7 +3373,10 @@ a:active {
   width: 10%;
 }
 
-/*TODO in caso di icona non disponibile il testo sbanfa tutto*/
+.margin-top-7{
+  margin-top: 7%;
+}
+
 .w-10icon{
   width: 10%;
   overflow: scroll;

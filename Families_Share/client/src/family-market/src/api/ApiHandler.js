@@ -25,8 +25,6 @@ class ApiHandler {
      *      Set in the AUTHORIZATION field of the request header.
      */
     constructor(host="", authToken="", debug=true) {
-        // TODO might want to add a host parameter which is useful during testing,
-        //      where proxying to localhost:4000 doesn't work
 
         if (authToken !== "") {
             // Set default auth header with the token of the user that makes the requests
@@ -153,7 +151,7 @@ class ApiHandler {
      */
     async createPosting(userId, groupId, info) {
         const creationData = {
-            user_id: userId, // TODO quindi non devo più passarli qui ma nella route?
+            user_id: userId,
             group_id: groupId,
             ...info
         };

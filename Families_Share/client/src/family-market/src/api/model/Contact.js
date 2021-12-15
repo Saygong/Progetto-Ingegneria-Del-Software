@@ -31,7 +31,7 @@ class Contact {
     /**
      *
      * @param email {string}
-     * @param place {string} string representing a location (TODO could also be google maps coordinates)
+     * @param place {string} string representing a location
      * @param phone_number {string}
      */
     constructor({email, place, phone_number}) {
