@@ -9,6 +9,8 @@ class GroupCalendar extends React.Component {
     const { name, group_id } = group;
     return (
       <React.Fragment>
+
+
         <div className="row no-gutters" id="groupMembersHeaderContainer">
           <div className="col-2-10">
             <button
@@ -23,6 +25,9 @@ class GroupCalendar extends React.Component {
             <h1 className="verticalCenter">{name}</h1>
           </div>
         </div>
+
+
+
         <div style={{ position: "relative", top: "5.6rem" }}>
           <Calendar
             handleChangeView={this.handleChangeView}

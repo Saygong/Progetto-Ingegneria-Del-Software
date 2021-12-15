@@ -216,13 +216,7 @@ class GroupActivities extends React.Component {
           handleClose={this.handleConfirmDialogClose}
         />
 
-        <hr />
-        <div className="w-100 border-dark ">
 
-          <AccessMarketplaceButton />
-
-        </div>
-        <hr />
         <div className="row no-gutters" id="groupMembersHeaderContainer">
           <div className="col-2-10">
             <button
@@ -236,6 +230,7 @@ class GroupActivities extends React.Component {
           <div className="col-6-10 ">
             <h1 className="verticalCenter">{name}</h1>
           </div>
+
           <div className="col-1-10 ">
             {userIsAdmin && (
               <button
@@ -263,6 +258,13 @@ class GroupActivities extends React.Component {
             </button>
           </div>
         </div>
+
+        <div className="w-100">
+          <AccessMarketplaceButton />
+        </div>
+
+        <hr />
+
         <div
           className="row no-gutters"
           style={{
