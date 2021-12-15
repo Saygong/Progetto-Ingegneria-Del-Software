@@ -3541,3 +3541,13 @@ a:active {
   margin-top: 20px;
   margin-bottom: 5px;
 }
+
+.image-preview{
+  width: 80%;
+  min-height: 200px;
+  border: 2px solid #dddddd;
+  margin: 15px auto;
+}
+.image-preview__image{
+  width: 100%;
+}

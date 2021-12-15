@@ -25,35 +25,22 @@ class ImageInput extends React.Component {
 
         return (
             <div>
-                {/*<Dropzone accept="image/jpeg, image/png"*/}
-                {/*          multiple={false} maxFiles={1} maxSize={MAX_IMAGE_SIZE}*/}
-                {/*          onDrop={this.handleImageSelection}>*/}
-                {/*    {({getRootProps, getInputProps}) => (*/}
-                {/*        <section>*/}
-                {/*            <div {...getRootProps()}>*/}
-                {/*                <input {...getInputProps()} />*/}
-                {/*                <p>{txt.dropzoneText}</p>*/}
-                {/*            </div>*/}
-                {/*            <img className="img-8-10" src={this.props.currentImage} alt={txt.altImageText}/>*/}
-                {/*        </section>*/}
-                {/*    )}*/}
-                {/*</Dropzone>*/}
-                {/*<input type="file" name="inpFile" id="inpFile" class="m-top-20"/>*/}
-                {/*<div class="image-preview" id="imagePreview">*/}
-                {/*    <img src={this.props.currentImage} alt={txt.altImageText} className="image-preview__image" />*/}
-                {/*    <span class="image-preview__default-text">Image Preview</span>*/}
-                {/*</div>*/}
-                
-                {/*<script>*/}
-                {/*    //prendermi l'immagine*/}
-                {/*    //faccio reference agli elementi html con gli id*/}
-                {/*    const inpFile = document.getElementById("inpFile");*/}
-                {/*    const previewContainer = document.getElementById("imagePreview");*/}
-                {/*    const previewImage = previewContainer.querySelector("image-preview__image");*/}
-                {/*    const previewDefaultText = previewContainer.querySelector("image-preview__default-text");*/}
+                <Dropzone accept="image/jpeg, image/png"
+                          multiple={false} maxFiles={1} maxSize={MAX_IMAGE_SIZE}
+                          onDrop={this.handleImageSelection}>
+                    {({getRootProps, getInputProps}) => (
+                        <section>
+                            <div {...getRootProps()}>
+                                <input {...getInputProps()} />
+                                <p className="m-top-20">{txt.dropzoneText}</p>
+                            </div>
 
-                {/*    inpFile*/}
-                {/*</script>*/}
+                            <div className="image-preview">
+                                <img src={this.props.currentImage} alt={txt.altImageText} className="image-preview__image"/>
+                            </div>
+                        </section>
+                    )}
+                </Dropzone>
             </div>
         )
     }
