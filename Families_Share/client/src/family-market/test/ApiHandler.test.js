@@ -4,11 +4,12 @@ import PostingInfo from "../src/api/model/PostingInfo";
 import Contact from "../src/api/model/Contact";
 import GroupInfo from "../src/api/model/GroupInfo";
 import chalk from "chalk";
+import {Log, stringify} from "../src/utils";
 
 const axios = require("axios");
 axios.defaults.adapter = require('axios/lib/adapters/http');
 
-const BASE_URL = "http://localhost:4000";
+const HOST = "http://localhost:4000";
 const MIN_PWD_LENGTH = 8;
 
 // Change if more output is desired: impacts the logResponse functions
@@ -95,6 +96,19 @@ function assertList(actualList, expectedList) {
     }
 }
 
+/**
+ * Logs a generic error,
+ * only if the debug attribute of this instance was set to true
+ * @param error {Error}
+ */
+function logError(error) {
+    Log.error("Error caught: " + stringify({
+        name: error.name,
+        message: error.message,
+        lineNumber: error.lineNumber,
+        stack: error.stack
+    }));
+}
 
 /**
  * Logs an axios response to the console
@@ -125,7 +139,7 @@ function logResponseInternal(message, response) {
         Data: response.data
     }
 
-    console.log(`${message} \n` + JSON.stringify(logData, null, 4));
+    Log.info(`${message} \n` + stringify(logData));
 }
 
 
@@ -145,17 +159,17 @@ async function createRandomUser() {
     };
 
     // in test.js: await chai.request(server).post('/api/users').send(user2)
-    const routeUrl = BASE_URL + "/api/users";
+    const routeUrl = HOST + "/api/users";
     const response = await axios.post(routeUrl, user)
         .then(response => {
-            console.log(`Successfully created user [${response.data.id}]`);
+            Log.info(`Successfully created user [${response.data.id}]`);
             logResponse(response);
 
             // see line 154 of user-routes.js to understand what data is returned
             return response;
         })
         .catch(error => {
-            console.log(`Error while creating user`);
+            Log.error(`Error while creating user`);
             logErrorResponse(error.response);
         });
 
@@ -183,17 +197,18 @@ async function createRandomGroup(creator) {
 
     // in test.js:
     // await chai.request(server).post('/api/groups').send(group2).set('Authorization', user.token)
-    const routeUrl = BASE_URL + "/api/groups";
+    const routeUrl = HOST + "/api/groups";
     const response = await axios.post(routeUrl, group,
         {headers: {"Authorization": creator.token}})
         .then(response => {
-            console.log(`Successfully created group [${response.data.group_id}]`);
+            Log.info(`Successfully created group [${response.data.group_id}]`);
             logResponse(response)
 
             return response;
         })
         .catch(error => {
-            console.log(`Error while creating group`);
+            Log.error(`Error while creating group`);
+            logError(error);
             logErrorResponse(error.response);
         });
 
@@ -218,19 +233,19 @@ async function createRandomPosting(creator, groupId) {
         ...rndInfo
     };
 
-    const routeUrl = `${ApiHandler.POSTINGS_BASE_URL}`;
+    const routeUrl = `${HOST}${ApiHandler.POSTINGS_BASE_URL}`;
     const response = await axios.post(routeUrl, creationData,
         {headers: {"Authorization": creator.token}})
         .then(response => {
-            console.log(`Successfully created posting [${response.data.id}]`);
+            Log.info(`Successfully created posting [${response.data.id}]`);
             logResponse(response)
 
             return response;
         })
         .catch(error => {
-            console.log(`Error while creating posting`);
+            Log.error(`Error while creating posting`);
+            logError(error);
             logErrorResponse(error.response);
-            console.log(error.response);
         });
 
     const postingData = response.data;
@@ -315,15 +330,16 @@ async function createUserWithSomeFavourites() {
         favourites: favouritesIds
     };
 
-    const routeUrl = `${ApiHandler.USERS_BASE_URL}/${user.id}/favourites`
+    const routeUrl = `${HOST}${ApiHandler.USERS_BASE_URL}/${user.id}/favourites`
     await axios.patch(routeUrl, reqData,
         {headers: {"Authorization": user.token}})
         .then(response => {
-            console.log(`Favourites of user '${user.id}' have been updated`)
+            Log.info(`Favourites of user '${user.id}' have been updated`)
             logResponse(response);
         })
         .catch(error => {
-            console.log("An error occurred while updating user favorites of user: " + user.id)
+            Log.error("An error occurred while updating user favorites of user: " + user.id)
+            logError(error);
             logErrorResponse(error.response);
         });
 
@@ -334,14 +350,15 @@ async function createUserWithSomeFavourites() {
 
 async function deleteGroup(groupId, creatorToken) {
     await axios
-        .delete(BASE_URL + `/api/groups/${groupId}`,
+        .delete(HOST + `/api/groups/${groupId}`,
             {headers: {"Authorization": creatorToken}})
         .then(response => {
-            console.log(`Successfully deleted group [${groupId}]`);
+            Log.info(`Successfully deleted group [${groupId}]`);
             logResponse(response)
         })
         .catch(error => {
-            console.log(`Error while deleting group [${groupId}]`);
+            Log.error(`Error while deleting group [${groupId}]`);
+            logError(error);
             logErrorResponse(error.response);
         });
 }
@@ -352,11 +369,12 @@ async function deletePosting(postingId, creatorToken) {
         .delete(`${ApiHandler.POSTINGS_BASE_URL}/${postingId}`,
             {headers: {"Authorization": creatorToken}})
         .then(response => {
-            console.log(`Successfully deleted posting [${postingId}]`);
+            Log.info(`Successfully deleted posting [${postingId}]`);
             logResponse(response)
         })
         .catch(error => {
-            console.log(`Error while deleting posting [${postingId}]`)
+            Log.error(`Error while deleting posting [${postingId}]`)
+            logError(error);
             logErrorResponse(error.response);
         });
 }
@@ -369,14 +387,15 @@ async function deletePosting(postingId, creatorToken) {
  */
 async function deleteUser(user) {
     await axios
-        .delete(BASE_URL + `/api/users/${user.id}`,
+        .delete(HOST + `/api/users/${user.id}`,
             {headers: {"Authorization": user.token}})
         .then(response => {
-            console.log(`Successfully deleted user [${user.id}]`);
+            Log.info(`Successfully deleted user [${user.id}]`);
             logResponse(response)
         })
         .catch(error => {
-            console.log(`Error while deleting user [${user.id}]`);
+            Log.error(`Error while deleting user [${user.id}]`);
+            logError(error);
             logErrorResponse(error.response);
         });
 }
@@ -453,7 +472,7 @@ describe('Get all group postings', function () {
             setupData = await setup();
             const {user, groupId, postings} = setupData
 
-            const apiHandler = new ApiHandler(user.token);
+            const apiHandler = new ApiHandler(HOST, user.token);
 
             // Act
             const actualPostings = await apiHandler.getGroupPostings(groupId);
@@ -476,7 +495,7 @@ describe('Get all group postings', function () {
         const expectedLength = 0;
         const wrongId = "-1";
         const wrongToken = "-1";
-        const apiHandler = new ApiHandler(wrongToken);
+        const apiHandler = new ApiHandler(HOST, wrongToken);
 
         //Act
         const actual = await apiHandler.getGroupPostings(wrongId);
@@ -505,7 +524,7 @@ describe('Get group info', function () {
         try {
             setupData = await setup();
             const {user, group} = setupData;
-            const apiHandler = new ApiHandler(user.token);
+            const apiHandler = new ApiHandler(HOST, user.token);
 
             // Act
             const actualGroup = await apiHandler.getGroupInfo(group.id);
@@ -528,7 +547,7 @@ describe('Get group info', function () {
         const expected = GroupInfo.EMPTY;
         const wrongId = "-1";
         const wrongToken = "-1"
-        const apiHandler = new ApiHandler(wrongToken);
+        const apiHandler = new ApiHandler(HOST, wrongToken);
 
         //Act
         const actual = await apiHandler.getGroupInfo(wrongId);
@@ -566,7 +585,7 @@ describe('Get group info of all user groups', function () {
             try {
                 setupData = await setup();
                 const {user, groups} = setupData;
-                const apiHandler = new ApiHandler(user.token);
+                const apiHandler = new ApiHandler(HOST, user.token);
 
                 // Act
                 const actualGroups = await apiHandler.getUserGroups(user.id);
@@ -588,7 +607,7 @@ describe('Get group info of all user groups', function () {
         //Arrange
         const wrongId = "-1";
         const wrongToken = "-1";
-        const apiHandler = new ApiHandler(wrongToken);
+        const apiHandler = new ApiHandler(HOST, wrongToken);
         const expectedLength = 0;
 
         //Act
@@ -615,7 +634,7 @@ describe('Get single posting', function () {
         try {
             setupData = await setup();
             const {user, posting} = setupData;
-            const apiHandler = new ApiHandler(user.token);
+            const apiHandler = new ApiHandler(HOST, user.token);
 
             // Act
             const actualPosting = await apiHandler.getPosting(posting.id);
@@ -638,7 +657,7 @@ describe('Get single posting', function () {
         const expected = Posting.EMPTY;
         const wrongId = "-1";
         const wrongToken = "-1"
-        const apiHandler = new ApiHandler(wrongToken);
+        const apiHandler = new ApiHandler(HOST, wrongToken);
 
         //Act
         const actual = await apiHandler.getPosting(wrongId);
@@ -668,7 +687,7 @@ describe('Create posting', function () {
         try {
             setupData = await setup();
             const {user, groupId} = setupData;
-            const apiHandler = new ApiHandler(user.token);
+            const apiHandler = new ApiHandler(HOST, user.token);
             const creationInfo = getRandomPostingInfo();
 
             // Act
@@ -702,7 +721,7 @@ describe('Create posting', function () {
         const wrongGroupId = wrongUserId;
         const wrongCreationInfo = PostingInfo.EMPTY;
         wrongCreationInfo.name = "-1";
-        const apiHandler = new ApiHandler(wrongToken);
+        const apiHandler = new ApiHandler(HOST, wrongToken);
 
         //Act
         const actual = await apiHandler.createPosting(wrongUserId, wrongGroupId, wrongCreationInfo);
@@ -728,7 +747,7 @@ describe('Edit posting', function () {
         try {
             setupData = await setup();
             const {user, posting} = setupData;
-            const apiHandler = new ApiHandler(user.token);
+            const apiHandler = new ApiHandler(HOST, user.token);
 
             const newInfo = new PostingInfo({
                 name: posting.name + " edit ",
@@ -765,7 +784,7 @@ describe('Edit posting', function () {
         const wrongToken = "-1"
         const wrongCreationInfo = PostingInfo.EMPTY;
         wrongCreationInfo.name = "-1"
-        const apiHandler = new ApiHandler(wrongToken);
+        const apiHandler = new ApiHandler(HOST, wrongToken);
 
         //Act
         const success = await apiHandler.editPosting(wrongUserId, wrongCreationInfo);
@@ -793,7 +812,7 @@ describe('Delete posting', function () {
         try {
             setupData = await setup();
             const {user, posting} = setupData;
-            const apiHandler = new ApiHandler(user.token);
+            const apiHandler = new ApiHandler(HOST, user.token);
 
             // Act
             const isDeleted = await apiHandler.deletePosting(posting.id);
@@ -815,7 +834,7 @@ describe('Delete posting', function () {
         //Arrange
         const wrongPostingId = "-1";
         const wrongToken = "-1";
-        const apiHandler = new ApiHandler(wrongToken);
+        const apiHandler = new ApiHandler(HOST, wrongToken);
 
         //Act
         const isDeleted = await apiHandler.deletePosting(wrongPostingId);
@@ -846,7 +865,7 @@ describe('Get all user postings of a certain group', function () {
         try {
             setupData = await setup();
             const {user, groupId, postings} = setupData;
-            const apiHandler = new ApiHandler(user.token);
+            const apiHandler = new ApiHandler(HOST, user.token);
 
             // Act
             const actualGroupPostings = await apiHandler.getUserPostings(user.id, groupId)
@@ -869,7 +888,7 @@ describe('Get all user postings of a certain group', function () {
         const wrongId = "-1";
         const wrongToken = "-1";
         const wrongGroupId = "-1";
-        const apiHandler = new ApiHandler(wrongToken);
+        const apiHandler = new ApiHandler(HOST, wrongToken);
         const expectedLength = 0;
 
         //Act
@@ -901,7 +920,7 @@ describe('Get user favourite postings', function () {
         try {
             setupData = await setup();
             const {user, favouritePostings} = setupData;
-            const apiHandler = new ApiHandler(user.token);
+            const apiHandler = new ApiHandler(HOST, user.token);
 
             // Act
             const actualPostings = await apiHandler.getUserFavouritePostings(user.id);
@@ -924,7 +943,7 @@ describe('Get user favourite postings', function () {
         const expectedLength = 0;
         const wrongId = "-1";
         const wrongToken = "-1";
-        const apiHandler = new ApiHandler(wrongToken);
+        const apiHandler = new ApiHandler(HOST, wrongToken);
 
         //Act
         const actual = await apiHandler.getUserFavouritePostings(wrongId);
@@ -954,7 +973,7 @@ describe('Edit user favourite postings', function () {
         try {
             setupData = await setup();
             const {user, favouritePostings} = setupData;
-            const apiHandler = new ApiHandler(user.token);
+            const apiHandler = new ApiHandler(HOST, user.token);
 
             // Take only postings on odd indexes to make a different id list
             const newFavouritesIds = [];
@@ -999,7 +1018,7 @@ describe('Edit user favourite postings', function () {
         const wrongId = "-1";
         const wrongToken = "-1";
         const newFavourites = []
-        const apiHandler = new ApiHandler(wrongToken);
+        const apiHandler = new ApiHandler(HOST, wrongToken);
 
         //Act
         const success = await apiHandler.editUserFavourites(wrongId, newFavourites);
@@ -1030,7 +1049,7 @@ describe("Check if a single posting belongs to a user's favourites list", functi
         try {
             setupData = await setup();
             const {user, favouritePostings} = setupData;
-            const apiHandler = new ApiHandler(user.token);
+            const apiHandler = new ApiHandler(HOST, user.token);
 
             // this is already a favourite, so the tested method should return true
             const toCheck = favouritePostings[0];
@@ -1070,7 +1089,7 @@ describe("Check if a single posting belongs to a user's favourites list", functi
         try {
             setupData = await setup();
             const {user} = setupData;
-            const apiHandler = new ApiHandler(user.token);
+            const apiHandler = new ApiHandler(HOST, user.token);
 
             // Act
             const wrongId = "-1";
@@ -1111,7 +1130,7 @@ describe("Add a single posting to a user's favourites list", function () {
         try {
             setupData = await setup();
             const {user, groupIds} = setupData;
-            const apiHandler = new ApiHandler(user.token);
+            const apiHandler = new ApiHandler(HOST, user.token);
             const toAdd = await createRandomPosting(user, groupIds[0]);
 
             // Act
@@ -1149,7 +1168,7 @@ describe("Add a single posting to a user's favourites list", function () {
         try {
             setupData = await setup();
             const {user, favouritePostings} = setupData;
-            const apiHandler = new ApiHandler(user.token);
+            const apiHandler = new ApiHandler(HOST, user.token);
             const alreadyAdded = favouritePostings[0]
 
             // Act
@@ -1190,7 +1209,7 @@ describe("Remove a single posting from a user's favourites list", function () {
         try {
             setupData = await setup();
             const {user, favouritePostings} = await setup();
-            const apiHandler = new ApiHandler(user.token);
+            const apiHandler = new ApiHandler(HOST, user.token);
             const toRemove = favouritePostings[0];
 
             // Act
@@ -1228,7 +1247,7 @@ describe("Remove a single posting from a user's favourites list", function () {
         try {
             setupData = await setup();
             const {user} = setupData;
-            const apiHandler = new ApiHandler(user.token);
+            const apiHandler = new ApiHandler(HOST, user.token);
             const wrongIdToRemove = "-1";
 
             // Act

@@ -38,7 +38,7 @@ class MyFavouritesScreen extends React.Component {
     constructor(props) {
         super(props);
 
-        this.apiHandler = new ApiHandler("", TESTING);
+        this.apiHandler = new ApiHandler("", "", TESTING)("", TESTING);
         this.matchParams = this.props.match.params;
         this.state = {
             postings: []

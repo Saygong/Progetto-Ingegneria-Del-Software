@@ -38,7 +38,7 @@ class MarketplaceScreen extends React.Component {
     constructor(props) {
         super(props);
 
-        this.apiHandler = new ApiHandler("", TESTING);
+        this.apiHandler = new ApiHandler("", "", TESTING)("", TESTING);
 
         this.state = {
             groupPostings: [],

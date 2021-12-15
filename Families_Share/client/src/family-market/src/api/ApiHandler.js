@@ -19,13 +19,13 @@ import axios from "axios";
  */
 class ApiHandler {
     /**
-     *
+     * @param host {string} host of the api
      * @param debug {boolean} If true, console is used to log debug data.
      * @param authToken {string} Token used to authenticate the user that makes the requests.
      *      Set in the AUTHORIZATION field of the request header.
      */
-    constructor(authToken="", debug=true) {
-        // TODO might want to add a baseUrl parameter which is useful during testing,
+    constructor(host="", authToken="", debug=true) {
+        // TODO might want to add a host parameter which is useful during testing,
         //      where proxying to localhost:4000 doesn't work
 
         if (authToken !== "") {
@@ -36,6 +36,7 @@ class ApiHandler {
         }
 
         this.debug = debug;
+        this.host = host;
 
         this.getGroupPostings = this.getGroupPostings.bind(this);
 
@@ -99,7 +100,7 @@ class ApiHandler {
      */
     async getGroupPostings(groupId) {
         let postings = [];
-        const routeUrl = `${ApiHandler.GROUPS_BASE_URL}/${groupId}/postings`
+        const routeUrl = `${this.host}${ApiHandler.GROUPS_BASE_URL}/${groupId}/postings`
         await axios.get(routeUrl)
             .then(response => {
                 this.logSuccessResponse(`Postings of group '${groupId}' have been fetched`, response);
@@ -124,7 +125,7 @@ class ApiHandler {
      */
     async getPosting(postingId) {
         let posting = Posting.EMPTY;
-        const routeUrl = `${ApiHandler.POSTINGS_BASE_URL}/${postingId}`
+        const routeUrl = `${this.host}${ApiHandler.POSTINGS_BASE_URL}/${postingId}`
         await axios.get(routeUrl)
             .then(response => {
                 this.logSuccessResponse(`Posting with id '${postingId}' has been fetched`, response);
@@ -158,7 +159,7 @@ class ApiHandler {
         };
 
         let posting = Posting.EMPTY;
-        const routeUrl = `${ApiHandler.POSTINGS_BASE_URL}/`;
+        const routeUrl = `${this.host}${ApiHandler.POSTINGS_BASE_URL}/`;
         await axios.post(routeUrl, creationData)
             .then(response => {
                 this.logSuccessResponse(`Posting created with id ${response.data.id}`, response);
@@ -169,7 +170,7 @@ class ApiHandler {
                 this.logErrorResponse(
                     `Error while creating posting for user: ${userId}, group: ${groupId}`,
                     error.response);
-                this.logMessage('Creation data: ' + stringify(creationData));
+                this.logMessage('Creation data: ' + stringify(creationData), Log.trace);
                 this.logError(error);
             });
 
@@ -186,7 +187,7 @@ class ApiHandler {
      */
     async editPosting(idToEdit, newInfo) {
         let success = false;
-        const routeUrl = `${ApiHandler.POSTINGS_BASE_URL}/${idToEdit}`;
+        const routeUrl = `${this.host}${ApiHandler.POSTINGS_BASE_URL}/${idToEdit}`;
         await axios.patch(routeUrl, newInfo)
             .then(response => {
                 this.logSuccessResponse(`Posting with id ${idToEdit} has been edited`, response);
@@ -196,7 +197,7 @@ class ApiHandler {
             .catch(error => {
                 this.logErrorResponse(`Error while editing posting with id ${idToEdit}`,
                     error.response);
-                this.logMessage('Editing data: ' + stringify(newInfo));
+                this.logMessage('Editing data: ' + stringify(newInfo), Log.trace);
                 this.logError(error);
             });
 
@@ -211,7 +212,7 @@ class ApiHandler {
      */
     async deletePosting(postingId) {
         let success = false;
-        const routeUrl = `${ApiHandler.POSTINGS_BASE_URL}/${postingId}`;
+        const routeUrl = `${this.host}${ApiHandler.POSTINGS_BASE_URL}/${postingId}`;
         await axios.delete(routeUrl)
             .then(response => {
                 this.logSuccessResponse(`Posting with id ${response.data.id} has been deleted`, response);
@@ -235,7 +236,7 @@ class ApiHandler {
      */
     async getUserGroups(userId) {
         const groupInfos = [];
-        const routeUrl = `${ApiHandler.FS_API_BASE_URL}/users/${userId}/groups`;
+        const routeUrl = `${this.host}${ApiHandler.FS_API_BASE_URL}/users/${userId}/groups`;
         await axios.get(routeUrl)
             .then(async response => {
                 this.logSuccessResponse(`Group ids for user '${userId}' has been fetched`, response);
@@ -265,7 +266,7 @@ class ApiHandler {
         let groupInfo = GroupInfo.EMPTY;
 
         // This is an endpoint of Families Share, not Family Market
-        const routeUrl = `${ApiHandler.FS_API_BASE_URL}/groups/${groupId}`;
+        const routeUrl = `${this.host}${ApiHandler.FS_API_BASE_URL}/groups/${groupId}`;
         await axios.get(routeUrl)
             .then(async response => {
                 this.logSuccessResponse(`Group info for id '${groupId}' has been fetched`, response);
@@ -294,7 +295,7 @@ class ApiHandler {
      */
     async getUserPostings(userId, groupId) {
         let postings = [];
-        const routeUrl = `${ApiHandler.USERS_BASE_URL}/${userId}/groups/${groupId}/postings`;
+        const routeUrl = `${this.host}${ApiHandler.USERS_BASE_URL}/${userId}/groups/${groupId}/postings`;
         await axios.get(routeUrl)
             .then(response => {
                 this.logSuccessResponse(`Postings of user '${userId}' in group '${groupId}' have been fetched`,
@@ -321,7 +322,7 @@ class ApiHandler {
      */
     async getUserFavouritePostings(userId) {
         const favouritePostings = [];
-        const routeUrl = `${ApiHandler.USERS_BASE_URL}/${userId}/favourites`
+        const routeUrl = `${this.host}${ApiHandler.USERS_BASE_URL}/${userId}/favourites`
         await axios.get(routeUrl)
             .then(response => {
                 this.logSuccessResponse(`Favourite postings of user '${userId}' have been fetched`,
@@ -430,7 +431,7 @@ class ApiHandler {
      */
     async editUserFavourites(userId, newFavouritesIds) {
         let success = false;
-        const routeUrl = `${ApiHandler.USERS_BASE_URL}/${userId}/favourites`
+        const routeUrl = `${this.host}${ApiHandler.USERS_BASE_URL}/${userId}/favourites`
         const data = {
             favourites: newFavouritesIds
         };

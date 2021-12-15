@@ -53,7 +53,7 @@ class PostingScreen extends React.Component {
 
         this.matchParams = this.props.match.params;
         this.onPostingDeleteRedirection = this.props.location.state.onDeleteRedirection;
-        this.apiHandler = new ApiHandler("", TESTING);
+        this.apiHandler = new ApiHandler("", "", TESTING)("", TESTING);
         this.state = {
             posting: Posting.EMPTY
         }
