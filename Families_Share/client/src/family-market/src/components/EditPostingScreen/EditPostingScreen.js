@@ -1,7 +1,7 @@
 import withLanguage from "../../../../components/LanguageContext";
 import texts from "../../texts";
 
-import {NO_CATEGORY, NO_TN_TYPE, TESTING} from "../../constants";
+import {NO_CATEGORY, NO_TN_TYPE, DEBUG} from "../../constants";
 import {FAMILY_MARKET_BASE_PAGE_URL} from "../../constants";
 
 import ApiHandler from "../../api/ApiHandler";
@@ -63,7 +63,7 @@ class EditPostingScreen extends React.Component {
     constructor(props) {
         super(props);
 
-        this.apiHandler = new ApiHandler("", "", TESTING);
+        this.apiHandler = new ApiHandler("", "", DEBUG);
         this.redirections = this.props.location.state;
         this.matchParams = this.props.match.params;
         this.state = {
@@ -270,7 +270,7 @@ class EditPostingScreen extends React.Component {
         const creationInfo = this.getPostingInfoFromState()
         const {userId, groupId} = this.matchParams;
 
-        Log.info(`Creating posting for user: ${userId} in group ${groupId} with info:
+        Log.trace(`Creating posting for user: ${userId} in group ${groupId} with info:
         ${stringify(creationInfo)}`, this);
         await this.apiHandler.createPosting(userId, groupId, creationInfo);
     }
@@ -283,7 +283,7 @@ class EditPostingScreen extends React.Component {
         const idToEdit = this.matchParams.postingId;
         const editedInfo = this.getPostingInfoFromState()
 
-        Log.info(`Editing posting [id]${idToEdit} with info:
+        Log.trace(`Editing posting [id]${idToEdit} with info:
         ${stringify(editedInfo)}`, this);
         await this.apiHandler.editPosting(idToEdit, editedInfo);
     }
@@ -315,7 +315,7 @@ class EditPostingScreen extends React.Component {
         const idToDelete = this.matchParams.postingId;
 
 
-        Log.info(`Deleting posting [id]${idToDelete}`, this);
+        Log.trace(`Deleting posting [id]${idToDelete}`, this);
         await this.apiHandler.deletePosting(idToDelete);
     }
 

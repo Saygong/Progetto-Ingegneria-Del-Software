@@ -41,4 +41,4 @@ export const TN_TYPES = {
 };
 
 export const FAMILY_MARKET_BASE_PAGE_URL = "/family-market";
-export const TESTING = true;
+export const DEBUG = false;

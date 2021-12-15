@@ -2,7 +2,7 @@ import withLanguage from "../../../../components/LanguageContext";
 import texts from "../../texts";
 
 import {FAMILY_MARKET_BASE_PAGE_URL} from  "../../constants";
-import {TESTING} from "../../constants";
+import {DEBUG} from "../../constants";
 
 import ApiHandler from "../../api/ApiHandler";
 
@@ -38,7 +38,7 @@ class MyGroupPostingsScreen extends React.Component {
 
     constructor(props) {
         super(props);
-        this.apiHandler = new ApiHandler("", "", TESTING);
+        this.apiHandler = new ApiHandler("", "", DEBUG);
         this.matchParams = this.props.match.params;
         this.state = {
             group_name: "",
@@ -71,7 +71,7 @@ class MyGroupPostingsScreen extends React.Component {
     async componentDidMount() {
         const currentGroupPostings = await this.fetchPostings();
 
-        Log.info("Group postings fetched: " + stringify(currentGroupPostings));
+        Log.trace("Group postings fetched: " + stringify(currentGroupPostings), this);
 
         const group_info = await this.apiHandler.getGroupInfo(this.matchParams.groupId);
 

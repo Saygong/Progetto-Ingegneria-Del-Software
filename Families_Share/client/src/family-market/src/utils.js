@@ -1,4 +1,5 @@
 import chalk from "chalk";
+import {DEBUG} from "./constants";
 
 /**
  * Returns the string version of the provided object,
@@ -18,13 +19,18 @@ function logInternal(message, source) {
     console.log(`${sourceClass}${message}`);
 }
 
-const traceMessageBuilder = chalk.bold.white;
+const traceMessageBuilder = chalk.bold.hex("#cacac0"); // light-grey
 const infoMessageBuilder = chalk.bold.hex("#1f4e99"); // blue
 const warningMessageBuilder = chalk.bold.hex("#ffa500"); // orange
 const errorMessageBuilder = chalk.bold.hex("#8f242e"); // red
 
 export const Log = class {
     static trace(message, source=null) {
+        // Log trace only if in debug mode
+        if (!DEBUG) {
+            return;
+        }
+
         logInternal(traceMessageBuilder(`[TRACE] ${message}`), source);
     }
 

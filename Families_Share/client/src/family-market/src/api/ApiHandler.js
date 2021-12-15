@@ -492,7 +492,7 @@ class ApiHandler {
             return;
         }
 
-        this.logResponseInternal(message, response, Log.info);
+        this.logResponseInternal(`[SUCCESS RESPONSE] ${message}`, response, Log.trace);
     }
 
     /**
@@ -507,7 +507,7 @@ class ApiHandler {
             return;
         }
 
-        this.logResponseInternal("Error response data:", errResponse, Log.error);
+        this.logResponseInternal(`[ERROR RESPONSE] ${message}`, errResponse, Log.warning);
     }
 
     /**
@@ -516,7 +516,8 @@ class ApiHandler {
      *
      * @param message {string}
      * @param response {Object}
-     * @param logHandler {function(string)} function that logs the provided message
+     * @param logHandler {function(string, Object)} function that logs the provided message
+     *      from the provided source
      */
     logResponseInternal(message, response, logHandler) {
         if (response === null || response === undefined) {
@@ -541,14 +542,15 @@ class ApiHandler {
      * Logs a message to the console,
      * only if the debug attribute of this instance was set to true.
      * @param message {string} message to be printed
-     * @param logHandler {function(string)} function that logs the provided message
+     * @param logHandler {function(string, Object)} function that logs the provided message
+     *      from the provided source
      */
     logMessage(message, logHandler) {
         if(!this.debug) {
             return;
         }
 
-        logHandler(message);
+        logHandler(message, this);
     }
 }
 

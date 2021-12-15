@@ -1,7 +1,7 @@
 import withLanguage from "../../../../components/LanguageContext";
 import texts from "../../texts";
 
-import {TESTING} from "../../constants";
+import {DEBUG} from "../../constants";
 import {FAMILY_MARKET_BASE_PAGE_URL} from "../../constants";
 
 import ApiHandler from "../../api/ApiHandler";
@@ -38,7 +38,7 @@ class MyFavouritesScreen extends React.Component {
     constructor(props) {
         super(props);
 
-        this.apiHandler = new ApiHandler("", "", TESTING);
+        this.apiHandler = new ApiHandler("", "", DEBUG);
         this.matchParams = this.props.match.params;
         this.state = {
             postings: []
