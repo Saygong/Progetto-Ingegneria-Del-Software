@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import PlainNavBar from "../PlainNavBar";
 import EditPostingButton from "../EditPostingButton";
 import ToggleFavouriteButton from "../ToggleFavouriteButton";
-import Log from "../../../../components/Log";
+
 
 
 /**

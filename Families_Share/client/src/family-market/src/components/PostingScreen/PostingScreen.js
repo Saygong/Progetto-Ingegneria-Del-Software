@@ -10,8 +10,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import PostingNavBar from "./PostingNavBar";
 import PostingInfo from "./PostingInfo";
-import Log from "../../../../components/Log";
-import {stringify} from "../../utils";
+import {stringify, Log} from "../../utils";
 
 
 /**
@@ -88,7 +87,7 @@ class PostingScreen extends React.Component {
 
     async componentDidMount() {
         const currentPosting = await this.fetchPosting();
-        console.log("Fetched posting: " + stringify(currentPosting));
+        Log.trace("Fetched posting: " + stringify(currentPosting));
         this.setState({
             posting: currentPosting
         });

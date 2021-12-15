@@ -25,18 +25,18 @@ const errorMessageBuilder = chalk.bold.hex("#8f242e"); // red
 
 export const Log = class {
     static trace(message, source=null) {
-        logInternal(traceMessageBuilder(message), source);
+        logInternal(traceMessageBuilder(`[TRACE] ${message}`), source);
     }
 
     static info(message, source=null) {
-        logInternal(infoMessageBuilder(message), source);
+        logInternal(infoMessageBuilder(`[INFO] ${message}`), source);
     }
 
     static warning(message, source=null) {
-        logInternal(warningMessageBuilder(message), source);
+        logInternal(warningMessageBuilder(`[WARNING] ${message}`), source);
     }
 
     static error(message, source=null) {
-        logInternal(errorMessageBuilder(message), source);
+        logInternal(errorMessageBuilder(`[ERROR] ${message}`), source);
     }
 }

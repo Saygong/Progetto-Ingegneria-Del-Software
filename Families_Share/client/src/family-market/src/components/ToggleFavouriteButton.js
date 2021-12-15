@@ -37,7 +37,6 @@ class ToggleFavouriteButton extends React.Component {
     }
 
     render() {
-
         // Determine which image to display
         const isFavPath = "fas fa-bookmark";
         const isNotFavPath = "far fa-bookmark";
@@ -57,7 +56,17 @@ class ToggleFavouriteButton extends React.Component {
         )
     }
 
+    async componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.postingId !== prevProps.postingId) {
+            await this.updateIsFavState();
+        }
+    }
+
     async componentDidMount() {
+        await this.updateIsFavState();
+    }
+
+    async updateIsFavState() {
         // Fetch the favourite state of the posting and set it to update the button
         const currentPostingId = this.props.postingId;
         const userId = JSON.parse(localStorage.getItem("user")).id;
