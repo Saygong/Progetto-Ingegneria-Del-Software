@@ -61,6 +61,13 @@ class PostingScreen extends React.Component {
 
     render() {
         const currentPosting = this.state.posting;
+
+        /**
+         * TODO this is not used as of now because there is a race condition
+         *      that happens when you confirm the edit, which causes the posting not
+         *      to display the edited information.
+         *      Instead, atm, this.onPostingDeleteRedirection is passed to PostingNavBar
+         */
         const onEditRedirection = {
             pathname: this.props.location.pathname,
             state: this.props.location.state
@@ -71,7 +78,7 @@ class PostingScreen extends React.Component {
                 <PostingNavBar postingId={currentPosting.id}
                                postingName={currentPosting.name}
                                postingCreatorId={currentPosting.user_id}
-                               onEditRedirection={onEditRedirection}
+                               onEditRedirection={this.onPostingDeleteRedirection}
                                onDeleteRedirection={this.onPostingDeleteRedirection}/>
                 <hr/>
                 <PostingInfo posting={this.state.posting}/>

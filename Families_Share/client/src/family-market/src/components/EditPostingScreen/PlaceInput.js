@@ -1,9 +1,9 @@
 import withLanguage from "../../../../components/LanguageContext";
-// import {LocationPicker} from "react-location-picker";
+import texts from "../../texts";
 
 import React from "react";
 import PropTypes from "prop-types";
-import Log from"../../../../components/Log";
+import SimpleTextInput from "../SimpleTextInput";
 
 
 class PlaceInput extends React.Component {
@@ -15,48 +15,30 @@ class PlaceInput extends React.Component {
     }
 
     render() {
-        // TODO react-location-picker? in base a cosa viene scelto vanno anche
-        //      cambiati i parametri che onPlaceSelection accetta
-        // https://www.npmjs.com/package/react-location-picker
-        // https://www.npmjs.com/package/react-google-map-picker
-        // Non ho capito concretamente cosa cambia tra i due.
-        // Importante è scegliere uno che ti permetta di ottenere anche l'indirizzo
-        // come stringa e non solo le coordinate.
-
-        // Reference tutorial:
-        // https://codesandbox.io/s/qljl8y8nwq?file=/src/LPicker.js:144-202
-        const defaultPos = {
-            lat: 27.9878,
-            lng: 86.925
-        };
+        const language = this.props.language;
+        const txt = texts[language].placeInput;
 
         return (
-            <div>
-                {/*
-                <LocationPicker containerElement={<div style={{ height: "100%" }} />}
-                                mapElement={<div style={{ height: "400px" }} />}
-                                zoom={17}
-                                radius={-1}
-                                defaultPosition={defaultPos}
-                                onChange={this.handlePlaceChange}
-                />*/}
+            <div className="row no-gutters">
+                <div className="col-2-10">
+                    <i className="family-icon fas fa-map-marked-alt"/>
+                </div>
+                <div className="col-8-10">
+                    <SimpleTextInput text={this.props.place}
+                                     placeholder={txt.placeholder}
+                                     description={txt.description}
+                                     textChangeHandler={this.handlePlaceChange}/>
+                </div>
             </div>
         );
-
     }
 
     /**
      * Called when a new place is picked.
-     * @param position {string}
-     * @param address {string}
-     * @param places
      * @return {Promise<void>}
      */
-    async handlePlaceChange(position, address, places) {
-        // TODO a questo punto potrebbe essere da cambiare il modo in cui vengono salvati i posti
-        // perché servono anche le coordinate -> dunque c'è da cambiare anche il meccanismo dei props,
-        // perché andrebbero passati sia coordinate che address
-        this.props.placeChangeHandler(address);
+    async handlePlaceChange(place) {
+        this.props.placeChangeHandler(place);
     }
 }
 

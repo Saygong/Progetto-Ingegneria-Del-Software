@@ -3525,7 +3525,7 @@ a:active {
   /*text-align: center;*/
 }
 
-.descPosting{
+.descPosting {
   padding: 12px 20px;
   border-radius: 5px;
   border-color: #E5E4E2;
@@ -3533,11 +3533,15 @@ a:active {
   width: 80%;
 }
 
-.titles{
+.titles {
   text-align: center;
 }
 
-.m-top-20{
+.m-top-20 {
   margin-top: 20px;
   margin-bottom: 5px;
+}
+
+.h1-error {
+  color: #be1622;
 }

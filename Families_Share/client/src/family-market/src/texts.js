@@ -99,6 +99,7 @@ const en = {
             placeholder: "Insert description"
         },
         editContactTitle: "Contact information:",
+        missingValuesError: "Some values are missing!"
     },
 
     imageInput: {
@@ -152,6 +153,11 @@ const en = {
         phone: "Phone number:",
         mail: "Email:",
     },
+
+    placeInput: {
+        description: "Place: ",
+        placeholder: "Insert the place"
+    }
 }
 
 
@@ -255,6 +261,7 @@ const it = {
             placeholder: "Inserire descrizione"
         },
         editContactTitle: "Informazioni di contatto:",
+        missingValuesError: "Alcuni valori non sono stati inseriti!"
     },
 
     imageInput: {
@@ -309,6 +316,11 @@ const it = {
         phone: "Cellulare:",
         mail: "Email:",
     },
+
+    placeInput: {
+        description: "Luogo: ",
+        placeholder: "Inserisci il luogo"
+    }
 }
 
 

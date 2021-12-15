@@ -25,6 +25,9 @@ class ApiHandler {
      *      Set in the AUTHORIZATION field of the request header.
      */
     constructor(authToken="", debug=true) {
+        // TODO might want to add a baseUrl parameter which is useful during testing,
+        //      where proxying to localhost:4000 doesn't work
+
         if (authToken !== "") {
             // Set default auth header with the token of the user that makes the requests
             // this is necessary because the server checks if the user is authenticated
@@ -65,7 +68,7 @@ class ApiHandler {
      * @return {string}
      */
     static get FS_API_BASE_URL() {
-        return "http://localhost:4000/api"
+        return "/api";
     }
 
     /**

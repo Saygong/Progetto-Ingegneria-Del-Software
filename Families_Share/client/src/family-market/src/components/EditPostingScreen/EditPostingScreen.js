@@ -1,7 +1,7 @@
 import withLanguage from "../../../../components/LanguageContext";
 import texts from "../../texts";
 
-import {TESTING} from "../../constants";
+import {NO_CATEGORY, NO_TN_TYPE, TESTING} from "../../constants";
 import {FAMILY_MARKET_BASE_PAGE_URL} from "../../constants";
 
 import ApiHandler from "../../api/ApiHandler";
@@ -22,9 +22,7 @@ import PlaceInput from "./PlaceInput";
 import ImageInput from "./ImageInput";
 import CategoryComboBox from "../CategoryComboBox";
 import TransactionTypeComboBox from "../TransactionTypeComboBox";
-import Log from "../../../../components/Log";
-import {stringify} from "../../utils";
-
+import {stringify, Log} from "../../utils";
 
 
 /**
@@ -37,7 +35,8 @@ class EditPostingScreen extends React.Component {
      * and is updated each time one of these info is changed by the user.
      * @type {{photo: string | Blob | File, name: string,
      *          description: string, category: string, tnType: string,
-     *          place: string, mail: string, phoneNumber: string}}
+     *          place: string, mail: string, phoneNumber: string,
+     *          inputDisabled: boolean, missingValues: boolean}}
      */
     state;
 
@@ -75,7 +74,9 @@ class EditPostingScreen extends React.Component {
             tnType: "",
             mail: "",
             phoneNumber: "",
-            place: ""
+            place: "",
+            inputDisabled: false,
+            missingValues: false
         }
 
         // Bind everything because all these methods are called from outside the class
@@ -85,6 +86,7 @@ class EditPostingScreen extends React.Component {
         this.getPostingInfoFromState = this.getPostingInfoFromState.bind(this);
         this.handleConfirmation = this.handleConfirmation.bind(this);
         this.handleDeleteRedirection = this.handleDeleteRedirection.bind(this);
+        this.handlePlaceChange = this.handlePlaceChange.bind(this);
         this.handlePhotoChange = this.handlePhotoChange.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
@@ -98,14 +100,14 @@ class EditPostingScreen extends React.Component {
         const language = this.props.language;
         const txt = texts[language].editPostingScreen;
         const title = this.isCreateMode() ? txt.navBar.title.createMode : txt.navBar.title.editMode;
-        /**
-         * TODO:
-         *  - Se è create mode, item di default è "nessuna categoria"
-         *  - Se è edit mode, item di default è categoria già presente
-         */
+
+        // If edit mode, get the value from the posting to edit, else take the default "empty value"
+        const defaultCat = this.isCreateMode() ? NO_CATEGORY[language] : this.state.category;
+        const defaultTnType = this.isCreateMode() ? NO_TN_TYPE[language] : this.state.tnType;
 
         return (
             <div className="titles">
+                {/*TODO disabilitare anche questa quando user clicca conferma?*/}
                 <PlainNavBar title={title} goBackLocation={this.redirections.goBackRedirection}/>
                 <ImageInput currentImage={this.state.photo}
                             imageChangeHandler={this.handlePhotoChange} />
@@ -116,8 +118,10 @@ class EditPostingScreen extends React.Component {
                                  placeholder={txt.nameInput.placeholder}
                                  textChangeHandler={this.handleNameChange} />
 
-                <CategoryComboBox categoryChangeHandler={this.handleCategoryChange} />
-                <TransactionTypeComboBox tnTypeChangeHandler={this.handleTnTypeChange} />
+                <CategoryComboBox defaultValue={defaultCat}
+                                  categoryChangeHandler={this.handleCategoryChange} />
+                <TransactionTypeComboBox defaultValue={defaultTnType}
+                                         tnTypeChangeHandler={this.handleTnTypeChange} />
 
                 {/*TextBox where the description is inserted*/}
                 <LargeTextInput description={txt.descriptionInput.description}
@@ -125,7 +129,6 @@ class EditPostingScreen extends React.Component {
                                 placeholder={txt.descriptionInput.placeholder}
                                 textChangeHandler={this.handleDescriptionChange} />
 
-                {/*TODO sta roba è commentata*/}
                 <PlaceInput place={this.state.place}
                             placeChangeHandler={this.handlePlaceChange} />
 
@@ -134,10 +137,18 @@ class EditPostingScreen extends React.Component {
                                 textChangeHandler={this.handleTelephoneChange} />
                 <MailInput text={this.state.mail}
                            textChangeHandler={this.handleMailChange} />
+
+                { this.state.missingValues
+                    && <h1 className="h1-error">{txt.missingValuesError}</h1>
+                }
+
                 <div className="row">
-                    <ConfirmButton confirmationHandler={this.handleConfirmation} />
-                    { !this.isCreateMode() && <DeleteButton postingId={this.matchParams.postingId}
-                                                           redirectionHandler={this.handleDeleteRedirection}/>
+                    { !this.state.inputDisabled
+                        && <ConfirmButton confirmationHandler={this.handleConfirmation}/>
+                    }
+                    { !this.isCreateMode() && !this.state.inputDisabled
+                        && <DeleteButton postingId={this.matchParams.postingId}
+                                         redirectionHandler={this.handleDeleteRedirection}/>
                         /* To render only if edit mode */
                     }
                 </div>
@@ -146,8 +157,11 @@ class EditPostingScreen extends React.Component {
     }
 
 
+    /**
+     * Fetch the posting info and update state, only in edit mode.
+     * @return {Promise<void>}
+     */
     async componentDidMount() {
-        // Fetch the posting info to load only in edit mode
         if (!this.isCreateMode()) {
             const currentPosting = await this.fetchPosting();
             this.setState({
@@ -168,7 +182,9 @@ class EditPostingScreen extends React.Component {
      * @return {boolean}
      */
     isCreateMode() {
-        const location = this.props.location
+        const location = this.props.location;
+
+        // See routes on EditPostingScreen
         return location.pathname.includes("create");
     }
 
@@ -183,6 +199,70 @@ class EditPostingScreen extends React.Component {
     }
 
     /**
+     * Called when the user presses the confirmation button.
+     * @return {Promise<void>}
+     */
+    async handleConfirmation() {
+        if (this.isInputMissingValues()) {
+            this.setState({
+                missingValues: true
+            });
+
+            return;
+        }
+
+        // If the data is valid, disable it
+        this.setState({
+            disableInput: true
+        })
+
+        if (this.isCreateMode()) {
+            // Create mode
+            await this.createPosting();
+
+            const {onCreateRedirection} = this.redirections;
+            Log.info("Creation successful, redirecting to " + stringify(onCreateRedirection), this);
+            this.redirect(onCreateRedirection)
+        }
+        else {
+            // Edit mode
+            await this.editPosting();
+
+            /**
+             * TODO: adding a time out here fixes race condition that
+             *      happens when the user is redirected to the onEditRedirection page.
+             *      This looks dangerous because 3500ms seems to be enough in my environment,
+             *      but in a real deployment scenario or in another machine, who knows.
+             *      Maybe just put a loading spinner and set 1 or 2 seconds timeout.
+             *      That, coupled with a performance enhancement by handling images
+             *      in a more efficient way than base64, should be enough.
+             *
+             * TODO 2: As of now, timeout has been nullified (1ms) because else its too long,
+             *      need to find another way
+             */
+            setTimeout(() => {
+                const {onEditRedirection} = this.redirections;
+                Log.info("Edit successful, redirecting to " + stringify(onEditRedirection), this);
+                this.redirect(onEditRedirection)
+            }, 1);
+        }
+    }
+
+    /**
+     * Returns true if the user has left some input values empty.
+     */
+    isInputMissingValues() {
+        return this.state.name === ""
+            || this.state.description === ""
+            || this.state.photo === ""
+            || this.state.phoneNumber === ""
+            || this.state.place === ""
+            || this.state.mail === ""
+            || this.state.category === NO_CATEGORY[this.props.language]
+            || this.state.tnType === NO_TN_TYPE[this.props.language]
+    }
+
+    /**
      * Api call to create a posting based on current state.
      * @return {Promise<void>}
      */
@@ -190,7 +270,7 @@ class EditPostingScreen extends React.Component {
         const creationInfo = this.getPostingInfoFromState()
         const {userId, groupId} = this.matchParams;
 
-        console.log(`Creating posting for user: ${userId} in group ${groupId} with info:
+        Log.info(`Creating posting for user: ${userId} in group ${groupId} with info:
         ${stringify(creationInfo)}`, this);
         await this.apiHandler.createPosting(userId, groupId, creationInfo);
     }
@@ -203,21 +283,9 @@ class EditPostingScreen extends React.Component {
         const idToEdit = this.matchParams.postingId;
         const editedInfo = this.getPostingInfoFromState()
 
-        console.log(`Editing posting [id]${idToEdit} with info:
-        ${stringify(editedInfo)}`);
+        Log.info(`Editing posting [id]${idToEdit} with info:
+        ${stringify(editedInfo)}`, this);
         await this.apiHandler.editPosting(idToEdit, editedInfo);
-    }
-
-    /**
-     * Api call to delete the current posting.
-     * @return {Promise<void>}
-     */
-    async deletePosting() {
-        const idToDelete = this.matchParams.postingId;
-
-
-        console.log(`Deleting posting [id]${idToDelete}`);
-        await this.apiHandler.deletePosting(idToDelete);
     }
 
     /**
@@ -229,50 +297,26 @@ class EditPostingScreen extends React.Component {
             name: this.state.name,
             category: this.state.category,
             description: this.state.description,
-            // TODO mettere valori default o controlli che forzano inserimento
-            photo: this.state.photo ? this.state.photo : "default",
+            photo: this.state.photo,
             type: this.state.tnType,
             contact: new Contact({
                 email: this.state.mail,
-                place: this.state.place ? this.state.place : "default",
+                place: this.state.place,
                 phone_number: this.state.phoneNumber
             })
         });
     }
 
     /**
-     * Called when the user presses the confirmation button.
+     * Api call to delete the current posting.
      * @return {Promise<void>}
      */
-    async handleConfirmation() {
-        // TODO pallino di caricamento oppure disabilitare i comandi mentre invia i dati?
+    async deletePosting() {
+        const idToDelete = this.matchParams.postingId;
 
-        if (this.isCreateMode()) {
-            // Create mode
-            await this.createPosting();
 
-            const {onCreateRedirection} = this.redirections;
-            console.log("Creation successful, redirecting to " + stringify(onCreateRedirection), this);
-            this.redirect(onCreateRedirection)
-        }
-        else {
-            // Edit mode
-            await this.editPosting();
-
-            /** TODO adding a time out here fixes race condition that
-             *      happens when the user is redirected to the onEditRedirection page.
-             *      This looks dangerous because 3500ms seems to be enough in my environment,
-             *      but in a real deployment scenario or in another machine, who knows.
-             *      Maybe just put a loading spinner and set 1 or 2 seconds timeout.
-             *      That, coupled with a performance enhancement by handling images
-             *      in a more efficient way than base64, should be enough.
-             */
-            setTimeout(() => {
-                const {onEditRedirection} = this.redirections;
-                console.log("Edit successful, redirecting to " + stringify(onEditRedirection), this);
-                this.redirect(onEditRedirection)
-            }, 3500);
-        }
+        Log.info(`Deleting posting [id]${idToDelete}`, this);
+        await this.apiHandler.deletePosting(idToDelete);
     }
 
     /**
@@ -281,7 +325,7 @@ class EditPostingScreen extends React.Component {
      */
     async handleDeleteRedirection() {
         const {onDeleteRedirection} = this.redirections;
-        console.log("Deletion successful, redirecting to " + stringify(onDeleteRedirection), this);
+        Log.info("Deletion successful, redirecting to " + stringify(onDeleteRedirection), this);
         this.redirect(onDeleteRedirection)
     }
 
