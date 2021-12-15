@@ -23,7 +23,7 @@ class PlainNavBar extends React.Component {
         this.goBack = this.goBack.bind(this);
     }
 
-    //TODO il titolo non e molto centrato nel caso di postings (?)
+
     render() {
         return (
             <div className="py-3 w-100 family-color navBarHeight">
@@ -32,13 +32,13 @@ class PlainNavBar extends React.Component {
                         <tr>
                             <td>
                                 <div className="w-100">
-                                    <div className="w-25" role="button" onClick={this.goBack}>
+                                    <div className="w-25 " role="button" onClick={this.goBack}>
                                         <i className="family-icon fas fa-arrow-left whity" />
                                     </div>
                                 </div>
                             </td>
                             <td>
-                                <div className="text-center pt-3">
+                                <div className="pt-3 margin-left-30">
                                     <h1 className="whity"><strong>{this.props.title}</strong></h1>
                                 </div>
                             </td>

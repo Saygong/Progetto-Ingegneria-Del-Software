@@ -53,8 +53,10 @@ class MyGroupPostingsScreen extends React.Component {
 
         return (
             <div>
-                <div className="w-95">
+                <div className="w-100">
                     <PlainNavBar title={txt.prefix + this.state.group_name}/>
+                </div>
+                <div className="w-90 mx-auto">
                     { noPostings ? (
                         <h1>{txt.noPostingsText}</h1>
                     ) : (

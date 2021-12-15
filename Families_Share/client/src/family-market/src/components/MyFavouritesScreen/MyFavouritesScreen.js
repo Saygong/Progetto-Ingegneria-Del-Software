@@ -54,7 +54,7 @@ class MyFavouritesScreen extends React.Component {
 
         return (
             <div>
-                <div>
+                <div >
                     <PlainNavBar title={txt.navBar.title} />
                 </div>
                 <div className="w-95">
