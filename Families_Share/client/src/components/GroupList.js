@@ -46,8 +46,6 @@ const GroupList = ({ groupIds }) => {
     const history = useHistory();
     const isFamilyMarketRedirect = currentLocation.pathname.includes(FAMILY_MARKET_BASE_PAGE_URL)
 
-    Log.info("Is family market redirect?" + isFamilyMarketRedirect);
-
     return (
         <div className="suggestionsContainer">
             <ul>

@@ -1,5 +1,7 @@
-import dotenv from "dotenv"
-dotenv.config();
+// TODO webpack is needed to use process.env client side
+// https://trekinbami.medium.com/using-environment-variables-in-react-6b0a99d83cf5
+//import dotenv from "dotenv"
+//dotenv.config();
 
 // TODO da tradurre
 // TODO 2: va allora gestito il salvataggio dei valori e la loro riconversione nella lingua selezionata dall'utente,
@@ -39,4 +41,4 @@ export const TN_TYPES = {
 };
 
 export const FAMILY_MARKET_BASE_PAGE_URL = "/family-market";
-export const TESTING = process.env.TESTING === "true";
+export const TESTING = true;
