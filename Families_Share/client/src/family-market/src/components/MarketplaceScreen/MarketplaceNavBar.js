@@ -22,8 +22,16 @@ class MarketplaceNavBar extends React.Component {
 
         return (
 
-            <div className="w-100 mx-auto family-color">
-                <table className="w-100 mx-auto">
+            <div>
+                <PlainNavBar title={txt.title} otherComponent={<MyProfileButton/>} />
+            </div>
+
+        );
+    }
+
+
+    /*
+    * <table className="w-100 mx-auto">
                     <tbody>
                         <tr>
                             <td className="w-80">
@@ -37,10 +45,9 @@ class MarketplaceNavBar extends React.Component {
                         </tr>
                     </tbody>
                 </table>
-            </div>
+    *
+    * */
 
-        );
-    }
 
 }
 

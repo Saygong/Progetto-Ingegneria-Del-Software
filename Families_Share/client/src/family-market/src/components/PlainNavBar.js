@@ -4,6 +4,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {stringify, Log} from "../utils";
 import {withRouter} from "react-router-dom";
+import MyProfileButton from "./MarketplaceScreen/MyProfileButton";
 
 
 /**
@@ -19,29 +20,24 @@ class PlainNavBar extends React.Component {
 
 
     render() {
+        let otherComp = this.props.otherComponent;
+
         return (
-            <div className="py-3 w-100 family-color navBarHeight">
-                <div className="w-80 mx-auto">
-                    <table className="w-100 mx-auto">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <div className="w-100">
-                                        <div className="w-25 " role="button" onClick={this.goBack}>
-                                            <i className="family-icon fas fa-arrow-left whity" />
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div className="pt-3 margin-left-30">
-                                        <h1 className="whity"><strong>{this.props.title}</strong></h1>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+
+            <div className="row no-gutters family-color navBarHeight ">
+                <div role="button" onClick={this.goBack} className="col-2-10 text-center ">
+                    <i className="fas fa-arrow-left family-icon" />
+                </div>
+
+                <div className="col-6-10">
+                    <h2 className="navBarTitle"><strong>{this.props.title}</strong></h2>
+                </div>
+
+                <div className="col-2-10 text-center">
+                    {otherComp}
                 </div>
             </div>
+
 
         );
     }
@@ -74,6 +70,7 @@ PlainNavBar.defaultProps = {
         pathname: "",
         state: {}
     },
+    otherComponent: null
 }
 
 PlainNavBar.propTypes = {
@@ -90,7 +87,12 @@ PlainNavBar.propTypes = {
     /**
      * Passed by the withLanguage HOC, used to determine which texts to display.
      */
-    language: PropTypes.string
+    language: PropTypes.string,
+
+    /**
+     * Passed by the withLanguage HOC, used to determine which texts to display.
+     */
+    otherComponent: React.component
 }
 
 

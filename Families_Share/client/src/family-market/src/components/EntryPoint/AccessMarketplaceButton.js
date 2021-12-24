@@ -25,35 +25,28 @@ class AccessMarketplaceButton extends React.Component {
 
 
         return (
-            <div>
+            <div className="w-100">
                 <div role="button" onClick={this.redirectToMarketplaceScreen} >
 
-                    <div className="w-100 margin-left-10">
-                        <h5>Marketplace:</h5>
+                    <div id="groupMarketPlaceButtonContainer" className="horizontalCenter">
+                        <h3 className="">{txt.header}</h3>
                     </div>
 
-                    <table className="w-100">
-                        <tbody>
-                            <tr>
-                                <td className="w-10"/>
-                                <td className="w-10">
-                                    <div>
-                                        <i className="family-icon fas fa-balance-scale"/>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div className="">
-                                        <h2 className="font-italic w-100">{txt.title}</h2>
-                                        <h5>{txt.description}</h5>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div className="row no-gutters">
+                        <div className="col-3-10 text-center">
+                            <i className="family-icon fas fa-balance-scale verticalCenter"/>
+                        </div>
+                        <div className="col-7-10 margin-">
+                            <h2 className="font-italic">{txt.title}</h2>
+                            <h5>{txt.description}</h5>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         );
     }
+
 
     /**
      * Called when this button is clicked.

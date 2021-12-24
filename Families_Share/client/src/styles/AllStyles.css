@@ -3321,20 +3321,34 @@ a:active {
 
 /*--------------------Family Market------------------*/
 
-.family-icon{
-  font-size: 30px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
 
 .navBarHeight{
-  height:75px;
+  height:6rem;
 }
 
 .family-color{
   background-color: #00838F;
 }
+
+.navBarTitle{
+  color: white;
+  top: 50%;
+  position: relative;
+  transform: translateY(-50%);
+  margin-left: 0.5rem !important;
+}
+
+.family-icon{
+  font-size: 2.5rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  color: white;
+  top: 50%;
+  position: relative;
+  transform: translateY(-50%);
+}
+
 
 .whity{
   color: white;
@@ -3598,4 +3612,10 @@ a:active {
 
 .forTabsTitle{
   color: #808080;
+}
+
+
+#groupMarketPlaceButtonContainer {
+  width: 94%;
+  padding-bottom: 1rem;
 }

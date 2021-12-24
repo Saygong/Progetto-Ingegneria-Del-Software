@@ -25,9 +25,9 @@ class EditPostingButton extends React.Component {
 
     render() {
         return (
-            <button onClick={this.redirectToEditPostingScreen}>
-                <i className="far fa-edit" />
-            </button>
+            <div role="button" className="navBarHeight" onClick={this.redirectToEditPostingScreen}>
+                <i className="far fa-edit family-icon" />
+            </div>
         )
     }
 

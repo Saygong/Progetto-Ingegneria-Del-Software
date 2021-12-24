@@ -41,17 +41,16 @@ class ToggleFavouriteButton extends React.Component {
         const isFavPath = "fas fa-bookmark";
         const isNotFavPath = "far fa-bookmark";
 
-        const imgPath = this.state.isFavourite ? isFavPath : isNotFavPath;
+        let imgPath = this.state.isFavourite ? isFavPath : isNotFavPath;
+        imgPath += " family-icon";
 
         // Get texts based on current language
         const language = this.props.language;
         const txt = texts[language].toggleFavButton;
 
         return (
-            <div className="">
-                <button onClick={this.handleFavouriteChange}>
-                    <i className={imgPath} />
-                </button>
+            <div role="button" className="navBarHeight" onClick={this.handleFavouriteChange}>
+                <i className={imgPath} />
             </div>
         )
     }

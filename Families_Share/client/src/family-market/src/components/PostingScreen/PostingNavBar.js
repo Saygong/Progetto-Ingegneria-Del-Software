@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import PlainNavBar from "../PlainNavBar";
 import EditPostingButton from "../EditPostingButton";
 import ToggleFavouriteButton from "../ToggleFavouriteButton";
+import MarketplaceScreen from "../MarketplaceScreen/MarketplaceScreen";
 
 
 
@@ -21,29 +22,19 @@ class PostingNavBar extends React.Component {
 
     render() {
         const postingTitle = this.props.postingName;
+        let otherComp;
+        if(this.isCurrentUserOwner()){
+            otherComp = <EditPostingButton postingId={this.props.postingId}
+                                           onEditRedirection={this.props.onEditRedirection}
+                                           onDeleteRedirection={this.props.onDeleteRedirection} />;
+        }
+        else{
+            otherComp = <ToggleFavouriteButton postingId={this.props.postingId} />;
+        }
 
         return (
-            <div className="w-100 mx-auto family-color">
-                <table className="w-100 mx-auto">
-                    <tbody>
-                        <tr>
-                            <td className="w-80">
-                                <PlainNavBar title={postingTitle} />
-                            </td>
-                        {this.isCurrentUserOwner() ? (
-                            <td className="w-10">
-                                <EditPostingButton postingId={this.props.postingId}
-                                                   onEditRedirection={this.props.onEditRedirection}
-                                                   onDeleteRedirection={this.props.onDeleteRedirection} />
-                            </td>
-                        ):(
-                            <td className="w-10">
-                                <ToggleFavouriteButton postingId={this.props.postingId} />
-                            </td>
-                        )}
-                        </tr>
-                    </tbody>
-                </table>
+            <div>
+                <PlainNavBar title={postingTitle} otherComponent={otherComp}/>
             </div>
         );
     }

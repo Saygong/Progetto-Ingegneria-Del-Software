@@ -6,7 +6,6 @@ import PropTypes from "prop-types";
 import LoadingSpinner from "./LoadingSpinner";
 import GroupNavbar from "./GroupNavbar";
 import Log from "./Log";
-import AccessMarketplaceButton from "../family-market/src/components/EntryPoint/AccessMarketplaceButton";
 
 const GroupInfo = Loadable({
   loader: () => import("./GroupInfo"),

@@ -23,10 +23,8 @@ class MyProfileButton extends React.Component {
         const txt = texts[language].profileButton;
 
         return (
-            <div className="w-100">
-                <div className="w-20 text-center" role="button" onClick={this.redirectToProfileScreen}>
-                    <i className="family-icon fas fa-user whity" />
-                </div>
+            <div role="button" className="navBarHeight" onClick={this.redirectToProfileScreen}>
+                <i className="family-icon fas fa-user whity verticalCenter" />
             </div>
         )
     }

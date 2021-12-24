@@ -22,6 +22,7 @@ const en = {
     },
 
     accessMarketplaceButton: {
+        header: "Marketplace",
         title: "Family Market",
         description: "Access the marketplace"
     },
@@ -184,6 +185,7 @@ const it = {
     },
 
     accessMarketplaceButton: {
+        header: "Mercatino",
         title: "Family Market",
         description: "Accesso alla vetrina"
     },
