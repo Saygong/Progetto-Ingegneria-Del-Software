@@ -6,6 +6,7 @@ import {CATEGORIES} from "../constants";
 import React from "react";
 import PropTypes from "prop-types";
 import ComboBox from "react-responsive-combo-box";
+import SimpleTextInput from "./SimpleTextInput";
 
 
 class CategoryComboBox extends React.Component {
@@ -22,27 +23,21 @@ class CategoryComboBox extends React.Component {
         const txt = texts[language].categoryComboBox;
 
         return (
-            <div className="m-top-20">
-
-                <table className="w-50 margin-left-20">
-                    <tbody>
-                        <tr  className="text-center">
-                            <td className="w-10icon">
-                                <i className="family-icon fas fa-th-large"/>
-                            </td>
-                            <td>
-                                <h2>{txt.description}</h2>
-                                <ComboBox options={CATEGORIES[language]}
-                                          defaultValue={this.props.defaultValue}
-                                          onSelect={this.handleCategoryChange}
-                                          editable={false}
-                                          className="cbox"
-                                />
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div>
+                <div className="w-80 mx-auto">
+                    <h4 className="mb-0">{txt.description}</h4>
+                </div>
+                <div className="text-center w-80 mx-auto">
+                    <ComboBox options={CATEGORIES[language]}
+                              defaultValue={this.props.defaultValue}
+                              onSelect={this.handleCategoryChange}
+                              editable={false}
+                              className="cbox"
+                    />
+                </div>
             </div>
+
+
         )
     }
 

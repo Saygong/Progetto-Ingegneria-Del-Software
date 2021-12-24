@@ -34,7 +34,7 @@ class AccessMarketplaceButton extends React.Component {
 
                     <div className="row no-gutters">
                         <div className="col-3-10 text-center">
-                            <i className="family-icon fas fa-balance-scale verticalCenter"/>
+                            <i className="family-icon-dark fas fa-balance-scale"/>
                         </div>
                         <div className="col-7-10 margin-">
                             <h2 className="font-italic">{txt.title}</h2>

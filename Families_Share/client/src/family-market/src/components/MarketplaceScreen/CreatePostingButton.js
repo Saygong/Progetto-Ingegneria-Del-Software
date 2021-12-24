@@ -29,7 +29,7 @@ class CreatePostingButton extends React.Component {
         const txt = texts[language].createPostingButton;
 
         return (
-            <button className="buttonCreatePosting" onClick={this.redirectToEditPostingScreen}>
+            <button className="buttonCreatePosting mb-4" onClick={this.redirectToEditPostingScreen}>
                 {txt.text}
             </button>
         )

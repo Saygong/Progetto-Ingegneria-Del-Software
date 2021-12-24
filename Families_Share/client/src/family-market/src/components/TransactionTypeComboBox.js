@@ -1,7 +1,7 @@
 import withLanguage from "../../../components/LanguageContext";
 import texts from "../texts";
 
-import {TN_TYPES} from "../constants";
+import {CATEGORIES, TN_TYPES} from "../constants";
 
 import React from "react";
 import PropTypes from "prop-types";
@@ -21,26 +21,19 @@ class TransactionTypeComboBox extends React.Component {
         const txt = texts[language].transactionTypeComboBox;
 
         return (
-            <div className="m-top-20">
+            <div>
 
-                <table className="w-50 margin-left-20">
-                    <tbody>
-                        <tr className="text-center">
-                            <td className="w-10icon">
-                                <i className="family-icon fas fa-filter"/>
-                            </td>
-                            <td>
-                                <h2>{txt.description}</h2>
-                                <ComboBox options={TN_TYPES[language]}
-                                          defaultValue={this.props.defaultValue}
-                                          onSelect={this.handleTnTypeChange}
-                                          editable={false}
-                                          className="cbox"
-                                />
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div className="w-80 mx-auto">
+                    <h4 className="mb-0">{txt.description}</h4>
+                </div>
+                <div className="text-center w-80 mx-auto">
+                    <ComboBox options={TN_TYPES[language]}
+                              defaultValue={this.props.defaultValue}
+                              onSelect={this.handleTnTypeChange}
+                              editable={false}
+                              className="cbox"
+                    />
+                </div>
             </div>
         )
     }

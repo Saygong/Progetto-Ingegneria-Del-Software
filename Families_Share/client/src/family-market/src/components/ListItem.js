@@ -31,7 +31,7 @@ class ListItem extends React.Component {
 
         return (
 
-            <div className="w-100 row no-gutters">
+            <div className="w-100 row no-gutters height-5rem">
 
                 <div className="col-2-10">
                     {isIcon ? (

@@ -3321,6 +3321,10 @@ a:active {
 
 /*--------------------Family Market------------------*/
 
+.margin-top-2rem{
+  margin-top: 2rem;
+}
+
 
 .navBarHeight{
   height:6rem;
@@ -3349,6 +3353,15 @@ a:active {
   transform: translateY(-50%);
 }
 
+.family-icon-dark{
+  font-size: 2.5rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  top: 50%;
+  position: relative;
+  transform: translateY(-50%);
+}
 
 .whity{
   color: white;
@@ -3539,7 +3552,7 @@ a:active {
 }
 
 .txtbxPosting {
-  width: 70%;
+  width: 100%;
   margin-bottom: 30px;
   border-width: 2px;
   padding: 5px;
@@ -3557,7 +3570,12 @@ a:active {
 }
 
 .cbox{
+  width: 100%;
   margin-bottom: 20px;
+}
+
+.height-5rem{
+  height: 5rem;
 }
 
 .titles {

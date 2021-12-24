@@ -26,8 +26,9 @@ class PostingsList extends React.Component {
         const title = this.buildTitle();
 
         return (
-            <div>
+            <div className="w-95 mx-auto">
                 <h2 className="m-top-20">{title}</h2>
+
                 {/* One item for each posting */
                     filteredPostings.map((p, idx) => {
                         return <PostingsListItem key={idx}
