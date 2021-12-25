@@ -8,6 +8,8 @@ import {stringify, Log} from "../../utils";
 import ListItem from "../ListItem";
 import {buildRedirectionHandler} from "../MyPostingsScreens/MyGroupsScreen";
 import {withRouter} from "react-router-dom";
+import IconButton from "../IconButton";
+import MenuItem from "../MenuItem";
 
 
 /**
@@ -30,10 +32,9 @@ class MyPostingsButton extends React.Component {
 
         return (
 
-            <div className="pt-3" role="button" onClick={this.redirectToMyPostingsScreens}>
-                <ListItem isIcon={true} image={myPostingsButtonIconPath}
+            <div role="button" onClick={this.redirectToMyPostingsScreens}>
+                <MenuItem path={myPostingsButtonIconPath}
                           title={txt.title} description={txt.description}/>
-                <hr />
             </div>
 
         );

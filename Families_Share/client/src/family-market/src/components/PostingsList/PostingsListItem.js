@@ -76,8 +76,9 @@ class PostingsListItem extends React.Component {
         }
         else if (this.props.mode === PostingsListItem.FAVOURITES_MODE) {
             // Render toggle favourite button
+            let theme = "family-icon-dark";
             sideButton = (
-                <ToggleFavouriteButton postingId={posting.id}/>
+                <ToggleFavouriteButton postingId={posting.id} theme={theme}/>
             );
         }
         else {
@@ -86,16 +87,13 @@ class PostingsListItem extends React.Component {
         }
 
         return (
-            <div className="posting-list-item-container row no-gutters">
-                <div className="col-8-10"
-                     role="button" onClick={this.redirectToPostingScreen}>
-                    <ListItem image={posting.photo}
-                              title={posting.name}
-                              description={posting.description}/>
-                </div>
-                <div className="col-2-10">
-                    {sideButton}
-                </div>
+            <div role="button" onClick={this.redirectToPostingScreen}>
+
+                <ListItem image={posting.photo}
+                          title={posting.name}
+                          description={posting.description}
+                          sideButton={sideButton}/>
+
             </div>
         );
     }

@@ -4,9 +4,9 @@ import PropTypes from "prop-types";
 
 import React from "react";
 import {stringify, Log} from "../../utils";
-import ListItem from "../ListItem";
 import {buildRedirectionHandler} from "../MyFavouritesScreen/MyFavouritesScreen";
 import {withRouter} from "react-router-dom";
+import MenuItem from "../MenuItem";
 
 
 
@@ -24,16 +24,15 @@ class MyFavouritesButton extends React.Component {
     render() {
         const language = this.props.language;
         const txt = texts[language].myFavouritesButton;
-        // origin of "fas fa-heart  ->  https://fontawesome.com/v5.15/icons?d=gallery&p=2
         const myFavouritesButtonIconPath = "fas fa-heart";
 
         return (
+
             <div role="button" onClick={this.redirectToMyFavouritesScreen}>
 
-                    <ListItem isIcon={true} image={myFavouritesButtonIconPath}
+                    <MenuItem path={myFavouritesButtonIconPath}
                               title={txt.title} description={txt.description}/>
 
-                <hr />
             </div>
         );
     }

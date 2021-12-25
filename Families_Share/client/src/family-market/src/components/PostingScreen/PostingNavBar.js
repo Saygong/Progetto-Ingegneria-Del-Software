@@ -29,7 +29,8 @@ class PostingNavBar extends React.Component {
                                            onDeleteRedirection={this.props.onDeleteRedirection} />;
         }
         else{
-            otherComp = <ToggleFavouriteButton postingId={this.props.postingId} />;
+            let theme = "family-icon";
+            otherComp = <ToggleFavouriteButton postingId={this.props.postingId} theme={theme}/>;
         }
 
         return (

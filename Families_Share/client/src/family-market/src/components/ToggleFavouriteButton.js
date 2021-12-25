@@ -8,6 +8,7 @@ import ApiHandler from "../api/ApiHandler";
 import React from "react" ;
 import PropTypes from "prop-types";
 import Log from "../../../components/Log";
+import IconButton from "./IconButton";
 
 
 
@@ -41,16 +42,17 @@ class ToggleFavouriteButton extends React.Component {
         const isFavPath = "fas fa-bookmark";
         const isNotFavPath = "far fa-bookmark";
 
-        let imgPath = this.state.isFavourite ? isFavPath : isNotFavPath;
-        imgPath += " family-icon";
+        let iconPath = this.state.isFavourite ? isFavPath : isNotFavPath;
+
 
         // Get texts based on current language
         const language = this.props.language;
         const txt = texts[language].toggleFavButton;
 
         return (
-            <div role="button" className="navBarHeight" onClick={this.handleFavouriteChange}>
-                <i className={imgPath} />
+            <div role="button" className="text-center verticalCenter height-100" onClick={this.handleFavouriteChange}>
+                <IconButton iconPath={iconPath} theme={this.props.theme}/>
+
             </div>
         )
     }
@@ -111,7 +113,12 @@ ToggleFavouriteButton.propTypes = {
     /**
      * Passed by the withLanguage HOC, used to determine which texts to display.
      */
-    language: PropTypes.string
+    language: PropTypes.string,
+
+    /**
+     * Passed theme in order to re-use code with different css rules
+     */
+    theme: PropTypes.string
 };
 
 export default withLanguage(ToggleFavouriteButton);

@@ -2,12 +2,11 @@ import withLanguage from "../../../components/LanguageContext";
 
 import React from "react";
 import PropTypes from "prop-types";
-import Log from "../../../components/Log";
-
 import texts from "../texts";
 
 /**
  * Class that represents a generic rectangular list item, with an image, title and description.
+ * Dimension: 3-5-2
  */
 class ListItem extends React.Component {
 
@@ -20,45 +19,30 @@ class ListItem extends React.Component {
         // Get texts based on current language
         const language = this.props.language;
         const txt = texts[language].listItem;
-
-
-
-        let isIcon = this.props.isIcon;
         let path = this.props.image;
-        if (isIcon){
-            path += " family-icon";
-        }
+
 
         return (
 
-            <div className="w-100 row no-gutters height-5rem">
+            <div className="w-100 row no-gutters height-10rem border-bottom">
 
-                <div className="col-2-10">
-                    {isIcon ? (
-                        <div className="center text-center">
-                            <i className={path} />
-                        </div>
-                    ):(
-                        <div className="center mx-auto">
-                            <img className="img-8-10__icons" src={path} alt={txt.altImageText} />
-                        </div>
-                    )}
-                </div>
-                <div className="col-6-10 my-auto pt-3">
-                    <div>
-                        <h2>{this.props.title}</h2>
+                <div className="col-3-10">
+
+                    <div className="height-100">
+                        <img className="listImg verticalCenter" src={path} alt={txt.altImageText} />
                     </div>
-                    <div>
+
+                </div>
+                <div className="col-5-10">
+                    <div className="verticalCenter">
+                        <h2>{this.props.title}</h2>
                         <h5>{this.props.description}</h5>
                     </div>
                 </div>
-                {isIcon && (
-                    <div className="col-2-10">
-                        <div className="center text-center">
-                            <i className="fas fa-chevron-right family-icon" />
-                        </div>
-                    </div>
-                )}
+
+                <div className="col-2-10 text-center">
+                    {this.props.sideButton}
+                </div>
 
             </div>
         )
@@ -66,14 +50,13 @@ class ListItem extends React.Component {
 }
 
 ListItem.defaultProps = {
-    isIcon: false,
     image: "",
     title: "",
-    description: ""
+    description: "",
+    sideButton: null
 }
 
 ListItem.propTypes = {
-    isIcon: PropTypes.bool,
     image: PropTypes.oneOfType(
         [PropTypes.string, PropTypes.instanceOf(File), PropTypes.instanceOf(Blob)]),
     title: PropTypes.string,
@@ -82,7 +65,13 @@ ListItem.propTypes = {
     /**
      * Passed by the withLanguage HOC, used to determine which texts to display.
      */
-    language: PropTypes.string
+    language: PropTypes.string,
+
+    /**
+     * Custom button
+     */
+    sideButton: React.Component
+
 }
 
 export default withLanguage(ListItem);
