@@ -7,6 +7,8 @@ import ApiHandler from "../../api/ApiHandler";
 
 import React from "react";
 import PropTypes from "prop-types";
+import Texts from "../../../../Constants/Texts";
+import ConfirmDialog from "../../../../components/ConfirmDialog";
 
 
 /**
@@ -26,17 +28,60 @@ class DeletePostingButton extends React.Component {
         this.apiHandler = new ApiHandler("", "", DEBUG);
         this.handleClick = this.handleClick.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
+
+        this.state = {
+            confirmDialogIsOpen: false,
+            confirmDialogTitle: "",
+            optionsModalIsOpen: false
+        };
+
     }
+
+    handleConfirmDialogClose = async (choice) => {
+        const { confirmDialogAction } = this.state;
+        if (choice === "agree") {
+            await this.handleClick();
+        }
+        this.setState({
+            confirmDialogIsOpen: false,
+            confirmDialogTitle: "",
+            confirmDialogAction: ""
+        });
+    };
+
+    handleConfirmDialogOpen = action => {
+        const { language } = this.props;
+        const texts = Texts[language].managePlanScreen;
+        const confirmDialogTitle =
+            action === "delete" ? texts.deleteConfirm : texts.exportConfirm;
+        this.setState({
+            confirmDialogTitle,
+            confirmDialogAction: action,
+            confirmDialogIsOpen: true,
+            optionsModalIsOpen: false
+        });
+    };
+
+
 
     render() {
         // TODO (magari aggiungere pure una finestra di dialogo per dire "sei sicuro"?
         const language = this.props.language;
-        const buttonText = texts[language].deletePostingButton.text;
-
+        const txt = texts[language].deletePostingButton
+        const buttonText = txt.text;
+        const {confirmDialogIsOpen} = this.state
         return (
-            <button className="buttonEditPosting"  onClick={this.handleClick}>
-                {buttonText}
-            </button>
+            <div>
+                <ConfirmDialog
+                    title={txt.titleDialog}
+                    isOpen={confirmDialogIsOpen}
+                    handleClose={this.handleConfirmDialogClose}
+                />
+                <button className="buttonEditPosting"  onClick={this.handleConfirmDialogOpen}>
+                    {buttonText}
+                </button>
+
+            </div>
         )
     }
 

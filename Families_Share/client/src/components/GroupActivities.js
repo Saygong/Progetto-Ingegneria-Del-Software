@@ -259,12 +259,13 @@ class GroupActivities extends React.Component {
             </button>
           </div>
         </div>
-        <div className="navBarHeight"/>
-        <div className="w-100">
+
+
+        <div className="spacerHeight"/>
+        <div className="w-95 groupActivitiesContainer mx-auto">
           <AccessMarketplaceButton />
         </div>
 
-        <hr />
 
         <div
           className="row no-gutters"
@@ -336,13 +337,13 @@ class GroupActivities extends React.Component {
         )}
         <div style={{ paddingBottom: "6rem" }}>
           {fetchedData && (
-            <div id="groupActivitiesContainer" className="horizontalCenter">
+            <div className="horizontalCenter groupActivitiesContainer">
               <h1 className="">{texts.activitiesHeader}</h1>
               {this.renderActivities()}
             </div>
           )}
           {fetchedData && plans.length > 0 && (
-            <div id="groupActivitiesContainer" className="horizontalCenter">
+            <div className="horizontalCenter groupActivitiesContainer">
               <h1 className="">{texts.plansHeader}</h1>
               {this.renderPlans()}
             </div>

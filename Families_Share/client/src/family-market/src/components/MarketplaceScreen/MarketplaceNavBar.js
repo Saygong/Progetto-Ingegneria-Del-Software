@@ -5,6 +5,7 @@ import React from "react";
 import PlainNavBar from "../PlainNavBar";
 import MyProfileButton from "./MyProfileButton";
 import Log from "../../../../components/Log";
+import PropTypes from "prop-types";
 
 
 /**
@@ -28,27 +29,10 @@ class MarketplaceNavBar extends React.Component {
 
         );
     }
+}
 
-
-    /*
-    * <table className="w-100 mx-auto">
-                    <tbody>
-                        <tr>
-                            <td className="w-80">
-                                <PlainNavBar title={txt.title}/>
-                            </td>
-
-                            <td className="w-10">
-                               <MyProfileButton />
-                            </td>
-
-                        </tr>
-                    </tbody>
-                </table>
-    *
-    * */
-
-
+MarketplaceNavBar.propTypes = {
+    language: PropTypes.string
 }
 
 export default withLanguage(MarketplaceNavBar);

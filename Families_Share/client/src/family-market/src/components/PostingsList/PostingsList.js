@@ -25,12 +25,18 @@ class PostingsList extends React.Component {
         const filteredPostings = this.getFilteredPostings()
         const title = this.buildTitle();
 
+        let orderedArray = [];
+        for (let i = filteredPostings.length - 1; i >= 0; i--) {
+            orderedArray.push(filteredPostings[i]);
+        }
+
+
         return (
             <div className="w-95 mx-auto">
                 <h2 className="m-top-20">{title}</h2>
 
                 {/* One item for each posting */
-                    filteredPostings.map((p, idx) => {
+                    orderedArray.map((p, idx) => {
                         return <PostingsListItem key={idx}
                                                  mode={this.props.itemMode}
                                                  posting={p}/>

@@ -9,6 +9,7 @@ const en = {
     },
 
     deletePostingButton: {
+        titleDialog: "Are you sure to delete this posting?",
         text: "Delete",
         altImageText: "delete image"
     },
@@ -158,6 +159,10 @@ const en = {
         user: "User:",
         phone: "Phone number:",
         mail: "Email:",
+    },
+
+    categoryDialog:{
+
     }
 }
 
@@ -172,6 +177,7 @@ const it = {
     },
 
     deletePostingButton: {
+        titleDialog: "Sei sicuro di voler eliminare questo annuncio?",
         text: "Elimina",
         altImageText: "Elimina immagine"
     },
@@ -323,7 +329,17 @@ const it = {
         phone: "Cellulare:",
         mail: "Email:",
     },
+
+    categoryDialog:{
+        header: "Seleziona la categoria:",
+        save: "Salva"
+
+    }
 }
+
+
+
+
 
 
 const el = {

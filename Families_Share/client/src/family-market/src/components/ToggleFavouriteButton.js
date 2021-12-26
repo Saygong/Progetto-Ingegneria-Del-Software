@@ -52,7 +52,6 @@ class ToggleFavouriteButton extends React.Component {
         return (
             <div role="button" className="text-center verticalCenter height-100" onClick={this.handleFavouriteChange}>
                 <IconButton iconPath={iconPath} theme={this.props.theme}/>
-
             </div>
         )
     }

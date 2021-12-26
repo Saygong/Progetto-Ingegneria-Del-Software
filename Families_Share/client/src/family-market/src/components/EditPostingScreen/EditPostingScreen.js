@@ -20,9 +20,9 @@ import MailInput from "./MailInput";
 import TelephoneInput from "./TelephoneInput";
 import PlaceInput from "./PlaceInput";
 import ImageInput from "./ImageInput";
-import CategoryComboBox from "../CategoryComboBox";
 import TransactionTypeComboBox from "../TransactionTypeComboBox";
 import {stringify, Log} from "../../utils";
+import CategorySelector from "../CategorySelector";
 
 
 /**
@@ -118,8 +118,9 @@ class EditPostingScreen extends React.Component {
                                  placeholder={txt.nameInput.placeholder}
                                  textChangeHandler={this.handleNameChange} />
 
-                <CategoryComboBox defaultValue={defaultCat}
+                <CategorySelector value={this.state.category ? this.state.category : defaultCat }
                                   categoryChangeHandler={this.handleCategoryChange} />
+
                 <TransactionTypeComboBox defaultValue={defaultTnType}
                                          tnTypeChangeHandler={this.handleTnTypeChange} />
 

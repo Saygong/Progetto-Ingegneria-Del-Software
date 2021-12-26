@@ -5,16 +5,16 @@ import {FAMILY_MARKET_BASE_PAGE_URL} from "../../constants";
 
 import ApiHandler from "../../api/ApiHandler";
 
-import React from"react";
+import React from "react";
 import PropTypes from "prop-types";
 import PostingsList from "../PostingsList/PostingsList";
 import {FAVOURITES_MODE} from "../PostingsList/PostingsListItem";
 import CreatePostingButton from "./CreatePostingButton";
 import SearchBar from "../SearchBar";
-import CategoryComboBox from "../CategoryComboBox";
 import TransactionTypeComboBox from "../TransactionTypeComboBox";
 import MarketplaceNavBar from "./MarketplaceNavBar";
 import {withRouter} from "react-router-dom";
+import CategorySelector from "../CategorySelector";
 
 
 /**
@@ -59,6 +59,7 @@ class MarketplaceScreen extends React.Component {
         this.handleCategoryChange = this.handleCategoryChange.bind(this);
     }
 
+
     render() {
         // It is fine if, after the user creates a posting, he gets redirected to this page,
         // because it will be reloaded and the new posting will be shown.
@@ -67,7 +68,9 @@ class MarketplaceScreen extends React.Component {
             state: this.props.location.state
         };
 
+
         return (
+
             <div>
                 <MarketplaceNavBar/>
 
@@ -77,8 +80,10 @@ class MarketplaceScreen extends React.Component {
                                    textChangeHandler={this.handleSearchBarChange}/>
                     </div>
                     <div className="w-80 mx-auto">
-                        <CategoryComboBox defaultValue={this.defaultCat}
+
+                        <CategorySelector value={this.state.filterCategory ? this.state.filterCategory : this.defaultCat }
                                           categoryChangeHandler={this.handleCategoryChange}/>
+
                     </div>
                     <div className="w-80 mx-auto">
                         <TransactionTypeComboBox defaultValue={this.defaultTnType}
@@ -95,6 +100,9 @@ class MarketplaceScreen extends React.Component {
                       filterText={this.state.filterText}
                       filterTnType={this.state.filterTnType}
                       filterCategory={this.state.filterCategory}/>
+
+
+
             </div>
         );
     }

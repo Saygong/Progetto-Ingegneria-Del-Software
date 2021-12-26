@@ -489,7 +489,7 @@
 											"top": 399,
 											"width": 284.375,
 											"height": 13,
-											"text": "CategoryComboBox"
+											"text": "CategorySelector"
 										},
 										{
 											"_type": "LabelView",
@@ -18935,7 +18935,7 @@
 											"top": 1519,
 											"width": 284.375,
 											"height": 13,
-											"text": "CategoryComboBox"
+											"text": "CategorySelector"
 										},
 										{
 											"_type": "LabelView",
@@ -34602,7 +34602,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "CategoryComboBox",
+					"name": "CategorySelector",
 					"ownedElements": [
 						{
 							"_type": "UMLGeneralization",

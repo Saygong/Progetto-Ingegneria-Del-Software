@@ -15,9 +15,9 @@ export const NO_CATEGORY = {
     fr: "Nessuna categoria"
 }
 export const CATEGORIES = {
-    it: [NO_CATEGORY["it"], "Abbigliamento", "Casa e Cucina", "Cancelleria", "Giochi e Videogiochi", "Intrattenimento", "Tecnologia", "Libri"],
-    en: [NO_CATEGORY["en"], "Clothings", "Home & Kitchen", "Cancelleria", "Giochi e Videogiochi", "Intrattenimento", "Tecnologia", "Libri"],
-    el: [NO_CATEGORY["el"], "Abbigliamento", "Casa e Cucina", "Office Products", "Toys & Games", "Entertainment", "Technology", "Books"],
+    it: [NO_CATEGORY["it"], "Abbigliamento", "Casa e Cucina", "Cancelleria", "Giochi e Videogiochi", "Libri", "Intrattenimento", "Tecnologia"],
+    en: [NO_CATEGORY["en"], "Clothings", "Home & Kitchen", "Office Products", "Toys & Games", "Books", "Entertainment", "Technology" ],
+    el: [NO_CATEGORY["el"], "Abbigliamento", "Casa e Cucina", "Office Products", "Toys & Games", "Books", "Entertainment", "Technology" ],
     hu: [NO_CATEGORY["hu"], "Abbigliamento", "Casa e Cucina", "Cancelleria", "Giochi e Videogiochi", "Intrattenimento", "Tecnologia", "Libri"],
     nl: [NO_CATEGORY["nl"], "Abbigliamento", "Casa e Cucina", "Cancelleria", "Giochi e Videogiochi", "Intrattenimento", "Tecnologia", "Libri"],
     fr: [NO_CATEGORY["fr"], "Abbigliamento", "Casa e Cucina", "Cancelleria", "Giochi e Videogiochi", "Intrattenimento", "Tecnologia", "Libri"]

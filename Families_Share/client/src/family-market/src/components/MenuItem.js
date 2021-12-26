@@ -31,8 +31,8 @@ class MenuItem extends React.Component {
                 </div>
                 <div className="col-6-10">
                     <div className="verticalCenter">
-                        <h2>{this.props.title}</h2>
-                        <h5>{this.props.description}</h5>
+                        <h3>{this.props.title}</h3>
+                        <p>{this.props.description}</p>
                     </div>
                 </div>
 

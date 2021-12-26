@@ -70,7 +70,7 @@ ListItem.propTypes = {
     /**
      * Custom button
      */
-    sideButton: React.Component
+    sideButton: PropTypes.object
 
 }
 

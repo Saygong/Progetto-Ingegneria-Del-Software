@@ -21,7 +21,7 @@ class TransactionTypeComboBox extends React.Component {
         const txt = texts[language].transactionTypeComboBox;
 
         return (
-            <div>
+            <div className="mb-3">
 
                 <div className="w-80 mx-auto">
                     <h4 className="mb-0">{txt.description}</h4>

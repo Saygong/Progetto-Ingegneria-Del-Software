@@ -6,6 +6,7 @@ import PropTypes from  "prop-types";
 import {stringify, Log} from "../../utils";
 import {buildRedirectionHandler} from "../MarketplaceScreen/MarketplaceScreen";
 import {withRouter} from "react-router-dom";
+import MenuItem from "../MenuItem";
 
 /**
  * Class that represents the button to access the Marketplace section of Family Market.
@@ -25,24 +26,11 @@ class AccessMarketplaceButton extends React.Component {
 
 
         return (
-            <div className="w-100">
-                <div role="button" onClick={this.redirectToMarketplaceScreen} >
-
-                    <div id="groupMarketPlaceButtonContainer" className="horizontalCenter">
-                        <h3 className="">{txt.header}</h3>
-                    </div>
-
-                    <div className="row no-gutters">
-                        <div className="col-3-10 text-center">
-                            <i className="family-icon-dark fas fa-balance-scale"/>
-                        </div>
-                        <div className="col-7-10 margin-">
-                            <h2 className="font-italic">{txt.title}</h2>
-                            <h5>{txt.description}</h5>
-                        </div>
-                    </div>
-
+            <div className="w-100 " role="button" onClick={this.redirectToMarketplaceScreen} >
+                <div className="horizontalCenter">
+                    <h3 className="">{txt.header}</h3>
                 </div>
+                <MenuItem path="fas fa-balance-scale" title={txt.title} description={txt.description} />
             </div>
         );
     }

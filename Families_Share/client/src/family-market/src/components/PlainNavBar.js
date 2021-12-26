@@ -92,7 +92,7 @@ PlainNavBar.propTypes = {
     /**
      * Passed by the withLanguage HOC, used to determine which texts to display.
      */
-    otherComponent: React.component
+    otherComponent: PropTypes.object
 }
 
 

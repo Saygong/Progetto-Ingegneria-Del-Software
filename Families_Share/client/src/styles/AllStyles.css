@@ -1629,12 +1629,12 @@
   border-radius: 0.5rem;
   box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.4);
 }
-#groupActivitiesContainer {
+.groupActivitiesContainer {
   width: 94%;
   top: 6rem;
   padding-bottom: 1rem;
 }
-#groupActivitiesContainer h1 {
+.groupActivitiesContainer h1 {
   font-size: 1.6rem;
   color: rgba(0, 0, 0, 0.9);
   line-height: 1.5;
@@ -1658,12 +1658,12 @@
   color: #ffffff;
   font-size: 1.3rem;
 }
-#groupActivitiesContainer h2 {
+.groupActivitiesContainer h2 {
   font-size: 1.4rem;
   color: rgba(0, 0, 0, 0.54);
   display: inline-block;
 }
-#groupActivitiesContainer button {
+.groupActivitiesContainer button {
   width: 4rem;
   height: 4rem;
 }
@@ -3328,6 +3328,38 @@ a:active {
 
 .navBarHeight{
   height:6rem;
+}
+
+.spacerHeight{
+  height:7rem;
+}
+
+.categoryButton{
+  margin: 0 auto;
+  width: 80%;
+  border-radius: 5px;
+  background-color: #ffffff;
+  border: 2px solid #e7e7e7;
+  text-align: center;
+  text-decoration: none;
+}
+
+.modalCategoryButton{
+  background-color: #ffffff;
+  border: 1px solid #e7e7e7;
+  text-align: justify-all;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  font: 400 11px system-ui;
+  border-collapse: collapse;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+}
+
+.categoryButtonContainer{
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .family-color{
