@@ -1,4 +1,4 @@
-// TODO scrivere i testi dei componenti nelle varie lingue
+
 const en = {
     listItem: {
         altImageText: "List item placeholder"
@@ -162,7 +162,19 @@ const en = {
     },
 
     categoryDialog:{
+        header: "Select the category:",
+        save: "Save"
+    },
 
+    disclaimer:{
+        title: "CONDIZIONI GENERALI DI UTILIZZO DI FAMILY-MARKET",
+        text: "L'obbiettivo di Family-Market è quello di garantire condivisione di informazioni, contenuti ed oggetti materiali o immateriali." +
+              "L'offerta proviene da un soggetto offerente privato e mira ad arrivare ad altri soggetti privati appartenenti ad una comunità." +
+              "Nell'estensione possono essere proposti links di accesso a siti di altri enti o di società." +
+              "Family-Market non può ritenersi responsabile circa la disponibilità, il contenuto," +
+              "i prodotti ed i servizi offerti, nè, tanto meno, di eventuali danni o perdite occorsi in conseguenza dell' utilizzo.",
+        error: "You must accept the general terms of use.",
+        agree: "Accept"
     }
 }
 
@@ -333,8 +345,19 @@ const it = {
     categoryDialog:{
         header: "Seleziona la categoria:",
         save: "Salva"
+    },
 
+    disclaimer:{
+        title: "CONDIZIONI GENERALI DI UTILIZZO DI FAMILY-MARKET",
+        text: "L'obbiettivo di Family-Market è quello di garantire condivisione di informazioni, contenuti ed oggetti materiali o immateriali." +
+            "L'offerta proviene da un soggetto offerente privato e mira ad arrivare ad altri soggetti privati appartenenti ad una comunità." +
+            "Nell'estensione possono essere proposti links di accesso a siti di altri enti o di società." +
+            "Family-Market non può ritenersi responsabile circa la disponibilità, il contenuto," +
+            "i prodotti ed i servizi offerti, nè, tanto meno, di eventuali danni o perdite occorsi in conseguenza dell' utilizzo.",
+        error: "Accettare le condizioni generali di utilizzo.",
+        agree: "Accetto"
     }
+
 }
 
 

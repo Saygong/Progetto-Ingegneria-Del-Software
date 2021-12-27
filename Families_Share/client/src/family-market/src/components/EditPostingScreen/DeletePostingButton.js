@@ -63,9 +63,9 @@ class DeletePostingButton extends React.Component {
 
     render() {
         const language = this.props.language;
-        const txt = texts[language].deletePostingButton
+        const txt = texts[language].deletePostingButton;
         const buttonText = txt.text;
-        const {confirmDialogIsOpen} = this.state
+        const {confirmDialogIsOpen} = this.state;
         return (
             <div>
                 <ConfirmDialog

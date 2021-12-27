@@ -1,22 +1,54 @@
-import withLanguage from "../../../components/LanguageContext";
 
+import withLanguage from "../../../components/LanguageContext";
 import React from "react";
 import PropTypes from "prop-types" ;
-import Log from "../../../components/Log" ;
+import DisclaimerDialog from "./DisclaimerDialog";
+
 
 
 class Disclaimer extends React.Component {
     constructor(props) {
         super(props);
+        
 
+        this.state = {
+            disclaimerDialogIsOpen: false,
+            alreadySaw: false
+        };
     }
 
+
+    handleDisclaimerModalOpen = () => {
+        const elem = document.getElementsByTagName("body")[0];
+        elem.style.overflow = "auto";
+        this.setState({ alreadySaw: true})
+        this.setState({ categoryModalIsOpen: true });
+    };
+    handleDisclaimerModalClose = () => {
+        const elem = document.getElementsByTagName("body")[0];
+        elem.style.overflow = "auto";
+        this.setState({ categoryModalIsOpen: false });
+    };
+
+
+
     render() {
+
+        let {disclaimerDialogIsOpen} = this.state;
+        let already = this.state.alreadySaw;
+
         return (
             <div>
-
+                {window.onload = () => {
+                    if (!already)
+                        this.handleDisclaimerModalOpen();
+                }}
+                <DisclaimerDialog
+                    isOpen={disclaimerDialogIsOpen}
+                    handleClose={this.handleDisclaimerModalClose}
+                />
             </div>
-        );
+        )
     }
 
 }

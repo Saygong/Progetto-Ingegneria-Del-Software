@@ -15,6 +15,7 @@ import TransactionTypeComboBox from "../TransactionTypeComboBox";
 import MarketplaceNavBar from "./MarketplaceNavBar";
 import {withRouter} from "react-router-dom";
 import CategorySelector from "../CategorySelector";
+import Disclaimer from "../Disclaimer";
 
 
 /**
@@ -72,6 +73,9 @@ class MarketplaceScreen extends React.Component {
         return (
 
             <div>
+
+                <Disclaimer/>
+
                 <MarketplaceNavBar/>
 
                 <div className="margin-top-2rem">

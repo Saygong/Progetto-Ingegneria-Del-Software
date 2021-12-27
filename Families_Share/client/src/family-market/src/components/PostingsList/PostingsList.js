@@ -1,15 +1,12 @@
+
 import withLanguage from "../../../../components/LanguageContext";
 import texts from "../../texts";
-
 import {NO_CATEGORY, NO_TN_TYPE} from "../../constants";
-
 import Posting from "../../api/model/Posting";
-
 import React from "react";
 import PropTypes from "prop-types";
 import PostingsListItem from "./PostingsListItem";
 import {FAVOURITES_MODE} from "./PostingsListItem";
-import {stringify, Log} from "../../utils";
 
 const CATEGORY_NOT_SET = "not-set";
 const TN_TYPE_NOT_SET = "not-set";
@@ -25,18 +22,14 @@ class PostingsList extends React.Component {
         const filteredPostings = this.getFilteredPostings()
         const title = this.buildTitle();
 
-        let orderedArray = [];
-        for (let i = filteredPostings.length - 1; i >= 0; i--) {
-            orderedArray.push(filteredPostings[i]);
-        }
-
+        //TODO dovrebbero essere ordinati in base alla creation_date (è stata inserita apposta nel model)
 
         return (
             <div className="w-95 mx-auto">
                 <h2 className="m-top-20">{title}</h2>
 
                 {/* One item for each posting */
-                    orderedArray.map((p, idx) => {
+                    filteredPostings.map((p, idx) => {
                         return <PostingsListItem key={idx}
                                                  mode={this.props.itemMode}
                                                  posting={p}/>

@@ -1,9 +1,9 @@
+
 import texts from "../texts";
 import React from "react";
 import PropTypes from "prop-types";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import {withRouter} from "react-router-dom";
 import withLanguage from "../../../components/LanguageContext";
@@ -14,8 +14,7 @@ class CategoryDialog extends React.Component {
     constructor(props) {
         super(props);
         this.handleCategoryChange = this.handleCategoryChange.bind(this);
-        this.state = {
-        };
+
     }
 
 
