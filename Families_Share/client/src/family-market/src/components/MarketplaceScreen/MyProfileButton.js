@@ -5,6 +5,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {stringify, Log} from "../../utils";
 import {withRouter} from "react-router-dom";
+import IconItem from "../IconItem";
 
 /**
  * Class that represents a button used to go to
@@ -24,10 +25,11 @@ class MyProfileButton extends React.Component {
 
         return (
             <div role="button" className="navBarHeight" onClick={this.redirectToProfileScreen}>
-                <i className="family-icon fas fa-user whity verticalCenter" />
+                <IconItem iconPath="fas fa-user" theme="family-icon"/>
             </div>
         )
     }
+
 
     /**
      * Called when the button is clicked.

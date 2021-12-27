@@ -1,14 +1,12 @@
+
 import withLanguage from "../../../components/LanguageContext";
-
 import {withRouter} from "react-router-dom";
-
 import React from "react" ;
 import PropTypes from "prop-types";
-import {stringify, Log} from "../utils";
-
+import {Log} from "../utils";
+import IconItem from "./IconItem"
 import {buildEditModeRedirectionHandler} from "./EditPostingScreen/EditPostingScreen";
 
-import texts from"../texts";
 
 
 /**
@@ -26,7 +24,7 @@ class EditPostingButton extends React.Component {
     render() {
         return (
             <div role="button" className="navBarHeight" onClick={this.redirectToEditPostingScreen}>
-                <i className="far fa-edit family-icon" />
+                <IconItem iconPath="far fa-edit" theme="family-icon"/>
             </div>
         )
     }

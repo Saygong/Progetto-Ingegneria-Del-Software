@@ -3440,14 +3440,6 @@ a:active {
   overflow: scroll;
 }
 
-/*TODO sistemare meglio le box/searchbar*/
-.w-80Market{
-  width: 80%;
-  display: block;
-  /*margin-left: auto;*/
-  /*margin-right: 0;*/
-}
-
 .family-m-tabs{
   text-align:center;
   margin: 0 auto;
@@ -3512,11 +3504,9 @@ a:active {
   color: red;
 }
 
-
 .listImg{
   width: 90%;
   height: 70%;
-
 }
 
 .buttonCreatePosting {
@@ -3613,6 +3603,7 @@ a:active {
   border: 2px solid #dddddd;
   margin: 15px auto;
 }
+
 .image-preview__image{
   width: 100%;
   max-height: 500px;
@@ -3623,7 +3614,6 @@ a:active {
 .h1-error {
   color: #be1622;
 }
-
 
 .margin-left-40{
   margin-left: 42%;

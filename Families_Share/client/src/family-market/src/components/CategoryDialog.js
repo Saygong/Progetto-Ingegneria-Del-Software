@@ -5,11 +5,9 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import Button from "@material-ui/core/Button";
 import {withRouter} from "react-router-dom";
 import withLanguage from "../../../components/LanguageContext";
 import {CATEGORIES} from "../constants";
-import {styled} from "@material-ui/core";
 
 class CategoryDialog extends React.Component {
 

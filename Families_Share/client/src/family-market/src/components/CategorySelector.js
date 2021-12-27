@@ -1,14 +1,9 @@
+
 import withLanguage from "../../../components/LanguageContext";
 import texts from "../texts";
-
-import {CATEGORIES} from "../constants";
-
 import React from "react";
 import PropTypes from "prop-types";
-import ComboBox from "react-responsive-combo-box";
-import SimpleTextInput from "./SimpleTextInput";
 import CategoryDialog from "./CategoryDialog";
-import Button from "@material-ui/core/Button";
 
 
 class CategorySelector extends React.Component {
@@ -22,12 +17,12 @@ class CategorySelector extends React.Component {
     }
 
 
-    handleInviteModalOpen = () => {
+    handleCategoryModalOpen = () => {
         const elem = document.getElementsByTagName("body")[0];
         elem.style.overflow = "auto";
         this.setState({ categoryModalIsOpen: true });
     };
-    handleInviteModalClose = () => {
+    handleCategoryModalClose = () => {
         const elem = document.getElementsByTagName("body")[0];
         elem.style.overflow = "auto";
         this.setState({ categoryModalIsOpen: false });
@@ -47,7 +42,7 @@ class CategorySelector extends React.Component {
 
                     <button
                         className="categoryButton"
-                        onClick={this.handleInviteModalOpen}
+                        onClick={this.handleCategoryModalOpen}
                     >
                         <span>{this.props.value}</span>
                     </button>
@@ -56,7 +51,7 @@ class CategorySelector extends React.Component {
 
                 <CategoryDialog
                     isOpen={categoryModalIsOpen}
-                    handleClose={this.handleInviteModalClose}
+                    handleClose={this.handleCategoryModalClose}
                     handleInvite={this.handleInvite}
                     inviteType="member"
                     categoryChangeHandler={this.handleCategoryChange}

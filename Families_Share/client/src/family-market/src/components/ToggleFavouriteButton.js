@@ -1,15 +1,11 @@
+
 import withLanguage from "../../../components/LanguageContext";
 import texts from "../texts";
-
 import {DEBUG} from "../constants";
-
 import ApiHandler from "../api/ApiHandler";
-
 import React from "react" ;
 import PropTypes from "prop-types";
-import Log from "../../../components/Log";
-import IconButton from "./IconButton";
-
+import IconItem from "./IconItem";
 
 
 /**
@@ -51,7 +47,7 @@ class ToggleFavouriteButton extends React.Component {
 
         return (
             <div role="button" className="text-center verticalCenter height-100" onClick={this.handleFavouriteChange}>
-                <IconButton iconPath={iconPath} theme={this.props.theme}/>
+                <IconItem iconPath={iconPath} theme={this.props.theme}/>
             </div>
         )
     }

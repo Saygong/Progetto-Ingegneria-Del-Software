@@ -8,7 +8,7 @@ import {stringify, Log} from "../../utils";
 import ListItem from "../ListItem";
 import {buildRedirectionHandler} from "../MyPostingsScreens/MyGroupsScreen";
 import {withRouter} from "react-router-dom";
-import IconButton from "../IconButton";
+import IconButton from "../IconItem";
 import MenuItem from "../MenuItem";
 
 

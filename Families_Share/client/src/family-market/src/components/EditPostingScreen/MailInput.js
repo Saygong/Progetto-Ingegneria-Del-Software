@@ -2,8 +2,8 @@ import withLanguage from "../../../../components/LanguageContext";
 import texts from "../../texts";
 import React from "react";
 import PropTypes from "prop-types";
-import Log from "../../../../components/Log";
 import SimpleTextInput from "../SimpleTextInput";
+import IconItem from "../IconItem"
 
 
 
@@ -24,7 +24,7 @@ class MailInput extends React.Component {
         return (
             <div className="row no-gutters">
                 <div className="col-2-10">
-                    <i className="family-icon far fa-envelope"/>
+                    <IconItem iconPath="far fa-envelope" theme="family-icon"/>
                 </div>
                 <div className="col-8-10">
                     <SimpleTextInput text={this.props.text} description={txt.description}

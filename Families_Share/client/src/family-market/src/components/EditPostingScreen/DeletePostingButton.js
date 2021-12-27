@@ -1,10 +1,7 @@
 import withLanguage from "../../../../components/LanguageContext";
 import texts from "../../texts";
-
 import {DEBUG} from "../../constants";
-
 import ApiHandler from "../../api/ApiHandler";
-
 import React from "react";
 import PropTypes from "prop-types";
 import Texts from "../../../../Constants/Texts";
@@ -65,7 +62,6 @@ class DeletePostingButton extends React.Component {
 
 
     render() {
-        // TODO (magari aggiungere pure una finestra di dialogo per dire "sei sicuro"?
         const language = this.props.language;
         const txt = texts[language].deletePostingButton
         const buttonText = txt.text;
@@ -100,7 +96,6 @@ class DeletePostingButton extends React.Component {
      * @return {Promise<void>}
      */
     async handleDelete() {
-        // Delete the posting by calling api
         const postingId = this.props.postingId;
         await this.apiHandler.deletePosting(postingId);
     }

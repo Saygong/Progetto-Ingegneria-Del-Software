@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 /**
  * Class that represents a generic icon
  */
-class IconButton extends React.Component {
+class IconItem extends React.Component {
 
     constructor(props) {
         super(props);
@@ -25,12 +25,12 @@ class IconButton extends React.Component {
 
 }
 
-IconButton.defaultProps = {
+IconItem.defaultProps = {
     iconPath:"",
     theme:""
 }
 
-IconButton.propTypes = {
+IconItem.propTypes = {
 
     /**
      * Path for the icon
@@ -44,4 +44,5 @@ IconButton.propTypes = {
 
 }
 
-export default withLanguage(IconButton);
+export default withLanguage(IconItem);
+

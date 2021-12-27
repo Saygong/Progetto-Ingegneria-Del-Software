@@ -1,8 +1,9 @@
-import withLanguage from "../../../components/LanguageContext";
 
+import withLanguage from "../../../components/LanguageContext";
 import React from "react";
 import PropTypes from "prop-types";
-import IconButton from "./IconButton";
+import IconItem from "./IconItem";
+
 
 /**
  * Class that represents a generic rectangular menu item, with an icon, title and description and a right arrow.
@@ -25,7 +26,7 @@ class MenuItem extends React.Component {
                 <div className="col-2-10">
 
                     <div className="height-100 text-center">
-                        <IconButton iconPath={path} theme="family-icon-dark" />
+                        <IconItem iconPath={path} theme="family-icon-dark" />
                     </div>
 
                 </div>
@@ -37,7 +38,7 @@ class MenuItem extends React.Component {
                 </div>
 
                 <div className="col-2-10 text-center">
-                    <IconButton iconPath="fas fa-chevron-right" theme="family-icon-dark" />
+                    <IconItem iconPath="fas fa-chevron-right" theme="family-icon-dark" />
                 </div>
 
             </div>

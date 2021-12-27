@@ -4,7 +4,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {stringify, Log} from "../utils";
 import {withRouter} from "react-router-dom";
-import MyProfileButton from "./MarketplaceScreen/MyProfileButton";
+import IconItem from "./IconItem";
 
 
 /**
@@ -26,7 +26,7 @@ class PlainNavBar extends React.Component {
 
             <div className="row no-gutters family-color navBarHeight ">
                 <div role="button" onClick={this.goBack} className="col-2-10 text-center ">
-                    <i className="fas fa-arrow-left family-icon" />
+                    <IconItem iconPath="fas fa-arrow-left" theme="family-icon"/>
                 </div>
 
                 <div className="col-6-10">
@@ -90,7 +90,7 @@ PlainNavBar.propTypes = {
     language: PropTypes.string,
 
     /**
-     * Passed by the withLanguage HOC, used to determine which texts to display.
+     * Other button that should be displayed
      */
     otherComponent: PropTypes.object
 }
