@@ -84,6 +84,7 @@ export default class GroupMainScreen extends React.Component {
       id: group.group_id,
       name: group.name
     }
+    
     localStorage.setItem("group", JSON.stringify(currentGroupInfo));
 
     group.members = await getGroupMembers(groupId);

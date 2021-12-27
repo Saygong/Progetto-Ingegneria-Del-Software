@@ -26,6 +26,10 @@ function signup(
     })
   })
     .then(response => {
+
+      // Family-Market: localStorage variable that indicates if the user already accepted the terms & conditions
+      localStorage.setItem("disclaimer", "null");
+
       const user = response.data;
       localStorage.setItem("user", JSON.stringify(user));
       return user;

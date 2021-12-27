@@ -50,8 +50,7 @@ class MarketplaceScreen extends React.Component {
             groupPostings: [],
             filterText: "",
             filterTnType: this.defaultTnType,
-            filterCategory: this.defaultCat,
-            showDisclaimer: true
+            filterCategory: this.defaultCat
         };
 
         this.getGroupPostings = this.getGroupPostings.bind(this);
@@ -70,16 +69,13 @@ class MarketplaceScreen extends React.Component {
             state: this.props.location.state
         };
 
-        let {showDisclaimer} = this.state;
-
         return (
 
             <div>
 
-                { showDisclaimer ? (
+                { localStorage.getItem("disclaimer") === "null" ? (
                     <Disclaimer handle={this.handleDisclaimer} />) : null
                 }
-
 
                 <MarketplaceNavBar/>
 
@@ -175,9 +171,8 @@ class MarketplaceScreen extends React.Component {
      * Updates the prop accordingly.
      */
     handleDisclaimer() {
-        this.setState({
-            showDisclaimer: false
-        });
+        localStorage.setItem("disclaimer", "accepted");
+        window.location.reload(false);
     }
 
 
