@@ -1,5 +1,5 @@
 
-import withLanguage from "../../../components/LanguageContext";
+import withLanguage from "../../../../components/LanguageContext";
 import React from "react";
 import PropTypes from "prop-types" ;
 import DisclaimerDialog from "./DisclaimerDialog";
@@ -9,40 +9,28 @@ import DisclaimerDialog from "./DisclaimerDialog";
 class Disclaimer extends React.Component {
     constructor(props) {
         super(props);
-        
 
         this.state = {
-            disclaimerDialogIsOpen: false,
-            alreadySaw: false
+            disclaimerDialogIsOpen: true
         };
+        this.handleDisclaimerModalClose = this.handleDisclaimerModalClose.bind(this);
     }
 
 
-    handleDisclaimerModalOpen = () => {
-        const elem = document.getElementsByTagName("body")[0];
-        elem.style.overflow = "auto";
-        this.setState({ alreadySaw: true})
-        this.setState({ categoryModalIsOpen: true });
-    };
     handleDisclaimerModalClose = () => {
         const elem = document.getElementsByTagName("body")[0];
         elem.style.overflow = "auto";
         this.setState({ categoryModalIsOpen: false });
+        this.props.handle();
     };
 
 
 
     render() {
-
         let {disclaimerDialogIsOpen} = this.state;
-        let already = this.state.alreadySaw;
 
         return (
             <div>
-                {window.onload = () => {
-                    if (!already)
-                        this.handleDisclaimerModalOpen();
-                }}
                 <DisclaimerDialog
                     isOpen={disclaimerDialogIsOpen}
                     handleClose={this.handleDisclaimerModalClose}
@@ -57,7 +45,13 @@ Disclaimer.propTypes = {
     /**
      * Passed by the withLanguage HOC, used to determine which texts to display.
      */
-    language: PropTypes.string
+    language: PropTypes.string,
+
+    /**
+     * Passed by the withLanguage HOC, used to determine which texts to display.
+     */
+    handle: PropTypes.func
+
 }
 
 export default withLanguage(Disclaimer);

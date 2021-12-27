@@ -1,10 +1,8 @@
-import withLanguage from "../../../../components/LanguageContext";
 
+import withLanguage from "../../../../components/LanguageContext";
 import {NO_CATEGORY, NO_TN_TYPE, DEBUG} from "../../constants";
 import {FAMILY_MARKET_BASE_PAGE_URL} from "../../constants";
-
 import ApiHandler from "../../api/ApiHandler";
-
 import React from "react";
 import PropTypes from "prop-types";
 import PostingsList from "../PostingsList/PostingsList";
@@ -15,7 +13,8 @@ import TransactionTypeComboBox from "../TransactionTypeComboBox";
 import MarketplaceNavBar from "./MarketplaceNavBar";
 import {withRouter} from "react-router-dom";
 import CategorySelector from "../CategorySelector";
-import Disclaimer from "../Disclaimer";
+import Disclaimer from "../Disclaimer/Disclaimer";
+import DisclaimerDialog from "../Disclaimer/DisclaimerDialog";
 
 
 /**
@@ -52,12 +51,14 @@ class MarketplaceScreen extends React.Component {
             filterText: "",
             filterTnType: this.defaultTnType,
             filterCategory: this.defaultCat,
+            showDisclaimer: true
         };
 
         this.getGroupPostings = this.getGroupPostings.bind(this);
         this.handleSearchBarChange = this.handleSearchBarChange.bind(this);
         this.handleTransactionTypeChange = this.handleTransactionTypeChange.bind(this);
         this.handleCategoryChange = this.handleCategoryChange.bind(this);
+        this.handleDisclaimer = this.handleDisclaimer.bind(this);
     }
 
 
@@ -69,12 +70,16 @@ class MarketplaceScreen extends React.Component {
             state: this.props.location.state
         };
 
+        let {showDisclaimer} = this.state;
 
         return (
 
             <div>
 
-                <Disclaimer/>
+                { showDisclaimer ? (
+                    <Disclaimer handle={this.handleDisclaimer} />) : null
+                }
+
 
                 <MarketplaceNavBar/>
 
@@ -128,6 +133,9 @@ class MarketplaceScreen extends React.Component {
         return this.apiHandler.getGroupPostings(groupId);
     }
 
+
+
+
     /**
      * Called when the text in the search bar is changed.
      * Updates the state accordingly.
@@ -138,6 +146,7 @@ class MarketplaceScreen extends React.Component {
             filterText: newText
         });
     }
+
 
     /**
      * Called when the text in the search bar is changed.
@@ -160,6 +169,17 @@ class MarketplaceScreen extends React.Component {
             filterTnType: newTnType
         });
     }
+
+    /**
+     * Called when the disclaimer has been accepted
+     * Updates the prop accordingly.
+     */
+    handleDisclaimer() {
+        this.setState({
+            showDisclaimer: false
+        });
+    }
+
 
     /**
      * Returns a url used to redirect to this page.
@@ -196,10 +216,11 @@ MarketplaceScreen.propTypes = {
     /**
      * Passed by the withLanguage HOC, used to determine which texts to display.
      */
-    language: PropTypes.string
+    language: PropTypes.string,
+
 }
+
 
 export const MarketplaceScreenRoute = MarketplaceScreen.ROUTE;
 export const buildRedirectionHandler = MarketplaceScreen.buildRedirectionHandler;
-
 export default withRouter(withLanguage(MarketplaceScreen));

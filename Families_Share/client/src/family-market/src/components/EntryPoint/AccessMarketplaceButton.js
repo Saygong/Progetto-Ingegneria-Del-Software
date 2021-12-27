@@ -1,9 +1,9 @@
+
 import withLanguage from "../../../../components/LanguageContext";
 import texts from "../../texts";
 import React from "react";
-
 import PropTypes from  "prop-types";
-import {stringify, Log} from "../../utils";
+import {Log} from "../../utils";
 import {buildRedirectionHandler} from "../MarketplaceScreen/MarketplaceScreen";
 import {withRouter} from "react-router-dom";
 import MenuItem from "../MenuItem";
@@ -18,6 +18,7 @@ class AccessMarketplaceButton extends React.Component {
         super(props);
 
         this.redirectToMarketplaceScreen = this.redirectToMarketplaceScreen.bind(this);
+
     }
 
     render() {
@@ -41,7 +42,6 @@ class AccessMarketplaceButton extends React.Component {
      */
     redirectToMarketplaceScreen() {
         const redirectionHandler = buildRedirectionHandler(this.props.history);
-
         Log.info("Redirecting to MarketplaceScreen ", this);
         redirectionHandler();
     }
@@ -51,7 +51,10 @@ AccessMarketplaceButton.propTypes = {
     /**
      * Passed by the withLanguage HOC, used to determine which texts to display.
      */
-    language: PropTypes.string
+    language: PropTypes.string,
+
 }
+
+
 
 export default withRouter(withLanguage(AccessMarketplaceButton));

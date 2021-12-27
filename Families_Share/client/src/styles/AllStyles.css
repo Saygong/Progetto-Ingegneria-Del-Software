@@ -3357,6 +3357,17 @@ a:active {
   margin-bottom: 1rem;
 }
 
+.modalAgreeButton{
+  background-color: #ffffff;
+  border: 1px solid #e7e7e7;
+  text-decoration: none;
+  cursor: pointer;
+  font: 1.5rem system-ui;
+  border-collapse: collapse;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+}
+
 .categoryButtonContainer{
   display: flex;
   flex-wrap: wrap;

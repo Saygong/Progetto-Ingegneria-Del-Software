@@ -1,11 +1,11 @@
+
 import React from "react";
-import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import PropTypes from "prop-types";
-import withLanguage from "../../../components/LanguageContext";
-import texts from "../texts";
+import withLanguage from "../../../../components/LanguageContext";
+import texts from "../../texts";
 import {DialogContent} from "@material-ui/core";
 
 
@@ -13,14 +13,13 @@ class DisclaimerDialog extends React.Component {
 
     constructor(props) {
         super(props);
+
     }
 
-
-    handleClose = choice => {
+    handleClose = () => {
         const { handleClose } = this.props;
-        handleClose(choice);
+        handleClose();
     };
-
 
     render() {
         const {language, isOpen} = this.props;
@@ -29,10 +28,8 @@ class DisclaimerDialog extends React.Component {
         return (
             <div>
                 <Dialog
-                    open={isOpen === undefined || isOpen === null ? false : isOpen}
-                    onClose={(event, reason) => {
-                        alert(txt.error);
-                    }}
+                    onClose={this.handleClose}
+                    open={isOpen}
                 >
                     <DialogTitle id="alert-dialog-title">
                         <div className="inviteDialogTitle">{txt.title}</div>
@@ -43,13 +40,9 @@ class DisclaimerDialog extends React.Component {
                         </p>
                     </DialogContent>
                     <DialogActions>
-                        <Button
-                            onClick={() => this.handleClose("agree")}
-                            color="primary"
-                            autoFocus
-                        >
+                        <button className="modalAgreeButton" onClick={() => this.handleClose()}>
                             {txt.agree}
-                        </Button>
+                        </button>
                     </DialogActions>
                 </Dialog>
             </div>
