@@ -34,9 +34,9 @@ class CategorySelector extends React.Component {
         const txt = texts[language].categoryComboBox;
         const {categoryModalIsOpen} = this.state
         return (
-            <div className="mb-5">
-                <div className="w-80 mx-auto">
-                    <h4>{txt.description}</h4>
+            <div>
+                <div>
+                    <span>{txt.description}</span>
                 </div>
                 <div className="w-100 text-center">
 

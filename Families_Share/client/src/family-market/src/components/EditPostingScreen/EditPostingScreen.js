@@ -106,53 +106,99 @@ class EditPostingScreen extends React.Component {
         const defaultTnType = this.isCreateMode() ? NO_TN_TYPE[language] : this.state.tnType;
 
         return (
-            <div className="titles">
+            <div>
                 {/*TODO disabilitare anche questa quando user clicca conferma?*/}
                 <PlainNavBar title={title} goBackLocation={this.redirections.goBackRedirection}/>
-                <ImageInput currentImage={this.state.photo}
-                            imageChangeHandler={this.handlePhotoChange} />
 
-                {/*TextBox where the name is inserted*/}
-                <SimpleTextInput description={txt.nameInput.description}
-                                 text={this.state.name}
-                                 placeholder={txt.nameInput.placeholder}
-                                 textChangeHandler={this.handleNameChange} />
+                <div className="titles">
 
-                <CategorySelector value={this.state.category ? this.state.category : defaultCat }
-                                  categoryChangeHandler={this.handleCategoryChange} />
+                    <div className="mt-5">
+                        <ImageInput currentImage={this.state.photo}
+                                    imageChangeHandler={this.handlePhotoChange} />
+                    </div>
+                    <hr/>
 
-                <TransactionTypeComboBox defaultValue={defaultTnType}
-                                         tnTypeChangeHandler={this.handleTnTypeChange} />
 
-                {/*TextBox where the description is inserted*/}
-                <LargeTextInput description={txt.descriptionInput.description}
-                                text={this.state.description}
-                                placeholder={txt.descriptionInput.placeholder}
-                                textChangeHandler={this.handleDescriptionChange} />
+                    <div className="mt-5 mb-3">
+                        <span>{txt.editTitle}</span>
+                        <SimpleTextInput description={txt.nameInput.description}
+                                         text={this.state.name}
+                                         placeholder={txt.nameInput.placeholder}
+                                         textChangeHandler={this.handleNameChange} />
+                    </div>
 
-                <h2>{txt.placeInput.description}</h2>
-                <PlaceInput place={this.state.place}
-                            placeChangeHandler={this.handlePlaceChange} />
+                    <div className="mb-3">
+                        <CategorySelector value={this.state.category ? this.state.category : defaultCat }
+                                          categoryChangeHandler={this.handleCategoryChange} />
+                    </div>
 
-                <h2>{txt.editContactTitle}</h2>
-                <TelephoneInput text={this.state.phoneNumber}
-                                textChangeHandler={this.handleTelephoneChange} />
-                <MailInput text={this.state.mail}
-                           textChangeHandler={this.handleMailChange} />
+                    <div className="mb-5">
+                        <TransactionTypeComboBox defaultValue={defaultTnType}
+                                                 tnTypeChangeHandler={this.handleTnTypeChange} />
+                    </div>
 
-                { this.state.missingValues
-                    && <h1 className="h1-error">{txt.missingValuesError}</h1>
-                }
+                    <hr className="mb-5"/>
 
-                <div className="row">
-                    { !this.state.inputDisabled
-                        && <ConfirmButton confirmationHandler={this.handleConfirmation}/>
+                    <div className="mb-3">
+                        <LargeTextInput description={txt.descriptionInput.description}
+                                        text={this.state.description}
+                                        placeholder={txt.descriptionInput.placeholder}
+                                        textChangeHandler={this.handleDescriptionChange} />
+                    </div>
+
+                    <hr className="mb-5"/>
+
+                    <h2 className="mb-3">{txt.editContactTitle}</h2>
+
+                    <div className="mb-3">
+
+                        <PlaceInput place={this.state.place}
+                                    placeChangeHandler={this.handlePlaceChange}/>
+
+                    </div>
+                    <div className="mb-3">
+
+                        <TelephoneInput text={this.state.phoneNumber}
+                                        textChangeHandler={this.handleTelephoneChange} />
+
+                    </div>
+                    <div className="mb-3">
+
+                        <MailInput text={this.state.mail}
+                                   textChangeHandler={this.handleMailChange} />
+
+                    </div>
+
+                    <br className="mb-5"/>
+                    { this.state.missingValues
+                        && <h2 className="h1-error">{txt.missingValuesError}</h2>
                     }
-                    { !this.isCreateMode() && !this.state.inputDisabled
-                        && <DeleteButton postingId={this.matchParams.postingId}
-                                         redirectionHandler={this.handleDeleteRedirection}/>
-                        /* To render only if edit mode */
-                    }
+
+
+                        { !this.state.inputDisabled && this.isCreateMode()
+                            && (
+                                <div className="row">
+                                    <div className="w-95 mx-auto text-center">
+                                        <ConfirmButton confirmationHandler={this.handleConfirmation}/>
+                                    </div>
+                                </div>
+                            )}
+
+                        { !this.isCreateMode() && !this.state.inputDisabled
+                            && (
+                                <div className="row">
+                                    <div className="col-5-10 text-center">
+                                        <DeleteButton postingId={this.matchParams.postingId}
+                                                      redirectionHandler={this.handleDeleteRedirection}/>
+                                    </div>
+                                    <div className="col-5-10 text-center">
+                                        <ConfirmButton confirmationHandler={this.handleConfirmation}/>
+                                    </div>
+                                </div>
+
+                        )}
+
+                    <br className="mb-5"/>
                 </div>
             </div>
         );

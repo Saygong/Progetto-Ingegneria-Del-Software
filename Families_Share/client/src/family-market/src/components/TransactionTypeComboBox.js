@@ -21,12 +21,11 @@ class TransactionTypeComboBox extends React.Component {
         const txt = texts[language].transactionTypeComboBox;
 
         return (
-            <div className="mb-3">
-
-                <div className="w-80 mx-auto">
-                    <h4 className="mb-0">{txt.description}</h4>
+            <div>
+                <div>
+                    <span>{txt.description}</span>
                 </div>
-                <div className="text-center w-80 mx-auto">
+                <div>
                     <ComboBox options={TN_TYPES[language]}
                               defaultValue={this.props.defaultValue}
                               onSelect={this.handleTnTypeChange}

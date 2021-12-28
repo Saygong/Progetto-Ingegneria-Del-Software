@@ -17,8 +17,8 @@ class LargeTextInput extends React.Component {
 
     render() {
         return (
-            <div>
-                <h2>{this.props.description}</h2>
+            <div className="text-center">
+                <h4>{this.props.description}</h4>
                 <textarea onChange={this.handleTextChange}
                           placeholder={this.props.placeholder}
                           value={this.props.text}

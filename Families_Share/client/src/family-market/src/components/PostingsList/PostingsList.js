@@ -48,7 +48,10 @@ class PostingsList extends React.Component {
         const txt = texts[language].postingsLists;
 
         // If no filter is valid (all values are default), the title "Newest posts" should appear
-        if(!this.isNameFilterValid() && !this.isCategoryFilterValid()  && !this.isTnTypeFilterValid()) {
+        if(this.props.title){
+            return this.props.title;
+        }
+        else if(!this.isNameFilterValid() && !this.isCategoryFilterValid()  && !this.isTnTypeFilterValid()) {
             return txt.defaultTitle;
         }
         else
@@ -174,7 +177,8 @@ PostingsList.defaultProps = {
     itemMode: FAVOURITES_MODE,
     filterText: "",
     filterTnType: TN_TYPE_NOT_SET,
-    filterCategory: CATEGORY_NOT_SET
+    filterCategory: CATEGORY_NOT_SET,
+    title: null
 }
 
 PostingsList.propTypes = {
@@ -207,7 +211,12 @@ PostingsList.propTypes = {
     /**
      * Passed by the withLanguage HOC, used to determine which texts to display.
      */
-    language: PropTypes.string
+    language: PropTypes.string,
+
+    /**
+     * Title for FavouritesScreen
+     */
+    title: PropTypes.string
 }
 
 export default withLanguage(PostingsList);

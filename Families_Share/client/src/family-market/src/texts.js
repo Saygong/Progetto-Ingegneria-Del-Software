@@ -105,7 +105,8 @@ const en = {
             placeholder: "Insert the place"
         },
         editContactTitle: "Contact information:",
-        missingValuesError: "Some values are missing!"
+        missingValuesError: "Some values are missing!",
+        editTitle: "Insert a title"
     },
 
     imageInput: {
@@ -123,7 +124,8 @@ const en = {
         navBar: {
             title: "Saved posts"
         },
-        noPostingsText: "You have no saved posts"
+        noPostingsText: "You have no saved posts",
+        title: "Your saved posts:"
     },
 
     myPostingsButton: {
@@ -228,12 +230,12 @@ const it = {
 
     categoryComboBox: {
         altImageText: "Icona categoria",
-        description: "Seleziona una categoria: "
+        description: "Seleziona una categoria "
     },
 
     transactionTypeComboBox: {
         altImageText: "Icona tipo di transazione",
-        description: "Seleziona il tipo di transazione: "
+        description: "Seleziona il tipo di transazione "
     },
 
     confirmButton: {
@@ -245,7 +247,7 @@ const it = {
     },
 
     postingsLists: {
-        defaultTitle: "Newest posts",
+        defaultTitle: "Nuovi annunci",
         titleBuilder: (name, category, tnType) => {
             let title = "Risultati"
 
@@ -285,11 +287,12 @@ const it = {
             placeholder: "Inserisci il luogo"
         },
         editContactTitle: "Informazioni di contatto:",
-        missingValuesError: "Alcuni valori non sono stati inseriti!"
+        missingValuesError: "Alcuni valori non sono stati inseriti!",
+        editTitle: "Inserisci un titolo"
     },
 
     imageInput: {
-        dropzoneText: "Rilascia qui un' immagine per l'annuncio: ",
+        dropzoneText: "Premi qui per selezionare un' immagine per l'annuncio",
         altImageText: "Immagine selezionata"
     },
 
@@ -304,7 +307,8 @@ const it = {
         navBar: {
             title: "Annunci salvati"
         },
-        noPostingsText: "Non hai annunci salvati"
+        noPostingsText: "Non hai annunci salvati",
+        title: "I tuoi post salvati:"
     },
 
     myPostingsButton: {
@@ -343,7 +347,7 @@ const it = {
     },
 
     categoryDialog:{
-        header: "Seleziona la categoria:",
+        header: "Seleziona la categoria",
         save: "Salva"
     },
 

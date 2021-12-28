@@ -73,7 +73,7 @@ class DeletePostingButton extends React.Component {
                     isOpen={confirmDialogIsOpen}
                     handleClose={this.handleConfirmDialogClose}
                 />
-                <button className="buttonEditPosting"  onClick={this.handleConfirmDialogOpen}>
+                <button className="buttonDeletePosting"  onClick={this.handleConfirmDialogOpen}>
                     {buttonText}
                 </button>
 

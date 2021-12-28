@@ -4,6 +4,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Log from "../../../../components/Log";
 import SimpleTextInput from "../SimpleTextInput";
+import IconItem from "../IconItem";
 
 
 
@@ -23,8 +24,8 @@ class TelephoneInput extends React.Component {
 
         return (
             <div className="row no-gutters">
-                <div className="col-2-10">
-                    <i className="family-icon fas fa-mobile-alt"/>
+                <div className="col-2-10 text-center">
+                    <IconItem iconPath="fas fa-mobile-alt" theme="family-icon-dark"/>
                 </div>
                 <div className="col-8-10">
                     <SimpleTextInput text={this.props.text} description={txt.description}

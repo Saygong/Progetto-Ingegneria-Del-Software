@@ -4,6 +4,7 @@ import texts from "../../texts";
 import React from "react";
 import PropTypes from "prop-types";
 import SimpleTextInput from "../SimpleTextInput";
+import IconItem from "../IconItem";
 
 
 class PlaceInput extends React.Component {
@@ -19,15 +20,17 @@ class PlaceInput extends React.Component {
         const txt = texts[language].editPostingScreen.placeInput;
 
         return (
-            <div className="row no-gutters">
-                <div className="col-2-10">
-                    <i className="family-icon fas fa-map-marked-alt"/>
-                </div>
-                <div className="col-8-10">
-                    <SimpleTextInput text={this.props.place}
-                                     placeholder={txt.placeholder}
-                                     description={txt.description}
-                                     textChangeHandler={this.handlePlaceChange}/>
+            <div>
+                <div className="row no-gutters">
+                    <div className="col-2-10 text-center">
+                        <IconItem iconPath="fas fa-map-marker-alt" theme="family-icon-dark" />
+                    </div>
+                    <div className="col-8-10">
+                        <SimpleTextInput text={this.props.place}
+                                         placeholder={txt.placeholder}
+                                         description={txt.description}
+                                         textChangeHandler={this.handlePlaceChange}/>
+                    </div>
                 </div>
             </div>
         );

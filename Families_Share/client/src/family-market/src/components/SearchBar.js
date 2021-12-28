@@ -21,10 +21,10 @@ class SearchBar extends React.Component {
 
         return (
             <div>
-                <div className="w-80 mx-auto">
-                    <h4 className="mb-0">{txt.description}</h4>
+                <div>
+                    <span>{txt.description}</span>
                 </div>
-                <div className="text-center w-80 mx-auto">
+                <div className="text-center">
                     <SimpleTextInput text={this.props.text}
                                      description={txt.description}
                                      textChangeHandler={this.handleTextChange}

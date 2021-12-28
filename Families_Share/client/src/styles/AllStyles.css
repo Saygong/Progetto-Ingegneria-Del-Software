@@ -3335,8 +3335,7 @@ a:active {
 }
 
 .categoryButton{
-  margin: 0 auto;
-  width: 80%;
+  width: 100%;
   border-radius: 5px;
   background-color: #ffffff;
   border: 2px solid #e7e7e7;
@@ -3378,6 +3377,7 @@ a:active {
 }
 
 .navBarTitle{
+  font-size: 1.7rem;
   color: white;
   top: 50%;
   position: relative;
@@ -3385,8 +3385,13 @@ a:active {
   margin-left: 0.5rem !important;
 }
 
+.border-lightgray{
+  border-radius: 10px;
+  border: 1px solid lightgray;
+}
+
 .family-icon{
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -3543,18 +3548,27 @@ a:active {
 }
 
 .buttonEditPosting {
+  width: 60%;
+  padding: 1rem;
   background-color: #00838F;
   border: none;
   color: white;
-  padding: 15px 30px;
   text-align: center;
-  display: block;
-  margin: 30px auto 25px;
-  font-size: 15px;
-  border-radius: 8px;
+  border-radius: 5px;
   box-shadow: 0 3px #999;
-  width: 25%;
 }
+
+.buttonDeletePosting{
+  width: 60%;
+  padding: 1rem;
+  background-color: #be1622;
+  border: none;
+  color: white;
+  text-align: center;
+  border-radius: 5px;
+  box-shadow: 0 3px #999;
+}
+
 .buttonEditPosting:hover {
   background-color: #00835F;
 }
@@ -3566,12 +3580,9 @@ a:active {
 
 .txtbxPosting {
   width: 100%;
-  margin-bottom: 30px;
-  border-width: 2px;
+  border: 2px solid #e7e7e7;
   padding: 5px;
   border-radius: 5px;
-  border-color: #E5E4E2;
-  /*text-align: center;*/
 }
 
 .descPosting{
@@ -3579,12 +3590,11 @@ a:active {
   border-radius: 5px;
   border-color: #E5E4E2;
   margin-bottom: 20px;
-  width: 80%;
+  width: 90%;
 }
 
 .cbox{
   width: 100%;
-  margin-bottom: 20px;
 }
 
 .height-8rem{
@@ -3595,12 +3605,18 @@ a:active {
   height: 10rem;
 }
 
+.size-1rem{
+  font-size: 1.2rem;
+  text-align: center;
+}
+
 .height-100{
   height: 100%;
 }
 
 .titles {
-  text-align: center;
+  width: 90%;
+  margin: 0 auto;
 }
 
 .m-top-20{
@@ -3609,16 +3625,17 @@ a:active {
 }
 
 .image-preview{
-  width: 80%;
-  min-height: 200px;
+  height: 100%;
   border: 2px solid #dddddd;
   margin: 15px auto;
 }
 
+.cursor-pointer{
+  cursor: pointer;
+}
+
 .image-preview__image{
   width: 100%;
-  max-height: 500px;
-  display: block;
   margin: auto;
 }
 
@@ -3641,5 +3658,9 @@ a:active {
 
 .forTabsTitle{
   color: #808080;
+}
+
+.editButtons{
+  display: inline-block;
 }
 

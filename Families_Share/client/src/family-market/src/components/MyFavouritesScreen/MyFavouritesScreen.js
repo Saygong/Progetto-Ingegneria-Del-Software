@@ -54,14 +54,14 @@ class MyFavouritesScreen extends React.Component {
 
         return (
             <div>
-                <div >
+                <div>
                     <PlainNavBar title={txt.navBar.title} />
                 </div>
                 <div className="w-95">
                     { noPostings ? (
                         <h1>{txt.noPostingsText}</h1>
                     ) : (
-                        <PostingsList postings={this.state.postings}/>
+                        <PostingsList postings={this.state.postings} title={txt.title} />
                     )}
                 </div>
             </div>

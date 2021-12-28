@@ -23,8 +23,8 @@ class MailInput extends React.Component {
 
         return (
             <div className="row no-gutters">
-                <div className="col-2-10">
-                    <IconItem iconPath="far fa-envelope" theme="family-icon"/>
+                <div className="col-2-10 text-center">
+                    <IconItem iconPath="far fa-envelope" theme="family-icon-dark"/>
                 </div>
                 <div className="col-8-10">
                     <SimpleTextInput text={this.props.text} description={txt.description}

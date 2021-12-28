@@ -25,21 +25,25 @@ class ImageInput extends React.Component {
 
         return (
             <div>
-                <Dropzone accept="image/jpeg, image/png"
-                          multiple={false} maxFiles={1} maxSize={MAX_IMAGE_SIZE}
-                          onDrop={this.handleImageSelection}>
-                    {({getRootProps, getInputProps}) => (
-                        <section>
-                            <div {...getRootProps()}>
-                                <input {...getInputProps()} />
-                                <p className="m-top-20">{txt.dropzoneText}</p>
-                            </div>
-                            <div className="image-preview">
-                                <img src={this.props.currentImage} alt={txt.altImageText} className="image-preview__image"/>
-                            </div>
-                        </section>
-                    )}
-                </Dropzone>
+                <div className="my-1 border-lightgray">
+                    <Dropzone accept="image/jpeg, image/png"
+                              multiple={false} maxFiles={1} maxSize={MAX_IMAGE_SIZE}
+                              onDrop={this.handleImageSelection}>
+                        {({getRootProps, getInputProps}) => (
+                            <section>
+                                <div {...getRootProps()}>
+                                    <input {...getInputProps()} />
+                                    <p className="cursor-pointer size-1rem">{txt.dropzoneText}</p>
+                                </div>
+                            </section>
+                        )}
+                    </Dropzone>
+                </div>
+                { this.props.currentImage && (
+                    <div className="image-preview">
+                        <img src={this.props.currentImage}  width="100%" height="100%" className="image-preview__image" alt=""/>
+                    </div>
+                )}
             </div>
         )
     }
@@ -97,4 +101,7 @@ ImageInput.propTypes = {
     language: PropTypes.string
 }
 
+ImageInput.defaultProps = {
+    currentImage: null
+}
 export default withLanguage(ImageInput);
