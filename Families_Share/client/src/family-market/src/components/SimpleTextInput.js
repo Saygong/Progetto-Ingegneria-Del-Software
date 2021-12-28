@@ -1,8 +1,7 @@
-import withLanguage from "../../../components/LanguageContext";
 
+import withLanguage from "../../../components/LanguageContext";
 import React from "react" ;
 import PropTypes from "prop-types";
-import Log from "../../../components/Log";
 
 
 class SimpleTextInput extends React.Component {

@@ -1,13 +1,12 @@
+
 import withLanguage from "../../../../components/LanguageContext";
 import Posting from "../../api/model/Posting";
-
 import React from "react";
 import PropTypes from "prop-types";
-import {stringify, Log} from "../../utils";
+import {Log} from "../../utils";
 import ListItem from "../ListItem";
 import EditPostingButton from "../EditPostingButton";
 import ToggleFavouriteButton from "../ToggleFavouriteButton";
-
 import {buildPostingScreenRedirectionHandler} from "../PostingScreen/PostingScreen";
 import {withRouter} from "react-router-dom";
 

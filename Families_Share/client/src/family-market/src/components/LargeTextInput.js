@@ -1,10 +1,7 @@
-import withLanguage from "../../../components/LanguageContext";
 
+import withLanguage from "../../../components/LanguageContext";
 import React from "react";
 import PropTypes from "prop-types";
-import Log from "../../../components/Log";
-
-import texts from "../texts";
 
 
 class LargeTextInput extends React.Component {

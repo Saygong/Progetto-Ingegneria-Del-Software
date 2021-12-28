@@ -1,9 +1,8 @@
-import withLanguage from "../../../../components/LanguageContext";
 
+import withLanguage from "../../../../components/LanguageContext";
 import Posting from "../../api/model/Posting";
 import React from "react";
 import PropTypes from "prop-types";
-import Log from "../../../../components/Log";
 import texts from "../../texts";
 import Tabs from "./PostingInfoTabsStyle";
 

@@ -1,11 +1,9 @@
-import withLanguage from "../../../../components/LanguageContext";
 
+import withLanguage from "../../../../components/LanguageContext";
 import {FAMILY_MARKET_BASE_PAGE_URL} from "../../constants";
 import {DEBUG} from "../../constants";
-
 import ApiHandler from "../../api/ApiHandler";
 import Posting  from "../../api/model/Posting";
-
 import React from "react";
 import PropTypes from "prop-types";
 import PostingNavBar from "./PostingNavBar";

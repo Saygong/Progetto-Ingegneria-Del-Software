@@ -1,10 +1,9 @@
+
 import withLanguage from "../../../../components/LanguageContext";
 import texts from "../../texts";
-
 import React from "react";
 import PlainNavBar from "../PlainNavBar";
 import MyProfileButton from "./MyProfileButton";
-import Log from "../../../../components/Log";
 import PropTypes from "prop-types";
 
 

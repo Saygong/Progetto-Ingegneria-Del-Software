@@ -1,13 +1,11 @@
+
 import withLanguage from "../../../../components/LanguageContext";
 import texts from "../../texts";
-
 import Posting from "../../api/model/Posting";
-
 import React from "react";
 import PropTypes from "prop-types";
 import PostingInfoHeader from "./PostingInfoHeader";
 import PostingInfoTabs from "./PostingInfoTabs";
-import Log from "../../../../components/Log";
 
 
 /**

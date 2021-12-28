@@ -1,11 +1,9 @@
+
 import {withRouter} from "react-router-dom";
 import withLanguage from "../../../../components/LanguageContext";
 import texts from "../../texts";
-import Posting from "../../api/model/Posting";
-
 import React from "react";
 import PropTypes from "prop-types";
-import Log from "../../../../components/Log";
 import {buildCreateModeRedirectionHandler} from "../EditPostingScreen/EditPostingScreen";
 
 

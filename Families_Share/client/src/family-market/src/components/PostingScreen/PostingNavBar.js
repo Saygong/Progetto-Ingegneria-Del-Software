@@ -1,11 +1,10 @@
-import withLanguage from "../../../../components/LanguageContext";
 
+import withLanguage from "../../../../components/LanguageContext";
 import React from "react";
 import PropTypes from "prop-types";
 import PlainNavBar from "../PlainNavBar";
 import EditPostingButton from "../EditPostingButton";
 import ToggleFavouriteButton from "../ToggleFavouriteButton";
-import MarketplaceScreen from "../MarketplaceScreen/MarketplaceScreen";
 
 
 

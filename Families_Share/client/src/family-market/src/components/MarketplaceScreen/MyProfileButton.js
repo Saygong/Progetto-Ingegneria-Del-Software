@@ -1,9 +1,9 @@
+
 import texts from "../../texts";
 import withLanguage from "../../../../components/LanguageContext";
-
 import React from "react";
 import PropTypes from "prop-types";
-import {stringify, Log} from "../../utils";
+import {Log} from "../../utils";
 import {withRouter} from "react-router-dom";
 import IconItem from "../IconItem";
 

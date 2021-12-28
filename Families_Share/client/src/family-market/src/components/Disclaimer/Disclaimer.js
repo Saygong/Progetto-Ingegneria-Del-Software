@@ -5,7 +5,7 @@ import PropTypes from "prop-types" ;
 import DisclaimerDialog from "./DisclaimerDialog";
 
 
-
+/* Disclaimer is shown only one times when user log for the first time in the marketplace */
 class Disclaimer extends React.Component {
     constructor(props) {
         super(props);

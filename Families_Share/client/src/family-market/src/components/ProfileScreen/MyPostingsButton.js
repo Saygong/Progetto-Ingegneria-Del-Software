@@ -1,14 +1,11 @@
+
 import withLanguage from "../../../../components/LanguageContext";
 import texts from "../../texts";
-
 import PropTypes from "prop-types";
-
 import React from "react";
-import {stringify, Log} from "../../utils";
-import ListItem from "../ListItem";
+import {Log} from "../../utils";
 import {buildRedirectionHandler} from "../MyPostingsScreens/MyGroupsScreen";
 import {withRouter} from "react-router-dom";
-import IconButton from "../IconItem";
 import MenuItem from "../MenuItem";
 
 

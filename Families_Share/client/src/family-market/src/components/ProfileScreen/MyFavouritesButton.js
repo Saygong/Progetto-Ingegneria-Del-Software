@@ -1,9 +1,9 @@
+
 import withLanguage from "../../../../components/LanguageContext";
 import texts from "../../texts";
 import PropTypes from "prop-types";
-
 import React from "react";
-import {stringify, Log} from "../../utils";
+import {Log} from "../../utils";
 import {buildRedirectionHandler} from "../MyFavouritesScreen/MyFavouritesScreen";
 import {withRouter} from "react-router-dom";
 import MenuItem from "../MenuItem";

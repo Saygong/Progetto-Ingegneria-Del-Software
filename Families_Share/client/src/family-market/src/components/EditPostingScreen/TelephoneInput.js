@@ -1,8 +1,8 @@
+
 import withLanguage from "../../../../components/LanguageContext";
 import texts from "../../texts";
 import React from "react";
 import PropTypes from "prop-types";
-import Log from "../../../../components/Log";
 import SimpleTextInput from "../SimpleTextInput";
 import IconItem from "../IconItem";
 

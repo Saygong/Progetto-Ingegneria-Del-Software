@@ -1,11 +1,10 @@
+
 import withLanguage from "../../../../components/LanguageContext";
 import texts from "../../texts";
-
 import React from "react";
 import PropTypes from "prop-types";
 import Dropzone from "react-dropzone";
 import Compressor from 'compressorjs';
-import {stringify, Log} from "../../utils";
 
 // 10MB is more than enough, also, MongoDb allows for max document size of 16MB
 export const MAX_IMAGE_SIZE = 10000000;
@@ -18,6 +17,9 @@ class ImageInput extends React.Component {
 
         this.handleImageSelection = this.handleImageSelection.bind(this);
     }
+
+
+    /* TODO there is probably need to fix a max-height for the image tag below */
 
     render() {
         const language = this.props.language;

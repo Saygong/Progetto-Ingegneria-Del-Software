@@ -1,11 +1,9 @@
+
 import withLanguage from "../../../../components/LanguageContext";
 import texts from "../../texts";
-
 import {DEBUG} from "../../constants";
 import {FAMILY_MARKET_BASE_PAGE_URL} from "../../constants";
-
 import ApiHandler from "../../api/ApiHandler";
-
 import React from "react";
 import PropTypes from "prop-types";
 import PlainNavBar from "../PlainNavBar";
