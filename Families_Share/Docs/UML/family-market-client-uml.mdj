@@ -737,7 +737,7 @@
 											"top": 239,
 											"width": 273.53955078125,
 											"height": 13,
-											"text": "TransactionTypeComboBox"
+											"text": "TransactionTypeButtons"
 										},
 										{
 											"_type": "LabelView",
@@ -19183,7 +19183,7 @@
 											"top": 1407,
 											"width": 273.53955078125,
 											"height": 13,
-											"text": "TransactionTypeComboBox"
+											"text": "TransactionTypeButtons"
 										},
 										{
 											"_type": "LabelView",
@@ -34747,7 +34747,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "TransactionTypeComboBox",
+					"name": "TransactionTypeButtons",
 					"ownedElements": [
 						{
 							"_type": "UMLGeneralization",

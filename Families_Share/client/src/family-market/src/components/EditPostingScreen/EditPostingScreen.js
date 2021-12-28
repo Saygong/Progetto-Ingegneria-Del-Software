@@ -1,14 +1,11 @@
+
 import withLanguage from "../../../../components/LanguageContext";
 import texts from "../../texts";
-
 import {NO_CATEGORY, NO_TN_TYPE, DEBUG} from "../../constants";
 import {FAMILY_MARKET_BASE_PAGE_URL} from "../../constants";
-
 import ApiHandler from "../../api/ApiHandler";
-import Posting from "../../api/model/Posting";
 import PostingInfo from "../../api/model/PostingInfo";
 import Contact from "../../api/model/Contact";
-
 import React from "react";
 import PropTypes from "prop-types";
 import PlainNavBar from "../PlainNavBar";
@@ -20,9 +17,9 @@ import MailInput from "./MailInput";
 import TelephoneInput from "./TelephoneInput";
 import PlaceInput from "./PlaceInput";
 import ImageInput from "./ImageInput";
-import TransactionTypeComboBox from "../TransactionTypeComboBox";
 import {stringify, Log} from "../../utils";
 import CategorySelector from "../CategorySelector";
+import TransactionTypeButtons from "../TransactionTypeButtons";
 
 
 /**
@@ -133,7 +130,7 @@ class EditPostingScreen extends React.Component {
                     </div>
 
                     <div className="mb-5">
-                        <TransactionTypeComboBox defaultValue={defaultTnType}
+                        <TransactionTypeButtons defaultValue={defaultTnType}
                                                  tnTypeChangeHandler={this.handleTnTypeChange} />
                     </div>
 

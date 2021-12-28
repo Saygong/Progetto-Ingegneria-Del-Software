@@ -3321,10 +3321,12 @@ a:active {
 
 /*--------------------Family Market------------------*/
 
+
+/*TODO eliminare le classi che non vengono utilizzate*/
+
 .margin-top-2rem{
   margin-top: 2rem;
 }
-
 
 .navBarHeight{
   height:6rem;
@@ -3411,14 +3413,6 @@ a:active {
   transform: translateY(-50%);
 }
 
-.whity{
-  color: white;
-}
-
-.h-80px{
-  height:80px;
-}
-
 .w-95 {
   width: 95%;
 }
@@ -3447,14 +3441,6 @@ a:active {
   width: 10%;
 }
 
-.margin-top-7{
-  margin-top: 7%;
-}
-
-.w-10icon{
-  width: 10%;
-  overflow: scroll;
-}
 
 .family-m-tabs{
   text-align:center;
@@ -3538,9 +3524,11 @@ a:active {
   box-shadow: 0 3px #999;
   margin: 0 auto;
 }
+
 .buttonCreatePosting:hover {
   background-color: #00835F;
 }
+
 .buttonCreatePosting:active {
   background-color: #00835F;
   box-shadow: 0 1px #666;
@@ -3558,6 +3546,26 @@ a:active {
   box-shadow: 0 3px #999;
 }
 
+.transactionsContainer{
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.transactionContainers{
+  position: relative;
+  display: inline-block;
+}
+
+.no-decorations{
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  text-decoration: none;
+}
+
 .buttonDeletePosting{
   width: 60%;
   padding: 1rem;
@@ -3572,6 +3580,7 @@ a:active {
 .buttonEditPosting:hover {
   background-color: #00835F;
 }
+
 .buttonEditPosting:active {
   background-color: #00835F;
   box-shadow: 0 1px #666;
@@ -3591,10 +3600,6 @@ a:active {
   border-color: #E5E4E2;
   margin-bottom: 20px;
   width: 90%;
-}
-
-.cbox{
-  width: 100%;
 }
 
 .height-8rem{
@@ -3646,21 +3651,32 @@ a:active {
 .margin-left-40{
   margin-left: 42%;
 }
-.margin-left-30{
-  margin-left: 30%;
-}
-.margin-left-20{
-  margin-left:20%;
-}
-.margin-left-10{
-  margin-left:10%;
-}
 
 .forTabsTitle{
   color: #808080;
 }
 
-.editButtons{
-  display: inline-block;
+.mybtn-primary {
+  width: 8rem;
+  border: 1px solid lightgray;
+}
+
+.mybtn-primary:hover {
+  color: #fff;
+  background-color: rgba(0, 131, 143);
+  border-color: grey;
+}
+
+.no-decorations:checked ~ label{
+  color: #fff;
+  background-color: rgba(0, 131, 143);
+  border-color: grey;
+}
+
+.mybtn-primary:focus, .btn-primary.focus {
+  color: #fff;
+  background-color: #00838F;
+  border-color: grey;
+  box-shadow: 0 0 0 0.2rem rgba(0, 131, 143);
 }
 

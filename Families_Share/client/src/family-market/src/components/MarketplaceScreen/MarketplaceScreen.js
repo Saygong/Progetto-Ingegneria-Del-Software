@@ -9,12 +9,11 @@ import PostingsList from "../PostingsList/PostingsList";
 import {FAVOURITES_MODE} from "../PostingsList/PostingsListItem";
 import CreatePostingButton from "./CreatePostingButton";
 import SearchBar from "../SearchBar";
-import TransactionTypeComboBox from "../TransactionTypeComboBox";
 import MarketplaceNavBar from "./MarketplaceNavBar";
 import {withRouter} from "react-router-dom";
 import CategorySelector from "../CategorySelector";
 import Disclaimer from "../Disclaimer/Disclaimer";
-import DisclaimerDialog from "../Disclaimer/DisclaimerDialog";
+import TransactionTypeButtons from "../TransactionTypeButtons";
 
 
 /**
@@ -90,11 +89,10 @@ class MarketplaceScreen extends React.Component {
                                           categoryChangeHandler={this.handleCategoryChange}/>
 
                     </div>
-                    <div  className="mb-3">
-                        <TransactionTypeComboBox defaultValue={this.defaultTnType}
+                    <div  className="mb-4">
+                        <TransactionTypeButtons defaultValue={this.defaultTnType}
                                                  tnTypeChangeHandler={this.handleTransactionTypeChange}/>
                     </div>
-
                     <CreatePostingButton onCreateRedirection={onCreateRedirection}/>
 
                     <hr className="mt-3" />
@@ -105,7 +103,6 @@ class MarketplaceScreen extends React.Component {
                       filterText={this.state.filterText}
                       filterTnType={this.state.filterTnType}
                       filterCategory={this.state.filterCategory}/>
-
 
 
             </div>

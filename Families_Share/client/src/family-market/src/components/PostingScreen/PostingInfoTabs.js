@@ -25,8 +25,6 @@ class PostingInfoTabs extends React.Component {
         const language = this.props.language;
         const posting = this.props.posting;
         const txt = texts[language].postingInfoTabs;
-        //TODO ci sono i testi di utente, cellulare e email in txt
-        //     ma nella demo interfaccia ci stanno le icone
 
 
         return (

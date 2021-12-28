@@ -1,16 +1,13 @@
+
 import withLanguage from "../../../../components/LanguageContext";
 import texts from "../../texts";
-
 import {FAMILY_MARKET_BASE_PAGE_URL} from  "../../constants";
 import {DEBUG} from "../../constants";
-
 import ApiHandler from "../../api/ApiHandler";
-
 import React from "react";
 import PropTypes from "prop-types";
 import PlainNavBar from "../PlainNavBar";
 import PostingsList from "../PostingsList/PostingsList";
-import {EDIT_MODE} from "../PostingsList/PostingsListItem";
 import {stringify, Log} from "../../utils";
 
 
@@ -58,9 +55,11 @@ class MyGroupPostingsScreen extends React.Component {
                 </div>
                 <div className="w-90 mx-auto">
                     { noPostings ? (
-                        <h1>{txt.noPostingsText}</h1>
+                        <div className="w-80 mx-auto mt-5 text-center">
+                            <h4>{txt.noPostingsText}</h4>
+                        </div>
                     ) : (
-                        <PostingsList postings={this.state.postings}/>)
+                        <PostingsList postings={this.state.postings} title=" "/>)
                     }
                 </div>
             </div>
