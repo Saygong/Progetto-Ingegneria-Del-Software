@@ -57,7 +57,9 @@ class MyFavouritesScreen extends React.Component {
                 </div>
                 <div className="w-95">
                     { noPostings ? (
-                        <h1>{txt.noPostingsText}</h1>
+                            <div className="w-80 mx-auto mt-5 text-center">
+                                <h4>{txt.noPostingsText}</h4>
+                            </div>
                     ) : (
                         <PostingsList postings={this.state.postings} title={txt.title} />
                     )}
