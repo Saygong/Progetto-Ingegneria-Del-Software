@@ -19,8 +19,8 @@ class PostingInfoHeader extends React.Component {
         const posting = this.props.posting;
 
         return (
-            <div>
-                <h3 className="infoHeaderTop">{posting.category}</h3>
+            <div className="posting-info-header">
+                <h5 className="infoHeaderTop">{posting.category}</h5>
                 <h1 className="infoHeaderMid">{posting.name}</h1>
                 <h3 className="infoHeaderBot">{posting.type}</h3>
             </div>

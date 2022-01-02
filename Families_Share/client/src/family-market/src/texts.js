@@ -340,10 +340,6 @@ const it = {
         product: "Prodotto",
         where: "Dove",
         contact: "Contatti",
-        place: "Luogo:",
-        user: "Utente:",
-        phone: "Cellulare:",
-        mail: "Email:",
     },
 
     categoryDialog:{

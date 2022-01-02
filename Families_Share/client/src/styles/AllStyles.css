@@ -3496,13 +3496,14 @@ a:active {
 }
 
 .infoHeaderMid{
+  font-size: 3rem;
   text-align: center;
   margin: 5px 0 5px 0;
 }
 
 .infoHeaderBot{
   text-align: center;
-  margin: 10px 0px 5px 0px;
+  margin-bottom: 2rem;
   color: red;
 }
 
@@ -3680,3 +3681,15 @@ a:active {
   box-shadow: 0 0 0 0.2rem rgba(0, 131, 143);
 }
 
+.posting-info-header{
+  margin-bottom: 1rem;
+  border-bottom: 1px solid lightgray;
+}
+
+.little-text{
+  font-size: 1.5rem;
+}
+
+.verticalC{
+  margin: auto 0;
+}

@@ -71,13 +71,13 @@ class PostingScreen extends React.Component {
         };
         console.log("PostingScreen:" + currentPosting.id)
         return (
-            <div>
+            <div className="posting-info">
                 <PostingNavBar postingId={currentPosting.id}
                                postingName={currentPosting.name}
                                postingCreatorId={currentPosting.user_id}
                                onEditRedirection={this.onPostingDeleteRedirection}
                                onDeleteRedirection={this.onPostingDeleteRedirection}/>
-                <hr/>
+
                 <PostingInfo posting={currentPosting}/>
             </div>
         );
