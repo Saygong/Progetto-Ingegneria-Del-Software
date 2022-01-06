@@ -127,8 +127,6 @@ class MarketplaceScreen extends React.Component {
     }
 
 
-
-
     /**
      * Called when the text in the search bar is changed.
      * Updates the state accordingly.

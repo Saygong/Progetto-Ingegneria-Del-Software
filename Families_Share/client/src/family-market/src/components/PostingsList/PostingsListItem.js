@@ -86,7 +86,7 @@ class PostingsListItem extends React.Component {
         }
 
         return (
-            <div>
+            <div className="singleItem">
                 <ListItem image={posting.photo}
                           title={posting.name}
                           description={posting.description}

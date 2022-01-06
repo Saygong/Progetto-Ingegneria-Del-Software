@@ -24,10 +24,9 @@ class ListItem extends React.Component {
 
         return (
 
-            <div className="w-100 row no-gutters height-10rem border-bottom">
+            <div className="singleItem w-100 row no-gutters border-bottom">
 
                 <div role="button" className="col-8-10 row no-gutters" onClick={this.props.onClick}>
-
 
                     <div className="col-4-10">
                         <div className="height-100">

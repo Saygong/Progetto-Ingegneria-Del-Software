@@ -19,6 +19,10 @@ class PostingInfoTabs extends React.Component {
 
     constructor(props) {
         super(props);
+
+        this.state = {
+            ownerName: ""
+        };
     }
 
     render() {
@@ -62,7 +66,8 @@ class PostingInfoTabs extends React.Component {
                                     </div>
                                     <div className="col-8-10">
 
-                                        <span className="little-text"> NOME{/* TODO aggiungere informazioni utente (nome)*/} </span>
+                                        {/* TODO aggiungere informazioni utente (nome)*/}
+                                        <span className="little-text"> __________________NOME </span>
                                     </div>
                                 </div>
                                 <br/>
@@ -92,6 +97,17 @@ class PostingInfoTabs extends React.Component {
             </div>
         );
     }
+
+    //TODO aggiungere codice per trovare il nome e cognome di chi ha creato il posting, serve per contatti
+
+    // async componentDidMount() {
+    //     const posting = this.props.posting;
+    //     const profile = await Profile.findOne({ user_id: posting.user_id })
+    //
+    //     this.setState({
+    //         ownerName: profile.given_name + " " + profile.family_name
+    //     });
+    // }
 }
 
 PostingInfoTabs.defaultProps = {

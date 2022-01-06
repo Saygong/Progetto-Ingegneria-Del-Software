@@ -3509,7 +3509,7 @@ a:active {
 
 .listImg{
   width: 90%;
-  height: 70%;
+  height: 25vw;
 }
 
 .buttonCreatePosting {
@@ -3692,4 +3692,8 @@ a:active {
 
 .verticalC{
   margin: auto 0;
+}
+
+.singleItem{
+  height: 30vw;
 }
