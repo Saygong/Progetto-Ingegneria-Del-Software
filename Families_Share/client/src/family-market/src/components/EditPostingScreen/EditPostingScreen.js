@@ -20,6 +20,7 @@ import ImageInput from "./ImageInput";
 import {stringify, Log} from "../../utils";
 import CategorySelector from "../CategorySelector";
 import TransactionTypeButtons from "../TransactionTypeButtons";
+import Posting from "../../api/model/Posting";
 
 // TODO aggiungere caricamento
 
@@ -107,7 +108,7 @@ class EditPostingScreen extends React.Component {
         // If edit mode, get the value from the posting to edit, else take the default "empty value"
         const defaultCat = this.isCreateMode() ? NO_CATEGORY[language] : this.state.category;
         const defaultTnType = this.isCreateMode() ? NO_TN_TYPE[language] : this.state.tnType;
-
+        let error = this.state.missingValues || this.state.emailNotValid;
         return (
             <div>
                 {/*TODO disabilitare anche questa quando user clicca conferma?*/}
@@ -271,6 +272,14 @@ class EditPostingScreen extends React.Component {
             return;
         }
 
+        if (this.isEmailNotValid()) {
+            this.setState({
+                emailNotValid: true
+            });
+
+            return;
+        }
+
         // If the data is valid, disable it
         this.setState({
             disableInput: true
@@ -324,6 +333,13 @@ class EditPostingScreen extends React.Component {
             || this.state.mail === ""
             || this.state.category === NO_CATEGORY[this.props.language]
             || this.state.tnType === NO_TN_TYPE[this.props.language]
+    }
+
+    /**
+     * Returns true if the input email is valid.
+     */
+    isEmailNotValid() {
+        return !((this.state.mail).match(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/));
     }
 
     /**
