@@ -3,7 +3,7 @@ import withLanguage from "../../../components/LanguageContext";
 import texts from "../texts";
 import React from "react";
 import PropTypes from "prop-types";
-import SimpleTextInput from "./SimpleTextInput";
+import SimpleInput from "./SimpleInput";
 
 
 class SearchBar extends React.Component {
@@ -25,10 +25,11 @@ class SearchBar extends React.Component {
                     <span>{txt.description}</span>
                 </div>
                 <div className="text-center">
-                    <SimpleTextInput text={this.props.text}
+                    <SimpleInput text={this.props.text}
                                      description={txt.description}
                                      textChangeHandler={this.handleTextChange}
-                                     placeholder={txt.placeholder}/>
+                                     placeholder={txt.placeholder}
+                                     type={"text"}/>
                 </div>
             </div>
         )

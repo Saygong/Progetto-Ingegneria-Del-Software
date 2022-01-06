@@ -105,7 +105,8 @@ const en = {
             placeholder: "Insert the place"
         },
         editContactTitle: "Contact information:",
-        missingValuesError: "Some values are missing!",
+        missingValuesError: "Some values are missing or incorrect!",
+        emailNotValidError: "Email not valid!",
         editTitle: "Insert a title"
     },
 
@@ -287,7 +288,8 @@ const it = {
             placeholder: "Inserisci il luogo"
         },
         editContactTitle: "Informazioni di contatto:",
-        missingValuesError: "Alcuni valori non sono stati inseriti!",
+        missingValuesError: "Alcuni valori non sono stati inseriti correttamente!",
+        emailNotValidError: "Email non valida!",
         editTitle: "Inserisci un titolo"
     },
 

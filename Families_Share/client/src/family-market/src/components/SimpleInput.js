@@ -4,7 +4,7 @@ import React from "react" ;
 import PropTypes from "prop-types";
 
 
-class SimpleTextInput extends React.Component {
+class SimpleInput extends React.Component {
 
     constructor(props) {
         super(props);
@@ -15,7 +15,7 @@ class SimpleTextInput extends React.Component {
     render() {
         return (
             <div>
-                <input type="text"
+                <input type={this.props.type}
                        value={this.props.text}
                        onChange={this.handleTextChange}
                        placeholder={this.props.placeholder}
@@ -36,14 +36,14 @@ class SimpleTextInput extends React.Component {
     }
 }
 
-SimpleTextInput.defaultProps = {
+SimpleInput.defaultProps = {
     text: "",
     description: "",
     placeholder: "placeholder",
     textChangeHandler: null
 }
 
-SimpleTextInput.propTypes = {
+SimpleInput.propTypes = {
     /**
      * Text to display in the input section
      */
@@ -67,7 +67,12 @@ SimpleTextInput.propTypes = {
     /**
      * Passed by the withLanguage HOC, used to determine which texts to display.
      */
-    language: PropTypes.string
+    language: PropTypes.string,
+
+    /**
+     * Defines the type of input we are going to show
+     */
+    type: PropTypes.string
 }
 
-export default withLanguage(SimpleTextInput);
+export default withLanguage(SimpleInput);

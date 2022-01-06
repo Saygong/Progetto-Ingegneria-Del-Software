@@ -17945,7 +17945,7 @@
 											"top": 1679,
 											"width": 255.4677734375,
 											"height": 13,
-											"text": "SimpleTextInput"
+											"text": "SimpleInput"
 										},
 										{
 											"_type": "LabelView",
@@ -18858,7 +18858,7 @@
 							"top": 1920,
 							"width": 121,
 							"height": 90,
-							"text": "SimpleTextInput con icona di telefono/mail a sinistra e descrizione vuota."
+							"text": "SimpleInput con icona di telefono/mail a sinistra e descrizione vuota."
 						},
 						{
 							"_type": "UMLNoteLinkView",
@@ -38396,7 +38396,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "SimpleTextInput",
+					"name": "SimpleInput",
 					"ownedElements": [
 						{
 							"_type": "UMLAssociation",

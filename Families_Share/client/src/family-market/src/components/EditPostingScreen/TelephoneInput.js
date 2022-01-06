@@ -3,7 +3,7 @@ import withLanguage from "../../../../components/LanguageContext";
 import texts from "../../texts";
 import React from "react";
 import PropTypes from "prop-types";
-import SimpleTextInput from "../SimpleTextInput";
+import SimpleInput from "../SimpleInput";
 import IconItem from "../IconItem";
 
 
@@ -28,9 +28,10 @@ class TelephoneInput extends React.Component {
                     <IconItem iconPath="fas fa-mobile-alt" theme="family-icon-dark"/>
                 </div>
                 <div className="col-8-10">
-                    <SimpleTextInput text={this.props.text} description={txt.description}
+                    <SimpleInput text={this.props.text} description={txt.description}
                                      textChangeHandler={this.handleTextChange}
-                                     placeholder={txt.placeholder}/>
+                                     placeholder={txt.placeholder}
+                                     type={"number"}/>
                 </div>
             </div>
         )

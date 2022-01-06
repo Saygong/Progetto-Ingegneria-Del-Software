@@ -9,7 +9,7 @@ import Contact from "../../api/model/Contact";
 import React from "react";
 import PropTypes from "prop-types";
 import PlainNavBar from "../PlainNavBar";
-import SimpleTextInput from "../SimpleTextInput";
+import SimpleInput from "../SimpleInput";
 import LargeTextInput from "../LargeTextInput";
 import ConfirmButton from "./ConfirmButton";
 import DeleteButton from "./DeletePostingButton";
@@ -33,7 +33,7 @@ class EditPostingScreen extends React.Component {
      * @type {{photo: string | Blob | File, name: string,
      *          description: string, category: string, tnType: string,
      *          place: string, mail: string, phoneNumber: string,
-     *          inputDisabled: boolean, missingValues: boolean}}
+     *          inputDisabled: boolean, missingValues: boolean, emailNotValid: boolean}}
      */
     state;
 
@@ -73,7 +73,8 @@ class EditPostingScreen extends React.Component {
             phoneNumber: "",
             place: "",
             inputDisabled: false,
-            missingValues: false
+            missingValues: false,
+            emailNotValid: false
         }
 
         // Bind everything because all these methods are called from outside the class
@@ -102,6 +103,8 @@ class EditPostingScreen extends React.Component {
         const defaultCat = this.isCreateMode() ? NO_CATEGORY[language] : this.state.category;
         const defaultTnType = this.isCreateMode() ? NO_TN_TYPE[language] : this.state.tnType;
 
+        let error = this.state.missingValues || this.state.emailNotValid;
+
         return (
             <div>
                 {/*TODO disabilitare anche questa quando user clicca conferma?*/}
@@ -118,10 +121,11 @@ class EditPostingScreen extends React.Component {
 
                     <div className="mt-5 mb-3">
                         <span>{txt.editTitle}</span>
-                        <SimpleTextInput description={txt.nameInput.description}
+                        <SimpleInput description={txt.nameInput.description}
                                          text={this.state.name}
                                          placeholder={txt.nameInput.placeholder}
-                                         textChangeHandler={this.handleNameChange} />
+                                         textChangeHandler={this.handleNameChange}
+                                         type={"text"}/>
                     </div>
 
                     <div className="mb-3">
@@ -168,8 +172,12 @@ class EditPostingScreen extends React.Component {
                     </div>
 
                     <br className="mb-5"/>
-                    { this.state.missingValues
-                        && <h2 className="h1-error">{txt.missingValuesError}</h2>
+                    { (error && this.state.missingValues) ?
+                        (
+                            <h2 className="h1-error">{txt.missingValuesError}</h2>
+                        ): (error)
+                            && <h2 className="h1-error" id="ciao">{txt.emailNotValidError}</h2>
+
                     }
 
 
@@ -257,6 +265,14 @@ class EditPostingScreen extends React.Component {
             return;
         }
 
+        if (this.isEmailNotValid()) {
+            this.setState({
+                emailNotValid: true
+            });
+
+            return;
+        }
+
         // If the data is valid, disable it
         this.setState({
             disableInput: true
@@ -306,6 +322,13 @@ class EditPostingScreen extends React.Component {
             || this.state.mail === ""
             || this.state.category === NO_CATEGORY[this.props.language]
             || this.state.tnType === NO_TN_TYPE[this.props.language]
+    }
+
+    /**
+     * Returns true if the user has left some input values empty.
+     */
+    isEmailNotValid() {
+        return !((this.state.mail).match(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/));
     }
 
     /**

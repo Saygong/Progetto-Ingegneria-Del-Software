@@ -3,7 +3,7 @@ import withLanguage from "../../../../components/LanguageContext";
 import texts from "../../texts";
 import React from "react";
 import PropTypes from "prop-types";
-import SimpleTextInput from "../SimpleTextInput";
+import SimpleTextInput from "../SimpleInput";
 import IconItem from "../IconItem";
 
 
@@ -29,7 +29,8 @@ class PlaceInput extends React.Component {
                         <SimpleTextInput text={this.props.place}
                                          placeholder={txt.placeholder}
                                          description={txt.description}
-                                         textChangeHandler={this.handlePlaceChange}/>
+                                         textChangeHandler={this.handlePlaceChange}
+                                         type={"text"}/>
                     </div>
                 </div>
             </div>
