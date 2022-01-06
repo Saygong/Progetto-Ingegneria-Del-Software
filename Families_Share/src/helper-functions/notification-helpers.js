@@ -41,7 +41,8 @@ async function newMemberNotification (group_id, user_id) {
 async function newActivityNotification (group_id, user_id) {
   const object = await Group.findOne({ group_id })
   const subject = await Profile.findOne({ user_id })
-  const members = await Member.find({ group_id, user_id: { $ne: user_id }, group_accepted: true, user_accepted: true }).distinct('user_id')
+  const members = await Member.find({ group_id, user_id: { $ne: user_id },
+    group_accepted: true, user_accepted: true }).distinct('user_id')
   const users = await User.find({ user_id: { $in: members } })
   const devices = await Device.find({ user_id: { $in: members } })
   if (subject && object) {
@@ -483,6 +484,13 @@ function getNotificationDescription (notification, language) {
   const description = texts[language][type][code].description
 
   switch (type) {
+    case "familyMarket":
+      switch (code) {
+        // New Posting Notification "subject has created a new posting"
+        case 0:
+          return `${subject} ${description}`
+      }
+
     case 'group':
       switch (code) {
         case 0:
@@ -597,5 +605,6 @@ module.exports = {
   deleteTimeslotNotification,
   timeslotAdminChangesNotification,
   newRequestNotification,
-  newReplyNotification
+  newReplyNotification,
+  sendPushNotifications
 }

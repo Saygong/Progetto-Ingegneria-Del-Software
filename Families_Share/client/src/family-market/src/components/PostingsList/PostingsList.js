@@ -22,8 +22,6 @@ class PostingsList extends React.Component {
         const filteredPostings = this.getFilteredPostings()
         const title = this.buildTitle();
 
-        //TODO dovrebbero essere ordinati in base alla creation_date (è stata inserita apposta nel model)
-
         return (
             <div className="w-95 mx-auto">
                 <h2 className="m-top-20">{title}</h2>

@@ -107,6 +107,7 @@ const en = {
         editContactTitle: "Contact information:",
         missingValuesError: "Some values are missing or incorrect!",
         emailNotValidError: "Email not valid!",
+        confirmationUnsuccessful: "Could not confirm. Check your values and internet connection and try again!",
         editTitle: "Insert a title"
     },
 
@@ -288,7 +289,9 @@ const it = {
             placeholder: "Inserisci il luogo"
         },
         editContactTitle: "Informazioni di contatto:",
-        missingValuesError: "Alcuni valori non sono stati inseriti correttamente!",
+        missingValuesError: "Alcuni valori non sono stati inseriti!",
+        confirmationUnsuccessful: "Non si è potuto confermare. " +
+            "Controlla i valori inseriti e la tua connessione e riprova!",
         emailNotValidError: "Email non valida!",
         editTitle: "Inserisci un titolo"
     },

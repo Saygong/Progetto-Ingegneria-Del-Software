@@ -1,4 +1,10 @@
 const en = {
+  familyMarket: [
+    {
+      header: "New Posting",
+      description: "has created a new posting"
+    }
+  ],
   group: [
     {
       header: 'Group Settings',
@@ -102,7 +108,14 @@ const en = {
     }
   ]
 }
+
 const it = {
+  familyMarket: [
+    {
+      header: "Nuovo Annuncio",
+      description: "ha creato un nuovo annuncio"
+    }
+  ],
   group: [
     {
       header: 'Impostazioni del gruppo',
@@ -192,7 +205,15 @@ const it = {
     }
   ]
 }
+
 const nl = {
+  familyMarket: [
+      //TODO tradurre
+    {
+      header: "New Posting",
+      description: "has created a new posting"
+    }
+  ],
   group: [
     {
       header: 'Groepsinstellingen',
@@ -282,7 +303,15 @@ const nl = {
     }
   ]
 }
+
 const el = {
+  familyMarket: [
+      // TODO tradurre
+    {
+      header: "New Posting",
+      description: "has created a new posting"
+    }
+  ],
   group: [
     {
       header: 'Ρυθμίσεις ομάδας',
@@ -384,7 +413,14 @@ const el = {
     }
   ]
 }
+
 const hu = {
+  familyMarket: [
+    { // TODO tradurre
+      header: "New Posting",
+      description: "has created a new posting"
+    }
+  ],
   group: [
     {
       'header': 'Csoport beállítások',
@@ -487,6 +523,12 @@ const hu = {
 }
 
 const fr = {
+  familyMarket: [
+    { // TODO tradurre
+      header: "New Posting",
+      description: "has created a new posting"
+    }
+  ],
   'group': [
     {
       'header': 'Paramètres du groupe',

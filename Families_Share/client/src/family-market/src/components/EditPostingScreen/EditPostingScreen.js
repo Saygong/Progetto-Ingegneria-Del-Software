@@ -21,6 +21,7 @@ import {stringify, Log} from "../../utils";
 import CategorySelector from "../CategorySelector";
 import TransactionTypeButtons from "../TransactionTypeButtons";
 
+// TODO aggiungere caricamento
 
 /**
  * Class that represents a screen that is used either to edit an existing posting
@@ -33,7 +34,9 @@ class EditPostingScreen extends React.Component {
      * @type {{photo: string | Blob | File, name: string,
      *          description: string, category: string, tnType: string,
      *          place: string, mail: string, phoneNumber: string,
-     *          inputDisabled: boolean, missingValues: boolean, emailNotValid: boolean}}
+     *          inputDisabled: boolean, missingValues: boolean,
+     *          confirmationUnsuccessful: boolean,
+     *          emailNotValid: boolean}}
      */
     state;
 
@@ -67,14 +70,16 @@ class EditPostingScreen extends React.Component {
             name: "",
             description: "",
             photo: "",
-            category: "",
-            tnType: "",
+            category: NO_CATEGORY[this.props.language],
+            tnType: NO_TN_TYPE[this.props.language],
             mail: "",
             phoneNumber: "",
             place: "",
+
             inputDisabled: false,
             missingValues: false,
-            emailNotValid: false
+            emailNotValid: false,
+            confirmationUnsuccessful: false
         }
 
         // Bind everything because all these methods are called from outside the class
@@ -102,8 +107,6 @@ class EditPostingScreen extends React.Component {
         // If edit mode, get the value from the posting to edit, else take the default "empty value"
         const defaultCat = this.isCreateMode() ? NO_CATEGORY[language] : this.state.category;
         const defaultTnType = this.isCreateMode() ? NO_TN_TYPE[language] : this.state.tnType;
-
-        let error = this.state.missingValues || this.state.emailNotValid;
 
         return (
             <div>
@@ -180,6 +183,9 @@ class EditPostingScreen extends React.Component {
 
                     }
 
+                    { this.state.confirmationUnsuccessful
+                        && <h2 className="h1-error">{txt.confirmationUnsuccessful}</h2>
+                    }
 
                         { !this.state.inputDisabled && this.isCreateMode()
                             && (
@@ -265,14 +271,6 @@ class EditPostingScreen extends React.Component {
             return;
         }
 
-        if (this.isEmailNotValid()) {
-            this.setState({
-                emailNotValid: true
-            });
-
-            return;
-        }
-
         // If the data is valid, disable it
         this.setState({
             disableInput: true
@@ -280,7 +278,16 @@ class EditPostingScreen extends React.Component {
 
         if (this.isCreateMode()) {
             // Create mode
-            await this.createPosting();
+            const creationSuccessful = await this.createPosting();
+
+            // If not successful, return before redirecting
+            if (!creationSuccessful) {
+                this.setState({
+                    confirmationUnsuccessful: true
+                })
+
+                return
+            }
 
             const {onCreateRedirection} = this.redirections;
             Log.info("Creation successful, redirecting to " + stringify(onCreateRedirection), this);
@@ -288,25 +295,20 @@ class EditPostingScreen extends React.Component {
         }
         else {
             // Edit mode
-            await this.editPosting();
+            const editSuccessful = await this.editPosting();
 
-            /**
-             * TODO: adding a time out here fixes race condition that
-             *      happens when the user is redirected to the onEditRedirection page.
-             *      This looks dangerous because 3500ms seems to be enough in my environment,
-             *      but in a real deployment scenario or in another machine, who knows.
-             *      Maybe just put a loading spinner and set 1 or 2 seconds timeout.
-             *      That, coupled with a performance enhancement by handling images
-             *      in a more efficient way than base64, should be enough.
-             *
-             * TODO 2: As of now, timeout has been nullified (1ms) because else its too long,
-             *      need to find another way
-             */
-            setTimeout(() => {
-                const {onEditRedirection} = this.redirections;
-                Log.info("Edit successful, redirecting to " + stringify(onEditRedirection), this);
-                this.redirect(onEditRedirection)
-            }, 1);
+            // If not successful, return before redirecting
+            if (!editSuccessful) {
+                this.setState({
+                    confirmationUnsuccessful: true
+                })
+
+                return
+            }
+
+            const {onEditRedirection} = this.redirections;
+            Log.info("Edit successful, redirecting to " + stringify(onEditRedirection), this);
+            this.redirect(onEditRedirection)
         }
     }
 
@@ -325,15 +327,9 @@ class EditPostingScreen extends React.Component {
     }
 
     /**
-     * Returns true if the user has left some input values empty.
-     */
-    isEmailNotValid() {
-        return !((this.state.mail).match(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/));
-    }
-
-    /**
      * Api call to create a posting based on current state.
-     * @return {Promise<void>}
+     * Returns true if the posting was successfully created, false otherwise.
+     * @return {Promise<boolean>}
      */
     async createPosting() {
         const creationInfo = this.getPostingInfoFromState()
@@ -341,12 +337,15 @@ class EditPostingScreen extends React.Component {
 
         Log.trace(`Creating posting for user: ${userId} in group ${groupId} with info:
         ${stringify(creationInfo)}`, this);
-        await this.apiHandler.createPosting(userId, groupId, creationInfo);
+        const newPosting = await this.apiHandler.createPosting(userId, groupId, creationInfo);
+
+        // Empty posting id is "", which a legit posting cannot have
+        return newPosting.id !== Posting.EMPTY.id
     }
 
     /**
      * Api call to edit a posting based on current state.
-     * @return {Promise<void>}
+     * @return {Promise<boolean>}
      */
     async editPosting() {
         const idToEdit = this.matchParams.postingId;
@@ -354,7 +353,7 @@ class EditPostingScreen extends React.Component {
 
         Log.trace(`Editing posting [id]${idToEdit} with info:
         ${stringify(editedInfo)}`, this);
-        await this.apiHandler.editPosting(idToEdit, editedInfo);
+        return await this.apiHandler.editPosting(idToEdit, editedInfo);
     }
 
     /**

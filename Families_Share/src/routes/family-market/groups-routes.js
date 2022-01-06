@@ -30,7 +30,7 @@ router.get('/:groupId/postings', async (req, res) => {
     await Posting.find({
       group_id: `${g_id}`
     })
-      .sort({ creation_date: 'desc' })
+      .sort({ creation_date: 'desc'})
       .lean()
       .exec()
       .then(postings => {

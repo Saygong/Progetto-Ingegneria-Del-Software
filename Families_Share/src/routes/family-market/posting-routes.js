@@ -3,6 +3,13 @@ const router = new express.Router()
 const Posting = require('../../models/family-market/posting')
 const Member = require('../../models/member')
 const objectid = require('objectid')
+const Group = require("../../models/group");
+const Profile = require("../../models/profile");
+const User = require("../../models/user");
+const Device = require("../../models/device");
+const Notification = require("../../models/notification");
+const nh = require('../../helper-functions/notification-helpers')
+const texts = require("../../constants/notification-texts");
 
 // Prefisso: “/api/family-market/postings”
 // Route for getPosting that retrieve a posting
@@ -67,9 +74,9 @@ router.patch('/:postingId', async (req, res, next) => {
     // req.body must be an object with the updated field
     const update = {...req.body}
 
-    await Posting.updateOne({ id: p_id}, update).then(
-      res.status(200).send('Posting successfully updated')
-    )
+    await Posting.updateOne({ id: p_id}, update)
+
+    res.status(200).send('Posting successfully updated')
 
   } catch (error) {
     next(error)
@@ -97,6 +104,60 @@ router.delete('/:postingId', async (req, res, next) => {
     next(error)
   }
 })
+
+
+async function sendNewPostingNotifications(group_id, user_id) {
+  const new_posting_creator = await Profile.findOne({ user_id })
+  const current_group = await Group.findOne({ group_id })
+
+  const to_members = await Member.find({ group_id, user_id: { $ne: user_id },
+    group_accepted: true, user_accepted: true }).distinct('user_id')
+  const to_users = await User.find({ user_id: { $in: to_members } })
+
+  const devices = await Device.find({ user_id: { $in: to_members } })
+
+  // type e code are the name and index of the object
+  // that contains the notification text
+  const notificationType = "familyMarket"
+  const notificationCode = 0
+  if (new_posting_creator && current_group) {
+    const notifications = []
+    to_members.forEach(member => {
+      notifications.push({
+        owner_type: 'user',
+        owner_id: member,
+        // Notification text comes from getNotificationDescription in notification-helpers,
+        // Also, look at line 666 of src/routes/group-routes:
+        // that's the function where notifications for the group are fetched.
+        // Go there to see how notifications are handled in the app.
+        // "type" and "code" are used to fetch the header and description
+        //  from notification-texts.js.
+        type: notificationType,
+        code: notificationCode,
+        read: false,
+        subject: `${new_posting_creator.given_name} ${new_posting_creator.family_name}`,
+        object: `${current_group.name}`
+      })
+    })
+    await Notification.create(notifications)
+
+    const messages = []
+    devices.forEach(device => {
+      const language = to_users.filter(user => user.user_id === device.user_id)[0].language
+
+      const notificationTexts = texts[language][notificationType][notificationCode]
+      messages.push({
+        to: device.device_id,
+        sound: 'default',
+        title: notificationTexts.header,
+        body: `${new_posting_creator.given_name} ${new_posting_creator.family_name} ${notificationTexts.description} ${current_group.name}`,
+        data: { url: `${process.env.CITYLAB_URI}/groups/${group_id}/activities` }
+      })
+    })
+    await nh.sendPushNotifications(messages)
+  }
+}
+
 
 // Prefisso: “/api/family-market/postings”
 // Route for createPosting -> create a new posting
@@ -156,6 +217,8 @@ router.post('/', async (req, res, next) => {
     }
 
     res.json(response)
+
+    await sendNewPostingNotifications(group_id, user_id)
 
   } catch (err) {
     return res.status(401).send("Caught Error:" + JSON.stringify(err));
