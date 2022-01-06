@@ -86,13 +86,12 @@ class PostingsListItem extends React.Component {
         }
 
         return (
-            <div role="button" onClick={this.redirectToPostingScreen}>
-
+            <div>
                 <ListItem image={posting.photo}
                           title={posting.name}
                           description={posting.description}
-                          sideButton={sideButton}/>
-
+                          sideButton={sideButton}
+                          onClick={this.redirectToPostingScreen}/>
             </div>
         );
     }

@@ -26,18 +26,21 @@ class ListItem extends React.Component {
 
             <div className="w-100 row no-gutters height-10rem border-bottom">
 
-                <div className="col-3-10">
+                <div role="button" className="col-8-10 row no-gutters" onClick={this.props.onClick}>
 
-                    <div className="height-100">
-                        <img className="listImg verticalCenter" src={path} alt={txt.altImageText} />
+
+                    <div className="col-4-10">
+                        <div className="height-100">
+                            <img className="listImg verticalCenter" src={path} alt={txt.altImageText} />
+                        </div>
+                    </div>
+                    <div className="col-6-10">
+                        <div className="verticalCenter">
+                            <h2>{this.props.title}</h2>
+                            <h5>{this.props.description}</h5>
+                        </div>
                     </div>
 
-                </div>
-                <div className="col-5-10">
-                    <div className="verticalCenter">
-                        <h2>{this.props.title}</h2>
-                        <h5>{this.props.description}</h5>
-                    </div>
                 </div>
 
                 <div className="col-2-10 text-center">
@@ -70,8 +73,9 @@ ListItem.propTypes = {
     /**
      * Custom button
      */
-    sideButton: PropTypes.object
+    sideButton: PropTypes.object,
 
+    onClick: PropTypes.func
 }
 
 export default withLanguage(ListItem);

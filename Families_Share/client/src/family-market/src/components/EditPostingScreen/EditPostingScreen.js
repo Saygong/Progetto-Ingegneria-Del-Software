@@ -130,8 +130,9 @@ class EditPostingScreen extends React.Component {
                     </div>
 
                     <div className="mb-5">
-                        <TransactionTypeButtons defaultValue={defaultTnType}
-                                                 tnTypeChangeHandler={this.handleTnTypeChange} />
+                        <TransactionTypeButtons value={this.state.tnType ? this.state.tnType : defaultTnType}
+                                                tnTypeChangeHandler={this.handleTnTypeChange}
+                                                createMode={true} />
                     </div>
 
                     <hr className="mb-5"/>
