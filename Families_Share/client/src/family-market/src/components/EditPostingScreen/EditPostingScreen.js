@@ -21,8 +21,9 @@ import {stringify, Log} from "../../utils";
 import CategorySelector from "../CategorySelector";
 import TransactionTypeButtons from "../TransactionTypeButtons";
 import Posting from "../../api/model/Posting";
+import LoadingSpinner from "../../../../components/LoadingSpinner";
 
-// TODO aggiungere caricamento
+
 
 /**
  * Class that represents a screen that is used either to edit an existing posting
@@ -76,7 +77,7 @@ class EditPostingScreen extends React.Component {
             mail: "",
             phoneNumber: "",
             place: "",
-
+            fetchedData: false,
             inputDisabled: false,
             missingValues: false,
             emailNotValid: false,
@@ -108,8 +109,11 @@ class EditPostingScreen extends React.Component {
         // If edit mode, get the value from the posting to edit, else take the default "empty value"
         const defaultCat = this.isCreateMode() ? NO_CATEGORY[language] : this.state.category;
         const defaultTnType = this.isCreateMode() ? NO_TN_TYPE[language] : this.state.tnType;
+        const fetchedData = this.isCreateMode() || this.state.fetchedData;
         let error = this.state.missingValues || this.state.emailNotValid;
-        return (
+
+
+        return fetchedData ? (
             <div>
                 {/*TODO disabilitare anche questa quando user clicca conferma?*/}
                 <PlainNavBar title={title} goBackLocation={this.redirections.goBackRedirection}/>
@@ -214,7 +218,9 @@ class EditPostingScreen extends React.Component {
                     <br className="mb-5"/>
                 </div>
             </div>
-        );
+        ) : (
+            <LoadingSpinner />
+        )
     }
 
 
@@ -233,7 +239,8 @@ class EditPostingScreen extends React.Component {
                 tnType: currentPosting.type,
                 mail: currentPosting.contact.email,
                 phoneNumber: currentPosting.contact.phone_number,
-                place: currentPosting.contact.place
+                place: currentPosting.contact.place,
+                fetchedData: true
             });
         }
     }

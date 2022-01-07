@@ -16,11 +16,13 @@ class PostingsList extends React.Component {
 
     constructor(props) {
         super(props);
+
     }
 
     render() {
-        const filteredPostings = this.getFilteredPostings()
+
         const title = this.buildTitle();
+        const filteredPostings = this.getFilteredPostings();
 
         return (
             <div className="w-95 mx-auto">
@@ -36,6 +38,7 @@ class PostingsList extends React.Component {
             </div>
         )
     }
+
 
     /**
      * Returns the title to display, which is based on the filtering criteria
@@ -214,7 +217,8 @@ PostingsList.propTypes = {
     /**
      * Title for FavouritesScreen
      */
-    title: PropTypes.string
+    title: PropTypes.string,
+
 }
 
 export default withLanguage(PostingsList);

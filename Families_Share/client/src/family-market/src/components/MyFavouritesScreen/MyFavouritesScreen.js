@@ -8,6 +8,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import PlainNavBar from "../PlainNavBar";
 import PostingsList from "../PostingsList/PostingsList";
+import LoadingSpinner from "../../../../components/LoadingSpinner";
 
 
 
@@ -39,7 +40,8 @@ class MyFavouritesScreen extends React.Component {
         this.apiHandler = new ApiHandler("", "", DEBUG);
         this.matchParams = this.props.match.params;
         this.state = {
-            postings: []
+            postings: [],
+            fetchedData: false
         };
 
         this.getFavouritePostings = this.getFavouritePostings.bind(this);
@@ -49,8 +51,9 @@ class MyFavouritesScreen extends React.Component {
         const language = this.props.language;
         const txt = texts[language].favouritesScreen;
         const noPostings = (this.state.postings.length === 0);
+        const {fetchedData} = this.state;
 
-        return (
+        return fetchedData ? (
             <div>
                 <div>
                     <PlainNavBar title={txt.navBar.title} />
@@ -65,13 +68,16 @@ class MyFavouritesScreen extends React.Component {
                     )}
                 </div>
             </div>
+        ): (
+            <LoadingSpinner />
         );
     }
 
     async componentDidMount() {
         const favPostings = await this.getFavouritePostings(this.matchParams.userId);
         this.setState({
-            postings: favPostings
+            postings: favPostings,
+            fetchedData: true
         });
     }
 

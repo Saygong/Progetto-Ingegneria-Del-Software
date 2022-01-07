@@ -9,6 +9,7 @@ import PropTypes from "prop-types";
 import PlainNavBar from "../PlainNavBar";
 import PostingsList from "../PostingsList/PostingsList";
 import {stringify, Log} from "../../utils";
+import LoadingSpinner from "../../../../components/LoadingSpinner";
 
 
 /**
@@ -39,7 +40,8 @@ class MyGroupPostingsScreen extends React.Component {
         this.matchParams = this.props.match.params;
         this.state = {
             group_name: "",
-            postings: []
+            postings: [],
+            fetchedData: false,
         };
     }
 
@@ -47,8 +49,9 @@ class MyGroupPostingsScreen extends React.Component {
         const language = this.props.language;
         const txt = texts[language].myGroupsPostingsScreen;
         const noPostings = (this.state.postings.length === 0);
+        const {fetchedData} = this.state;
 
-        return (
+        return fetchedData ? (
             <div>
                 <div className="w-100">
                     <PlainNavBar title={txt.prefix + this.state.group_name}/>
@@ -63,20 +66,21 @@ class MyGroupPostingsScreen extends React.Component {
                     }
                 </div>
             </div>
+        ): (
+            <LoadingSpinner />
         );
 
     }
 
     async componentDidMount() {
         const currentGroupPostings = await this.fetchPostings();
-
         Log.trace("Group postings fetched: " + stringify(currentGroupPostings), this);
-
         const group_info = await this.apiHandler.getGroupInfo(this.matchParams.groupId);
 
         this.setState({
             group_name: group_info.name,
-            postings: currentGroupPostings
+            postings: currentGroupPostings,
+            fetchedData: true
         });
     }
 

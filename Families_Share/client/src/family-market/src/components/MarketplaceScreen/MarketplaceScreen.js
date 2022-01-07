@@ -14,6 +14,7 @@ import {withRouter} from "react-router-dom";
 import CategorySelector from "../CategorySelector";
 import Disclaimer from "../Disclaimer/Disclaimer";
 import TransactionTypeButtons from "../TransactionTypeButtons";
+import LoadingSpinner from "../../../../components/LoadingSpinner";
 
 
 /**
@@ -49,7 +50,8 @@ class MarketplaceScreen extends React.Component {
             groupPostings: [],
             filterText: "",
             filterTnType: this.defaultTnType,
-            filterCategory: this.defaultCat
+            filterCategory: this.defaultCat,
+            fetchedData: false,
         };
 
         this.getGroupPostings = this.getGroupPostings.bind(this);
@@ -67,8 +69,9 @@ class MarketplaceScreen extends React.Component {
             pathname: this.props.location.pathname,
             state: this.props.location.state
         };
+        const {fetchedData} = this.state;
 
-        return (
+        return fetchedData ? (
 
             <div>
 
@@ -104,16 +107,21 @@ class MarketplaceScreen extends React.Component {
                       filterTnType={this.state.filterTnType}
                       filterCategory={this.state.filterCategory}/>
 
-
             </div>
+        ) : (
+            <LoadingSpinner />
         );
     }
+
+
+
 
     async componentDidMount() {
         const currentGroupPostings = await this.getGroupPostings();
 
         this.setState({
-            groupPostings: currentGroupPostings
+            groupPostings: currentGroupPostings,
+            fetchedData: true,
         });
     }
 

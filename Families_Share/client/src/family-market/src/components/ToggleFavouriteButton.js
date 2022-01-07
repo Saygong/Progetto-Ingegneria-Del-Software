@@ -6,6 +6,7 @@ import ApiHandler from "../api/ApiHandler";
 import React from "react" ;
 import PropTypes from "prop-types";
 import IconItem from "./IconItem";
+import LoadingSpinner from "../../../components/LoadingSpinner";
 
 
 /**
@@ -27,7 +28,7 @@ class ToggleFavouriteButton extends React.Component {
 
         this.apiHandler = new ApiHandler("", "", DEBUG);
         this.state = {
-            isFavourite: false
+            isFavourite: false,
         };
 
         this.handleFavouriteChange = this.handleFavouriteChange.bind(this);
@@ -49,7 +50,7 @@ class ToggleFavouriteButton extends React.Component {
             <div role="button" className="text-center verticalCenter height-100" onClick={this.handleFavouriteChange}>
                 <IconItem iconPath={iconPath} theme={this.props.theme}/>
             </div>
-        )
+        );
     }
 
     async componentDidUpdate(prevProps, prevState, snapshot) {

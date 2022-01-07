@@ -61,7 +61,7 @@ class TransactionTypeButtons extends React.Component {
 }
 
 TransactionTypeButtons.propTypes = {
-    value: PropTypes.string.isRequired,
+    value: PropTypes.string,
 
     /**
      * Function that handles what happens when the selected item changes

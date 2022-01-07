@@ -9,6 +9,7 @@ import PropTypes from "prop-types";
 import PostingNavBar from "./PostingNavBar";
 import PostingInfo from "./PostingInfo";
 import {stringify, Log} from "../../utils";
+import LoadingSpinner from "../../../../components/LoadingSpinner";
 
 
 /**
@@ -52,12 +53,14 @@ class PostingScreen extends React.Component {
         this.onPostingDeleteRedirection = this.props.location.state.onDeleteRedirection;
         this.apiHandler = new ApiHandler("", "", DEBUG);
         this.state = {
-            posting: Posting.EMPTY
+            posting: Posting.EMPTY,
+            fetchedData: false,
         }
     }
 
     render() {
         const currentPosting = this.state.posting;
+        const {fetchedData} = this.state;
 
         /**
          * TODO this is not used as of now because there is a race condition
@@ -70,7 +73,7 @@ class PostingScreen extends React.Component {
             state: this.props.location.state
         };
         console.log("PostingScreen:" + currentPosting.id)
-        return (
+        return fetchedData ? (
             <div className="posting-info">
                 <PostingNavBar postingId={currentPosting.id}
                                postingName={currentPosting.name}
@@ -80,6 +83,8 @@ class PostingScreen extends React.Component {
 
                 <PostingInfo posting={currentPosting}/>
             </div>
+        ) : (
+            <LoadingSpinner />
         );
     }
 
@@ -87,7 +92,8 @@ class PostingScreen extends React.Component {
         const currentPosting = await this.fetchPosting();
         Log.trace("Fetched posting: " + stringify(currentPosting));
         this.setState({
-            posting: currentPosting
+            posting: currentPosting,
+            fetchedData: true
         });
     }
 
