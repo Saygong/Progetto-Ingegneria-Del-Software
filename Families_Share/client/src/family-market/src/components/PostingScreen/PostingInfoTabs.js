@@ -9,6 +9,9 @@ import Tabs from "./PostingInfoTabsStyle";
 
 import Tab from "./PostingInfoTabsStyle";
 import IconItem from "../IconItem";
+import axios from "axios";
+import Log from "../../../../components/Log";
+import LoadingSpinner from "../../../../components/LoadingSpinner";
 
 /**
  * Class that represents a component that displays
@@ -29,7 +32,7 @@ class PostingInfoTabs extends React.Component {
         const language = this.props.language;
         const posting = this.props.posting;
         const txt = texts[language].postingInfoTabs;
-
+        const username = this.state.ownerName.given_name + " " + this.state.ownerName.family_name;
 
         return (
             <div>
@@ -66,8 +69,7 @@ class PostingInfoTabs extends React.Component {
                                     </div>
                                     <div className="col-8-10">
 
-                                        {/* TODO aggiungere informazioni utente (nome)*/}
-                                        <span className="little-text"> __________________NOME </span>
+                                        <span className="little-text"> {username} </span>
                                     </div>
                                 </div>
                                 <br/>
@@ -98,17 +100,39 @@ class PostingInfoTabs extends React.Component {
         );
     }
 
-    //TODO aggiungere codice per trovare il nome e cognome di chi ha creato il posting, serve per contatti
 
-    // async componentDidMount() {
-    //     const posting = this.props.posting;
-    //     const profile = await Profile.findOne({ user_id: posting.user_id })
-    //
-    //     this.setState({
-    //         ownerName: profile.given_name + " " + profile.family_name
-    //     });
-    // }
+     async componentDidMount() {
+
+         const user_id = this.props.posting.user_id;
+         const user_name = await getUserName(user_id);
+
+
+         this.setState({
+             ownerName: user_name,
+             fetchedData: true
+         })
+     }
 }
+
+const getUserName = (user_id) => {
+    return axios
+        .get(`/api/users/${user_id}/profile`)
+        .then(response => {
+            let name = response.data;
+            return {
+                given_name: name.given_name,
+                family_name: name.family_name
+            };
+        })
+        .catch(error => {
+            Log.error(error);
+            return {
+                given_name: "",
+                family_name: ""
+            };
+        });
+};
+
 
 PostingInfoTabs.defaultProps = {
     posting: Posting.EMPTY
