@@ -21,7 +21,7 @@ class PostingInfoHeader extends React.Component {
         return (
             <div className="posting-info-header">
                 <h5 className="infoHeaderTop">{posting.category}</h5>
-                <h1 className="infoHeaderMid">{posting.name}</h1>
+                <h1 className="infoHeaderMid fitText">{posting.name}</h1>
                 <h3 className="infoHeaderBot">{posting.type}</h3>
             </div>
         );

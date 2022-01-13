@@ -41,7 +41,7 @@ class PostingInfoTabs extends React.Component {
                         <Tab label={txt.product}>
                             <div>
                                 <h3 className="forTabsTitle">{txt.desc}</h3>
-                                <span className="little-text">{posting.description}</span>
+                                <span className="little-text fitText">{posting.description}</span>
                             </div>
                         </Tab>
 

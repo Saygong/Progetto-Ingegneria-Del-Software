@@ -3601,6 +3601,8 @@ a:active {
   border-color: #E5E4E2;
   margin-bottom: 20px;
   width: 90%;
+  height: 120px;
+  line-height: 28px
 }
 
 .height-8rem{
@@ -3697,4 +3699,13 @@ a:active {
 .singleItem{
   height: 30vw;
   overflow: hidden;
+}
+
+.longText {
+  overflow: hidden;
+  text-overflow: ellipsis;
+ }
+
+.fitText {
+  word-wrap: break-word;
 }

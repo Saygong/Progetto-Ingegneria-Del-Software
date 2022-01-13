@@ -30,7 +30,7 @@ class PlainNavBar extends React.Component {
                 </div>
 
                 <div className="col-6-10">
-                    <h2 className="navBarTitle"><strong>{this.props.title}</strong></h2>
+                    <h2 className="navBarTitle longText"><strong>{this.props.title}</strong></h2>
                 </div>
 
                 <div className="col-2-10 text-center">
