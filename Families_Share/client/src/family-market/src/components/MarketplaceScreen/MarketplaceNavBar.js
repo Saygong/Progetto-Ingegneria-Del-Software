@@ -4,6 +4,7 @@ import texts from "../../texts";
 import React from "react";
 import PlainNavBar from "../PlainNavBar";
 import MyProfileButton from "./MyProfileButton";
+import GuideButton from "./GuideButton";
 import PropTypes from "prop-types";
 
 
@@ -23,7 +24,7 @@ class MarketplaceNavBar extends React.Component {
         return (
 
             <div>
-                <PlainNavBar title={txt.title} otherComponent={<MyProfileButton/>} />
+                <PlainNavBar title={txt.title} otherComponent={<MyProfileButton/>} otherComponent2={<GuideButton/>} />
             </div>
 
         );

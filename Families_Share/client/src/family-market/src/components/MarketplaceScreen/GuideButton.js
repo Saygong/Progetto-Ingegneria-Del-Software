@@ -22,7 +22,7 @@ class GuideButton extends React.Component {
         return (
             <div role="button" className="navBarHeight">
                 <a href={guideFile} download="Guida.pdf">
-                    <IconItem iconPath="fas fa-fa-question-circle" theme="family-icon"/>
+                    <IconItem iconPath="fas fa-question-circle" className="guideIcon" theme="family-icon"/>
                 </a>
             </div>
         )

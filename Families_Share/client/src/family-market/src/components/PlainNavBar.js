@@ -21,6 +21,7 @@ class PlainNavBar extends React.Component {
 
     render() {
         let otherComp = this.props.otherComponent;
+        let otherComp2 = this.props.otherComponent2;
 
         return (
 
@@ -29,10 +30,14 @@ class PlainNavBar extends React.Component {
                     <IconItem iconPath="fas fa-arrow-left" theme="family-icon"/>
                 </div>
 
-                <div className="col-6-10">
+                <div className="col-5-10">
                     <h2 className="navBarTitle longText"><strong>{this.props.title}</strong></h2>
                 </div>
 
+
+                <div className="col-1-10 text-center">
+                    {otherComp2}
+                </div>
                 <div className="col-2-10 text-center">
                     {otherComp}
                 </div>
@@ -92,7 +97,12 @@ PlainNavBar.propTypes = {
     /**
      * Other button that should be displayed
      */
-    otherComponent: PropTypes.object
+    otherComponent: PropTypes.object,
+
+    /**
+     * Other button that should be displayed
+     */
+    otherComponent2: PropTypes.object
 }
 
 

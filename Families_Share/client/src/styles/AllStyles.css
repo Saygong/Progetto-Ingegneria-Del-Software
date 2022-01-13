@@ -3709,3 +3709,10 @@ a:active {
 .fitText {
   word-wrap: break-word;
 }
+
+.guideIcon{
+  color: #fff;
+  margin: auto;
+  height: 50%;
+  width: 50%;
+}
