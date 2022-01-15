@@ -51,7 +51,6 @@ class PostingScreen extends React.Component {
 
         this.matchParams = this.props.match.params;
         this.onPostingDeleteRedirection = this.props.location.state.onDeleteRedirection;
-        this.onEditRedirection = this.props.location.state.onEditRedirection;
         this.apiHandler = new ApiHandler("", "", DEBUG);
         this.state = {
             posting: Posting.EMPTY,
@@ -64,13 +63,17 @@ class PostingScreen extends React.Component {
         const {fetchedData} = this.state;
 
 
+        const onEditRedirection = {
+            pathname: this.props.location.pathname,
+            state: this.props.location.state
+        };
         console.log("PostingScreen:" + currentPosting.id)
         return fetchedData ? (
             <div className="posting-info">
                 <PostingNavBar postingId={currentPosting.id}
                                postingName={currentPosting.name}
                                postingCreatorId={currentPosting.user_id}
-                               onEditRedirection={this.onEditRedirection}
+                               onEditRedirection={onEditRedirection}
                                onDeleteRedirection={this.onPostingDeleteRedirection}/>
 
                 <PostingInfo posting={currentPosting}/>

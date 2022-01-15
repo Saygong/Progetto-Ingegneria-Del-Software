@@ -31,8 +31,8 @@ class ListItem extends React.Component {
                     </div>
                     <div className="col-6-10">
                         <div className="verticalCenter">
-                            <h2 className="longText">{this.props.title}</h2>
-                            <h5 className="longText">{this.props.description}</h5>
+                            <h2 className="longText"><nobr>{this.props.title}</nobr></h2>
+                            <h5 className="longText"><nobr>{this.props.description}</nobr></h5>
                         </div>
                     </div>
 

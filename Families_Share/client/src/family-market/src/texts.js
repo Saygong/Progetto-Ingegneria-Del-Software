@@ -371,27 +371,735 @@ const it = {
 
 
 const el = {
-    editPostingButton: {
+    listItem: {
+        altImageText: "List item placeholder"
+    },
 
+    editPostingButton: {
+        altImageText: "Edit image"
+    },
+
+    deletePostingButton: {
+        titleDialog: "Are you sure to delete this posting?",
+        text: "Delete",
+        altImageText: "delete image"
+    },
+
+    toggleFavButton: {
+        altImageText: "favourite image"
+    },
+
+    createPostingButton: {
+        text: "Create new posting"
+    },
+
+    accessMarketplaceButton: {
+        header: "Marketplace",
+        title: "Family Market",
+        description: "Access the marketplace"
+    },
+
+    searchBar: {
+        altImageText: "Magnifying lens icon",
+        placeholder: "Search",
+        description: "What are you looking for?",
+    },
+
+    mailInput: {
+        altImageText: "email image",
+        placeholder: "youremail@yourdom.something",
+        description: "E-Mail"
+    },
+
+    telephoneInput: {
+        altImageText: "telephone image",
+        placeholder: "Insert your phone number",
+        description: "Telephone"
+    },
+
+    categoryComboBox: {
+        altImageText: "Category icon",
+        description: "Select the category:"
+    },
+
+    transactionTypeComboBox: {
+        altImageText: "Transaction type icon",
+        description: "Select the transaction type:"
+    },
+
+    confirmButton: {
+        text: "Confirm"
+    },
+
+    profileButton: {
+        altImageText: "profile icon"
+    },
+
+    postingsLists: {
+        defaultTitle: "Newest posts",
+        titleBuilder: (name, category, tnType) => {
+            let title = "Results"
+
+            if (name) {
+                title += ` for '${name}'`;
+            }
+
+            if (category) {
+                title += ` in '${category}'`;
+            }
+
+            if (tnType) {
+                title += ` of type '${tnType}'`;
+            }
+
+            return title;
+        }
+    },
+
+    editPostingScreen: {
+        navBar: {
+            title: {
+                createMode: "Create new posting",
+                editMode: "Edit posting"
+            }
+        },
+        nameInput: {
+            description: "Title",
+            placeholder: "Insert title"
+        },
+        descriptionInput: {
+            description: "Description",
+            placeholder: "Insert description"
+        },
+        placeInput: {
+            description: "Place: ",
+            placeholder: "Insert the place"
+        },
+        editContactTitle: "Contact information:",
+        missingValuesError: "Some values are missing or incorrect!",
+        emailNotValidError: "Email not valid!",
+        confirmationUnsuccessful: "Could not confirm. Check your values and internet connection and try again!",
+        editTitle: "Insert a title"
+    },
+
+    imageInput: {
+        dropzoneText: "Drop an image for the posting here",
+        altImageText: "Selected image"
+    },
+
+    marketplaceScreen: {
+        title: "Family Market",
+        postingList: "Newest Post",
+        placeholder: "What are you looking for?"
+    },
+
+    favouritesScreen: {
+        navBar: {
+            title: "Saved posts"
+        },
+        noPostingsText: "You have no saved posts",
+        title: "Your saved posts:"
+    },
+
+    myPostingsButton: {
+        title: "My posts",
+        description: "Postings divided by groups"
+    },
+
+    myFavouritesButton: {
+        title: "Saved posts",
+        description: "Post you liked"
+    },
+
+    postingInfo: {
+        altImageText: "posting image placeholder"
+    },
+
+    myGroupsPostingsScreen: {
+        prefix: "My posts in ",
+        noPostingsText: "You have no postings in this group"
+    },
+
+    myGroupsWithPostingsScreen: {
+        title : "My groups",
+        instruction: "Select a group to see your postings"
+    },
+
+    postingInfoTabs: {
+        desc: "Description:",
+        product: "Product",
+        where: "Where",
+        contact: "Contacts",
+        place: "Place:",
+        user: "User:",
+        phone: "Phone number:",
+        mail: "Email:",
+    },
+
+    categoryDialog:{
+        header: "Select the category:",
+        save: "Save"
+    },
+
+    disclaimer:{
+        title: "CONDIZIONI GENERALI DI UTILIZZO DI FAMILY-MARKET",
+        text: "L'obbiettivo di Family-Market è quello di garantire condivisione di informazioni, contenuti ed oggetti materiali o immateriali." +
+            "L'offerta proviene da un soggetto offerente privato e mira ad arrivare ad altri soggetti privati appartenenti ad una comunità." +
+            "Nell'estensione possono essere proposti links di accesso a siti di altri enti o di società." +
+            "Family-Market non può ritenersi responsabile circa la disponibilità, il contenuto," +
+            "i prodotti ed i servizi offerti, nè, tanto meno, di eventuali danni o perdite occorsi in conseguenza dell' utilizzo.",
+        error: "You must accept the general terms of use.",
+        agree: "Accept"
     }
 };
 
 const nl = {
-    editPostingButton: {
+    listItem: {
+        altImageText: "List item placeholder"
+    },
 
+    editPostingButton: {
+        altImageText: "Edit image"
+    },
+
+    deletePostingButton: {
+        titleDialog: "Are you sure to delete this posting?",
+        text: "Delete",
+        altImageText: "delete image"
+    },
+
+    toggleFavButton: {
+        altImageText: "favourite image"
+    },
+
+    createPostingButton: {
+        text: "Create new posting"
+    },
+
+    accessMarketplaceButton: {
+        header: "Marketplace",
+        title: "Family Market",
+        description: "Access the marketplace"
+    },
+
+    searchBar: {
+        altImageText: "Magnifying lens icon",
+        placeholder: "Search",
+        description: "What are you looking for?",
+    },
+
+    mailInput: {
+        altImageText: "email image",
+        placeholder: "youremail@yourdom.something",
+        description: "E-Mail"
+    },
+
+    telephoneInput: {
+        altImageText: "telephone image",
+        placeholder: "Insert your phone number",
+        description: "Telephone"
+    },
+
+    categoryComboBox: {
+        altImageText: "Category icon",
+        description: "Select the category:"
+    },
+
+    transactionTypeComboBox: {
+        altImageText: "Transaction type icon",
+        description: "Select the transaction type:"
+    },
+
+    confirmButton: {
+        text: "Confirm"
+    },
+
+    profileButton: {
+        altImageText: "profile icon"
+    },
+
+    postingsLists: {
+        defaultTitle: "Newest posts",
+        titleBuilder: (name, category, tnType) => {
+            let title = "Results"
+
+            if (name) {
+                title += ` for '${name}'`;
+            }
+
+            if (category) {
+                title += ` in '${category}'`;
+            }
+
+            if (tnType) {
+                title += ` of type '${tnType}'`;
+            }
+
+            return title;
+        }
+    },
+
+    editPostingScreen: {
+        navBar: {
+            title: {
+                createMode: "Create new posting",
+                editMode: "Edit posting"
+            }
+        },
+        nameInput: {
+            description: "Title",
+            placeholder: "Insert title"
+        },
+        descriptionInput: {
+            description: "Description",
+            placeholder: "Insert description"
+        },
+        placeInput: {
+            description: "Place: ",
+            placeholder: "Insert the place"
+        },
+        editContactTitle: "Contact information:",
+        missingValuesError: "Some values are missing or incorrect!",
+        emailNotValidError: "Email not valid!",
+        confirmationUnsuccessful: "Could not confirm. Check your values and internet connection and try again!",
+        editTitle: "Insert a title"
+    },
+
+    imageInput: {
+        dropzoneText: "Drop an image for the posting here",
+        altImageText: "Selected image"
+    },
+
+    marketplaceScreen: {
+        title: "Family Market",
+        postingList: "Newest Post",
+        placeholder: "What are you looking for?"
+    },
+
+    favouritesScreen: {
+        navBar: {
+            title: "Saved posts"
+        },
+        noPostingsText: "You have no saved posts",
+        title: "Your saved posts:"
+    },
+
+    myPostingsButton: {
+        title: "My posts",
+        description: "Postings divided by groups"
+    },
+
+    myFavouritesButton: {
+        title: "Saved posts",
+        description: "Post you liked"
+    },
+
+    postingInfo: {
+        altImageText: "posting image placeholder"
+    },
+
+    myGroupsPostingsScreen: {
+        prefix: "My posts in ",
+        noPostingsText: "You have no postings in this group"
+    },
+
+    myGroupsWithPostingsScreen: {
+        title : "My groups",
+        instruction: "Select a group to see your postings"
+    },
+
+    postingInfoTabs: {
+        desc: "Description:",
+        product: "Product",
+        where: "Where",
+        contact: "Contacts",
+        place: "Place:",
+        user: "User:",
+        phone: "Phone number:",
+        mail: "Email:",
+    },
+
+    categoryDialog:{
+        header: "Select the category:",
+        save: "Save"
+    },
+
+    disclaimer:{
+        title: "CONDIZIONI GENERALI DI UTILIZZO DI FAMILY-MARKET",
+        text: "L'obbiettivo di Family-Market è quello di garantire condivisione di informazioni, contenuti ed oggetti materiali o immateriali." +
+            "L'offerta proviene da un soggetto offerente privato e mira ad arrivare ad altri soggetti privati appartenenti ad una comunità." +
+            "Nell'estensione possono essere proposti links di accesso a siti di altri enti o di società." +
+            "Family-Market non può ritenersi responsabile circa la disponibilità, il contenuto," +
+            "i prodotti ed i servizi offerti, nè, tanto meno, di eventuali danni o perdite occorsi in conseguenza dell' utilizzo.",
+        error: "You must accept the general terms of use.",
+        agree: "Accept"
     }
 };
 
 
 const hu = {
-    editPostingButton: {
+    listItem: {
+        altImageText: "List item placeholder"
+    },
 
+    editPostingButton: {
+        altImageText: "Edit image"
+    },
+
+    deletePostingButton: {
+        titleDialog: "Are you sure to delete this posting?",
+        text: "Delete",
+        altImageText: "delete image"
+    },
+
+    toggleFavButton: {
+        altImageText: "favourite image"
+    },
+
+    createPostingButton: {
+        text: "Create new posting"
+    },
+
+    accessMarketplaceButton: {
+        header: "Marketplace",
+        title: "Family Market",
+        description: "Access the marketplace"
+    },
+
+    searchBar: {
+        altImageText: "Magnifying lens icon",
+        placeholder: "Search",
+        description: "What are you looking for?",
+    },
+
+    mailInput: {
+        altImageText: "email image",
+        placeholder: "youremail@yourdom.something",
+        description: "E-Mail"
+    },
+
+    telephoneInput: {
+        altImageText: "telephone image",
+        placeholder: "Insert your phone number",
+        description: "Telephone"
+    },
+
+    categoryComboBox: {
+        altImageText: "Category icon",
+        description: "Select the category:"
+    },
+
+    transactionTypeComboBox: {
+        altImageText: "Transaction type icon",
+        description: "Select the transaction type:"
+    },
+
+    confirmButton: {
+        text: "Confirm"
+    },
+
+    profileButton: {
+        altImageText: "profile icon"
+    },
+
+    postingsLists: {
+        defaultTitle: "Newest posts",
+        titleBuilder: (name, category, tnType) => {
+            let title = "Results"
+
+            if (name) {
+                title += ` for '${name}'`;
+            }
+
+            if (category) {
+                title += ` in '${category}'`;
+            }
+
+            if (tnType) {
+                title += ` of type '${tnType}'`;
+            }
+
+            return title;
+        }
+    },
+
+    editPostingScreen: {
+        navBar: {
+            title: {
+                createMode: "Create new posting",
+                editMode: "Edit posting"
+            }
+        },
+        nameInput: {
+            description: "Title",
+            placeholder: "Insert title"
+        },
+        descriptionInput: {
+            description: "Description",
+            placeholder: "Insert description"
+        },
+        placeInput: {
+            description: "Place: ",
+            placeholder: "Insert the place"
+        },
+        editContactTitle: "Contact information:",
+        missingValuesError: "Some values are missing or incorrect!",
+        emailNotValidError: "Email not valid!",
+        confirmationUnsuccessful: "Could not confirm. Check your values and internet connection and try again!",
+        editTitle: "Insert a title"
+    },
+
+    imageInput: {
+        dropzoneText: "Drop an image for the posting here",
+        altImageText: "Selected image"
+    },
+
+    marketplaceScreen: {
+        title: "Family Market",
+        postingList: "Newest Post",
+        placeholder: "What are you looking for?"
+    },
+
+    favouritesScreen: {
+        navBar: {
+            title: "Saved posts"
+        },
+        noPostingsText: "You have no saved posts",
+        title: "Your saved posts:"
+    },
+
+    myPostingsButton: {
+        title: "My posts",
+        description: "Postings divided by groups"
+    },
+
+    myFavouritesButton: {
+        title: "Saved posts",
+        description: "Post you liked"
+    },
+
+    postingInfo: {
+        altImageText: "posting image placeholder"
+    },
+
+    myGroupsPostingsScreen: {
+        prefix: "My posts in ",
+        noPostingsText: "You have no postings in this group"
+    },
+
+    myGroupsWithPostingsScreen: {
+        title : "My groups",
+        instruction: "Select a group to see your postings"
+    },
+
+    postingInfoTabs: {
+        desc: "Description:",
+        product: "Product",
+        where: "Where",
+        contact: "Contacts",
+        place: "Place:",
+        user: "User:",
+        phone: "Phone number:",
+        mail: "Email:",
+    },
+
+    categoryDialog:{
+        header: "Select the category:",
+        save: "Save"
+    },
+
+    disclaimer:{
+        title: "CONDIZIONI GENERALI DI UTILIZZO DI FAMILY-MARKET",
+        text: "L'obbiettivo di Family-Market è quello di garantire condivisione di informazioni, contenuti ed oggetti materiali o immateriali." +
+            "L'offerta proviene da un soggetto offerente privato e mira ad arrivare ad altri soggetti privati appartenenti ad una comunità." +
+            "Nell'estensione possono essere proposti links di accesso a siti di altri enti o di società." +
+            "Family-Market non può ritenersi responsabile circa la disponibilità, il contenuto," +
+            "i prodotti ed i servizi offerti, nè, tanto meno, di eventuali danni o perdite occorsi in conseguenza dell' utilizzo.",
+        error: "You must accept the general terms of use.",
+        agree: "Accept"
     }
 };
 
 const fr = {
-    editPostingButton: {
+    listItem: {
+        altImageText: "List item placeholder"
+    },
 
+    editPostingButton: {
+        altImageText: "Edit image"
+    },
+
+    deletePostingButton: {
+        titleDialog: "Are you sure to delete this posting?",
+        text: "Delete",
+        altImageText: "delete image"
+    },
+
+    toggleFavButton: {
+        altImageText: "favourite image"
+    },
+
+    createPostingButton: {
+        text: "Create new posting"
+    },
+
+    accessMarketplaceButton: {
+        header: "Marketplace",
+        title: "Family Market",
+        description: "Access the marketplace"
+    },
+
+    searchBar: {
+        altImageText: "Magnifying lens icon",
+        placeholder: "Search",
+        description: "What are you looking for?",
+    },
+
+    mailInput: {
+        altImageText: "email image",
+        placeholder: "youremail@yourdom.something",
+        description: "E-Mail"
+    },
+
+    telephoneInput: {
+        altImageText: "telephone image",
+        placeholder: "Insert your phone number",
+        description: "Telephone"
+    },
+
+    categoryComboBox: {
+        altImageText: "Category icon",
+        description: "Select the category:"
+    },
+
+    transactionTypeComboBox: {
+        altImageText: "Transaction type icon",
+        description: "Select the transaction type:"
+    },
+
+    confirmButton: {
+        text: "Confirm"
+    },
+
+    profileButton: {
+        altImageText: "profile icon"
+    },
+
+    postingsLists: {
+        defaultTitle: "Newest posts",
+        titleBuilder: (name, category, tnType) => {
+            let title = "Results"
+
+            if (name) {
+                title += ` for '${name}'`;
+            }
+
+            if (category) {
+                title += ` in '${category}'`;
+            }
+
+            if (tnType) {
+                title += ` of type '${tnType}'`;
+            }
+
+            return title;
+        }
+    },
+
+    editPostingScreen: {
+        navBar: {
+            title: {
+                createMode: "Create new posting",
+                editMode: "Edit posting"
+            }
+        },
+        nameInput: {
+            description: "Title",
+            placeholder: "Insert title"
+        },
+        descriptionInput: {
+            description: "Description",
+            placeholder: "Insert description"
+        },
+        placeInput: {
+            description: "Place: ",
+            placeholder: "Insert the place"
+        },
+        editContactTitle: "Contact information:",
+        missingValuesError: "Some values are missing or incorrect!",
+        emailNotValidError: "Email not valid!",
+        confirmationUnsuccessful: "Could not confirm. Check your values and internet connection and try again!",
+        editTitle: "Insert a title"
+    },
+
+    imageInput: {
+        dropzoneText: "Drop an image for the posting here",
+        altImageText: "Selected image"
+    },
+
+    marketplaceScreen: {
+        title: "Family Market",
+        postingList: "Newest Post",
+        placeholder: "What are you looking for?"
+    },
+
+    favouritesScreen: {
+        navBar: {
+            title: "Saved posts"
+        },
+        noPostingsText: "You have no saved posts",
+        title: "Your saved posts:"
+    },
+
+    myPostingsButton: {
+        title: "My posts",
+        description: "Postings divided by groups"
+    },
+
+    myFavouritesButton: {
+        title: "Saved posts",
+        description: "Post you liked"
+    },
+
+    postingInfo: {
+        altImageText: "posting image placeholder"
+    },
+
+    myGroupsPostingsScreen: {
+        prefix: "My posts in ",
+        noPostingsText: "You have no postings in this group"
+    },
+
+    myGroupsWithPostingsScreen: {
+        title : "My groups",
+        instruction: "Select a group to see your postings"
+    },
+
+    postingInfoTabs: {
+        desc: "Description:",
+        product: "Product",
+        where: "Where",
+        contact: "Contacts",
+        place: "Place:",
+        user: "User:",
+        phone: "Phone number:",
+        mail: "Email:",
+    },
+
+    categoryDialog:{
+        header: "Select the category:",
+        save: "Save"
+    },
+
+    disclaimer:{
+        title: "CONDIZIONI GENERALI DI UTILIZZO DI FAMILY-MARKET",
+        text: "L'obbiettivo di Family-Market è quello di garantire condivisione di informazioni, contenuti ed oggetti materiali o immateriali." +
+            "L'offerta proviene da un soggetto offerente privato e mira ad arrivare ad altri soggetti privati appartenenti ad una comunità." +
+            "Nell'estensione possono essere proposti links di accesso a siti di altri enti o di società." +
+            "Family-Market non può ritenersi responsabile circa la disponibilità, il contenuto," +
+            "i prodotti ed i servizi offerti, nè, tanto meno, di eventuali danni o perdite occorsi in conseguenza dell' utilizzo.",
+        error: "You must accept the general terms of use.",
+        agree: "Accept"
     }
 };
 

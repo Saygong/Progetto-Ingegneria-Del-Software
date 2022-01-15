@@ -66,8 +66,7 @@ class PostingInfoTabs extends React.Component {
                                         <IconItem iconPath="fas fa-user" theme="family-icon-dark"/>
                                     </div>
                                     <div className="col-8-10">
-
-                                        <span className="little-text"> {username} </span>
+                                        <span className="little-text fitText"> {username} </span>
                                     </div>
                                 </div>
                                 <br/>
@@ -77,7 +76,7 @@ class PostingInfoTabs extends React.Component {
                                         <IconItem iconPath="fas fa-phone" theme="family-icon-dark"/>
                                     </div>
                                     <div className="col-8-10">
-                                        <span className="little-text">{posting.contact.phone_number}</span>
+                                        <span className="little-text fitText">{posting.contact.phone_number}</span>
                                     </div>
                                 </div>
                                 <br/>
@@ -87,7 +86,7 @@ class PostingInfoTabs extends React.Component {
                                         <IconItem iconPath="fas fa-envelope" theme="family-icon-dark"/>
                                     </div>
                                     <div className="col-8-10">
-                                        <span className="little-text">{posting.contact.email}</span>
+                                        <span className="little-text fitText">{posting.contact.email}</span>
                                     </div>
                                 </div>
                             </div>

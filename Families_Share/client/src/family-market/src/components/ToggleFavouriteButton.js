@@ -36,9 +36,7 @@ class ToggleFavouriteButton extends React.Component {
         // Determine which image to display
         const isFavPath = "fas fa-bookmark";
         const isNotFavPath = "far fa-bookmark";
-
-        let iconPath = this.state.isFavourite ? isFavPath : isNotFavPath;
-
+        const iconPath = this.state.isFavourite ? isFavPath : isNotFavPath;
 
         return (
             <div role="button" className="text-center verticalCenter height-100" onClick={this.handleFavouriteChange}>

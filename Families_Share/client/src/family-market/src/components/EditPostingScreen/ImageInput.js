@@ -19,7 +19,6 @@ class ImageInput extends React.Component {
     }
 
 
-    /* TODO there is probably need to fix a max-height for the image tag below */
 
     render() {
         const language = this.props.language;

@@ -31,7 +31,7 @@ class PlainNavBar extends React.Component {
                 </div>
 
                 <div className="col-5-10">
-                    <h2 className="navBarTitle longText"><strong>{this.props.title}</strong></h2>
+                    <h2 className="navBarTitle longText"><strong><nobr>{this.props.title}</nobr></strong></h2>
                 </div>
 
 

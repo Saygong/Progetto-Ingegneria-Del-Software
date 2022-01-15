@@ -1,11 +1,4 @@
-// TODO webpack is needed to use process.env client side
-// https://trekinbami.medium.com/using-environment-variables-in-react-6b0a99d83cf5
-//import dotenv from "dotenv"
-//dotenv.config();
 
-// TODO da tradurre
-// TODO 2: va allora gestito il salvataggio dei valori e la loro riconversione nella lingua selezionata dall'utente,
-//      perché se l'utente crea post in italiano e poi cambia lingua, viene salvato il dato in italiano.
 export const NO_CATEGORY = {
     it: "Nessuna categoria",
     en: "No category",

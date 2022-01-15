@@ -28,8 +28,8 @@ class Tabs extends React.Component{
 const TabButtons = ({buttons, changeTab, activeTab}) =>{
     return(
         <div className="family-m-tab-buttons">
-            {buttons.map(button =>{
-                return <button className={button === activeTab? 'family-m-active': 'family-m-button'} onClick={()=>changeTab(button)}>{button}</button>
+            {buttons.map((button, index) =>{
+                return <button key={index} className={button === activeTab? 'family-m-active': 'family-m-button'} onClick={()=>changeTab(button)}>{button}</button>
             })}
             <hr/>
         </div>
