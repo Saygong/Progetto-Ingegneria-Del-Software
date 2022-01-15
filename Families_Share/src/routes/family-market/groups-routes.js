@@ -4,7 +4,7 @@ const express = require('express')
 const router = new express.Router()
 /* ----------------------------------------     FAMILY-MARKET    ---------------------------------------------------- */
 
-// Prefisso: “/api/family-market/groups”
+// Prefix: “/api/family-market/groups”
 // Route for getGroupPostings in order to show all the postings in a group
 router.get('/:groupId/postings', async (req, res) => {
   // Check if user is not authenticated

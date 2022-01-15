@@ -7,7 +7,7 @@ const Member = require('../../models/member')
 /* ----------------------------------------     FAMILY-MARKET    ---------------------------------------------------- */
 
 // Prefix: “/api/family-market/users“
-// Route for getUserFavouritePostings to show all the saved postings of an user
+// Route for getUserFavouritePostings to show all the saved postings of a user
 router.get('/:userId/favourites', async (req, res) => {
   // Check if user is not authenticated
   if (!req.params.userId) {
