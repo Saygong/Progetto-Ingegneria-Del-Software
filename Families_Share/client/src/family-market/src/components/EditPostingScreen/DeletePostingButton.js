@@ -35,7 +35,7 @@ class DeletePostingButton extends React.Component {
     }
 
     handleConfirmDialogClose = async (choice) => {
-        const { confirmDialogAction } = this.state;
+
         if (choice === "agree") {
             await this.handleClick();
         }

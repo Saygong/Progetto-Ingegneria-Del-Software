@@ -15,9 +15,7 @@ import ToggleFavouriteButton from "../ToggleFavouriteButton";
  */
 class PostingNavBar extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
+
 
     render() {
         const postingTitle = this.props.postingName;

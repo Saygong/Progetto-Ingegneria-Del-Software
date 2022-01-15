@@ -11,10 +11,6 @@ import {DialogContent} from "@material-ui/core";
 
 class DisclaimerDialog extends React.Component {
 
-    constructor(props) {
-        super(props);
-
-    }
 
     handleClose = () => {
         const { handleClose } = this.props;

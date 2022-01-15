@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import LazyLoad from "react-lazyload";
 import GroupListItem from "./GroupListItem";
 import withLanguage from "./LanguageContext";
-import {stringify, Log} from "../family-market/src/utils";
+import {Log} from "../family-market/src/utils";
 // Needed to handle Family Market redirection
 import {useLocation} from "react-router-dom";
 import {useHistory} from "react-router-dom";

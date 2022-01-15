@@ -10,10 +10,6 @@ import texts from "../texts";
  */
 class ListItem extends React.Component {
 
-    constructor(props) {
-        super(props);
-
-    }
 
     render() {
         // Get texts based on current language

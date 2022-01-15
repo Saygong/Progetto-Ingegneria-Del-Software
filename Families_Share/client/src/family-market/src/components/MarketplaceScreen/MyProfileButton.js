@@ -1,5 +1,4 @@
 
-import texts from "../../texts";
 import withLanguage from "../../../../components/LanguageContext";
 import React from "react";
 import PropTypes from "prop-types";
@@ -20,8 +19,6 @@ class MyProfileButton extends React.Component {
     }
 
     render() {
-        const language = this.props.language;
-        const txt = texts[language].profileButton;
 
         return (
             <div role="button" className="navBarHeight" onClick={this.redirectToProfileScreen}>
@@ -39,7 +36,7 @@ class MyProfileButton extends React.Component {
         const profileId = JSON.parse(localStorage.getItem("user")).id;
         const profileScreenUrl = `/profiles/${profileId}/info`;
 
-        Log.info("Redirecting to ProfileScreen " + `(${profileScreenUrl})`, this);
+        Log.info("Redirecting to ProfileScreen " + profileScreenUrl, this);
         this.props.history.push(profileScreenUrl);
     }
 }

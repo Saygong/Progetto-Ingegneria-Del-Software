@@ -1,8 +1,7 @@
-import texts from "../../texts";
+
 import withLanguage from "../../../../components/LanguageContext";
 import React from "react";
 import PropTypes from "prop-types";
-import {Log} from "../../utils";
 import {withRouter} from "react-router-dom";
 import IconItem from "../IconItem";
 import guideFile from "./dummy_guide.pdf";
@@ -12,12 +11,8 @@ import guideFile from "./dummy_guide.pdf";
  */
 class GuideButton extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
 
     render() {
-        const language = this.props.language;
 
         return (
             <div role="button" className="navBarHeight">

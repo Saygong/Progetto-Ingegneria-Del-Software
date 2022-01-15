@@ -13,9 +13,7 @@ import PropTypes from "prop-types";
  * It has the default go back button and a button to go to the profile section.
  */
 class MarketplaceNavBar extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+
 
     render() {
         const language = this.props.language;

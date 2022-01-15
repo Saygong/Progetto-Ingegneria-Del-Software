@@ -115,7 +115,7 @@ class EditPostingScreen extends React.Component {
 
         return fetchedData ? (
             <div>
-                {/*TODO disabilitare anche questa quando user clicca conferma?*/}
+
                 <PlainNavBar title={title} goBackLocation={this.redirections.goBackRedirection}/>
 
                 <div className="titles">

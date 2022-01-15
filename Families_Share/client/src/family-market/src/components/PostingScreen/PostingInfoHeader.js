@@ -11,9 +11,6 @@ import PropTypes from "prop-types";
  */
 class PostingInfoHeader extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         const posting = this.props.posting;

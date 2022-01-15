@@ -11,13 +11,12 @@ import IconItem from "./IconItem";
  */
 class MenuItem extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
+
 
 
     render() {
-        let path = this.props.path + " " + "family-icon-dark";
+        let path = this.props.path;
+
 
         return (
 

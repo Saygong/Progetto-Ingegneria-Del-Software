@@ -1,12 +1,10 @@
 
 import withLanguage from "../../../components/LanguageContext";
-import texts from "../texts";
 import {DEBUG} from "../constants";
 import ApiHandler from "../api/ApiHandler";
 import React from "react" ;
 import PropTypes from "prop-types";
 import IconItem from "./IconItem";
-import LoadingSpinner from "../../../components/LoadingSpinner";
 
 
 /**
@@ -41,10 +39,6 @@ class ToggleFavouriteButton extends React.Component {
 
         let iconPath = this.state.isFavourite ? isFavPath : isNotFavPath;
 
-
-        // Get texts based on current language
-        const language = this.props.language;
-        const txt = texts[language].toggleFavButton;
 
         return (
             <div role="button" className="text-center verticalCenter height-100" onClick={this.handleFavouriteChange}>

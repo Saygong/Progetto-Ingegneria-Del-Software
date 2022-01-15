@@ -7,17 +7,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import PostingsListItem from "./PostingsListItem";
 import {FAVOURITES_MODE} from "./PostingsListItem";
-
 const CATEGORY_NOT_SET = "not-set";
 const TN_TYPE_NOT_SET = "not-set";
 
 
 class PostingsList extends React.Component {
 
-    constructor(props) {
-        super(props);
 
-    }
 
     render() {
 

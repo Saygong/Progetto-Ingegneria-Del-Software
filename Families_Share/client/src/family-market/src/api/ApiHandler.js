@@ -1,7 +1,6 @@
+
 import Posting from "./model/Posting";
 import GroupInfo from "./model/GroupInfo";
-import PostingInfo from "./model/PostingInfo";
-import Contact from "./model/Contact";
 import {stringify, Log} from "../utils";
 import axios from "axios";
 

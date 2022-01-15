@@ -5,13 +5,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import texts from "../../texts";
 import Tabs from "./PostingInfoTabsStyle";
-
-
 import Tab from "./PostingInfoTabsStyle";
 import IconItem from "../IconItem";
 import axios from "axios";
 import Log from "../../../../components/Log";
-import LoadingSpinner from "../../../../components/LoadingSpinner";
+
 
 /**
  * Class that represents a component that displays

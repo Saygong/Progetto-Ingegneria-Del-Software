@@ -36,12 +36,12 @@ class TransactionTypeButtons extends React.Component {
                     }
 
                     <div className="transactionContainers">
-                        <input type="radio" className="btn-check no-decorations" name="options" id={options[1]} checked={option1}/>
+                        <input type="radio" className="btn-check no-decorations" name="options" id={options[1]} defaultChecked={option1}/>
                         <label className="btn mybtn-primary" htmlFor={options[1]} onClick={() => this.handleTnTypeChange(options[1]) }> {options[1]} </label>
                     </div>
 
                     <div className="transactionContainers">
-                        <input type="radio" className="btn-check no-decorations" name="options" id={options[2]} checked={option2}/>
+                        <input type="radio" className="btn-check no-decorations" name="options" id={options[2]} defaultChecked={option2}/>
                         <label className="btn mybtn-primary" htmlFor={options[2]} onClick={() => this.handleTnTypeChange(options[2]) }> {options[2]} </label>
                     </div>
 

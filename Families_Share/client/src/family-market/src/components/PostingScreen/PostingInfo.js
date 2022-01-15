@@ -13,9 +13,7 @@ import PostingInfoTabs from "./PostingInfoTabs";
  */
 class PostingInfo extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
+
 
     render() {
         const language = this.props.language;

@@ -51,6 +51,7 @@ class PostingScreen extends React.Component {
 
         this.matchParams = this.props.match.params;
         this.onPostingDeleteRedirection = this.props.location.state.onDeleteRedirection;
+        this.onEditRedirection = this.props.location.state.onEditRedirection;
         this.apiHandler = new ApiHandler("", "", DEBUG);
         this.state = {
             posting: Posting.EMPTY,
@@ -62,23 +63,14 @@ class PostingScreen extends React.Component {
         const currentPosting = this.state.posting;
         const {fetchedData} = this.state;
 
-        /**
-         * TODO this is not used as of now because there is a race condition
-         *      that happens when you confirm the edit, which causes the posting not
-         *      to display the edited information.
-         *      Instead, atm, this.onPostingDeleteRedirection is passed to PostingNavBar
-         */
-        const onEditRedirection = {
-            pathname: this.props.location.pathname,
-            state: this.props.location.state
-        };
+
         console.log("PostingScreen:" + currentPosting.id)
         return fetchedData ? (
             <div className="posting-info">
                 <PostingNavBar postingId={currentPosting.id}
                                postingName={currentPosting.name}
                                postingCreatorId={currentPosting.user_id}
-                               onEditRedirection={this.onPostingDeleteRedirection}
+                               onEditRedirection={this.onEditRedirection}
                                onDeleteRedirection={this.onPostingDeleteRedirection}/>
 
                 <PostingInfo posting={currentPosting}/>

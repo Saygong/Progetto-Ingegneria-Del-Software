@@ -9,10 +9,6 @@ import PropTypes from "prop-types";
  */
 class IconItem extends React.Component {
 
-    constructor(props) {
-        super(props);
-
-    }
 
     render() {
         let iconPath = this.props.iconPath + " " + this.props.theme;
