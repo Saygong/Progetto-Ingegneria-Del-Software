@@ -4,7 +4,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {withRouter} from "react-router-dom";
 import IconItem from "../IconItem";
-import guideFile from "../../guide/dummy_guide.pdf";
+import guideFile from "../../guide/FamilyMarket_Guide.pdf";
 
 /**
  * Class that represents a button used to download a guide for Family market.
