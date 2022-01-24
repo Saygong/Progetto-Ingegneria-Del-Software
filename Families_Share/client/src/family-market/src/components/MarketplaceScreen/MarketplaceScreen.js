@@ -113,9 +113,6 @@ class MarketplaceScreen extends React.Component {
         );
     }
 
-
-
-
     async componentDidMount() {
         const currentGroupPostings = await this.getGroupPostings();
 
@@ -180,7 +177,7 @@ class MarketplaceScreen extends React.Component {
 
 
     /**
-     * Returns a url used to redirect to this page.
+     * Returns an url used to redirect to this page.
      * @return {string}
      */
     static buildUrl() {
@@ -215,7 +212,6 @@ MarketplaceScreen.propTypes = {
      * Passed by the withLanguage HOC, used to determine which texts to display.
      */
     language: PropTypes.string,
-
 }
 
 

@@ -82,7 +82,6 @@ TransactionTypeButtons.propTypes = {
 
 TransactionTypeButtons.defaultProps = {
     createMode : false
-
 }
 
 

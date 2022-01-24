@@ -17,7 +17,6 @@ class CategoryDialog extends React.Component {
 
     }
 
-
     handleClose = () => {
         const { handleClose } = this.props;
         handleClose();

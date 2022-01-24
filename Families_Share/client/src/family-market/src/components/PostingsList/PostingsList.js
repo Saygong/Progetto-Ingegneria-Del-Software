@@ -13,8 +13,6 @@ const TN_TYPE_NOT_SET = "not-set";
 
 class PostingsList extends React.Component {
 
-
-
     render() {
 
         const title = this.buildTitle();

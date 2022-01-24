@@ -15,8 +15,6 @@ import ToggleFavouriteButton from "../ToggleFavouriteButton";
  */
 class PostingNavBar extends React.Component {
 
-
-
     render() {
         const postingTitle = this.props.postingName;
         let otherComp;
@@ -61,7 +59,7 @@ PostingNavBar.propTypes = {
      */
     postingName: PropTypes.string.isRequired,
 
-    /**
+    /**o
      * Id of the user that created the posting.
      * Used to determine if the current user is the owner of the posting and
      * consequently which buttons to show .

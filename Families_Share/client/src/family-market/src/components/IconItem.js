@@ -8,8 +8,6 @@ import PropTypes from "prop-types";
  * Class that represents a generic icon
  */
 class IconItem extends React.Component {
-
-
     render() {
         let iconPath = this.props.iconPath + " " + this.props.theme;
 

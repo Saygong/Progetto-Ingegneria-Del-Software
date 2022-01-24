@@ -11,9 +11,6 @@ import IconItem from "./IconItem";
  */
 class MenuItem extends React.Component {
 
-
-
-
     render() {
         let path = this.props.path;
 

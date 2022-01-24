@@ -14,7 +14,6 @@ import PropTypes from "prop-types";
  */
 class MarketplaceNavBar extends React.Component {
 
-
     render() {
         const language = this.props.language;
         const txt = texts[language].marketplaceScreen;

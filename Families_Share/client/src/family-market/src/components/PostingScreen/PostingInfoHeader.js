@@ -7,10 +7,9 @@ import PropTypes from "prop-types";
 
 /**
  * Class that represents a component that displays
- * name, category and transaction type of a certain posting.
+ * name, category and transaction-type of a certain posting.
  */
 class PostingInfoHeader extends React.Component {
-
 
     render() {
         const posting = this.props.posting;

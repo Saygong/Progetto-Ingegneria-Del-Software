@@ -11,7 +11,6 @@ import guideFile from "../../guide/FamilyMarket_Guide.pdf";
  */
 class GuideButton extends React.Component {
 
-
     render() {
 
         return (
